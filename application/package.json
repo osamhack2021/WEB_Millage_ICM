@@ -1,0 +1,17 @@
+{
+    "name": "icm",
+    "version": "0.0.1",
+    "private": "true",
+    "description": "Independent Community of Military",
+    "workspaces": [
+        "icm-server",
+        "icm-client"
+    ],
+    "scripts": {
+      "start": "yarn workspace icm-server start && yarn workspace icm-client start",
+      "server-start": "yarn workspace icm-server start",
+      "server-start:watch": "yarn workspace icm-server start:watch",
+      "client-start": "yarn workspace icm-client start"
+    }
+  }
+  
