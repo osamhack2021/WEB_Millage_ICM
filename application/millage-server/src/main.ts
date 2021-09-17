@@ -14,8 +14,8 @@ async function bootstrap() {
 
   //Swagger Options
   const options = new DocumentBuilder()
-    .setTitle('ICM-Server')
-    .setDescription('Web Server for OSAM ICM Project')
+    .setTitle('Millage-Server')
+    .setDescription('Web Server for OSAM Millage Project')
     .setVersion('1.0')
     .setBasePath('api')
     .addBearerAuth()

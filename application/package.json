@@ -1,17 +1,17 @@
 {
-    "name": "icm",
+    "name": "millage",
     "version": "0.0.1",
     "private": "true",
-    "description": "Independent Community of Military",
+    "description": "Military Village - Millage",
     "workspaces": [
-        "icm-server",
-        "icm-client"
+        "millage-server",
+        "millage-client"
     ],
     "scripts": {
-      "start": "yarn workspace icm-server start && yarn workspace icm-client start",
-      "server-start": "yarn workspace icm-server start",
-      "server-start:watch": "yarn workspace icm-server start:watch",
-      "client-start": "yarn workspace icm-client start"
+      "start": "yarn workspace millage-server start && yarn workspace millage-client start",
+      "server-start": "yarn workspace millage-server start",
+      "server-start:watch": "yarn workspace millage-server start:watch",
+      "client-start": "yarn workspace millage-client start"
     }
   }
   
