@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "@pages": ["./pages/index.ts"],
+            "@routers": ["./routers/index.ts"],
+
+            "@pages/*": ["./pages/*"],
+            "@routers/*": ["./routers/*"],
+            "@components/*": ["./components/*"]
+        }
+    }
+}
