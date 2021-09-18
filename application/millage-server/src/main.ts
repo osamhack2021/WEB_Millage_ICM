@@ -3,14 +3,12 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { join } from 'path';
-import hbs = require('hbs');
 
 async function bootstrap() {
   const appOptions = {cors: true};
   const app = await NestFactory.create<NestExpressApplication>(AppModule, appOptions);
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  app.setViewEngine('hbs');
 
   //Swagger Options
   const options = new DocumentBuilder()
@@ -25,6 +23,9 @@ async function bootstrap() {
 
 
 
-  await app.listen(3000);
+  await app.listen(3000, async () => {
+    console.log('Server running on http://localhost:3000');
+  });
+
 }
 bootstrap();
