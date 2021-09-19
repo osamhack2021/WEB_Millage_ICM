@@ -1,10 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, JoinTable, ManyToMany, OneToMany} from 'typeorm';
-import { IsEmail } from 'class-validator';
+import {IsEmail} from 'class-validator';
 import * as argon2 from 'argon2';
 
 @Entity('user')
 export class UserEntity {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,5 +17,4 @@ export class UserEntity {
   async hashPassword() {
     this.password = await argon2.hash(this.password);
   }
-
 }

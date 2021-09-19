@@ -21,7 +21,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +44,12 @@
     ]
   },
   "devDependencies": {
-    "craco-alias": "^3.0.1"
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
+    "craco-alias": "^3.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.4.1"
   }
 }

@@ -10,7 +10,9 @@
     "start:prod": "node dist/main.js",
     "test": "jest --config=jest.json",
     "test:watch": "jest --watch --config=jest.json",
-    "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage"
+    "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
+    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'"
   },
   "repository": {
     "type": "git"
@@ -43,11 +45,17 @@
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
+    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/parser": "^4.31.1",
     "atob": ">=2.1.0",
     "deep-extend": ">=0.5.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "extend": ">=3.0.2",
     "jest": ">=26.6.0",
     "nodemon": "^1.19.4",
+    "prettier": "^2.4.1",
     "supertest": "^3.4.2",
     "ts-jest": "^25.4.0",
     "ts-node": "^8.9.1"
