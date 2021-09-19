@@ -26,6 +26,6 @@ Add contributing.md
 
 ## Contributing Code
 
-1. 이 레포지토리를 Fork하여 개발하고자 하는 기능의 Branch 생성
+1. Repository clone 후 (혹은 code-server로 접속 후) 개발하고자 하는 기능의 Branch 생성
 2. 코드 작성 완료 후 Eslint 테스트 모두 통과시 Pull Request. 이때 구현한 기능의 핵심 내용을 본문에 요약.
 4. Maintainer 확인 후 main branch 로 merge
