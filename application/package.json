@@ -11,7 +11,10 @@
       "start": "yarn workspace millage-server start && yarn workspace millage-client start",
       "server-start": "yarn workspace millage-server start",
       "server-start:watch": "yarn workspace millage-server start:watch",
-      "client-start": "yarn workspace millage-client start"
+      "client-start": "yarn workspace millage-client start",
+      "build": "yarn workspace millage-client build",
+      "lint": "yarn workspace millage-client lint && yarn workspace millage-server lint",
+      "lint:fix": "yarn workspace millage-client lint:fix && yarn workspace millage-server lint:fix"
     }
   }
   
