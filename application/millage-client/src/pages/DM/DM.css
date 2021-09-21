@@ -1,0 +1,45 @@
+#container {
+    position: fixed;
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+}
+
+@media only screen and (min-width: 641px) {
+    #container #messageboxes{
+        position: relative;
+        width:350px;
+        height:100%;
+        border: 1px solid #ededed;
+        border-radius: 12px;
+        margin: 5px;
+    }
+
+    #container #messages{
+        position: relative;
+        width: 780px;
+        height:100%;
+        border: 1px solid #ededed;
+        border-radius: 12px;
+        margin: 5px;
+    }
+}
+@media only screen and (max-width: 640px) {
+  #container #messageboxes {
+    display: none;
+  }
+  #container #messageboxes.visible {
+    display: block;
+  }
+
+  #container #messages {
+    display: none;
+  }
+  #container #messages.visible {
+    display: block;
+  }
+}
