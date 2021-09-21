@@ -1,0 +1,10 @@
+footer{
+    width: 100vw;
+    height: 10vh;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+.footer{
+    line-height: 10vh !important;
+}
