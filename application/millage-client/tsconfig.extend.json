@@ -11,7 +11,7 @@
             "@components/*": ["./components/*"],
             "@modules/*": ["./modules/*"],
             "@hooks/*": ["./hooks/*"],
-            "@utils/*": ["./utils/*"],
+            "@utils/*": ["./utils/*"]
         }
     }
 }
