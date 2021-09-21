@@ -3,15 +3,10 @@
         "baseUrl": "./src",
         "paths": {
             "@pages": ["./pages/index.ts"],
-            "@modules": ["./modules/index.ts"],
-            "@hooks": ["./hooks/index.ts"],
-            "@constants": ["./constants/index.ts"],
-
+            "@routers": ["./routers/index.ts"],
             "@pages/*": ["./pages/*"],
-            "@components/*": ["./components/*"],
-            "@modules/*": ["./modules/*"],
-            "@hooks/*": ["./hooks/*"],
-            "@utils/*": ["./utils/*"],
+            "@routers/*": ["./routers/*"],
+            "@components/*": ["./components/*"]
         }
     }
 }

@@ -1,23 +1,19 @@
 import React from 'react';
-import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
-import SignIn from '@pages/SignIn';
-import Signup from '@pages/Signup';
+import Login from '@pages/Login';
 import './App.css';
 
 function App() {
   return (
-    <>
+    <div>
       <Header/>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={SignIn} />
-          <Route path="/signup" component={Signup} />
-        </Switch>
-      </Router>
+      <div id = "mainFrame">
+        <Login/>
+      </div>
       <Footer/>
-    </>
+    </div>
+
   );
 }
 
