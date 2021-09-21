@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-
+import {Link as RouterLink} from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -98,9 +98,11 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+                <RouterLink to="/">
+                  <Link href="#" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </RouterLink>
               </Grid>
             </Grid>
           </Box>

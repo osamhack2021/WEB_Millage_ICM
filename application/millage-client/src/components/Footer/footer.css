@@ -1,10 +1,12 @@
 footer{
     width: 100vw;
-    height: 10vh;
     background-color: #f8f8f8;
     text-align: center;
+    position: fixed;
+    bottom: 0;
 }
 
-.footer{
-    line-height: 10vh !important;
+.footer {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
