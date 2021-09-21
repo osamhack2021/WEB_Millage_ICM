@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
-import Header from './header/Header';
-import Footer from './footer/Footer';
-import Login from './login/Login';
-import Signup from './signup/Signup';
+import Header from '@components/Header';
+import Footer from '@components/Footer';
+import Login from '@pages/Login';
+import Signup from '@pages/Signup'
 import './App.css';
 
 function App() {
