@@ -60,10 +60,13 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
+    "autoprefixer": "^9",
     "craco-alias": "^3.0.1",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
-    "prettier": "^2.4.1"
+    "postcss": "^7",
+    "prettier": "^2.4.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
