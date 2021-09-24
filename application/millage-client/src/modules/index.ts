@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {all} from 'redux-saga/effects';
-import {DMReducer} from '@pages/DM/reducers';
-import dmSaga from '@pages/DM/sagas';
+import DMReducer from './DM/reducer';
+import dmSaga from './DM/sagas';
 
 const rootReducer = combineReducers({
   DM: DMReducer,

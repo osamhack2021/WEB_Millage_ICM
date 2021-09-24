@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getMessageBoxListAsync} from '@pages/DM/actions';
+import {getMessageBoxListAsync} from '@modules/DM/actions';
 
 const MessageBoxes = () => {
   const dispatch = useDispatch();

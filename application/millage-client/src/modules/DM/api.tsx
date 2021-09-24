@@ -1,4 +1,4 @@
-import {DMState} from './types';
+import {DMState} from '../../modules/DM/types';
 
 export async function apiGetMessageBoxList() : Promise<DMState> {
   const response : DMState = {

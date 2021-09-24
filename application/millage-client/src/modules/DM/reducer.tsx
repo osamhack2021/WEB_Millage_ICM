@@ -19,4 +19,4 @@ const DMReducer = createReducer<DMState, DMAction>(initialState, {
   }),
 });
 
-export {DMReducer};
+export default DMReducer;
