@@ -1,14 +1,16 @@
 import {combineReducers} from 'redux';
 import {all} from 'redux-saga/effects';
+import DMReducer from './DM/reducer';
+import dmSaga from './DM/sagas';
 
 const rootReducer = combineReducers({
-  /* Reducer List */
+  DM: DMReducer,
 });
 
 export default rootReducer;
 
 export function* rootSaga() {
-  yield all([]);
+  yield all([dmSaga()]);
 }
 
 export type RootState = ReturnType<typeof rootReducer>

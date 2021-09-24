@@ -23,9 +23,13 @@
         position: relative;
         width: 780px;
         height:100%;
-        border: 1px solid #ededed;
+        border: 1px solid #e0c7c7;
         border-radius: 12px;
         margin: 5px;
+    }
+
+    #container #messageboxes h2 {
+      position: absolute; left: 16px; line-height: 33px; color: #292929; font-size: 22px; font-weight: bold;
     }
 }
 @media only screen and (max-width: 640px) {

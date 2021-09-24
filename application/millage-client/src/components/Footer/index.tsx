@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import './footer.css';
@@ -18,15 +18,13 @@ function Copyright(props: any) {
 }
 
 
-class Footer extends Component {
-  render() {
-    return (
-      <footer>
-        <Copyright className="footer" sx={{mt: 8, mb: 4}} />
-      </footer>
-    );
-  }
+function Footer() {
+  return (
+    <footer>
+      <Copyright className="footer" sx={{mt: 8, mb: 4}} />
+    </footer>
+  );
 }
 
 
-export default (Footer);
+export default Footer;
