@@ -85,7 +85,10 @@
 ## 개념적 설계
 ![conceptual schema](./db_pictures/conceptual_schema.png "conceptual schema")
 
-- 권한 기능 구현에 대해 더 고민이 필요하다.
+- 권한 기능 구현
+    - 관리자, 중간 관리자, 일반 사용자 (추후 추가 가능)
+    - 부대 별 권한 필요
+    - 신규 게시판에 대한 권한을 유동적으로 부여할 수 있어야 함.
 
 ## 물리적 설계
 
