@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
@@ -13,8 +13,7 @@ function App() {
     <>
       <Header/>
       <Switch>
-        <Route path="/" component={Main} />
-        <Route path="/signin" component={SignIn} />
+        <Route path="/" component={SignIn} />
         <Route path="/signup" component={Signup} />
         <Route path='/boards/create' component={CreateBoardPage} />
       </Switch>
