@@ -1,6 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
-import {FormControl, MenuItem, Select, TextareaAutosize} from '@mui/material';
+import {
+  FormControl,
+  FormControlLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  TextareaAutosize,
+} from '@mui/material';
+import {NORMAL, POLL, RECRUIT} from '@constants';
+
+type PostType =
+  | typeof NORMAL
+  | typeof POLL
+  | typeof RECRUIT
 
 function CreatePostPage() {
   const {curBoard, boardList, getBoardList} = useBoard();
@@ -14,7 +28,8 @@ function CreatePostPage() {
   ] = useState<number>(curBoard?.id || 0);
 
   const selectedBoard = boardList.find((b) => b.id === selectedBoardID);
-  console.log(selectedBoard);
+
+  const [postType, setPostType] = useState<PostType>(NORMAL);
 
   return (
     <div
@@ -24,26 +39,60 @@ function CreatePostPage() {
     >
       <h1 className='text-2xl' > 게시글 생성하기 </h1>
 
-      <div className='flex self-end mt-6' >
-        <h3 className='text-xl mt-4 mb-2 mr-4' >게시판 선택</h3>
-        <FormControl className='' style={{minWidth: '10rem'}}>
-          <Select
-            value={selectedBoardID}
-            onChange={(e) => setSelectedBoardID((e.target.value as number))}
-            renderValue={(selected) => {
-              if (selected === 0) {
-                return <em>선택해주세요</em>;
-              }
+      <div className='flex mt-6 w-9/12 justify-between' >
+        <div className='flex' >
+          <h3 className='text-xl mt-4 mb-2 mr-4' >게시판 선택</h3>
+          <FormControl className='' style={{minWidth: '10rem'}}>
+            <Select
+              value={selectedBoardID}
+              onChange={(e) => setSelectedBoardID((e.target.value as number))}
+              renderValue={(selected) => {
+                if (selected === 0) {
+                  return <em>선택해주세요</em>;
+                }
 
-              return boardList.find((b) => b.id === selected)?.name;
+                return boardList.find((b) => b.id === selected)?.name;
+              }}
+            >
+              {boardList.map( (b) =>
+                <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>,
+              )}
+            </Select>
+          </FormControl>
+        </div>
+
+        { (selectedBoard?.allowPoll || selectedBoard?.allowRecruit) &&
+          <RadioGroup
+            row
+            value={postType}
+            onChange={(e, v) => {
+              if ( v !== NORMAL && v !== POLL && v !== RECRUIT ) return;
+              setPostType(v);
             }}
           >
-            {boardList.map( (b) =>
-              <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>,
-            )}
-          </Select>
-        </FormControl>
+            <FormControlLabel
+              value={NORMAL}
+              control={<Radio />}
+              label="일반 게시글"
+            />
+            { selectedBoard?.allowPoll &&
+              <FormControlLabel
+                value={POLL}
+                control={<Radio />}
+                label="설문 게시글"
+              />
+            }
+            { selectedBoard?.allowRecruit &&
+              <FormControlLabel
+                value={RECRUIT}
+                control={<Radio />}
+                label="모집 게시글"
+              />
+            }
+          </RadioGroup>
+        }
       </div>
+
 
       <form className='mt-8 w-3/4 flex flex-col' >
         <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>
