@@ -1,8 +1,20 @@
-import { FormControl, MenuItem, Select, TextareaAutosize } from '@mui/material';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {useBoard} from '@hooks/board';
+import {FormControl, MenuItem, Select, TextareaAutosize} from '@mui/material';
 
 function CreatePostPage() {
-  const [selectedBoard, setSelectedBoard] = useState()
+  const {curBoard, boardList, getBoardList} = useBoard();
+  useEffect(() => {
+    getBoardList();
+  }, []);
+
+  const [
+    selectedBoardID,
+    setSelectedBoardID,
+  ] = useState<number>(curBoard?.id || 0);
+
+  const selectedBoard = boardList.find((b) => b.id === selectedBoardID);
+  console.log(selectedBoard);
 
   return (
     <div
@@ -11,29 +23,36 @@ function CreatePostPage() {
       style={{minHeight: '90vh'}}
     >
       <h1 className='text-2xl' > 게시글 생성하기 </h1>
-      
+
       <div className='flex self-end mt-6' >
         <h3 className='text-xl mt-4 mb-2 mr-4' >게시판 선택</h3>
         <FormControl className='' style={{minWidth: '10rem'}}>
           <Select
-            value={selectedBoard}
-            onChange={(e) => console.log(e.target.value)}
+            value={selectedBoardID}
+            onChange={(e) => setSelectedBoardID((e.target.value as number))}
+            renderValue={(selected) => {
+              if (selected === 0) {
+                return <em>선택해주세요</em>;
+              }
+
+              return boardList.find((b) => b.id === selected)?.name;
+            }}
           >
-            <MenuItem value={10}>칭찬게시판</MenuItem>
-            <MenuItem value={20}>설문게시판</MenuItem>
-            <MenuItem value={30}>인원모집</MenuItem>
+            {boardList.map( (b) =>
+              <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>,
+            )}
           </Select>
         </FormControl>
       </div>
 
       <form className='mt-8 w-3/4 flex flex-col' >
-        <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>      
+        <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>
         <input
           type='text'
-          className='focus:outline-none border-b border-gray-500 py-2 w-full'  
+          className='focus:outline-none border-b border-gray-500 py-2 w-full'
         />
 
-        <h3 className='text-xl mt-4 mb-2' >내용</h3>      
+        <h3 className='text-xl mt-4 mb-2' >내용</h3>
         <TextareaAutosize
           placeholder="내용을 입력하세요."
           minRows={3}
