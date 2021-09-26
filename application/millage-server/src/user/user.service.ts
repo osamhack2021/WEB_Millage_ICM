@@ -5,7 +5,7 @@ import {UserEntity} from './user.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 const jwt = require('jsonwebtoken');
 import {SECRET} from '../config';
-import {UserRO} from './user.interface';
+import {UserData, UserRO} from './user.interface';
 import {validate} from 'class-validator';
 import {HttpException} from '@nestjs/common/exceptions/http.exception';
 import {HttpStatus} from '@nestjs/common';
@@ -17,6 +17,43 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>
   ) {}
+
+  async create(dto: CreateUserDto): Promise<UserRO>{
+     const {username, email, phonenumber, password} = dto;
+     const qb = await getRepository(UserEntity)
+       .createQueryBuilder('user')
+       .where('user.username = :username', { username })
+       .orWhere('user.email = :email', { email })
+       .orWhere('user.phonenumber = :phonenumber', { phonenumber });
+     const user = await qb.getOne();
+ 
+     if (user) {
+       const errors = {username: '이미 회원가입 된 유저입니다.'};
+       throw new HttpException({message: 'Input data validation failed', errors}, HttpStatus.BAD_REQUEST);
+ 
+     }
+ 
+     // create new user
+     let newUser = new UserEntity();
+     newUser.username = dto.email;
+     newUser.password = dto.password;
+     newUser.email = dto.email;
+     newUser.phonenumber = dto.phonenumber;
+     newUser.fullname = dto.fullname;
+     newUser.nickname = dto.nickname;
+     newUser.unit.id = dto.unitId;
+ 
+     const errors = await validate(newUser);
+     if (errors.length > 0) {
+       const _errors = {username: 'Userinput is not valid.'};
+       throw new HttpException({message: 'Input data validation failed', _errors}, HttpStatus.BAD_REQUEST);
+ 
+     } else {
+       const savedUser = await this.userRepository.save(newUser);
+       return this.buildUserRO(savedUser);
+     }
+ 
+  }
 
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository.find();
@@ -45,26 +82,19 @@ export class UserService {
     return user;
   }
 
-  public generateJWT(user) {
-    const today = new Date();
-    const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    return jwt.sign({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      exp: exp.getTime() / 1000,
-    }, SECRET);
-  };
+  
 
   private buildUserRO(user: UserEntity) {
-    const userRO = {
+    const data = {
       id: user.id,
       username: user.username,
-      token: this.generateJWT(user),
+      fullname: user.fullname,
+      nickname: user.nickname,
+      email: user.email,
+      unit: user.unit,
+      phonenumber: user.phonenumber,
     };
 
-    return {user: userRO};
+    return {user: data};
   }
 }
