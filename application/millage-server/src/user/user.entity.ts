@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne} from 'typeorm';
-import {IsEmail} from 'class-validator';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable} from 'typeorm';
+import {IsEmail, IsMobilePhone} from 'class-validator';
 import * as argon2 from 'argon2';
 import {UnitEntity} from '../unit/unit.entity';
 
@@ -40,12 +40,21 @@ export class UserEntity {
   })
   nickname: string;
 
+  @Column({
+    nullable: true,
+  })
+  unitId: number;
+
   @BeforeInsert()
   async hashPassword() {
     this.password = await argon2.hash(this.password);
   }
 
   @ManyToOne(type => UnitEntity)
+  @JoinTable({
+    name: "unit",
+    joinColumn: { name: "unitId", referencedColumnName: "id" },
+  })
   unit: UnitEntity
   
 }

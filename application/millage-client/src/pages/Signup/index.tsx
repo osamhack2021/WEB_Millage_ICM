@@ -9,27 +9,30 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, RouteComponentProps} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync} from '@modules/User/actions';
 import {UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({history}: RouteComponentProps) {
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
-  const result = useSelector((state: any) => state.user.response);
-
+  const result = useSelector((state: any) => state.user);
   const onSubmit: SubmitHandler<UserSubmitData> = (data) => {
-    console.log(data);
-
-    useEffect(() => {
-      dispatch(createUserAsync.request(data));
-    }, [dispatch]);
-
-    console.log(result);
+    data.unitId = 1;
+    dispatch(createUserAsync.request(data));
   };
+
+  useEffect(() => {
+    if (result == 'success') {
+      alert('회원가입 성공');
+      history.push('/');
+    } else if (result == 'fail'){
+      alert('회원가입 실패');
+    }
+  }, [result]);
 
   return (
     <ThemeProvider theme={theme}>

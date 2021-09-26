@@ -9,14 +9,18 @@ function* createUserSaga(
   try {
     const param = action.payload;
     const response : UserState = yield call(createUserApi, param);
-    yield put(createUserAsync.success(response));
+    if (response.result == 'success') {
+      yield put(createUserAsync.success(response));
+    } else {
+      yield put(createUserAsync.failure(response));
+    }
   } catch (error : any) {
     yield put(createUserAsync.failure(error));
   }
 }
 
-export function* getMessageBoxListSagaListener() {
+export function* createUserSagaListener() {
   yield takeLatest(createUserAsync.request, createUserSaga);
 }
 
-export {getMessageBoxListSagaListener as default};
+export {createUserSagaListener as default};

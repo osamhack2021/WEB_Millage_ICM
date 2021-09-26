@@ -1,7 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository, getRepository, DeleteResult} from 'typeorm';
+import {Repository, getRepository, DeleteResult, SimpleConsoleLogger} from 'typeorm';
 import {UserEntity} from './user.entity';
+import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 const jwt = require('jsonwebtoken');
 import {SECRET} from '../config';
@@ -19,6 +20,7 @@ export class UserService {
   ) {}
 
   async create(dto: CreateUserDto): Promise<UserRO>{
+    console.log(dto);
      const {username, email, phonenumber, password} = dto;
      const qb = await getRepository(UserEntity)
        .createQueryBuilder('user')
@@ -41,8 +43,8 @@ export class UserService {
      newUser.phonenumber = dto.phonenumber;
      newUser.fullname = dto.fullname;
      newUser.nickname = dto.nickname;
-     newUser.unit.id = dto.unitId;
- 
+     newUser.unitId = dto.unitId;
+     
      const errors = await validate(newUser);
      if (errors.length > 0) {
        const _errors = {username: 'Userinput is not valid.'};
@@ -50,7 +52,12 @@ export class UserService {
  
      } else {
        const savedUser = await this.userRepository.save(newUser);
-       return this.buildUserRO(savedUser);
+       if(savedUser)
+        return this.buildUserRO(savedUser);
+       else{
+          const _errors = {username: 'create user failed'};
+          throw new HttpException({message: 'create user failed', _errors}, HttpStatus.BAD_REQUEST);
+       }
      }
  
   }
@@ -84,7 +91,7 @@ export class UserService {
 
   
 
-  private buildUserRO(user: UserEntity) {
+  private buildUserRO(user: UserEntity)  {
     const data = {
       id: user.id,
       username: user.username,

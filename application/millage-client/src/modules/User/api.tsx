@@ -1,11 +1,15 @@
-import {UserData, UserState} from './types';
+import {UserSubmitData, UserState} from './types';
 import axios from 'axios';
 
-export async function createUserApi(data: UserData) : Promise<UserState> {
+export async function createUserApi(data: UserSubmitData) : Promise<UserState> {
   try {
-    const user : UserState = await axios.post('/user/register', data);
-    return user;
+    const user = await axios.post('/user/register', data);
+    if (user) {
+      return {result: 'success'};
+    } else {
+      return {result: 'fail'};
+    }
   } catch (err: any) {
-    throw new Error(err);
+    return {result: 'fail'};
   }
 }

@@ -31,16 +31,17 @@ export class UserController {
     return {user};
   }
 
+  
   @UsePipes(new ValidationPipe())
   @Post('register')
-  async register(@Body('user') userdata : CreateUserDto): Promise<DefaultRO>{
-    const user = await this.userService.create(userdata);
-
-    if(user){
-      const errors = {result: '유저 생성에 실패했습니다.'};
-      throw new HttpException({errors}, 400);
-    } else{
+  async register(@Body() userdata : CreateUserDto): Promise<DefaultRO>{
+    //console.log(userdata);
+    try{
+      const user = await this.userService.create(userdata);
+      console.log(user);
       return {result: 'success'};
+    } catch(err){
+      throw err;
     }
   }
 }
