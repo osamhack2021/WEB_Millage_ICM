@@ -29,9 +29,7 @@
 
 
 ## 오픈소스 커뮤니티 참가 (주최측 권고사항)
-* [생활코딩 - Facebook Group](https://www.facebook.com/groups/codingeverybody)
-* [Scouter OSS APM - Facebook Group](https://www.facebook.com/groups/scouterapm)
-* ... (그 외 알고 있는 오픈소스 커뮤니티 있다면 추가 부탁드립니다 😊)
+* [#66](https://github.com/osamhack2021/WEB_Millage_ICM/issues/66) 이슈 참고하기
 
 커뮤니티 가입 후 멘토님께 알려드리기
 
