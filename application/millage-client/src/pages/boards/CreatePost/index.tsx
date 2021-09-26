@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
 import {
   FormControl,
@@ -10,11 +10,15 @@ import {
   TextareaAutosize,
 } from '@mui/material';
 import {NORMAL, POLL, RECRUIT} from '@constants';
+import {PollInput} from '@modules/board/types';
+import {CancelOutlined} from '@mui/icons-material';
 
 type PostType =
   | typeof NORMAL
   | typeof POLL
   | typeof RECRUIT
+
+let newPollID = 1;
 
 function CreatePostPage() {
   const {curBoard, boardList, getBoardList} = useBoard();
@@ -30,6 +34,60 @@ function CreatePostPage() {
   const selectedBoard = boardList.find((b) => b.id === selectedBoardID);
 
   const [postType, setPostType] = useState<PostType>(NORMAL);
+
+  // submit 전에 content가 ''인 poll 제거하는 로직 필요
+  const [pollList, setPollList] = useState<PollInput[]>([{
+    createId: newPollID,
+    content: '',
+  }]);
+
+  // Poll 입력 이벤트 헨들러
+  const onPollInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // Target Poll Update
+    const targetPollIdx = pollList.findIndex((p) =>
+      p.createId === +e.target.id);
+    const updatedPollList: PollInput[] = [
+      ...pollList.slice(0, targetPollIdx),
+      {
+        createId: +e.target.id,
+        content: e.target.value,
+      },
+      ...pollList.slice(targetPollIdx + 1),
+    ];
+
+    // 마지막 Poll이면 새로운 Poll 생성
+    const isLastInput = !(pollList.find((p) =>
+      p.createId === (+e.target.id) + 1));
+    if (isLastInput) {
+      newPollID++;
+      setPollList([
+        ...updatedPollList,
+        {
+          content: '',
+          createId: newPollID,
+        },
+      ]);
+    } else {
+      setPollList([...updatedPollList]);
+    }
+  };
+
+  // Poll 삭제 이벤트 핸들러
+  const onPollDelete = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    const inputId =
+      e.currentTarget.parentElement?.parentElement?.lastElementChild?.id;
+    if (!inputId || pollList.length === 1) {
+      return;
+    }
+    const targetPollIdx = pollList.findIndex((p) => p.createId === +inputId);
+    if (targetPollIdx === undefined) {
+      return;
+    }
+    setPollList([
+      ...pollList.slice(0, targetPollIdx),
+      ...pollList.slice(targetPollIdx + 1),
+    ]);
+  };
 
   return (
     <div
@@ -111,7 +169,39 @@ function CreatePostPage() {
         {/* <h3 className='text-xl mt-4 mb-2' >이미지 업로드</h3> */}
         {/* react-dropzone 사용하기 */}
 
-        {/* <h3 className='text-xl mt-4 mb-2' >설문지 만들기</h3> */}
+        {/* 설문 기능 */}
+        { selectedBoard?.allowPoll && postType === POLL &&
+          <div className='w-full'>
+            <h3 className='text-xl mt-4 mb-2' >설문지 만들기</h3>
+            <div className='w-full'>
+              { pollList.map((p) => (
+                <div
+                  key={p.createId}
+                  className='relative ring-1 ring-gray-500'
+                >
+                  <div
+                    className='
+                      absolute right-4 top-0 bottom-0 flex items-center
+                    '
+                  >
+                    <CancelOutlined
+                      className='cursor-pointer text-red-400'
+                      fontSize='small'
+                      onClick={onPollDelete}
+                    />
+                  </div>
+                  <input
+                    id={p.createId.toString()}
+                    value={p.content}
+                    onChange={onPollInputChange}
+                    className='w-full focus:outline-none p-4'
+                    type='text'
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        }
 
         {/* <h3 className='text-xl mt-4 mb-2' >모집 인원</h3> */}
 
