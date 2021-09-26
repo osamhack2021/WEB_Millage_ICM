@@ -12,6 +12,7 @@ import {
 import {NORMAL, POLL, RECRUIT} from '@constants';
 import {PollInput} from '@modules/board/types';
 import {CancelOutlined} from '@mui/icons-material';
+import {SubmitHandler, useForm} from 'react-hook-form';
 
 type PostType =
   | typeof NORMAL
@@ -19,6 +20,13 @@ type PostType =
   | typeof RECRUIT
 
 let newPollID = 1;
+
+type PostInputs = {
+  title: string;
+  content: string;
+  pollList?: PollInput[];
+  rCount?: number;
+}
 
 function CreatePostPage() {
   const {curBoard, boardList, getBoardList} = useBoard();
@@ -89,6 +97,35 @@ function CreatePostPage() {
     ]);
   };
 
+  const {register, handleSubmit} = useForm<PostInputs>({
+    defaultValues: {rCount: 0},
+  });
+  const onSubmit: SubmitHandler<PostInputs> = (data) => {
+    if (!selectedBoard) {
+      window.alert('게시판을 선택해주세요.');
+      return;
+    }
+    if (!selectedBoard.allowPoll && postType === POLL) {
+      window.alert('게시글 타입을 선택해주세요.');
+      return;
+    }
+    if (!selectedBoard.allowRecruit && postType === RECRUIT) {
+      window.alert('게시글 타입을 선택해주세요.');
+      return;
+    }
+
+    const dataWillSend: PostInputs = {
+      title: data.title,
+      content: data.content,
+    };
+    if (postType === POLL) {
+      dataWillSend.pollList = pollList.filter((p) => p.content !== '');
+    } else if (postType === RECRUIT) {
+      dataWillSend.rCount = data.rCount;
+    }
+    console.log(dataWillSend);
+  };
+
   return (
     <div
       className='max-w-screen-xl py-4 px-4 mx-auto flex flex-col items-center
@@ -151,16 +188,20 @@ function CreatePostPage() {
         }
       </div>
 
-
-      <form className='mt-8 w-3/4 flex flex-col' >
+      <form
+        className='mt-8 w-3/4 flex flex-col'
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>
         <input
+          {...register('title')}
           type='text'
           className='focus:outline-none border-b border-gray-500 py-2 w-full'
         />
 
         <h3 className='text-xl mt-4 mb-2' >내용</h3>
         <TextareaAutosize
+          {...register('content')}
           placeholder="내용을 입력하세요."
           minRows={3}
           className='focus:outline-none border border-gray-500 resize-none p-4'
@@ -203,9 +244,24 @@ function CreatePostPage() {
           </div>
         }
 
-        {/* <h3 className='text-xl mt-4 mb-2' >모집 인원</h3> */}
+        { selectedBoard?.allowRecruit && postType === RECRUIT &&
+          <div className='flex my-6 items-center' >
+            <h3 className='text-xl mr-4' >모집 인원</h3>
+            <input
+              {...register('rCount')}
+              className='p-2 ring-1 ring-gray-500 focus:outline-none'
+              type='number'
+              min={0}
+            />
+          </div>
+        }
 
-        <button className='bg-gray-500 text-white self-center px-40 py-5 mt-6'>
+        <button
+          className='
+            bg-gray-500 text-white self-center
+            px-40 py-5 mt-6 focus:outline-none
+          '
+        >
           게시글 생성
         </button>
       </form>
