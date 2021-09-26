@@ -1,5 +1,5 @@
-import * as Actions from './actions'
-import { ActionType } from "typesafe-actions"
+import * as Actions from './actions';
+import {ActionType} from 'typesafe-actions';
 
 export type Board = {
     id: number;
@@ -8,6 +8,17 @@ export type Board = {
     allowImage: boolean;
     allowPoll: boolean;
     allowRecruit: boolean;
+}
+
+/* Poll 관련 Types */
+export type PollInput = {
+    createId: number;
+    content: string;
+}
+
+export type Poll = Omit<PollInput, 'createId'> & {
+    id: number;
+    votes: number;
 }
 
 export type GetBoardListRes = {
