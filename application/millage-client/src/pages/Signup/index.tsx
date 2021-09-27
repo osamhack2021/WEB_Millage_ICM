@@ -33,8 +33,8 @@ export default function SignUp({history}: RouteComponentProps) {
     if (user.result == 'success') {
       alert('회원가입 성공');
       history.push('/');
-    } else if (user.result == 'fail' || user.result == 'error') {
-      alert('회원가입 실패');
+    } else if (user.result == 'registerfail' || user.result == 'error') {
+      alert(user.message);
     }
   }, [user]);
 
