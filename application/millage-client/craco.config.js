@@ -9,7 +9,7 @@ module.exports = {
         baseUrl: './src',
         tsConfigPath: './tsconfig.extend.json',
       },
-    },
+    }
   ],
   style: {
     postcss: {
