@@ -1,7 +1,15 @@
-.fc-day-sun a {
+.fc-day-sun a.fc-daygrid-day-number {
+  color: red;
+}
+
+.fc-day-sun a.fc-col-header-cell-cushion {
   color: red;
 }
 
 .fc-day-sat a {
+  color: blue;
+}
+
+.fc-day-sat a.fc-col-header-cell-cushion {
   color: blue;
 }
