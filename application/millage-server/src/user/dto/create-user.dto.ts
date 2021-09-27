@@ -13,7 +13,9 @@ export class CreateUserDto {
 
   readonly fullname: string;
 
-  readonly  nickname: string;
+  readonly nickname: string;
 
   readonly unitId: number;
+
+  readonly auth: number;
 }

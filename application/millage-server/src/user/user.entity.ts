@@ -35,6 +35,9 @@ export class UserEntity {
   @Column()
   fullname: string;
 
+  @Column()
+  auth: number;
+
   @Column({
     nullable: true,
   })
@@ -47,14 +50,13 @@ export class UserEntity {
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await argon2.hash(this.password);
+    // this.password = await argon2.hash(this.password);
   }
 
-  @ManyToOne(type => UnitEntity)
+  @ManyToOne((type) => UnitEntity)
   @JoinTable({
-    name: "unit",
-    joinColumn: { name: "unitId", referencedColumnName: "id" },
+    name: 'unit',
+    joinColumn: {name: 'unitId', referencedColumnName: 'id'},
   })
   unit: UnitEntity
-  
 }

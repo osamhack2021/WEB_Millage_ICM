@@ -9,6 +9,12 @@ export interface UserData {
     nickname: string;
     phonenumber: string;
     unitId: number;
+    auth: number;
+}
+
+export interface UserLoginData {
+    username: string;
+    password: string;
 }
 
 export interface UserSubmitData {
@@ -20,10 +26,13 @@ export interface UserSubmitData {
     phonenumber: string;
     unitId: number;
     password: string;
+    auth: number;
 }
 
 export interface UserState {
     result: string;
+    session?: UserData;
+    message?: string;
 }
 
 export type UserAction = ActionType<typeof actions>;

@@ -19,62 +19,57 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
-  async create(dto: CreateUserDto): Promise<UserRO>{
-    console.log(dto);
-     const {username, email, phonenumber, password} = dto;
-     const qb = await getRepository(UserEntity)
-       .createQueryBuilder('user')
-       .where('user.username = :username', { username })
-       .orWhere('user.email = :email', { email })
-       .orWhere('user.phonenumber = :phonenumber', { phonenumber });
-     const user = await qb.getOne();
- 
-     if (user) {
-       const errors = {username: '이미 회원가입 된 유저입니다.'};
-       throw new HttpException({message: 'Input data validation failed', errors}, HttpStatus.BAD_REQUEST);
- 
-     }
- 
-     // create new user
-     let newUser = new UserEntity();
-     newUser.username = dto.email;
-     newUser.password = dto.password;
-     newUser.email = dto.email;
-     newUser.phonenumber = dto.phonenumber;
-     newUser.fullname = dto.fullname;
-     newUser.nickname = dto.nickname;
-     newUser.unitId = dto.unitId;
-     
-     const errors = await validate(newUser);
-     if (errors.length > 0) {
-       const _errors = {username: 'Userinput is not valid.'};
-       throw new HttpException({message: 'Input data validation failed', _errors}, HttpStatus.BAD_REQUEST);
- 
-     } else {
-       const savedUser = await this.userRepository.save(newUser);
-       if(savedUser)
-        return this.buildUserRO(savedUser);
-       else{
-          const _errors = {username: 'create user failed'};
-          throw new HttpException({message: 'create user failed', _errors}, HttpStatus.BAD_REQUEST);
-       }
-     }
- 
+  async create(dto: CreateUserDto): Promise<UserRO> {
+    const {username, email, phonenumber, password} = dto;
+    const qb = await getRepository(UserEntity)
+        .createQueryBuilder('user')
+        .where('user.username = :username', {username})
+        .orWhere('user.email = :email', {email})
+        .orWhere('user.phonenumber = :phonenumber', {phonenumber});
+    const user = await qb.getOne();
+
+    if (user) {
+      return {
+        result: 'fail',
+        message: '이미 회원가입 된 유저입니다',
+      };
+    }
+
+    // create new user
+    const newUser = new UserEntity();
+    newUser.username = dto.username;
+    newUser.password = dto.password;
+    newUser.email = dto.email;
+    newUser.phonenumber = dto.phonenumber;
+    newUser.fullname = dto.fullname;
+    newUser.nickname = dto.nickname;
+    newUser.unitId = dto.unitId;
+    newUser.auth = dto.auth;
+
+    const errors = await validate(newUser);
+    if (errors.length > 0) {
+      return {
+        result: 'fail',
+        message: '값이 올바르지 않습니다',
+      };
+    } else {
+      const savedUser = await this.userRepository.save(newUser);
+      if (savedUser) {
+        return {
+          result: 'success',
+          session: this.buildUserRO(savedUser),
+        };
+      } else {
+        return {
+          result: 'fail',
+          message: '알수없는 오류가 발생했습니다',
+        };
+      }
+    }
   }
 
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository.find();
-  }
-
-  async findById(id: number): Promise<UserRO> {
-    const user = await this.userRepository.findOne(id);
-
-    if (!user) {
-      const errors = {User: ' not found'};
-      throw new HttpException({errors}, 401);
-    }
-
-    return this.buildUserRO(user);
   }
 
   async findOne(loginUserDto: LoginUserDto) {
@@ -89,19 +84,19 @@ export class UserService {
     return user;
   }
 
-  
 
-  private buildUserRO(user: UserEntity)  {
+  private buildUserRO(user: UserEntity) {
     const data = {
       id: user.id,
       username: user.username,
       fullname: user.fullname,
       nickname: user.nickname,
       email: user.email,
-      unit: user.unit,
+      unitId: user.unitId,
       phonenumber: user.phonenumber,
+      auth: user.auth,
     };
 
-    return {user: data};
+    return data;
   }
 }

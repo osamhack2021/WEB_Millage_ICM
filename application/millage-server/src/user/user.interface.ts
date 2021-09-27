@@ -1,4 +1,4 @@
-import { UnitEntity } from "src/unit/unit.entity";
+import {UnitEntity} from 'src/unit/unit.entity';
 
 export interface UserData {
   id: number;
@@ -7,11 +7,14 @@ export interface UserData {
   fullname: string;
   nickname: string;
   phonenumber: string;
-  unit: UnitEntity;
+  unitId: number;
+  auth: number;
 }
 
 export interface UserRO {
-  user: UserData;
+  result: string;
+  session?: UserData;
+  message?: string;
 }
 
 export interface DefaultRO {

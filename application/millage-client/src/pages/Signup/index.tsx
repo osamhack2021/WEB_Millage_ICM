@@ -19,20 +19,24 @@ const theme = createTheme();
 export default function SignUp({history}: RouteComponentProps) {
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
-  const result = useSelector((state: any) => state.user);
-  const onSubmit: SubmitHandler<UserSubmitData> = (data) => {
+  const user = useSelector((state: any) => state.user);
+  const onSubmit: SubmitHandler<UserSubmitData> = (data, e) => {
+    if (e) {
+      e.preventDefault();
+    }
     data.unitId = 1;
+    data.auth = 1;
     dispatch(createUserAsync.request(data));
   };
 
   useEffect(() => {
-    if (result == 'success') {
+    if (user.result == 'success') {
       alert('회원가입 성공');
       history.push('/');
-    } else if (result == 'fail'){
+    } else if (user.result == 'fail' || user.result == 'error') {
       alert('회원가입 실패');
     }
-  }, [result]);
+  }, [user]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,8 +134,8 @@ export default function SignUp({history}: RouteComponentProps) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Button component={RouterLink} to={'/'}>
-                  'Don\'t have an account? Sign Up'
+                <Button component={RouterLink} to={'/login'}>
+                  'Already have an account? Sign In'
                 </Button>
               </Grid>
             </Grid>

@@ -3,7 +3,11 @@ import {all} from 'redux-saga/effects';
 import DMReducer from './DM/reducer';
 import dmSaga from './DM/sagas';
 import UserReducer from './User/reducer';
-import userSaga from './User/sagas';
+import {
+  checkSessionListener,
+  createUserSagaListener,
+  loginSagaListener,
+} from './User/sagas';
 
 const rootReducer = combineReducers({
   DM: DMReducer,
@@ -13,7 +17,12 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 export function* rootSaga() {
-  yield all([dmSaga(), userSaga()]);
+  yield all([
+    dmSaga(),
+    createUserSagaListener(),
+    loginSagaListener(),
+    checkSessionListener(),
+  ]);
 }
 
 export type RootState = ReturnType<typeof rootReducer>
