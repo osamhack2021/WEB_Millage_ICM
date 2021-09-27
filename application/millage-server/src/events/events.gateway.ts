@@ -19,5 +19,4 @@ export class EventsGateway {
       console.log(data);
       return data;
     }
-  
 }

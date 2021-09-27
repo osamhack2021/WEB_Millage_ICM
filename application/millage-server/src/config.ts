@@ -1,1 +1,1 @@
-export const SECRET = 'secret-key';
+export const SECRET = 'millage-secret-key';
