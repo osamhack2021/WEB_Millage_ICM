@@ -6,7 +6,6 @@
             "@modules": ["./modules/index.ts"],
             "@hooks": ["./hooks/index.ts"],
             "@constants": ["./constants/index.ts"],
-
             "@pages/*": ["./pages/*"],
             "@components/*": ["./components/*"],
             "@modules/*": ["./modules/*"],
