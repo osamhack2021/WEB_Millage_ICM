@@ -30,7 +30,7 @@ export class UserService {
 
     if (user) {
       return {
-        result: 'fail',
+        result: 'registerfail',
         message: '이미 회원가입 된 유저입니다',
       };
     }
@@ -49,7 +49,7 @@ export class UserService {
     const errors = await validate(newUser);
     if (errors.length > 0) {
       return {
-        result: 'fail',
+        result: 'registerfail',
         message: '값이 올바르지 않습니다',
       };
     } else {
@@ -61,7 +61,7 @@ export class UserService {
         };
       } else {
         return {
-          result: 'fail',
+          result: 'registerfail',
           message: '알수없는 오류가 발생했습니다',
         };
       }
