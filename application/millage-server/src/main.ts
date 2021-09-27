@@ -22,14 +22,17 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.useStaticAssets(join(__dirname, '..', 'dist'));
 
-  app.set('trust proxy', 1);
+  app.set('trust proxy', true);
   app.use(
       session({
+        proxy: true,
         secret: SECRET,
         resave: false,
-        saveUninitialized: false,
-        cookie: {
-          secure: true,
+        saveUninitialized: true,
+        cookie: {	
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 1000 * 60 * 60 * 2,
         },
       }),
   );
