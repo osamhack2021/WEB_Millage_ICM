@@ -14,7 +14,7 @@ import {
 const rootReducer = combineReducers({
   DM: DMReducer,
   user: UserReducer,
-  board: BoardReducer,
+  Board: BoardReducer,
 });
 
 export default rootReducer;
