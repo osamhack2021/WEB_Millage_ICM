@@ -1,11 +1,12 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository, getRepository, DeleteResult} from 'typeorm';
+import {Repository, getRepository, DeleteResult, SimpleConsoleLogger} from 'typeorm';
 import {UserEntity} from './user.entity';
+import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 const jwt = require('jsonwebtoken');
 import {SECRET} from '../config';
-import {UserRO} from './user.interface';
+import {UserData, UserRO} from './user.interface';
 import {validate} from 'class-validator';
 import {HttpException} from '@nestjs/common/exceptions/http.exception';
 import {HttpStatus} from '@nestjs/common';
@@ -18,19 +19,57 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
-  async findAll(): Promise<UserEntity[]> {
-    return await this.userRepository.find();
-  }
+  async create(dto: CreateUserDto): Promise<UserRO> {
+    const {username, email, phonenumber, password} = dto;
+    const qb = await getRepository(UserEntity)
+        .createQueryBuilder('user')
+        .where('user.username = :username', {username})
+        .orWhere('user.email = :email', {email})
+        .orWhere('user.phonenumber = :phonenumber', {phonenumber});
+    const user = await qb.getOne();
 
-  async findById(id: number): Promise<UserRO> {
-    const user = await this.userRepository.findOne(id);
-
-    if (!user) {
-      const errors = {User: ' not found'};
-      throw new HttpException({errors}, 401);
+    if (user) {
+      return {
+        result: 'registerfail',
+        message: '이미 회원가입 된 유저입니다',
+      };
     }
 
-    return this.buildUserRO(user);
+    // create new user
+    const newUser = new UserEntity();
+    newUser.username = dto.username;
+    newUser.password = dto.password;
+    newUser.email = dto.email;
+    newUser.phonenumber = dto.phonenumber;
+    newUser.fullname = dto.fullname;
+    newUser.nickname = dto.nickname;
+    newUser.unitId = dto.unitId;
+    newUser.auth = dto.auth;
+
+    const errors = await validate(newUser);
+    if (errors.length > 0) {
+      return {
+        result: 'registerfail',
+        message: '값이 올바르지 않습니다',
+      };
+    } else {
+      const savedUser = await this.userRepository.save(newUser);
+      if (savedUser) {
+        return {
+          result: 'success',
+          session: this.buildUserRO(savedUser),
+        };
+      } else {
+        return {
+          result: 'registerfail',
+          message: '알수없는 오류가 발생했습니다',
+        };
+      }
+    }
+  }
+
+  async findAll(): Promise<UserEntity[]> {
+    return await this.userRepository.find();
   }
 
   async findOne(loginUserDto: LoginUserDto) {
@@ -45,26 +84,19 @@ export class UserService {
     return user;
   }
 
-  public generateJWT(user) {
-    const today = new Date();
-    const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    return jwt.sign({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      exp: exp.getTime() / 1000,
-    }, SECRET);
-  };
 
   private buildUserRO(user: UserEntity) {
-    const userRO = {
+    const data = {
       id: user.id,
       username: user.username,
-      token: this.generateJWT(user),
+      fullname: user.fullname,
+      nickname: user.nickname,
+      email: user.email,
+      unitId: user.unitId,
+      phonenumber: user.phonenumber,
+      auth: user.auth,
     };
 
-    return {user: userRO};
+    return data;
   }
 }
