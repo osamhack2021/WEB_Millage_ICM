@@ -1,0 +1,39 @@
+.login .logo{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    margin-bottom: 40px;
+}
+
+.login .loginButton{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    border:1px solid #e3e3e3;
+    color: rgba(0, 0, 0, 0.35);;
+    height: 39px;
+    font-size: 15px;
+    font-family: "Inter";
+    font-weight: bold;
+    margin-bottom:10px;
+    line-height: 39px;
+}
+
+.login .registerButton{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background-color:#10902C;
+    border:1px solid #10902C;
+    color: #FFFFFF;
+    height: 39px;
+    font-size: 15px;
+    font-family: "Inter";
+    font-weight: bold;
+    line-height: 39px;
+}
+
+.login .logo img{
+    margin-left: auto;
+    margin-right: auto;
+}
