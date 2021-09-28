@@ -21,8 +21,14 @@ const initialState: UserState = {
     fullname: '',
     nickname: '',
     phonenumber: '',
-    unitId: 0,
-    auth: -1,
+    unit: {
+      id: 0,
+      name: '',
+    },
+    role: {
+      id: -1,
+      role: '',
+    },
   },
 };
 

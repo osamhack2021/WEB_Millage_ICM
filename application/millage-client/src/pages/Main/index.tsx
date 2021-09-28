@@ -22,7 +22,7 @@ const Main = ({history}: RouteComponentProps) => {
     console.log(session);
   }, [session]);
 
-  if (session.auth != -1) {
+  if (session.role.id > 0) {
     return (
       <>
         <Header />

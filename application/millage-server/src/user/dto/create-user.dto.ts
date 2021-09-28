@@ -17,5 +17,5 @@ export class CreateUserDto {
 
   readonly unitId: number;
 
-  readonly auth: number;
+  readonly roleId: number;
 }
