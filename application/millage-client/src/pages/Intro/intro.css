@@ -1,6 +1,6 @@
 .rightbar{
     border-left: 1px solid #e3e3e3;
-    flex: 1 1 30%;
+    flex: 1 1 20%;
 }
 
 #introContainer{
@@ -12,6 +12,6 @@
 }
 
 .left{
-    flex: 1 1 70%;
+    flex: 1 1 80%;
     background-color: rgba(0,0,0,0.05);
 }
