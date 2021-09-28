@@ -1,6 +1,12 @@
 import * as React from 'react';
-import {DatePicker, Modal} from 'antd';
-import 'antd/dist/antd.css';
+import {
+  Button,
+  Dialog as _Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
+import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
 
 interface Props {
   visible: boolean
@@ -9,21 +15,32 @@ interface Props {
 };
 
 const Dialog: React.FC<Props> = ({visible, handleOpen, handleClose}) => {
+  const [value, setValue] = React.useState<
+    [Date?, Date?] | null
+  >([new Date(), new Date()]);
   // setEvents([{
   //   id: '3',
   //   title: 'test',
   //   start: new Date(),
   // }, ...events]);
+
   return (
-    <Modal
-      title='일정 선택'
-      visible={visible}
-      onCancel={handleClose}
-      footer={null}
-      centered
+    <_Dialog
+      open={visible}
+      onClose={handleClose}
     >
-      <DatePicker.RangePicker showTime placeholder={['시작 날짜', '종료 날짜']}/>
-    </Modal>
+      <DialogTitle>일정 선택</DialogTitle>
+      <DialogContent>
+        <DateTimeRangePicker
+          value={value}
+          onChange={setValue}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>취소</Button>
+        <Button onClick={handleClose}>추가</Button>
+      </DialogActions>
+    </_Dialog>
   );
 };
 

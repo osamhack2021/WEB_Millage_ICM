@@ -6,6 +6,7 @@ import Signup from '@pages/Signup';
 import Main from '@pages/Main';
 import CreateBoardPage from '@pages/boards/CreateBoard';
 import CreatePostPage from '@pages/boards/CreatePost';
+import Schedule from '@pages/Schedule';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" component={Signup} />
         <Route path='/create-board' component={CreateBoardPage} />
         <Route path='/create' component={CreatePostPage} />
+        <Route path='/schedule' component={Schedule} />
       </Switch>
       <Footer/>
     </>

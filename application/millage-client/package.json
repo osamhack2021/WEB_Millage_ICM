@@ -21,8 +21,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.9",
-    "antd": "^4.16.13",
-    "craco-antd": "^1.19.0",
+    "@wojtekmaj/react-datetimerange-picker": "^3.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.15.4",
@@ -65,6 +64,8 @@
     ]
   },
   "devDependencies": {
+    "@types/react-calendar": "^3.4.3",
+    "@types/wojtekmaj__react-datetimerange-picker": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "autoprefixer": "^9",
