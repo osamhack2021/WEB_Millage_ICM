@@ -4,13 +4,13 @@ import './intro.css';
 
 function Intro() {
   return (
-    <div className="container">
-      <aside className="rightbar">
-        <Login />
-      </aside>
+    <div id="introContainer">
       <section className="left">
         <div className="wrap">
         </div>
+      </section>
+      <section className="rightbar">
+        <Login />
       </section>
     </div>
   );
