@@ -43,8 +43,8 @@ export class UserController {
       };
     }
 
-    const {id, username, email, phonenumber, fullname, nickname, unitId, auth} = _user;
-    const user = {id, username, email, phonenumber, fullname, nickname, unitId, auth};
+    const {id, username, email, phonenumber, fullname, nickname, unit, role} = _user;
+    const user = {id, username, email, phonenumber, fullname, nickname, unit, role};
     request.session.user = user;
     return {
       result: 'success',

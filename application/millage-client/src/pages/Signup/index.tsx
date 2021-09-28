@@ -25,7 +25,7 @@ export default function SignUp({history}: RouteComponentProps) {
       e.preventDefault();
     }
     data.unitId = 1;
-    data.auth = 1;
+    data.roleId = 1;
     dispatch(createUserAsync.request(data));
   };
 

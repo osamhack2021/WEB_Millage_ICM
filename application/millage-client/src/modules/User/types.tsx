@@ -1,6 +1,16 @@
 import {ActionType} from 'typesafe-actions';
 import * as actions from './actions';
 
+export interface UnitData{
+    id: number;
+    name: string;
+}
+
+export interface UserRoleData{
+    id: number;
+    role: string;
+}
+
 export interface UserData {
     id: number;
     username: string;
@@ -8,8 +18,8 @@ export interface UserData {
     fullname: string;
     nickname: string;
     phonenumber: string;
-    unitId: number;
-    auth: number;
+    unit: UnitData;
+    role: UserRoleData;
 }
 
 export interface UserLoginData {
@@ -26,7 +36,7 @@ export interface UserSubmitData {
     phonenumber: string;
     unitId: number;
     password: string;
-    auth: number;
+    roleId: number;
 }
 
 export interface UserState {
