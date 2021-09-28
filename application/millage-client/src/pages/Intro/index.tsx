@@ -20,7 +20,8 @@ function Intro() {
         <div className = "search">
           <div className="searchText">
             <img src='img/searchUnitText.png'/>
-            <Button id="searchUnit" variant="outlined" endIcon="img/searchicon.png">
+            <Button id="searchUnit"
+              variant="outlined" endIcon="img/searchicon.png">
               찾으시는 부대를 검색하세요
             </Button>
           </div>
