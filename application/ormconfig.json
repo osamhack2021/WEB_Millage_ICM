@@ -1,9 +1,9 @@
 {
   "type": "mysql",
-  "host": "127.0.0.1",
-  "port": 3306,
-  "username": "",
-  "password": "",
+  "host": "db.scg.skku.ac.kr",
+  "port": 33306,
+  "username": "millage_user",
+  "password": "Millage123!",
   "database": "millage",
   "entities": ["src/**/**.entity{.ts,.js}"],
   "synchronize": true

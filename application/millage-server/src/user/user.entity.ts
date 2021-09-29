@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, JoinColumn} from 'typeorm';
 import {IsEmail} from 'class-validator';
+
 import * as argon2 from 'argon2';
 import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
@@ -48,11 +49,25 @@ export class UserEntity {
   }
 
   @ManyToOne((type) => UnitEntity)
+  @JoinColumn({
+    name: 'unitId',
+    referencedColumnName: 'id',
+  })
+  unitId: number;
+
+  @ManyToOne((type) => UnitEntity)
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
   })
-  unit: UnitEntity
+  unit: UnitEntity;
+
+  @ManyToOne((type) => UserRoleEntity)
+  @JoinColumn({
+    name: 'roleId',
+    referencedColumnName: 'id',
+  })
+  roleId: number;
 
   @ManyToOne((type) => UserRoleEntity)
   @JoinTable({
