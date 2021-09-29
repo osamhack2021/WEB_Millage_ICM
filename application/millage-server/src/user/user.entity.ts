@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable} from 'typeorm';
-import {IsEmail, IsMobilePhone} from 'class-validator';
+import {IsEmail} from 'class-validator';
 import * as argon2 from 'argon2';
 import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';

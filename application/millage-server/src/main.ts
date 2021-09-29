@@ -7,12 +7,12 @@ import * as session from 'express-session';
 import {SECRET} from './config';
 import {UserData} from './user/user.interface';
 
+/* eslint-disable */
 declare module 'express-session' {
   interface SessionData {
     user: UserData;
   }
 }
-
 
 async function bootstrap() {
   const appOptions = {cors: true};
@@ -29,7 +29,7 @@ async function bootstrap() {
         secret: SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: {	
+        cookie: {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
           maxAge: 1000 * 60 * 60 * 2,
