@@ -21,7 +21,6 @@ export class MessageEntity {
     @JoinColumn({ name: 'senderId', referencedColumnName: 'id' })
     senderId: number;
 
-    @ManyToOne(type => UserEntity)
     @JoinTable({
       name: 'user',
       joinColumn: { name: 'senderId', referencedColumnName: 'id' },
@@ -32,7 +31,6 @@ export class MessageEntity {
     @JoinColumn({ name: 'receiverId', referencedColumnName: 'id' })
     receiverId: number;
 
-    @ManyToOne(type => UserEntity)
     @JoinTable({
       name: 'user',
       joinColumn: { name: 'receiverId', referencedColumnName: 'id' },
