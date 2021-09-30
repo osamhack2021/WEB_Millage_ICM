@@ -12,7 +12,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Link as RouterLink, RouteComponentProps} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync} from '@modules/User/actions';
-import {UserSubmitData} from '@modules/User/types';
+import {UserState, UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 const theme = createTheme();
 
@@ -20,7 +20,9 @@ export default function SignUp({history}: RouteComponentProps) {
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const [responseState, setResponseState] = useState('');
+  const [responseState, setResponseState] = useState<UserState>({
+    result: '',
+  });
   const onSubmit: SubmitHandler<UserSubmitData> = (data, e) => {
     if (e) {
       e.preventDefault();
@@ -32,20 +34,18 @@ export default function SignUp({history}: RouteComponentProps) {
 
   useEffect(() => {
     if (user.result && user.result != '') {
-      setResponseState(user.result);
+      setResponseState(user);
     }
   }, [user]);
 
   useEffect(() => {
-    if (responseState == 'registerSuccess') {
+    if (responseState.result == 'registerSuccess') {
       alert('회원가입 성공');
       history.push('/');
-    } else if (responseState == 'registerFail') {
-      alert(responseState);
-      setResponseState('');
-    } else if (responseState == 'registerError') {
-      alert(responseState);
-      setResponseState('');
+    } else if (responseState.result == 'registerFail') {
+      alert(responseState.message);
+    } else if (responseState.result == 'registerError') {
+      alert(responseState.message);
     }
   }, [responseState]);
 

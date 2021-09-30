@@ -49,7 +49,6 @@ export class UserService {
     newUser.nickname = dto.nickname;
     newUser.unitId = dto.unitId;
     newUser.roleId = dto.roleId;
-    console.log(newUser);
 
     const errors = await validate(newUser);
     if (errors.length > 0) {
