@@ -6,7 +6,7 @@ export async function createUserApi(data: UserSubmitData) : Promise<UserState> {
     const user = await axios.post('/user/register', data);
     return user.data;
   } catch (err: any) {
-    return {result: 'error'};
+    return {result: 'error', message: err};
   }
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,6 +20,7 @@ export default function SignUp({history}: RouteComponentProps) {
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const [responseState, setResponseState] = useState('');
   const onSubmit: SubmitHandler<UserSubmitData> = (data, e) => {
     if (e) {
       e.preventDefault();
@@ -30,13 +31,23 @@ export default function SignUp({history}: RouteComponentProps) {
   };
 
   useEffect(() => {
-    if (user.result == 'success') {
-      alert('회원가입 성공');
-      history.push('/');
-    } else if (user.result == 'registerfail' || user.result == 'error') {
-      alert(user.message);
+    if (user.result && user.result != '') {
+      setResponseState(user.result);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (responseState == 'registerSuccess') {
+      alert('회원가입 성공');
+      history.push('/');
+    } else if (responseState == 'registerFail') {
+      alert(responseState);
+      setResponseState('');
+    } else if (responseState == 'registerError') {
+      alert(responseState);
+      setResponseState('');
+    }
+  }, [responseState]);
 
   return (
     <ThemeProvider theme={theme}>

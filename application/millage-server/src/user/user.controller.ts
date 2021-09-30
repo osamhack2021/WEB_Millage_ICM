@@ -57,7 +57,10 @@ export class UserController {
       const user = await this.userService.create(userdata);
       return user;
     } catch (err) {
-      return {result: err};
+      return {
+        result: 'error',
+        message: err,
+      };
     }
   }
 }

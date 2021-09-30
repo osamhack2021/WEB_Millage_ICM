@@ -18,10 +18,6 @@ const Main = ({history}: RouteComponentProps) => {
     dispatch(checkSessionAsync.request());
   }, []);
 
-  useEffect(()=>{
-    console.log(session);
-  }, [session]);
-
   if (session.role.id > 0) {
     return (
       <>

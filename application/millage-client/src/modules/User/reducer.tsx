@@ -43,6 +43,7 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
   [CREATE_USER_FAIL]: (state, action) => ({
     ...state,
     result: action.payload.result,
+    message: action.payload.message,
   }),
   [LOGIN_USER_REQUEST]: (state, action) => ({
     ...state,
