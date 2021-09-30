@@ -17,23 +17,24 @@ export class MessageEntity {
     })
     message: string;
 
-    @ManyToOne(type => UserEntity)
-    @JoinColumn({ name: 'senderId', referencedColumnName: 'id' })
+    @ManyToOne((type) => UserEntity)
+    @JoinColumn({name: 'senderId', referencedColumnName: 'id'})
     senderId: number;
 
     @JoinTable({
       name: 'user',
-      joinColumn: { name: 'senderId', referencedColumnName: 'id' },
+      joinColumn: {name: 'senderId', referencedColumnName: 'id'},
     })
     sender: UserEntity;
 
-    @ManyToOne(type => UserEntity)
-    @JoinColumn({ name: 'receiverId', referencedColumnName: 'id' })
+    @ManyToOne((type) => UserEntity)
+    @JoinColumn({name: 'receiverId', referencedColumnName: 'id'})
     receiverId: number;
 
     @JoinTable({
       name: 'user',
-      joinColumn: { name: 'receiverId', referencedColumnName: 'id' },
+      joinColumn: {name: 'receiverId', referencedColumnName: 'id'},
     })
     receiver: UserEntity;
 }
+
