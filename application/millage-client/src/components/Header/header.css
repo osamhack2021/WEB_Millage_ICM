@@ -1,5 +1,58 @@
 header {
-    width: 100vw;
+    width: 80vw;
     height: 10vh;
+    margin-left:auto;
+    margin-right:auto;
     background-color: #f8f8f8;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .unitNameContainer{
+    display: flex;
+    flex-direction: column;
+    line-height:1;
+}
+
+header .logo{
+    display: flex;
+    align-items: center;
+}
+
+header .logo img{
+    margin:10px;
+}
+
+header button{
+    justify-content: center;
+    align-items: center;
+}
+
+header .navigation a{
+    width: 100px;
+    margin: 30px;
+    font-family: "Roboto";
+    font-weight: bold;
+    font-size: 18px;
+}
+
+header .millage{
+    color: #10902C;
+    font-family: "Roboto";
+    font-size: 12px;
+    font-weight: normal;
+}
+
+header .unitName {
+    color: #000000;
+    font-family: "Roboto";
+    font-size: 26px;
+    font-weight: normal;
+}
+
+header .enabled{
+    color: #10902C;
+    border-bottom: 3px solid #10902C;
 }
