@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useParams} from 'react-router';
+import {useHistory, useParams} from 'react-router';
 import {useBoard} from '@hooks/board';
 
 type BoardViewParams = {
@@ -13,9 +13,20 @@ function BoardViewPage() {
     getBoardById(+boardId);
   }, [boardId, getBoardById]);
 
-  console.log(curBoardState);
+  const {loading, data, error} = curBoardState;
+  console.log(data);
+  const history = useHistory();
+  if (error) {
+    history.replace('/');
+  }
 
   return (
+    loading ?
+
+    <div>
+      loading...
+    </div>:
+
     <div>
       {boardId}
       Board View Page
