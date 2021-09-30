@@ -22,7 +22,7 @@ const Main = ({history}: RouteComponentProps) => {
   if (session.role.id > 0) {
     return (
       <>
-        <Header/>
+        <Header />
         <Switch>
           <Route exact path='/' component={MainPage} />
           <Route path='/create-board' component={CreateBoardPage} />
