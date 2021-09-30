@@ -10,12 +10,22 @@ function* createUserSaga(
     const param = action.payload;
     const response : UserState = yield call(createUserApi, param);
     if (response.result == 'success') {
-      yield put(createUserAsync.success(response));
+      yield put(createUserAsync.success({
+        result: 'registerSuccess',
+      }));
+    } else if (response.result == 'fail') {
+      yield put(createUserAsync.failure({
+        result: 'registerFail',
+        message: response.message,
+      }));
     } else {
-      yield put(createUserAsync.failure(response));
+      throw new Error(response.message);
     }
   } catch (error : any) {
-    yield put(createUserAsync.failure(error));
+    yield put(createUserAsync.failure({
+      result: 'registerError',
+      message: error.message,
+    }));
   }
 }
 
@@ -29,7 +39,6 @@ function* loginUserSaga(
   try {
     const param = action.payload;
     const response : UserState = yield call(loginApi, param);
-    console.log(response);
     if (response.result == 'success') {
       yield put(loginAsync.success(response));
     } else {

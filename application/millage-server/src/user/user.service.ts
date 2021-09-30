@@ -1,17 +1,13 @@
-import {Injectable, Module} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository, getRepository, DeleteResult, SimpleConsoleLogger} from 'typeorm';
+import {Repository, getRepository} from 'typeorm';
 import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
-import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
-const jwt = require('jsonwebtoken');
-import {SECRET} from '../config';
-import {UserData, UserRO} from './user.interface';
+import {CreateUserDto, LoginUserDto} from './dto';
 import {validate} from 'class-validator';
-import {HttpException} from '@nestjs/common/exceptions/http.exception';
-import {HttpStatus} from '@nestjs/common';
 import * as argon2 from 'argon2';
-import { UserRoleEntity } from '../user_role/user_role.entity';
+import {UserRoleEntity} from '../user_role/user_role.entity';
+import {UserRO} from './user.interface';
 
 
 @Injectable()
@@ -28,7 +24,7 @@ export class UserService {
   ) {}
 
   async create(dto: CreateUserDto): Promise<UserRO> {
-    const {username, email, phonenumber, password} = dto;
+    const {username, email, phonenumber} = dto;
     const qb = await getRepository(UserEntity)
         .createQueryBuilder('user')
         .where('user.username = :username', {username})
@@ -38,7 +34,7 @@ export class UserService {
 
     if (user) {
       return {
-        result: 'registerfail',
+        result: 'fail',
         message: '이미 회원가입 된 유저입니다',
       };
     }
@@ -51,32 +47,13 @@ export class UserService {
     newUser.phonenumber = dto.phonenumber;
     newUser.fullname = dto.fullname;
     newUser.nickname = dto.nickname;
-
-    const unit = await this.unitRepository.findOne({
-      where: {
-        id: dto.unitId
-      }
-    });
-    if(!unit){
-      return {
-        result: 'registerfail',
-        message: '존재하지 않는 부대입니다',
-      };
-    }
-
-    const role = await this.userRoleRepository.findOne({
-      where: {
-        id: dto.roleId
-      }
-    });
-
-    newUser.unit = unit;
-    newUser.role = role;
+    newUser.unitId = dto.unitId;
+    newUser.roleId = dto.roleId;
 
     const errors = await validate(newUser);
     if (errors.length > 0) {
       return {
-        result: 'registerfail',
+        result: 'fail',
         message: '값이 올바르지 않습니다',
       };
     } else {
@@ -88,7 +65,7 @@ export class UserService {
         };
       } else {
         return {
-          result: 'registerfail',
+          result: 'error',
           message: '알수없는 오류가 발생했습니다',
         };
       }
@@ -105,11 +82,11 @@ export class UserService {
       where: {
         username: username,
       },
-      relations: ['role', 'unit']
+      relations: ['role', 'unit'],
     });
 
     const result= await argon2.verify(user.password, password);
-    if(result) return user;
+    if (result) return user;
     else return null;
   }
 

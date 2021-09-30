@@ -2,19 +2,25 @@ import {combineReducers} from 'redux';
 import {all} from 'redux-saga/effects';
 import DMReducer from './DM/reducer';
 import BoardReducer from './board/reducer';
+import UnitReducer from './Unit/reducer';
+import UserReducer from './User/reducer';
 import dmSaga from './DM/sagas';
 import boardSaga from './board/sagas';
-import UserReducer from './User/reducer';
 import {
   checkSessionListener,
   createUserSagaListener,
   loginSagaListener,
 } from './User/sagas';
+import {
+  getUnitListSagaListener,
+} from './Unit/sagas';
+
 
 const rootReducer = combineReducers({
   DM: DMReducer,
   user: UserReducer,
   Board: BoardReducer,
+  unit: UnitReducer,
 });
 
 export default rootReducer;
@@ -26,6 +32,7 @@ export function* rootSaga() {
     loginSagaListener(),
     checkSessionListener(),
     boardSaga(),
+    getUnitListSagaListener(),
   ]);
 }
 

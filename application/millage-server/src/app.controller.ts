@@ -1,5 +1,5 @@
-import {Controller, Get, Render} from '@nestjs/common';
-import {ApiTags, ApiOperation, ApiResponse} from '@nestjs/swagger';
+import {Controller} from '@nestjs/common';
+import {ApiTags} from '@nestjs/swagger';
 import {AppService} from './app.service';
 
 @Controller()
