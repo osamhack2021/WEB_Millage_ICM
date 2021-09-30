@@ -1,7 +1,12 @@
 import {createReducer} from 'typesafe-actions';
 
 import {BoardAction, BoardState} from './types';
-import {GET_BOARD_LIST, GET_BOARD_LIST_SUCCESS} from './actions';
+import {
+  GET_BOARD_BY_ID,
+  GET_BOARD_BY_ID_SUCCESS,
+  GET_BOARD_LIST,
+  GET_BOARD_LIST_SUCCESS,
+} from './actions';
 
 const initialState: BoardState = {
   boardList: [],
@@ -18,6 +23,18 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
     ...state,
     boardList: action.payload.boardList,
   }),
+  [GET_BOARD_BY_ID]: (state) => ({
+    ...state,
+  }),
+  [GET_BOARD_BY_ID_SUCCESS]: (state, action) => {
+    if (action.payload.ok) {
+      return {
+        ...state,
+        curBoard: action.payload.board,
+      };
+    }
+    return {...state};
+  },
 });
 
 export default BoardReducer;

@@ -78,8 +78,12 @@ export type GetBoardListRes = {
 
 export type GetBoardByIdRes = {
     ok: boolean;
-    errorMessage: string;
-    board: Board;
+    errorMessage?: string;
+    board?: Board;
+}
+
+export type GetBoardByIdReq = {
+    boardId: number;
 }
 
 
