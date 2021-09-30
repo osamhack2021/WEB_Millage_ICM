@@ -1,4 +1,4 @@
-import {MiddlewareConsumer, Module, NestModule, RequestMethod} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {BoardController} from './board.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {BoardEntity} from './board.entity';

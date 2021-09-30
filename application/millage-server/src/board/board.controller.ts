@@ -1,9 +1,9 @@
-import { Controller, Get, Render, Req } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { BoardListRO } from './board.interface';
-import { BoardService } from './board.service';
+import {Controller, Get, Req} from '@nestjs/common';
+import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
+import {BoardListRO} from './board.interface';
+import {BoardService} from './board.service';
 import {Request} from 'express';
-import { BoardEntity } from './board.entity';
+import {BoardEntity} from './board.entity';
 
 @ApiBearerAuth()
 @ApiTags('board')
@@ -13,7 +13,7 @@ export class BoardController {
 
   @Get('list')
   async getBoardList(@Req() request: Request): Promise<BoardListRO> {
-    try{
+    try {
       // 이거 auth 쉽게 하는 authentication module 구현 필요 (@성흠)
       if (!(request.session && request.session.user && request.session.user.unit)) {
         return {
@@ -26,12 +26,11 @@ export class BoardController {
           boards: list,
         };
       }
-    } catch(err) {
-        return {
-          result: 'error',
-          message: err
-        };
+    } catch (err) {
+      return {
+        result: 'error',
+        message: err,
+      };
     }
   }
-
 }
