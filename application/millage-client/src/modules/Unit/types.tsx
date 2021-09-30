@@ -13,4 +13,3 @@ export interface UnitState{
 }
 
 export type UnitAction = ActionType<typeof actions>;
-

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Login from '@components/Login';
 import './intro.css';
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,12 +7,27 @@ import {UnitObject} from '@modules/Unit/types';
 
 function Intro() {
   const dispatch = useDispatch();
+  const [keyword, setKeyword] = useState('');
+  const [unitList, setUnitList] = useState([]);
   const unit = useSelector((state: any) => state.unit);
-  const unitList = unit.units;
+  const units = unit.units;
   useEffect(()=>{
     dispatch(getUnitListAsync.request());
   }, [dispatch]);
 
+  useEffect(()=>{
+    setUnitList(units);
+  }, [unit]);
+
+  useEffect(()=>{
+    if (keyword == '') {
+      setUnitList(units);
+    } else {
+      setUnitList(units.filter((unit : UnitObject) =>{
+        return unit.name.includes(keyword);
+      }));
+    }
+  }, [keyword]);
 
   const renderUnitList = () => {
     return unitList.map((u : UnitObject) => {
@@ -41,7 +56,12 @@ function Intro() {
         <div className="search">
           <div className="searchText">
             <img src='img/searchUnitText.png'/>
-            <input id="searchUnit" type="text" placeholder="찾으시는 부대를 검색하세요"/>
+            <input id="searchUnit" type="text"
+              placeholder="찾으시는 부대를 검색하세요"
+              value={keyword}
+              onChange={(e) => {
+                setKeyword(e.target.value);
+              }}/>
           </div>
         </div>
         <div className="list">
