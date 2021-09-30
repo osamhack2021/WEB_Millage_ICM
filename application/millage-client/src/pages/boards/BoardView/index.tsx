@@ -8,12 +8,12 @@ type BoardViewParams = {
 
 function BoardViewPage() {
   const {boardId} = useParams<BoardViewParams>();
-  const {curBoard, getBoardById} = useBoard();
+  const {curBoardState, getBoardById} = useBoard();
   useEffect(() => {
     getBoardById(+boardId);
   }, [boardId, getBoardById]);
 
-  console.log(curBoard);
+  console.log(curBoardState);
 
   return (
     <div>

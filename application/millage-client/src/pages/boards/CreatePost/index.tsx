@@ -17,7 +17,18 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 let newPollID = 1;
 
 function CreatePostPage() {
-  const {curBoard, boardList, getBoardList} = useBoard();
+  const {
+    curBoardState,
+    boardListState,
+    getBoardList,
+  } = useBoard();
+
+  const {data: curBoard} = curBoardState;
+  const {
+    loading,
+    data: boardList,
+  } = boardListState;
+
   useEffect(() => {
     getBoardList();
   }, []);
@@ -27,7 +38,7 @@ function CreatePostPage() {
     setSelectedBoardID,
   ] = useState<number>(curBoard?.id || 0);
 
-  const selectedBoard = boardList.find((b) => b.id === selectedBoardID);
+  const selectedBoard = boardList?.find((b) => b.id === selectedBoardID);
 
   const [postType, setPostType] = useState<PostType>(NORMAL);
 
@@ -116,6 +127,12 @@ function CreatePostPage() {
   };
 
   return (
+    loading ?
+
+    <div>
+      loading...
+    </div> :
+
     <div
       className='max-w-screen-xl py-4 px-4 mx-auto flex flex-col items-center
       lg:px-8 lg:py-8'
@@ -135,10 +152,10 @@ function CreatePostPage() {
                   return <em>선택해주세요</em>;
                 }
 
-                return boardList.find((b) => b.id === selected)?.name;
+                return boardList?.find((b) => b.id === selected)?.name;
               }}
             >
-              {boardList.map( (b) =>
+              {boardList?.map( (b) =>
                 <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>,
               )}
             </Select>

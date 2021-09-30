@@ -3,38 +3,85 @@ import {createReducer} from 'typesafe-actions';
 import {BoardAction, BoardState} from './types';
 import {
   GET_BOARD_BY_ID,
+  GET_BOARD_BY_ID_FAILURE,
   GET_BOARD_BY_ID_SUCCESS,
   GET_BOARD_LIST,
+  GET_BOARD_LIST_ERROR,
   GET_BOARD_LIST_SUCCESS,
 } from './actions';
 
 const initialState: BoardState = {
-  boardList: [],
-  curBoard: undefined,
+  boardListState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  curBoardState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
 };
 
-// createReducer는 reducer를 쉽게 작성할 수 있도록 하는 모듈이며
-// 타입 오류를 방지 할 수 있습니다.
 const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
   [GET_BOARD_LIST]: (state) => ({
     ...state,
+    boardListState: {
+      ...state.boardListState,
+      loading: true,
+    },
   }),
   [GET_BOARD_LIST_SUCCESS]: (state, action) => ({
     ...state,
-    boardList: action.payload.boardList,
+    boardListState: {
+      loading: false,
+      data: action.payload.boardList,
+      error: null,
+    },
+  }),
+  [GET_BOARD_LIST_ERROR]: (state, action) => ({
+    ...state,
+    boardListState: {
+      loading: false,
+      data: null,
+      error: action.payload,
+    },
   }),
   [GET_BOARD_BY_ID]: (state) => ({
     ...state,
+    curBoardState: {
+      ...state.curBoardState,
+      loading: true,
+    },
   }),
   [GET_BOARD_BY_ID_SUCCESS]: (state, action) => {
-    if (action.payload.ok) {
+    if (action.payload.ok && action.payload.board) {
       return {
         ...state,
-        curBoard: action.payload.board,
+        curBoardState: {
+          loading: false,
+          data: action.payload.board,
+          error: null,
+        },
       };
     }
-    return {...state};
+    return {
+      ...state,
+      curBoardState: {
+        loading: false,
+        data: null,
+        error: action.payload.errorMessage,
+      },
+    };
   },
+  [GET_BOARD_BY_ID_FAILURE]: (state, action) => ({
+    ...state,
+    curBoardState: {
+      loading: false,
+      data: null,
+      error: action.payload,
+    },
+  }),
 });
 
 export default BoardReducer;

@@ -2,6 +2,7 @@ import * as Actions from './actions';
 import {ActionType} from 'typesafe-actions';
 import {NORMAL, POLL, RECRUIT} from '@constants';
 import {UserData} from '@modules/User/types';
+import {AsyncState} from '@utils/reducerUtils';
 
 /* Types of Board */
 export type Board = {
@@ -89,8 +90,8 @@ export type GetBoardByIdReq = {
 
 /* Types for Reducer */
 export type BoardState = {
-    boardList: Board[];
-    curBoard?: Board;
+    boardListState: AsyncState<Board[]>;
+    curBoardState: AsyncState<Board>;
 }
 
 export type BoardAction = ActionType<typeof Actions>

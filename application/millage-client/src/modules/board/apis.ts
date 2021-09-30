@@ -1,42 +1,53 @@
-import {GetBoardByIdReq, GetBoardByIdRes, GetBoardListRes} from './types';
+import {
+  Board,
+  GetBoardByIdReq,
+  GetBoardByIdRes,
+  GetBoardListRes,
+} from './types';
 import {wait} from '@utils/timer';
 
-// user의 community_id 넘겨주어야 함
+/**
+ * 커뮤니티의 모든 게시판의 List를 요청하는 API\
+ * Use: CreatePost Page
+ * @return {Promise<GetBoardListRes>}
+ */
 export async function apiGetBoardList(): Promise<GetBoardListRes> {
-  const response: GetBoardListRes = {
-    boardList: [
-      {
-        id: 1,
-        name: '칭찬게시판',
-        authorityToWrite: 'all',
-        allowImage: false,
-        allowPoll: false,
-        allowRecruit: false,
-        isPublicWriter: true,
-      },
-      {
-        id: 2,
-        name: '설문게시판',
-        authorityToWrite: 'all',
-        allowImage: true,
-        allowPoll: true,
-        allowRecruit: false,
-        isPublicWriter: false,
-      },
-      {
-        id: 3,
-        name: '인원모집',
-        authorityToWrite: 'all',
-        allowImage: true,
-        allowPoll: false,
-        allowRecruit: true,
-        isPublicWriter: true,
-      },
-    ],
-  };
-
-  return response;
+  try {
+    await wait(500);
+    return {boardList: mockBoardList};
+  } catch (error) {
+    return {boardList: []};
+  }
 }
+const mockBoardList: Board[] = [
+  {
+    id: 1,
+    name: '칭찬게시판',
+    authorityToWrite: 'all',
+    allowImage: false,
+    allowPoll: false,
+    allowRecruit: false,
+    isPublicWriter: true,
+  },
+  {
+    id: 2,
+    name: '설문게시판',
+    authorityToWrite: 'all',
+    allowImage: true,
+    allowPoll: true,
+    allowRecruit: false,
+    isPublicWriter: false,
+  },
+  {
+    id: 3,
+    name: '인원모집',
+    authorityToWrite: 'all',
+    allowImage: true,
+    allowPoll: false,
+    allowRecruit: true,
+    isPublicWriter: true,
+  },
+];
 
 /**
  * 게시판 정보를 받는 API\

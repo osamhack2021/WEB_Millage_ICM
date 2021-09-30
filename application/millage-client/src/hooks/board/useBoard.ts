@@ -4,8 +4,12 @@ import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 function useBoard() {
-  const boardList = useSelector( (state: RootState) => state.Board.boardList );
-  const curBoard = useSelector( (state: RootState) => state.Board.curBoard );
+  const boardListState = useSelector(
+      (state: RootState) => state.Board.boardListState,
+  );
+  const curBoardState = useSelector(
+      (state: RootState) => state.Board.curBoardState,
+  );
 
   const dispatch = useDispatch();
   const getBoardList = useCallback(() => {
@@ -16,8 +20,8 @@ function useBoard() {
   }, [dispatch]);
 
   return {
-    curBoard,
-    boardList,
+    curBoardState,
+    boardListState,
     getBoardList,
     getBoardById,
   };
