@@ -11,7 +11,7 @@ import Intro from '@pages/Intro';
 import MainPage from './MainPage';
 import DM from '@pages/DM';
 
-const Main = ({history}: RouteComponentProps) => {
+const Main = (props: RouteComponentProps) => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const session = user.session;
@@ -34,7 +34,7 @@ const Main = ({history}: RouteComponentProps) => {
     );
   } else {
     return (
-      <Intro />
+      <Intro {...props} />
     );
   }
 };

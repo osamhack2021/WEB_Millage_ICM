@@ -12,8 +12,7 @@ function App() {
     <>
       <Switch>
         <Route exact path='/login' component={SignIn} />
-        <Route exact path="/register"
-          component={()=><UnitList page="Signup"/>}/>
+        <Route exact path="/register" component={UnitList} />
         <Route exact path="/register/user" component={Signup} />
         <Route path='/' component={Main} />
       </Switch>

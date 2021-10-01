@@ -6,21 +6,15 @@ import CSS from 'csstype';
 import './unit.css';
 import {RouteComponentProps} from 'react-router-dom';
 
-interface UnitListProp {
-  page: string;
-}
-
-const UnitList:React.FC<UnitListProp> = (
-    {page},
-    {history}: RouteComponentProps,
-) => {
+export default function UnitList(props: RouteComponentProps) {
+  const page = props.location.pathname;
   let containerStyle: CSS.Properties = {
     height: '100%',
   };
-  if (page == 'Signup') {
+  if (page == '/register') {
     containerStyle = {
       margin: '50px auto 0 auto',
-      width: '640px',
+      width: '480px',
       height: '100%',
       border: '1px solid #e3e3e3',
       borderRadius: '20px',
@@ -32,6 +26,20 @@ const UnitList:React.FC<UnitListProp> = (
   const [unitList, setUnitList] = useState([]);
   const unit = useSelector((state: any) => state.unit);
   const units = unit.units;
+
+  const goRegisterUser = () => {
+    if (unitId != -1) {
+      props.history.push({
+        pathname: '/register/user',
+        state: {
+          unitId: unitId,
+        },
+      });
+    } else {
+      alert('부대를 선택해주세요!');
+    }
+  };
+
   useEffect(() => {
     dispatch(getUnitListAsync.request());
   }, [dispatch]);
@@ -52,14 +60,14 @@ const UnitList:React.FC<UnitListProp> = (
 
   const renderUnitList = () => {
     return unitList.map((u: UnitObject) => {
-      if (page=='Intro') {
+      if (page=='/') {
         return (
           <div className="unit">
             <span className="name">{u.name}</span>
             <span className="count">{u.count}명</span>
           </div>
         );
-      } else if (page=='Signup') {
+      } else if (page=='/register') {
         return (
           <a className="link" onClick={()=>{
             setKeyword(u.name);
@@ -74,16 +82,11 @@ const UnitList:React.FC<UnitListProp> = (
   };
 
   let button;
-  if (page=='Signup') {
+  if (page=='/register') {
     button = (
       <div className="nextButton">
         <button onClick={()=>{
-          history.push({
-            pathname: '/register/user',
-            state: {
-              unitId: unitId,
-            },
-          });
+          goRegisterUser();
         }}>다음</button>
       </div>
     );
@@ -109,6 +112,3 @@ const UnitList:React.FC<UnitListProp> = (
     </div>
   );
 };
-
-
-export default UnitList;
