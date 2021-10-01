@@ -4,14 +4,17 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import CSS from 'csstype';
 import './unit.css';
-import {RouteComponentProps} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
+import {REGISTER_PATH, ROOT_PATH} from '@constants';
 
-export default function UnitList(props: RouteComponentProps) {
-  const page = props.location.pathname;
+export default function UnitList() {
+  const location = useLocation();
+  const history = useHistory();
+  const page = location.pathname;
   let containerStyle: CSS.Properties = {
     height: '100%',
   };
-  if (page == '/register') {
+  if (page === REGISTER_PATH) {
     containerStyle = {
       margin: '50px auto 0 auto',
       width: '480px',
@@ -29,7 +32,7 @@ export default function UnitList(props: RouteComponentProps) {
 
   const goRegisterUser = () => {
     if (unitId != -1) {
-      props.history.push({
+      history.push({
         pathname: '/register/user',
         state: {
           unitId: unitId,
@@ -60,14 +63,14 @@ export default function UnitList(props: RouteComponentProps) {
 
   const renderUnitList = () => {
     return unitList.map((u: UnitObject) => {
-      if (page=='/') {
+      if (page===ROOT_PATH) {
         return (
           <div className="unit">
             <span className="name">{u.name}</span>
             <span className="count">{u.count}명</span>
           </div>
         );
-      } else if (page=='/register') {
+      } else if (page===REGISTER_PATH) {
         return (
           <a className="link" onClick={()=>{
             setKeyword(u.name);
@@ -82,7 +85,7 @@ export default function UnitList(props: RouteComponentProps) {
   };
 
   let button;
-  if (page=='/register') {
+  if (page===REGISTER_PATH) {
     button = (
       <div className="nextButton">
         <button onClick={()=>{
