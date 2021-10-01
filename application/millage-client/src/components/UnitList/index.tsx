@@ -52,7 +52,7 @@ export default function UnitList() {
   }, [unit]);
 
   useEffect(() => {
-    if (keyword == '') {
+    if (keyword === '') {
       setUnitList(units);
     } else {
       setUnitList(units.filter((unit: UnitObject) => {
@@ -60,6 +60,10 @@ export default function UnitList() {
       }));
     }
   }, [keyword]);
+
+  useEffect(() => {
+    setUnitList([]);
+  }, [unitId]);
 
   const renderUnitList = () => {
     return unitList.map((u: UnitObject) => {
