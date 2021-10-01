@@ -67,12 +67,18 @@ export async function apiGetBoardById(
 
 const mockUser: UserData = {
   id: 1,
-  username: 'test',
-  unitId: 1,
-  auth: 1,
+  username: 'TestUser',
+  unit: {
+    id: 1,
+    name: 'test',
+  },
+  role: {
+    id: 1,
+    role: 'admin',
+  },
   email: 'test@test.com',
   fullname: 'Test Test',
-  nickname: 'test',
+  nickname: 'TestUser',
   phonenumber: '010-0000-0000',
 };
 
