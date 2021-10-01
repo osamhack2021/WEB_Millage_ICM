@@ -10,6 +10,7 @@ import Schedule from '@pages/Schedule';
 import Intro from '@pages/Intro';
 import MainPage from './MainPage';
 import DM from '@pages/DM';
+import BoardViewPage from '@pages/boards/BoardView';
 
 const Main = (props: RouteComponentProps) => {
   const dispatch = useDispatch();
@@ -25,10 +26,11 @@ const Main = (props: RouteComponentProps) => {
         <Header />
         <Switch>
           <Route exact path='/' component={MainPage} />
-          <Route path='/create-board' component={CreateBoardPage} />
-          <Route path='/create' component={CreatePostPage} />
           <Route path='/schedule' component={Schedule} />
           <Route path='/dm' component={DM} />
+          <Route path='/create' component={CreatePostPage} />
+          <Route path='/create-board' component={CreateBoardPage} />
+          <Route path='/board/:boardId' component={BoardViewPage} />
         </Switch>
       </>
     );

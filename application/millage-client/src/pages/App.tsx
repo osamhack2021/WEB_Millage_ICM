@@ -4,9 +4,6 @@ import Footer from '@components/Footer';
 import SignIn from '@pages/SignIn';
 import Signup from '@pages/Signup';
 import Main from '@pages/Main';
-import CreatePostPage from '@pages/boards/CreatePost';
-import CreateBoardPage from '@pages/boards/CreateBoard';
-import BoardViewPage from '@pages/boards/BoardView';
 import './App.css';
 import UnitList from '@components/UnitList';
 
