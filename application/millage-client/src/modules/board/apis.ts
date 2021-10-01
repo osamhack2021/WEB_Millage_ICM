@@ -5,6 +5,7 @@ import {
   GetBoardListRes,
 } from './types';
 import {wait} from '@utils/timer';
+import {UserData} from '@modules/User/types';
 
 /**
  * 커뮤니티의 모든 게시판의 List를 요청하는 API\
@@ -64,6 +65,17 @@ export async function apiGetBoardById(
   }
 }
 
+const mockUser: UserData = {
+  id: 1,
+  username: 'test',
+  unitId: 1,
+  auth: 1,
+  email: 'test@test.com',
+  fullname: 'Test Test',
+  nickname: 'test',
+  phonenumber: '010-0000-0000',
+};
+
 const mockRes1: GetBoardByIdRes = {
   ok: true,
   board: {
@@ -74,7 +86,18 @@ const mockRes1: GetBoardByIdRes = {
     allowRecruit: true,
     allowImage: true,
     isPublicWriter: false,
-    postList: [],
+    postList: [
+      {
+        id: 1,
+        title: 'test1',
+        content: 'test',
+        created: new Date('2021-10-01T10:00:00'),
+        comments: [],
+        likeCount: 0,
+        postType: 'NORMAL',
+        writer: mockUser,
+      },
+    ],
   },
 };
 

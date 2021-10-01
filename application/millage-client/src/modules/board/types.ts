@@ -26,8 +26,8 @@ export type Post = {
     id: number;
     postType: PostType;
     title: string;
-    content: string;
-    imageURL: string;
+    content?: string;
+    imageURL?: string;
     writer: UserData;
     created: Date;
     likeCount: number;

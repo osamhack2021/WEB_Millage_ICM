@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {useBoard} from '@hooks/board';
 import {Link} from 'react-router-dom';
+import PostListItem from '@components/boards/PostListItem';
 
 type BoardViewParams = {
   boardId: string;
@@ -15,7 +16,6 @@ function BoardViewPage() {
   }, [boardId, getBoardById]);
 
   const {loading, data, error} = curBoardState;
-  console.log(data);
   const history = useHistory();
   if (error) {
     history.replace('/');
@@ -57,6 +57,13 @@ function BoardViewPage() {
                 글 생성
               </Link>
             }
+          </div>
+
+          {/* Post List Component */}
+          <div className='mt-8'>
+            {data.postList?.map(( post ) => (
+              <PostListItem post={post} />
+            ))}
           </div>
 
         </div>
