@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {RouteComponentProps} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 import Header from '@components/Header';
@@ -11,7 +10,7 @@ import Intro from '@pages/Intro';
 import MainPage from './MainPage';
 import DM from '@pages/DM';
 
-const Main = (props: RouteComponentProps) => {
+const Main = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const session = user.session;
@@ -34,7 +33,7 @@ const Main = (props: RouteComponentProps) => {
     );
   } else {
     return (
-      <Intro {...props} />
+      <Intro />
     );
   }
 };

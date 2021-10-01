@@ -9,14 +9,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {Link as RouterLink, RouteComponentProps} from 'react-router-dom';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import {UserLoginData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginAsync} from '@modules/User/actions';
 const theme = createTheme();
 
-export default function SignIn({history}: RouteComponentProps) {
+export default function SignIn() {
+  const history = useHistory();
   const {register, handleSubmit} = useForm<UserLoginData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);

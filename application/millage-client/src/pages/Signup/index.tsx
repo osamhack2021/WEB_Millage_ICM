@@ -9,21 +9,20 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {Link as RouterLink, RouteComponentProps} from 'react-router-dom';
+import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync} from '@modules/User/actions';
 import {UserState, UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {StaticContext} from 'react-router';
 const theme = createTheme();
 
 interface SignupState{
   unitId: number;
 }
 
-export default function Signup(
-    props: RouteComponentProps<undefined, StaticContext, SignupState>,
-) {
+export default function Signup() {
+  const location = useLocation<SignupState>();
+  const history = useHistory();
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
@@ -35,7 +34,7 @@ export default function Signup(
     if (e) {
       e.preventDefault();
     }
-    data.unitId = props.location.state.unitId;
+    data.unitId = location.state.unitId;
     data.roleId = 1;
     dispatch(createUserAsync.request(data));
   };
@@ -49,7 +48,7 @@ export default function Signup(
   useEffect(() => {
     if (responseState.result == 'registerSuccess') {
       alert('회원가입 성공');
-      props.history.push('/');
+      history.push('/');
     } else if (responseState.result == 'registerFail') {
       alert(responseState.message);
     } else if (responseState.result == 'registerError') {

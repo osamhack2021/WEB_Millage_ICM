@@ -4,10 +4,12 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import CSS from 'csstype';
 import './unit.css';
-import {RouteComponentProps} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 
-export default function UnitList(props: RouteComponentProps) {
-  const page = props.location.pathname;
+export default function UnitList() {
+  const location = useLocation();
+  const history = useHistory();
+  const page = location.pathname;
   let containerStyle: CSS.Properties = {
     height: '100%',
   };
@@ -29,7 +31,7 @@ export default function UnitList(props: RouteComponentProps) {
 
   const goRegisterUser = () => {
     if (unitId != -1) {
-      props.history.push({
+      history.push({
         pathname: '/register/user',
         state: {
           unitId: unitId,
