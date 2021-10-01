@@ -16,7 +16,14 @@ import {UserState, UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 const theme = createTheme();
 
-export default function SignUp({history}: RouteComponentProps) {
+interface SignUpProp {
+  unitId: number; // try not to use any.
+}
+
+const SignUp: React.FC<SignUpProp> = (
+    {unitId},
+    {history}: RouteComponentProps,
+) => {
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
@@ -27,7 +34,7 @@ export default function SignUp({history}: RouteComponentProps) {
     if (e) {
       e.preventDefault();
     }
-    data.unitId = 1;
+    data.unitId = unitId;
     data.roleId = 1;
     dispatch(createUserAsync.request(data));
   };
@@ -155,4 +162,6 @@ export default function SignUp({history}: RouteComponentProps) {
       </Container>
     </ThemeProvider>
   );
-}
+};
+
+export default SignUp;

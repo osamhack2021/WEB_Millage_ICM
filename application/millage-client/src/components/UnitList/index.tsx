@@ -2,10 +2,33 @@ import {getUnitListAsync} from '@modules/Unit/actions';
 import {UnitObject} from '@modules/Unit/types';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import CSS from 'csstype';
+import './unit.css';
+import {RouteComponentProps} from 'react-router-dom';
 
-function UnitList() {
+interface UnitListProp {
+  page: string;
+}
+
+const UnitList:React.FC<UnitListProp> = (
+    {page},
+    {history}: RouteComponentProps,
+) => {
+  let containerStyle: CSS.Properties = {
+    height: '100%',
+  };
+  if (page == 'Signup') {
+    containerStyle = {
+      margin: '50px auto 0 auto',
+      width: '640px',
+      height: '100%',
+      border: '1px solid #e3e3e3',
+      borderRadius: '20px',
+    };
+  }
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState('');
+  const [unitId, setUnitId] = useState(-1);
   const [unitList, setUnitList] = useState([]);
   const unit = useSelector((state: any) => state.unit);
   const units = unit.units;
@@ -29,16 +52,45 @@ function UnitList() {
 
   const renderUnitList = () => {
     return unitList.map((u: UnitObject) => {
-      return (
-        <div className="unit">
-          <span className="name">{u.name}</span>
-          <span className="count">{u.count}명</span>
-        </div>
-      );
+      if (page=='Intro') {
+        return (
+          <div className="unit">
+            <span className="name">{u.name}</span>
+            <span className="count">{u.count}명</span>
+          </div>
+        );
+      } else if (page=='Signup') {
+        return (
+          <a className="link" onClick={()=>{
+            setKeyword(u.name);
+            setUnitId(u.id);
+          }}>
+            <span className="name">{u.name}</span>
+            <span className="count">{u.count}명</span>
+          </a>
+        );
+      }
     });
   };
+
+  let button;
+  if (page=='Signup') {
+    button = (
+      <div className="nextButton">
+        <button onClick={()=>{
+          history.push({
+            pathname: '/register/user',
+            state: {
+              unitId: unitId,
+            },
+          });
+        }}>다음</button>
+      </div>
+    );
+  }
+  ;
   return (
-    <>
+    <div id="UnitListContainer" style={containerStyle}>
       <div className="search">
         <div className="searchText">
           <img src='img/searchUnitText.png'/>
@@ -53,9 +105,10 @@ function UnitList() {
       <div className="list">
         {renderUnitList()}
       </div>
-    </>
+      {button}
+    </div>
   );
-}
+};
 
 
 export default UnitList;

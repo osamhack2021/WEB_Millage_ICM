@@ -17,7 +17,7 @@ function Intro() {
       </section>
       <section className="rightbar">
         <Login />
-        <UnitList />
+        <UnitList page="Intro"/>
       </section>
     </div>
   );
