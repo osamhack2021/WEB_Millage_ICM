@@ -10,6 +10,14 @@ import Intro from '@pages/Intro';
 import MainPage from './MainPage';
 import DM from '@pages/DM';
 import BoardViewPage from '@pages/boards/BoardView';
+import {
+  BOARD_VIEW_PATH,
+  CREATE_BOARD_PATH,
+  CREATE_POST_PATH,
+  DM_PATH,
+  ROOT_PATH,
+  SCHEDULE_PATH,
+} from '@constants';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -24,12 +32,12 @@ const Main = () => {
       <>
         <Header />
         <Switch>
-          <Route exact path='/' component={MainPage} />
-          <Route path='/schedule' component={Schedule} />
-          <Route path='/dm' component={DM} />
-          <Route path='/create' component={CreatePostPage} />
-          <Route path='/create-board' component={CreateBoardPage} />
-          <Route path='/board/:boardId' component={BoardViewPage} />
+          <Route exact path={ROOT_PATH} component={MainPage} />
+          <Route path={SCHEDULE_PATH} component={Schedule} />
+          <Route path={DM_PATH} component={DM} />
+          <Route path={CREATE_POST_PATH} component={CreatePostPage} />
+          <Route path={CREATE_BOARD_PATH} component={CreateBoardPage} />
+          <Route path={BOARD_VIEW_PATH} component={BoardViewPage} />
         </Switch>
       </>
     );

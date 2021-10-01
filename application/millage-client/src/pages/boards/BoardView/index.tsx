@@ -3,6 +3,7 @@ import {useHistory, useParams} from 'react-router';
 import {useBoard} from '@hooks/board';
 import {Link} from 'react-router-dom';
 import PostListItem from '@components/boards/PostListItem';
+import {ROOT_PATH} from '@constants';
 
 type BoardViewParams = {
   boardId: string;
@@ -18,7 +19,7 @@ function BoardViewPage() {
   const {loading, data, error} = curBoardState;
   const history = useHistory();
   if (error) {
-    history.replace('/');
+    history.replace(ROOT_PATH);
   }
 
   return (
