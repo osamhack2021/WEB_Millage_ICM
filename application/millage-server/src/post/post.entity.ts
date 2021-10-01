@@ -7,10 +7,7 @@ export class PostEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    nullable: false,
-    default: () => PostType.NORMAL,
-  })
+  @Column({nullable: false, default: PostType.NORMAL})
   postType: PostType; // 게시글 타입 ('NORMAL', 'POLL', 'RECRUIT')
 
   @Column({type: 'text'})

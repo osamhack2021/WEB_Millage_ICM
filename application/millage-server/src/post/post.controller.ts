@@ -1,6 +1,7 @@
 import {Post, Body, Controller} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {PostService} from './post.service';
+import {PostRO} from './post.interface';
 import {CreatePostDto} from './dto';
 
 @ApiBearerAuth()

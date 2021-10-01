@@ -23,16 +23,16 @@ export class BoardEntity {
   @Column() // 권한 부여 관련 테이블 설계 필요
   auth: number;
 
-  @Column({type: 'boolean', default: () => false})
+  @Column({type: 'boolean', default: false})
   anonymous: boolean;
 
-  @Column({type: 'boolean', default: () => false})
+  @Column({type: 'boolean', default: false})
   pollAllowed: boolean;
 
-  @Column({type: 'boolean', default: () => false})
+  @Column({type: 'boolean', default: false})
   recruitAllowed: boolean;
 
-  @Column({type: 'boolean', default: () => false})
+  @Column({type: 'boolean', default: false})
   imageAllowed: boolean;
 
   @ManyToOne((type) => UnitEntity)
