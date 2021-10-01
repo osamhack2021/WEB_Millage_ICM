@@ -1,9 +1,10 @@
-import {Controller, Get, Req} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
-import {BoardListRO} from './board.interface';
+import {BoardListRO, BoardRO} from './board.interface';
 import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
+import {CreateBoardDto} from './dto';
 
 @ApiBearerAuth()
 @ApiTags('board')
@@ -31,6 +32,16 @@ export class BoardController {
         result: 'error',
         message: err,
       };
+    }
+  }
+
+  @Post('create')
+  async create(@Body() boardData: CreateBoardDto): Promise<BoardRO> {
+    try {
+      const resultObject = await this.boardService.create(boardData);
+      return resultObject;
+    } catch (err) {
+      return {result: 'fail', message: err};
     }
   }
 }
