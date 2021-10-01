@@ -34,7 +34,7 @@ export class UserService {
 
     if (user) {
       return {
-        result: 'registerfail',
+        result: 'fail',
         message: '이미 회원가입 된 유저입니다',
       };
     }
@@ -47,32 +47,13 @@ export class UserService {
     newUser.phonenumber = dto.phonenumber;
     newUser.fullname = dto.fullname;
     newUser.nickname = dto.nickname;
-
-    const unit = await this.unitRepository.findOne({
-      where: {
-        id: dto.unitId,
-      },
-    });
-    if (!unit) {
-      return {
-        result: 'registerfail',
-        message: '존재하지 않는 부대입니다',
-      };
-    }
-
-    const role = await this.userRoleRepository.findOne({
-      where: {
-        id: dto.roleId,
-      },
-    });
-
-    newUser.unit = unit;
-    newUser.role = role;
+    newUser.unitId = dto.unitId;
+    newUser.roleId = dto.roleId;
 
     const errors = await validate(newUser);
     if (errors.length > 0) {
       return {
-        result: 'registerfail',
+        result: 'fail',
         message: '값이 올바르지 않습니다',
       };
     } else {
@@ -84,7 +65,7 @@ export class UserService {
         };
       } else {
         return {
-          result: 'registerfail',
+          result: 'error',
           message: '알수없는 오류가 발생했습니다',
         };
       }

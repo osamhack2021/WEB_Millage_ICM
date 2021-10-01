@@ -55,6 +55,7 @@ export class UserEntity {
   })
   unitId: number;
 
+  @ManyToOne((type) => UnitEntity)
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
@@ -68,6 +69,7 @@ export class UserEntity {
   })
   roleId: number;
 
+  @ManyToOne((type) => UserRoleEntity)
   @JoinTable({
     name: 'role',
     joinColumn: {name: 'roleId', referencedColumnName: 'id'},

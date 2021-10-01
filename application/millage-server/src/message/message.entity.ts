@@ -37,4 +37,3 @@ export class MessageEntity {
     })
     receiver: UserEntity;
 }
-
