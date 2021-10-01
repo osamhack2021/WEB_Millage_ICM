@@ -2,8 +2,9 @@ import React from 'react';
 import Login from '@components/Login';
 import './intro.css';
 import UnitList from '@components/UnitList';
+import {RouteComponentProps} from 'react-router-dom';
 
-function Intro() {
+function Intro(props: RouteComponentProps) {
   return (
     <div id="introContainer">
       <section className="left">
@@ -17,7 +18,7 @@ function Intro() {
       </section>
       <section className="rightbar">
         <Login />
-        <UnitList page="Intro"/>
+        <UnitList {...props}/>
       </section>
     </div>
   );

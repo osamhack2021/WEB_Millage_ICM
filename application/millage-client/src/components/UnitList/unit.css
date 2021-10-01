@@ -9,6 +9,7 @@
 #UnitListContainer div.list{
     overflow-y: auto;
     flex: 1 1 85%;
+    border-bottom: 1px solid #e3e3e3;
 }
 
 #UnitListContainer .searchText{
@@ -41,6 +42,7 @@
     height: 50px;
     line-height: 50px;
     font-family: "맑은 고딕", "돋움", "Apple SD Gothic Neo", sans-serif;
+    border-bottom: 1px solid #e3e3e3;
 }
 
 #UnitListContainer .link{
@@ -71,12 +73,14 @@
 #UnitListContainer .nextButton {
     margin-left:auto;
     margin-right:auto;
-    width: 640px;
+    width: 100%;
     margin-top:20px;
+    margin-bottom:20px;
 }
 
 #UnitListContainer .nextButton button{
-    width: 100%;
+    display:block;
+    width: 70%;
     background-color: #10902C;
     color: #FFFFFF;
     font-family: "Roboto";
@@ -85,4 +89,6 @@
     border: 1px solid #e3e3e3;
     border-radius: 20px;
     height:40px;
+    margin-left:auto;
+    margin-right:auto;
 }

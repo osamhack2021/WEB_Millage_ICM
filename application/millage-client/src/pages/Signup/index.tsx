@@ -14,27 +14,28 @@ import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync} from '@modules/User/actions';
 import {UserState, UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {StaticContext} from 'react-router';
 const theme = createTheme();
 
-interface SignUpProp {
-  unitId: number; // try not to use any.
+interface SignupState{
+  unitId: number;
 }
 
-const SignUp: React.FC<SignUpProp> = (
-    {unitId},
-    {history}: RouteComponentProps,
-) => {
+export default function Signup(
+    props: RouteComponentProps<undefined, StaticContext, SignupState>,
+) {
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const [responseState, setResponseState] = useState<UserState>({
     result: '',
   });
+
   const onSubmit: SubmitHandler<UserSubmitData> = (data, e) => {
     if (e) {
       e.preventDefault();
     }
-    data.unitId = unitId;
+    data.unitId = props.location.state.unitId;
     data.roleId = 1;
     dispatch(createUserAsync.request(data));
   };
@@ -48,7 +49,7 @@ const SignUp: React.FC<SignUpProp> = (
   useEffect(() => {
     if (responseState.result == 'registerSuccess') {
       alert('회원가입 성공');
-      history.push('/');
+      props.history.push('/');
     } else if (responseState.result == 'registerFail') {
       alert(responseState.message);
     } else if (responseState.result == 'registerError') {
@@ -163,5 +164,3 @@ const SignUp: React.FC<SignUpProp> = (
     </ThemeProvider>
   );
 };
-
-export default SignUp;
