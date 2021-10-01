@@ -39,6 +39,7 @@ export class BoardEntity {
   @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
   unitId: number;
 
+  @ManyToOne((type) => UnitEntity)
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
