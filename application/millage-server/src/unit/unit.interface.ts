@@ -1,4 +1,5 @@
 export interface UnitInfo{
+    id: number;
     name: string;
     count: number;
 }

@@ -7,97 +7,40 @@
 }
 
 @media (max-width:641px)  { 
-    .left{
+    #introContainer .left{
         display:none;
     }
 }
 @media (min-width:961px)  {
-    .left{
+    #introContainer .left{
         flex: 1 1 80%;
         background-color: rgba(0,0,0,0.05);
     }
 }
 
-.rightbar{
+#introContainer .rightbar{
     display:flex;
     flex-direction: column;
     border-left: 1px solid #e3e3e3;
     flex: 1 1 20%;
 }
 
-.wrap{
+#introContainer .wrap{
     height:50%;
 }
 
-.wrap img{
+#introContainer .wrap img{
     margin:auto;
     padding-top:25vh;
 }
 
-.wrap2{
+#introContainer .wrap2{
     height:50%;
     background-color: #FFFFFF;
 }
-.wrap2 img{
+#introContainer .wrap2 img{
     margin-left:auto;
     margin-right:auto;
     margin-bottom: 30px;
     padding-top:30px;
-}
-
-div.search{
-    padding: 10px 5px;
-    flex: 1 1 15%;
-    height: 100px;
-    border-bottom: 1px solid #e3e3e3;
-}
-
-div.list{
-    overflow-y: auto;
-    flex: 1 1 100%;
-    height: 65%;
-    border-bottom: 1px solid #e3e3e3;
-}
-
-.searchText{
-    font-family: 'Roboto';
-    font-size: 14px;
-    font-weight: 600;
-    color: rgba(0,0,0);
-}
-
-.searchText img{
-    margin-top:5px;
-    margin-left:10px;
-}
-
-input#searchUnit{
-    margin-top:10px;
-    width: 100%;
-    background-color: rgba(0,0,0,0.05);
-    border: 1px solid rgba(0,0,0,0.2);
-    color: rgba(0,0,0,0.5);
-    height: 40px;
-    text-indent:10px;
-    box-shadow: 0 5px 4px rgba(0,0,0,0.25);
-}
-
-.unit{
-    padding-left:15px;
-    padding-right:15px;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    border-bottom: 1px solid #e3e3e3;
-    font-family: "맑은 고딕", "돋움", "Apple SD Gothic Neo", sans-serif;
-}
-.count{
-    float:right;
-    color: #a6a6a6;
-    font-size: 12px;
-}
-
-.name{
-    font-size: 14px;
-    font-weight: normal;
 }
