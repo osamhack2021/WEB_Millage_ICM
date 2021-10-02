@@ -3,6 +3,7 @@ import {
   GetBoardByIdReq,
   GetBoardByIdRes,
   GetBoardListRes,
+  Post,
 } from './types';
 import {wait} from '@utils/timer';
 import {UserData} from '@modules/User/types';
@@ -55,11 +56,19 @@ const mockBoardList: Board[] = [
  * Board View 페이지에서 호출
  */
 export async function apiGetBoardById(
-    {boardId}: GetBoardByIdReq,
+    {boardId, page}: GetBoardByIdReq,
 ): Promise<GetBoardByIdRes> {
   try {
     await wait(500);
-    return mockResponses.find( (r) => r.board?.id === boardId ) || mockResFail;
+    // return mockResponses.find(
+    //   (r) => r.board?.id === boardId
+    // ) || mockResFail;
+    switch (page) {
+      case 1: return mockRes11;
+      case 2: return mockRes12;
+      case 3: return mockRes13;
+      default: return mockResFail;
+    }
   } catch (error: any) {
     return {ok: false, errorMessage: error};
   }
@@ -82,7 +91,18 @@ const mockUser: UserData = {
   phonenumber: '010-0000-0000',
 };
 
-const mockRes1: GetBoardByIdRes = {
+const mockPost1: Post = {
+  id: 1,
+  title: 'test1',
+  content: 'test',
+  created: new Date('2021-10-01T10:00:00'),
+  comments: [],
+  likeCount: 0,
+  postType: 'NORMAL',
+  writer: mockUser,
+};
+
+const mockRes11: GetBoardByIdRes = {
   ok: true,
   board: {
     id: 1,
@@ -92,54 +112,99 @@ const mockRes1: GetBoardByIdRes = {
     allowRecruit: true,
     allowImage: true,
     isPublicWriter: false,
-    postList: [
-      {
-        id: 1,
-        title: 'test1',
-        content: 'test',
-        created: new Date('2021-10-01T10:00:00'),
-        comments: [],
-        likeCount: 0,
-        postType: 'NORMAL',
-        writer: mockUser,
-      },
-    ],
+    posts: {
+      curPage: 1,
+      totalCounts: 12,
+      totalPages: 3,
+      results: [
+        mockPost1,
+        mockPost1,
+        mockPost1,
+        mockPost1,
+        mockPost1,
+      ],
+    },
   },
 };
 
-const mockRes2: GetBoardByIdRes = {
+const mockRes12: GetBoardByIdRes = {
   ok: true,
   board: {
-    id: 2,
-    name: '설문게시판',
+    id: 1,
+    name: '자유게시판',
     authorityToWrite: 'all',
     allowPoll: true,
-    allowRecruit: false,
+    allowRecruit: true,
     allowImage: true,
-    isPublicWriter: true,
-    postList: [],
+    isPublicWriter: false,
+    posts: {
+      curPage: 2,
+      totalCounts: 12,
+      totalPages: 3,
+      results: [
+        mockPost1,
+        mockPost1,
+        mockPost1,
+        mockPost1,
+        mockPost1,
+      ],
+    },
   },
 };
 
-const mockRes3: GetBoardByIdRes = {
+const mockRes13: GetBoardByIdRes = {
   ok: true,
   board: {
-    id: 3,
-    name: '공지게시판',
-    authorityToWrite: 'admin',
+    id: 1,
+    name: '자유게시판',
+    authorityToWrite: 'all',
     allowPoll: true,
-    allowRecruit: false,
+    allowRecruit: true,
     allowImage: true,
-    isPublicWriter: true,
-    postList: [],
+    isPublicWriter: false,
+    posts: {
+      curPage: 3,
+      totalCounts: 12,
+      totalPages: 3,
+      results: [
+        mockPost1,
+        mockPost1,
+      ],
+    },
   },
 };
+
+// const mockRes2: GetBoardByIdRes = {
+//   ok: true,
+//   board: {
+//     id: 2,
+//     name: '설문게시판',
+//     authorityToWrite: 'all',
+//     allowPoll: true,
+//     allowRecruit: false,
+//     allowImage: true,
+//     isPublicWriter: true,
+//   },
+// };
+
+// const mockRes3: GetBoardByIdRes = {
+//   ok: true,
+//   board: {
+//     id: 3,
+//     name: '공지게시판',
+//     authorityToWrite: 'admin',
+//     allowPoll: true,
+//     allowRecruit: false,
+//     allowImage: true,
+//     isPublicWriter: true,
+//   },
+// };
 
 const mockResFail: GetBoardByIdRes = {
   ok: false,
   errorMessage: 'Access Forbidden',
 };
 
-const mockResponses: GetBoardByIdRes[] = [
-  mockRes1, mockRes2, mockRes3, mockResFail,
-];
+// const mockResponses: GetBoardByIdRes[] = [
+//   mockRes11, mockRes2, mockRes3, mockResFail,
+// ];
