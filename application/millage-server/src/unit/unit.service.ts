@@ -13,6 +13,6 @@ export class UnitService {
 
 
   async getUnitList() : Promise<UnitInfo[]> {
-    return await this.unitRepository.query('SELECT unit.id, unit.name, COUNT(*) as count FROM unit INNER JOIN user ON user.unitId=unit.id GROUP BY unit.name');
+    return await this.unitRepository.query('SELECT unit.id, unit.name, COUNT(*) as count FROM unit INNER JOIN user ON user.unitId=unit.id GROUP BY unit.name order by count desc');
   }
 }

@@ -12,7 +12,7 @@ export default function UnitList() {
   const history = useHistory();
   const page = location.pathname;
   let containerStyle: CSS.Properties = {
-    height: '100%',
+    flex: '0 1 70%',
   };
   if (page === REGISTER_PATH) {
     containerStyle = {
