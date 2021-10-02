@@ -15,6 +15,7 @@
     #introContainer .left{
         flex: 1 1 80%;
         background-color: rgba(0,0,0,0.05);
+        height:100%;
     }
 }
 
@@ -23,6 +24,7 @@
     flex-direction: column;
     border-left: 1px solid #e3e3e3;
     flex: 1 1 20%;
+    height:100%;
 }
 
 #introContainer .wrap{
