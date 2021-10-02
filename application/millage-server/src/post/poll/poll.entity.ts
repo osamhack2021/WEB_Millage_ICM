@@ -1,6 +1,6 @@
 import {Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {PostEntity} from '../post.entity';
-import {PollItemEntity} from './poll_item/poll_item.entity';
+import {PollItemEntity} from './poll_item.entity';
 
 @Entity('poll')
 export class PollEntity {
@@ -11,7 +11,7 @@ export class PollEntity {
   @JoinColumn({name: 'postId', referencedColumnName: 'id'})
   postId: number;
 
-  @OneToMany(() => PollItemEntity, (pollItem) => pollItem.poll)
+  @OneToMany(() => PollItemEntity, (pollItem) => pollItem.pollId)
   pollItems: PollItemEntity[];
 }
 

@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
+import {PollEntity} from './poll/poll.entity';
 import {PostRO} from './post.interface';
 import {CreatePostDto} from './dto';
 

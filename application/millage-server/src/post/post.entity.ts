@@ -8,7 +8,7 @@ export class PostEntity {
   id: number;
 
   @Column({nullable: false, default: PostType.NORMAL})
-  postType: PostType; // 게시글 타입 ('NORMAL', 'POLL', 'RECRUIT')
+  postType: PostType;
 
   @Column({type: 'text'})
   title: string;
