@@ -1,4 +1,4 @@
-import {Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {PollEntity} from './poll.entity';
 import {UserPollEntity} from './user_poll.entity';
 
@@ -6,6 +6,9 @@ import {UserPollEntity} from './user_poll.entity';
 export class PollItemEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({type: 'text', nullable: false})
+  description: string;
 
   @ManyToOne(() => PollEntity, (poll) => poll.pollItems)
   @JoinColumn({name: 'pollId', referencedColumnName: 'id'})
