@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {useBoard} from '@hooks/board';
 import {Link} from 'react-router-dom';
-import PostListItem from '@components/boards/PostListItem';
 import {ROOT_PATH} from '@constants';
+import PostListBox from '@components/boards/PostListBox';
 
 type BoardViewParams = {
   boardId: string;
@@ -12,8 +12,20 @@ type BoardViewParams = {
 function BoardViewPage() {
   const {boardId} = useParams<BoardViewParams>();
   const {curBoardState, getBoardById} = useBoard();
+
+  const paginationFunc = useCallback(
+      (page: number) => getBoardById({
+        boardId: +boardId,
+        page,
+      }),
+      [boardId, getBoardById],
+  );
+
   useEffect(() => {
-    getBoardById(+boardId);
+    getBoardById({
+      boardId: +boardId,
+      page: 1,
+    });
   }, [boardId, getBoardById]);
 
   const {loading, data, error} = curBoardState;
@@ -22,9 +34,15 @@ function BoardViewPage() {
     history.replace(ROOT_PATH);
   }
 
-  return (
-    !loading && data ?
+  if (!data || loading) {
+    return (
+      <div>
+        loading...
+      </div>
+    );
+  }
 
+  return (
     <div
       className='max-w-screen-2xl py-4 mx-auto
       sm:px-8 sm:py-8'
@@ -61,11 +79,11 @@ function BoardViewPage() {
           </div>
 
           {/* Post List Component */}
-          <div className='mt-8'>
-            {data.postList?.map(( post ) => (
-              <PostListItem post={post} />
-            ))}
-          </div>
+          { data.posts &&
+            <PostListBox
+              posts={data.posts}
+              paginationFunc={paginationFunc}
+            /> }
 
         </div>
 
@@ -78,10 +96,6 @@ function BoardViewPage() {
         </div>
 
       </div>
-    </div>:
-
-    <div>
-      loading...
     </div>
   );
 }

@@ -14,7 +14,10 @@ const PostListItem: React.FC<Props> = ({post}) => {
   return (
     <div
       key={post.id}
-      className='ring-1 ring-gray-500 p-4'
+      className='border border-gray-500 p-4'
+      style={{
+        marginTop: '-1px',
+      }}
     >
       <h3 className='text-xl' >{post.title}</h3>
       <p className='text-base text-gray-400' >{post.content}</p>
