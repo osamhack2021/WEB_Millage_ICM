@@ -1,4 +1,4 @@
-import {BoardEntity} from 'src/board/board.entity';
+import {BoardEntity} from '../board/board.entity';
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from 'typeorm';
 import {PostType} from './post.interface';
 

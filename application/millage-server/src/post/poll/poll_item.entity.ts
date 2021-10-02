@@ -11,7 +11,7 @@ export class PollItemEntity {
   @JoinColumn({name: 'pollId', referencedColumnName: 'id'})
   pollId: number;
 
-  @OneToMany(() => UserPollEntity, (userPoll) => userPoll.polls)
+  @OneToMany(() => UserPollEntity, (userPoll) => userPoll.pollItemIds)
   @JoinTable({
     name: 'userPoll',
     joinColumn: {

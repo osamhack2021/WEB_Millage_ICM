@@ -1,6 +1,6 @@
 import {Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn} from 'typeorm';
 import {PollItemEntity} from './poll_item.entity';
-import {UserEntity} from 'src/user/user.entity';
+import {UserEntity} from '../../user/user.entity';
 
 @Entity('userPoll')
 export class UserPollEntity {
@@ -9,7 +9,7 @@ export class UserPollEntity {
 
   @ManyToOne(() => PollItemEntity, (pollItem) => pollItem.userPolls)
   @JoinColumn({name: 'pollItemId', referencedColumnName: 'id'})
-  pollItemId: number;
+  pollItemIds: number;
 
   @ManyToOne(() => UserEntity, (user) => user.userPolls)
   @JoinColumn({name: 'userId', referencedColumnName: 'id'})
