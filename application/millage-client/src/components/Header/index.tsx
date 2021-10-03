@@ -3,15 +3,20 @@ import {useSelector} from 'react-redux';
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import './header.css';
 
 function Header() {
+  const history = useHistory();
   const user = useSelector((state: any) => state.user);
   const [pageState, setPageState] = useState('board');
+  const goMain = () => {
+    history.push('/');
+  };
+
   return (
     <header className="header">
-      <div className="logo">
+      <div className="logo" onClick={()=>goMain()}>
         <img src='img/logo.png'/>
         <div className="unitNameContainer">
           <div className="millage">
