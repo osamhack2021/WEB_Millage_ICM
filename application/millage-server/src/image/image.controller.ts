@@ -1,5 +1,6 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import {Body, Controller, Post} from '@nestjs/common';
+import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {Result} from 'src/common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('image')
@@ -14,7 +15,7 @@ export class ImageController {
       return uploadMultipleImagesRO;
     } catch (err) {
       return {
-        result: 'error',
+        result: Result.FAIL,
         message: err,
       };
     }

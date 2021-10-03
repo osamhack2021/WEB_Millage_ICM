@@ -8,6 +8,7 @@ import {validate} from 'class-validator';
 import * as argon2 from 'argon2';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserRO} from './user.interface';
+import {Result} from '../common/common.interface';
 
 
 @Injectable()
@@ -34,7 +35,7 @@ export class UserService {
 
     if (user) {
       return {
-        result: 'fail',
+        result: Result.FAIL,
         message: '이미 회원가입 된 유저입니다',
       };
     }
@@ -53,19 +54,19 @@ export class UserService {
     const errors = await validate(newUser);
     if (errors.length > 0) {
       return {
-        result: 'fail',
+        result: Result.FAIL,
         message: '값이 올바르지 않습니다',
       };
     } else {
       const savedUser = await this.userRepository.save(newUser);
       if (savedUser) {
         return {
-          result: 'success',
+          result: Result.SUCCESS,
           session: this.buildUserRO(savedUser),
         };
       } else {
         return {
-          result: 'error',
+          result: Result.ERROR,
           message: '알수없는 오류가 발생했습니다',
         };
       }

@@ -1,4 +1,11 @@
+/* eslint-disable no-unused-vars */
+export enum Result {
+    SUCCESS = 'success',
+    FAIL = 'fail',
+    ERROR = 'error',
+}
+
 export interface ResultObject {
-    result: string;
+    result: Result;
     message?: string;
 }

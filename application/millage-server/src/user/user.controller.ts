@@ -7,6 +7,7 @@ import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
+import {Result} from 'src/common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('user')
@@ -18,12 +19,12 @@ export class UserController {
   async getSession(@Req() request : Request) : Promise<UserRO> {
     if (request.session && request.session.user) {
       return {
-        result: 'success',
+        result: Result.SUCCESS,
         session: request.session.user,
       };
     } else {
       return {
-        result: 'fail',
+        result: Result.FAIL,
       };
     }
   }
@@ -37,7 +38,7 @@ export class UserController {
     });
     if (!_user) {
       return {
-        result: 'fail',
+        result: Result.FAIL,
       };
     }
 
@@ -45,7 +46,7 @@ export class UserController {
     const user = {id, username, email, phonenumber, fullname, nickname, unit, role};
     request.session.user = user;
     return {
-      result: 'success',
+      result: Result.SUCCESS,
     };
   }
 
@@ -58,7 +59,7 @@ export class UserController {
       return user;
     } catch (err) {
       return {
-        result: 'error',
+        result: Result.SUCCESS,
         message: err,
       };
     }
