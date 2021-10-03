@@ -1,3 +1,4 @@
+import {ResultObject} from 'src/common/common.interface';
 import {UnitEntity} from 'src/unit/unit.entity';
 import {UserRoleEntity} from 'src/user_role/user_role.entity';
 
@@ -12,12 +13,7 @@ export interface UserData {
   role: UserRoleEntity;
 }
 
-export interface UserRO {
-  result: string;
+export interface UserRO extends ResultObject {
   session?: UserData;
-  message?: string;
 }
 
-export interface DefaultRO {
-  result: string;
-}
