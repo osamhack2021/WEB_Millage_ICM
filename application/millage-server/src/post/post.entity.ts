@@ -2,6 +2,7 @@ import {BoardEntity} from '../board/board.entity';
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
 import {PostType} from './post.interface';
 import {PollItemEntity} from './poll/poll_item.entity';
+import {ImageEntity} from '../image/image.entity';
 
 @Entity('post')
 export class PostEntity {
@@ -34,4 +35,7 @@ export class PostEntity {
 
   @OneToMany(() => PollItemEntity, (pollItem) => pollItem.postId)
   pollItems: PollItemEntity[];
+
+  @OneToMany(() => ImageEntity, (image) => image.postId)
+  images: ImageEntity[];
 }

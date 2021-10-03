@@ -1,4 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {Role} from './user_role.interface';
 
 
 @Entity('user_role')
@@ -10,5 +11,5 @@ export class UserRoleEntity {
     unique: true,
     nullable: false,
   })
-  role: string;
+  role: Role;
 }

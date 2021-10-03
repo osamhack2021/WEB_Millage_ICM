@@ -38,7 +38,7 @@ export class PostService {
     const {pollList} = dto;
     try {
       const savedPost: PostEntity = await this.postRepository.save(newPost);
-      if (savedPost.postType == PostType.POLL && pollList.length !== 0) {
+      if (savedPost.postType === PostType.POLL) {
         await this.createPoll(savedPost.id, pollList);
       }
     } catch (err) {
