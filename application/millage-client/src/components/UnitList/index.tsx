@@ -84,7 +84,7 @@ export default function UnitList() {
     return unitList.map((u: UnitObject) => {
       if (page===ROOT_PATH) {
         return (
-          <div className="unit">
+          <div className="unit" key={u.id}>
             <span className="name">{u.name}</span>
             <span className="count">{u.count}명</span>
           </div>
