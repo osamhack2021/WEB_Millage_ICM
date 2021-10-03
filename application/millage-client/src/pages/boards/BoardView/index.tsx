@@ -1,19 +1,13 @@
 import React, {useCallback, useEffect} from 'react';
-import {useHistory, useLocation, useParams} from 'react-router';
-import {useBoard} from '@hooks/board';
+import {useHistory} from 'react-router';
+import {useBoard, useBoardViewPath} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
 import PostListBox from '@components/boards/PostListBox';
 import BoardHeader from '@components/boards/BoardHeader';
-import queryString from 'query-string';
 
-type BoardViewParams = {
-  boardId: string;
-}
 
 function BoardViewPage() {
-  const {boardId} = useParams<BoardViewParams>();
-  const {search} = useLocation();
-  const {query} = queryString.parse(search);
+  const {query, boardId} = useBoardViewPath();
   const {curBoardState, getBoardById} = useBoard();
 
   const getBoardWithPage = useCallback(

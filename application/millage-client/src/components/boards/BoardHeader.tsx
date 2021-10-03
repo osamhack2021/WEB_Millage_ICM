@@ -1,24 +1,19 @@
 import React from 'react';
 import {Board} from '@modules/board/types';
 import {Link} from 'react-router-dom';
-import {useHistory, useLocation, useParams} from 'react-router';
+import {useHistory} from 'react-router';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import queryString from 'query-string';
 import {BOARD_VIEW_PATH} from '@constants';
+import {useBoardViewPath} from '@hooks/board';
 
 type Props = Pick<Board, 'authorityToWrite'>;
-type BoardViewParams = {
-  boardId: string;
-}
 type SearchInput = {
   query: string;
 }
 
 const BoardHeader: React.FC<Props> = ({authorityToWrite}) => {
   const history = useHistory();
-  const {boardId} = useParams<BoardViewParams>();
-  const {search} = useLocation();
-  const {query} = queryString.parse(search);
+  const {query, boardId} = useBoardViewPath();
 
   const {register, handleSubmit} = useForm<SearchInput>({
     defaultValues: {
