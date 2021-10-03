@@ -6,13 +6,6 @@
     height: 100px;
 }
 
-#UnitListContainer div.list{
-    overflow-y: auto;
-    flex: 1 1 85%;
-    border-bottom: 1px solid #e3e3e3;
-    height: 520px;
-}
-
 #UnitListContainer .searchText{
     font-family: 'Roboto';
     font-size: 14px;
