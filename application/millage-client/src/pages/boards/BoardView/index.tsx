@@ -7,7 +7,7 @@ import BoardHeader from '@components/boards/BoardHeader';
 
 
 function BoardViewPage() {
-  const {query, boardId} = useBoardViewPath();
+  const {boardId, query, prevQuery} = useBoardViewPath();
   const {curBoardState, getBoardById} = useBoard();
 
   const getBoardWithPage = useCallback(
@@ -29,6 +29,9 @@ function BoardViewPage() {
   );
 
   useEffect(() => {
+    if (prevQuery === undefined && query === '') {
+      return;
+    }
     getBoardWithPage(1);
   }, [boardId, getBoardById, query]);
 
