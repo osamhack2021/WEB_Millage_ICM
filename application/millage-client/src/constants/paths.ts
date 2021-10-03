@@ -8,4 +8,5 @@ export const SCHEDULE_PATH = '/schedule';
 export const DM_PATH = '/dm';
 export const CREATE_POST_PATH = '/create';
 export const CREATE_BOARD_PATH = '/create-board';
-export const BOARD_VIEW_PATH = '/board/:boardId';
+export const BOARD_VIEW_PATH = '/board';
+export const BOARD_VIEW_PATH_WITH_PARAM = '/board/:boardId';
