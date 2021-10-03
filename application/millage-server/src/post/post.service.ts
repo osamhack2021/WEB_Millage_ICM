@@ -5,6 +5,7 @@ import {PostEntity} from './post.entity';
 import {PostRO, PostType} from './post.interface';
 import {CreatePostDto} from './dto';
 import {PollItemEntity} from './poll/poll_item.entity';
+import {Result} from 'src/common/common.interface';
 
 @Injectable()
 export class PostService {
@@ -38,12 +39,16 @@ export class PostService {
     const {pollList} = dto;
     try {
       const savedPost: PostEntity = await this.postRepository.save(newPost);
-      if (savedPost.postType == PostType.POLL && pollList.length !== 0) {
+      if (savedPost.postType === PostType.POLL) {
         await this.createPoll(savedPost.id, pollList);
       }
+      return {
+        result: Result.SUCCESS,
+        post: savedPost,
+      };
     } catch (err) {
       return {
-        result: 'error',
+        result: Result.FAIL,
         message: err,
       };
     }

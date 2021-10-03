@@ -16,8 +16,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "types": ["jest"]
+    "noFallthroughCasesInSwitch": false
   },
   "include": [
     "src/**/*"

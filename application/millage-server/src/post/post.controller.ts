@@ -3,6 +3,7 @@ import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {PostService} from './post.service';
 import {PostRO} from './post.interface';
 import {CreatePostDto} from './dto';
+import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('post')
@@ -17,7 +18,7 @@ export class PostController {
       return postRO;
     } catch (err) {
       return {
-        result: 'error',
+        result: Result.FAIL,
         message: err,
       };
     }
