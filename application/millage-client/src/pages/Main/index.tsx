@@ -11,7 +11,7 @@ import MainPage from './MainPage';
 import DM from '@pages/DM';
 import BoardViewPage from '@pages/boards/BoardView';
 import {
-  BOARD_VIEW_PATH,
+  BOARD_VIEW_PATH_WITH_PARAM,
   CREATE_BOARD_PATH,
   CREATE_POST_PATH,
   DM_PATH,
@@ -37,7 +37,7 @@ const Main = () => {
           <Route path={DM_PATH} component={DM} />
           <Route path={CREATE_POST_PATH} component={CreatePostPage} />
           <Route path={CREATE_BOARD_PATH} component={CreateBoardPage} />
-          <Route path={BOARD_VIEW_PATH} component={BoardViewPage} />
+          <Route path={BOARD_VIEW_PATH_WITH_PARAM} component={BoardViewPage} />
         </Switch>
       </>
     );

@@ -3,6 +3,7 @@ import {ActionType} from 'typesafe-actions';
 import {NORMAL, POLL, RECRUIT} from '@constants';
 import {UserData} from '@modules/User/types';
 import {AsyncState} from '@utils/reducerUtils';
+import {PaginationResults} from '@utils/commonTypes';
 
 /* Types of Board */
 export type Board = {
@@ -13,7 +14,7 @@ export type Board = {
     allowImage: boolean;
     allowPoll: boolean;
     allowRecruit: boolean;
-    postList?: Post[];
+    posts?: PaginationResults<Post>;
 }
 
 /* Types of Post */
@@ -85,6 +86,8 @@ export type GetBoardByIdRes = {
 
 export type GetBoardByIdReq = {
     boardId: number;
+    page: number;
+    search?: string;
 }
 
 
