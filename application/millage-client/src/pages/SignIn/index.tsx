@@ -1,20 +1,12 @@
 import React, {useEffect} from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import {UserLoginData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useSelector, useDispatch} from 'react-redux';
 import {loginAsync} from '@modules/User/actions';
-const theme = createTheme();
+import './signin.css';
+import 'typeface-roboto';
+import 'typeface-inter';
 
 export default function SignIn() {
   const history = useHistory();
@@ -31,78 +23,43 @@ export default function SignIn() {
   };
 
   useEffect(()=>{
-    if (user.result == 'success') {
+    if (user.result === 'success') {
       history.push('/');
     }
   }, [user]);
 
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+    <div id="SignInContainer">
+      <div id="SignInWrap">
+        <div className="logo">
           <img src='img/logo.png'/>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <Box component="form" noValidate
-            onSubmit={handleSubmit(onSubmit)} sx={{mt: 1}}>
-            <TextField
-              {...register('username', {required: 'Username is Required'})}
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoFocus
-            />
-            <TextField
-              {...register('password', {required: 'Password is Required'})}
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{mt: 3, mb: 2}}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Button component={RouterLink} to={'#'}>
-                  'Forgot Password?'
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button component={RouterLink} to={'/register'}>
-                  'Don\'t have an account? Sign Up'
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+          <span className="text">
+            슬기로운 병영생활&nbsp;
+            <span className="bold">
+              밀리지
+            </span>
+          </span>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input className="block" placeholder="아이디"
+            type="text"
+            {...register('username', {required: 'Username is Required'})} />
+          <input className="block" placeholder="비밀번호"
+            type="password"
+            {...register('password', {required: 'Password is Required'})} />
+          <button className="loginButton block" type="submit">로그인</button>
+        </form>
+        <div className="block">
+          <RouterLink className="right"
+            to="/findpassword">아이디/비밀번호 찾기</RouterLink>
+        </div>
+        <div className="center block">
+          <span className="lighter">밀리지에 처음이신가요?</span>
+          <RouterLink
+            className="registerLink" to = "/register">회원가입</RouterLink>
+        </div>
+      </div>
+    </div>
   );
 }
