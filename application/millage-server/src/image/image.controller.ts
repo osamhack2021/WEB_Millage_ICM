@@ -11,8 +11,11 @@ export class ImageController {
   @Post('uploadMultipleImages')
   async uploadMultipleImages(@Body() dto: UploadMultipleImagesDto): Promise<UploadMultipleImagesRO> {
     try {
-      const uploadMultipleImagesRO = await this.imageService.uploadMultipleImages(dto);
-      return uploadMultipleImagesRO;
+      const imageURLs = await this.imageService.uploadMultipleImages(dto);
+      return {
+        result: Result.SUCCESS,
+        urls: imageURLs,
+      };
     } catch (err) {
       return {
         result: Result.FAIL,
