@@ -1,6 +1,10 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Controller, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {Result} from 'src/common/common.interface';
+import {Result} from '../common/common.interface';
+import {ImageService} from './image.service';
+import {UploadMultipleImagesDto} from './dto';
+import {UploadMultipleImagesRO} from './image.interface';
+import {FilesInterceptor} from '@nestjs/platform-express';
 
 @ApiBearerAuth()
 @ApiTags('image')
@@ -9,7 +13,8 @@ export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
   @Post('uploadMultipleImages')
-  async uploadMultipleImages(@Body() dto: UploadMultipleImagesDto): Promise<UploadMultipleImagesRO> {
+  @UseInterceptors(FilesInterceptor('files'))
+  async uploadMultipleImages(@UploadedFiles() files: Array<Express.Multer.File>): Promise<UploadMultipleImagesRO> {
     try {
       const imageURLs = await this.imageService.uploadMultipleImages(dto);
       return {

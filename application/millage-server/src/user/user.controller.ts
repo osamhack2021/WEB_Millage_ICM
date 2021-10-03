@@ -7,7 +7,7 @@ import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
-import {Result} from 'src/common/common.interface';
+import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('user')

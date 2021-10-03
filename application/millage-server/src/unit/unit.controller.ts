@@ -3,6 +3,7 @@ import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {UnitInfo, UnitListRO} from './unit.interface';
 import {UnitService} from './unit.service';
 import {Request} from 'express';
+import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('unit')
@@ -15,12 +16,12 @@ export class UnitController {
     try {
       const list: UnitInfo[] = await this.unitService.getUnitList();
       return {
-        result: 'success',
+        result: Result.SUCCESS,
         units: list,
       };
     } catch (err) {
       return {
-        result: 'error',
+        result: Result.ERROR,
         message: err,
       };
     }

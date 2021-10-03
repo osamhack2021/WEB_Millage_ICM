@@ -1,4 +1,4 @@
-import {PostEntity} from 'src/post/post.entity';
+import {PostEntity} from '../post/post.entity';
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity({name: 'image'})
