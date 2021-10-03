@@ -1,6 +1,7 @@
 import {BoardEntity} from '../board/board.entity';
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
 import {PostType} from './post.interface';
+import {PollItemEntity} from './poll/poll_item.entity';
 
 @Entity('post')
 export class PostEntity {
@@ -27,7 +28,10 @@ export class PostEntity {
   })
   createdAt: string;
 
-  @ManyToOne((type) => BoardEntity)
+  @ManyToOne(() => BoardEntity)
   @JoinColumn({name: 'boardId', referencedColumnName: 'id'})
   boardId: number;
+
+  @OneToMany(() => PollItemEntity, (pollItem) => pollItem.postId)
+  pollItems: PollItemEntity[];
 }

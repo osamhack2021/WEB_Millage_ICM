@@ -1,5 +1,5 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
-import {PollEntity} from './poll.entity';
+import {PostEntity} from '../post.entity';
 import {UserPollEntity} from './user_poll.entity';
 
 @Entity('pollItem')
@@ -10,9 +10,9 @@ export class PollItemEntity {
   @Column({type: 'text', nullable: false})
   description: string;
 
-  @ManyToOne(() => PollEntity, (poll) => poll.pollItems)
-  @JoinColumn({name: 'pollId', referencedColumnName: 'id'})
-  pollId: number;
+  @ManyToOne(() => PostEntity, (post) => post.pollItems)
+  @JoinColumn({name: 'postId', referencedColumnName: 'id'})
+  postId: number;
 
   @OneToMany(() => UserPollEntity, (userPoll) => userPoll.pollItemIds)
   @JoinTable({
