@@ -14,6 +14,13 @@ export default function UnitList() {
   let containerStyle: CSS.Properties = {
     flex: '0 1 70%',
   };
+
+  let unitListStyle: CSS.Properties = {
+    overflowY: 'auto',
+    flex: '1 1 85%',
+    borderBottom: '1px solid #e3e3e3',
+    height: '520px',
+  };
   if (page === REGISTER_PATH) {
     containerStyle = {
       margin: '50px auto 0 auto',
@@ -22,7 +29,15 @@ export default function UnitList() {
       border: '1px solid #e3e3e3',
       borderRadius: '20px',
     };
+
+    unitListStyle = {
+      overflowY: 'auto',
+      flex: '1 1 85%',
+      borderBottom: '1px solid #e3e3e3',
+    };
   }
+
+
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState('');
   const [unitId, setUnitId] = useState(-1);
@@ -112,7 +127,7 @@ export default function UnitList() {
             }}/>
         </div>
       </div>
-      <div className="list">
+      <div className="list" style={unitListStyle}>
         {renderUnitList()}
       </div>
       {button}
