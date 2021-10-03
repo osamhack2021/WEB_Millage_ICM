@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {useBoard} from '@hooks/board';
-import {Link} from 'react-router-dom';
 import {ROOT_PATH} from '@constants';
 import PostListBox from '@components/boards/PostListBox';
+import BoardHeader from '@components/boards/BoardHeader';
 
 type BoardViewParams = {
   boardId: string;
@@ -54,29 +54,7 @@ function BoardViewPage() {
           max-w-screen-lg flex-1 w-full
           p-8 ring-1 ring-gray-500 min-h-screen flex flex-col
         '>
-
-          {/* Board Header */}
-          <div className='flex items-center justify-between'>
-            <div>
-              <input
-                className='border-b border-gray-500 focus:outline-none p-2'
-                type='search'
-                placeholder='검색어를 입력하세요'
-              />
-              <button className='py-2 px-4 border border-gray-500 ml-4'>
-                내가 쓴 글
-              </button>
-            </div>
-
-            { data.authorityToWrite === 'all' &&
-              <Link
-                to='/create'
-                className='px-4 py-2 ring-1 ring-gray-500'
-              >
-                글 생성
-              </Link>
-            }
-          </div>
+          <BoardHeader authorityToWrite={data.authorityToWrite} />
 
           {/* Post List Component */}
           { data.posts &&
