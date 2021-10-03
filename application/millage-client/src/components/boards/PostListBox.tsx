@@ -5,10 +5,10 @@ import PostListItem from './PostListItem';
 
 type Props = {
   posts: PaginationResults<Post>,
-  paginationFunc: (page: number) => void,
+  getBoardWithPage: (page: number) => void,
 }
 
-const PostListBox: React.FC<Props> = ({posts, paginationFunc}) => {
+const PostListBox: React.FC<Props> = ({posts, getBoardWithPage}) => {
   const {
     curPage,
     results,
@@ -18,8 +18,8 @@ const PostListBox: React.FC<Props> = ({posts, paginationFunc}) => {
   const isFirstPage = curPage === 1;
   const isLastPage = curPage === totalPages;
 
-  const onPrevButton = () => paginationFunc(curPage - 1);
-  const onNextButton = () => paginationFunc(curPage + 1);
+  const onPrevButton = () => getBoardWithPage(curPage - 1);
+  const onNextButton = () => getBoardWithPage(curPage + 1);
 
   return (
     <div className='mt-8'>
