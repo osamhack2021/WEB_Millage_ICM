@@ -87,6 +87,7 @@ export type GetBoardByIdRes = {
 export type GetBoardByIdReq = {
     boardId: number;
     page: number;
+    search?: string;
 }
 
 

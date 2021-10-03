@@ -56,9 +56,12 @@ const mockBoardList: Board[] = [
  * Board View 페이지에서 호출
  */
 export async function apiGetBoardById(
-    {boardId, page}: GetBoardByIdReq,
+    {boardId, page, search}: GetBoardByIdReq,
 ): Promise<GetBoardByIdRes> {
   try {
+    console.log('boardId: ' + boardId);
+    console.log('page: ' + page);
+    console.log('search: ' + search);
     await wait(500);
     // return mockResponses.find(
     //   (r) => r.board?.id === boardId

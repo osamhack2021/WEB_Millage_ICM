@@ -1,18 +1,48 @@
 import React from 'react';
 import {Board} from '@modules/board/types';
 import {Link} from 'react-router-dom';
+import {useHistory, useLocation, useParams} from 'react-router';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import queryString from 'query-string';
+import {BOARD_VIEW_PATH} from '@constants';
 
 type Props = Pick<Board, 'authorityToWrite'>;
+type BoardViewParams = {
+  boardId: string;
+}
+type SearchInput = {
+  query: string;
+}
 
 const BoardHeader: React.FC<Props> = ({authorityToWrite}) => {
+  const history = useHistory();
+  const {boardId} = useParams<BoardViewParams>();
+  const {search} = useLocation();
+  const {query} = queryString.parse(search);
+
+  const {register, handleSubmit} = useForm<SearchInput>({
+    defaultValues: {
+      query: (typeof query === 'string') ? query : '',
+    },
+  });
+  const onSubmit: SubmitHandler<SearchInput> = ({query}) => {
+    if (query === '') {
+      history.push(`${BOARD_VIEW_PATH}/${boardId}/`);
+    }
+    history.push(`${BOARD_VIEW_PATH}/${boardId}/?query=${query}`);
+  };
+
   return (
     <div className='flex items-center justify-between'>
-      <div>
-        <input
-          className='border-b border-gray-500 focus:outline-none p-2'
-          type='search'
-          placeholder='검색어를 입력하세요'
-        />
+      <div className='flex'>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            {...register('query')}
+            className='border-b border-gray-500 focus:outline-none p-2'
+            type='search'
+            placeholder='검색어를 입력하세요'
+          />
+        </form>
         <button className='py-2 px-4 border border-gray-500 ml-4'>
           내가 쓴 글
         </button>

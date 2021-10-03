@@ -1,9 +1,10 @@
 import React, {useCallback, useEffect} from 'react';
-import {useHistory, useParams} from 'react-router';
+import {useHistory, useLocation, useParams} from 'react-router';
 import {useBoard} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
 import PostListBox from '@components/boards/PostListBox';
 import BoardHeader from '@components/boards/BoardHeader';
+import queryString from 'query-string';
 
 type BoardViewParams = {
   boardId: string;
@@ -11,22 +12,31 @@ type BoardViewParams = {
 
 function BoardViewPage() {
   const {boardId} = useParams<BoardViewParams>();
+  const {search} = useLocation();
+  const {query} = queryString.parse(search);
   const {curBoardState, getBoardById} = useBoard();
 
-  const paginationFunc = useCallback(
-      (page: number) => getBoardById({
-        boardId: +boardId,
-        page,
-      }),
-      [boardId, getBoardById],
+  const getBoardWithPage = useCallback(
+      (page: number) => {
+        if (typeof query === 'string' && query!== '') {
+          getBoardById({
+            boardId: +boardId,
+            page,
+            search: query,
+          });
+        } else {
+          getBoardById({
+            boardId: +boardId,
+            page,
+          });
+        }
+      },
+      [boardId, getBoardById, query],
   );
 
   useEffect(() => {
-    getBoardById({
-      boardId: +boardId,
-      page: 1,
-    });
-  }, [boardId, getBoardById]);
+    getBoardWithPage(1);
+  }, [boardId, getBoardById, query]);
 
   const {loading, data, error} = curBoardState;
   const history = useHistory();
@@ -60,7 +70,7 @@ function BoardViewPage() {
           { data.posts &&
             <PostListBox
               posts={data.posts}
-              paginationFunc={paginationFunc}
+              getBoardWithPage={getBoardWithPage}
             /> }
 
         </div>
