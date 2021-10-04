@@ -1,10 +1,12 @@
-import {Controller, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
+import {FilesInterceptor} from '@nestjs/platform-express';
+
 import {Result} from '../common/common.interface';
 import {ImageService} from './image.service';
-import {UploadMultipleImagesDto} from './dto';
 import {UploadMultipleImagesRO} from './image.interface';
-import {FilesInterceptor} from '@nestjs/platform-express';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+import { diskStorage } from 'multer';
 
 @ApiBearerAuth()
 @ApiTags('image')
@@ -12,20 +14,24 @@ import {FilesInterceptor} from '@nestjs/platform-express';
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
+  @UseInterceptors(FilesInterceptor(
+      'files',
+      10,
+      {
+        storage: ({
+          destination: './upload',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+      }))
   @Post('uploadMultipleImages')
-  @UseInterceptors(FilesInterceptor('files'))
-  async uploadMultipleImages(@UploadedFiles() files: Array<Express.Multer.File>): Promise<UploadMultipleImagesRO> {
+  async uploadMultipleImages(
+      @UploadedFiles() files: Array<Express.Multer.File>,
+  ): Promise<UploadMultipleImagesRO> {
     try {
-      const imageURLs = await this.imageService.uploadMultipleImages(dto);
-      return {
-        result: Result.SUCCESS,
-        urls: imageURLs,
-      };
+      await this.imageService.uploadMultipleImages(files);
     } catch (err) {
-      return {
-        result: Result.FAIL,
-        message: err,
-      };
+      
     }
   }
 }
