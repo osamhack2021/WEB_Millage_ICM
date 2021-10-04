@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MessageBoxes from './MessageBoxes';
 import Messages from './Messages';
+import {io} from 'socket.io-client'
+import {SOCKET_SERVER} from '@constants';
 import './DM.css';
 
 function DM() {
+
+  useEffect(() => {
+    const socket = io(SOCKET_SERVER);
+    (() => {
+      socket.emit('events', {name: 'Nest'}, (data: any) => console.log(data));
+    })();
+  }, []);
+
   return (
     <div id="container">
       <MessageBoxes/>
