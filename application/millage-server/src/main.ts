@@ -15,7 +15,12 @@ declare module 'express-session' {
 }
 
 async function bootstrap() {
-  const appOptions = {cors: true};
+const appOptions = {
+  cors: {
+    origin : true,
+    credentials: true
+  }
+};
   const app = await NestFactory.create<NestExpressApplication>(
       AppModule,
       appOptions);
@@ -31,8 +36,9 @@ async function bootstrap() {
           saveUninitialized: true,
           cookie: {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 1000 * 60 * 60 * 2,
+            secure: true,
+	    maxAge: 1000 * 60 * 60 * 2,
+	    sameSite: 'none'
           },
         }),
     );
