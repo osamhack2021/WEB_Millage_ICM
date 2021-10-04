@@ -11,7 +11,7 @@ type SearchInput = {
   query: string;
 }
 
-const BoardHeader: React.FC<Props> = ({authorityToWrite}) => {
+const BoardBoxTop: React.FC<Props> = ({authorityToWrite}) => {
   const history = useHistory();
   const {query, boardId} = useBoardViewPath();
 
@@ -55,4 +55,4 @@ const BoardHeader: React.FC<Props> = ({authorityToWrite}) => {
   );
 };
 
-export default BoardHeader;
+export default BoardBoxTop;
