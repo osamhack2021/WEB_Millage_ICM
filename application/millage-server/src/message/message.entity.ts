@@ -17,10 +17,25 @@ export class MessageEntity {
     })
     message: string;
 
+    @Column({
+      default: false,
+      nullable: true,
+    })
+    anonymous: boolean;
+
+    @Column({
+      type: 'timestamp',
+      default: () => {
+        'CURRENT_TIMESTAMP';
+      },
+    })
+    createdAt: string;
+
     @ManyToOne((type) => UserEntity)
     @JoinColumn({name: 'senderId', referencedColumnName: 'id'})
     senderId: number;
 
+    @ManyToOne((type) => UserEntity)
     @JoinTable({
       name: 'user',
       joinColumn: {name: 'senderId', referencedColumnName: 'id'},
@@ -31,6 +46,7 @@ export class MessageEntity {
     @JoinColumn({name: 'receiverId', referencedColumnName: 'id'})
     receiverId: number;
 
+    @ManyToOne((type) => UserEntity)
     @JoinTable({
       name: 'user',
       joinColumn: {name: 'receiverId', referencedColumnName: 'id'},

@@ -14,7 +14,7 @@ const MessageBoxes = () => {
 
   const renderMessageBoxes = () => {
     return messageboxes.map((mb : any) => {
-      return (<div key={mb.id}>{mb.content}</div>);
+      return (<div key={mb.id}>{mb.message}</div>);
     });
   };
 
