@@ -17,7 +17,7 @@ export interface UserData {
     email: string;
     fullname: string;
     nickname: string;
-    phonenumber: string;
+    phonenumber?: string;
     unit: UnitData;
     role: UserRoleData;
 }
@@ -33,10 +33,11 @@ export interface UserSubmitData {
     email: string;
     fullname: string;
     nickname: string;
-    phonenumber: string;
     unitId: number;
     password: string;
     roleId: number;
+    phonenumber?: string;
+    unitName?: string;
 }
 
 export interface UserState {

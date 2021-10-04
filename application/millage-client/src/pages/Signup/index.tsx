@@ -14,10 +14,12 @@ import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync} from '@modules/User/actions';
 import {UserState, UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {ROOT_PATH} from '@constants';
 const theme = createTheme();
 
 interface SignupState{
   unitId: number;
+  roleId: number;
 }
 
 export default function Signup() {
@@ -35,7 +37,7 @@ export default function Signup() {
       e.preventDefault();
     }
     data.unitId = location.state.unitId;
-    data.roleId = 1;
+    data.roleId = location.state.roleId;
     dispatch(createUserAsync.request(data));
   };
 
@@ -48,13 +50,48 @@ export default function Signup() {
   useEffect(() => {
     if (responseState.result == 'registerSuccess') {
       alert('회원가입 성공');
-      history.push('/');
+      history.push(ROOT_PATH);
     } else if (responseState.result == 'registerFail') {
       alert(responseState.message);
     } else if (responseState.result == 'registerError') {
       alert(responseState.message);
     }
   }, [responseState]);
+
+  let AdminComponent;
+
+  if (location.state.roleId == 2) {
+    AdminComponent = (
+      <>
+        <Grid item xs={12}>
+          <TextField
+            {
+              ...register('phonenumber',
+                  {required: 'Phone number is Required'})
+            }
+            fullWidth
+            id="phonenumber"
+            label="전화번호"
+            name="phonenumber"
+            autoComplete="phonenumber"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            {
+              ...register('unitName',
+                  {required: 'Phone number is Required'})
+            }
+            fullWidth
+            id="unitName"
+            label="부대 이름"
+            name="unitName"
+            autoComplete="unitName"
+          />
+        </Grid>
+      </>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -128,19 +165,7 @@ export default function Signup() {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {
-                    ...register('phonenumber',
-                        {required: 'Phone number is Required'})
-                  }
-                  fullWidth
-                  id="phonenumber"
-                  label="전화번호"
-                  name="phonenumber"
-                  autoComplete="phonenumber"
-                />
-              </Grid>
+              {AdminComponent}
             </Grid>
             <Button
               type="submit"

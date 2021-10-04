@@ -5,10 +5,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import CSS from 'csstype';
 import './unit.css';
 import {useHistory, useLocation} from 'react-router-dom';
-import {REGISTER_PATH, ROOT_PATH} from '@constants';
+import {UNITSELECT_PATH, ROOT_PATH, SIGNUP_PATH} from '@constants';
+
+interface UnitListState{
+  roleId: number;
+}
 
 export default function UnitList() {
-  const location = useLocation();
+  const location = useLocation<UnitListState>();
   const history = useHistory();
   const page = location.pathname;
   let containerStyle: CSS.Properties = {
@@ -21,7 +25,7 @@ export default function UnitList() {
     borderBottom: '1px solid #e3e3e3',
     height: '520px',
   };
-  if (page === REGISTER_PATH) {
+  if (page === UNITSELECT_PATH) {
     containerStyle = {
       margin: '50px auto 0 auto',
       width: '480px',
@@ -48,9 +52,10 @@ export default function UnitList() {
   const goRegisterUser = () => {
     if (unitId != -1) {
       history.push({
-        pathname: '/register/user',
+        pathname: SIGNUP_PATH,
         state: {
           unitId: unitId,
+          roleId: location.state.roleId,
         },
       });
     } else {
@@ -89,9 +94,9 @@ export default function UnitList() {
             <span className="count">{u.count}명</span>
           </div>
         );
-      } else if (page===REGISTER_PATH) {
+      } else if (page===UNITSELECT_PATH) {
         return (
-          <a className="link" onClick={()=>{
+          <a className="link" key={u.id} onClick={()=>{
             setKeyword(u.name);
             setUnitId(u.id);
           }}>
@@ -104,7 +109,7 @@ export default function UnitList() {
   };
 
   let button;
-  if (page===REGISTER_PATH) {
+  if (page===UNITSELECT_PATH) {
     button = (
       <div className="nextButton">
         <button onClick={()=>{
@@ -113,12 +118,12 @@ export default function UnitList() {
       </div>
     );
   }
-  ;
+
   return (
     <div id="UnitListContainer" style={containerStyle}>
       <div className="search">
         <div className="searchText">
-          <img src='img/searchUnitText.png'/>
+          <img src='/img/searchUnitText.png'/>
           <input id="searchUnit" type="text"
             placeholder="찾으시는 부대를 검색하세요"
             value={keyword}

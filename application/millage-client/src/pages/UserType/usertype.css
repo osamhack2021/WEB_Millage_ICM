@@ -1,0 +1,14 @@
+#UserTypeContainer{
+  display:flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+#UserTypeContainer button {
+  flex: 0 1 10%;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+  background-color: #10902C;
+  margin:10px;
+}
