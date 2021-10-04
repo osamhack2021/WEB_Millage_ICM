@@ -7,7 +7,7 @@ import './DM.css';
 
 function DM() {
   useEffect(() => {
-    const socket = io(SOCKET_SERVER);
+    const socket = io(SOCKET_SERVER, {transports: ['websocket']});
     (() => {
       socket.emit('events', {name: 'Nest'}, (data: any) => console.log(data));
     })();
