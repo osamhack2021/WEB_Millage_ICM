@@ -5,6 +5,7 @@ import {ImageService} from './image.service';
 import {UploadMultipleImagesRO} from './image.interface';
 import {extname} from 'path';
 import {Result} from '../common/common.interface';
+import {ImageEntity} from './image.entity';
 
 const imageFileFilter = (
     req: any,
@@ -63,7 +64,7 @@ export class ImageController {
     }
     return {
       result: Result.SUCCESS,
-      imageURLs: images.map((image) => image.url),
+      imageURLs: images.map((image: ImageEntity) => image.url),
     };
   }
 }
