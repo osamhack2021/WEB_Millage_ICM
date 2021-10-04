@@ -19,23 +19,23 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
       AppModule,
       appOptions);
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.useStaticAssets(join(__dirname, '..', 'dist'));
-  app.setGlobalPrefix('api');
-  app.set('trust proxy', true);
-  app.use(
-      session({
-        proxy: true,
-        secret: SECRET,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 1000 * 60 * 60 * 2,
-        },
-      }),
-  );
+    app.useStaticAssets(join(__dirname, '..', 'public'));
+    app.useStaticAssets(join(__dirname, '..', 'dist'));
+    app.setGlobalPrefix('api');
+    app.set('trust proxy', true);
+    app.use(
+        session({
+          proxy: true,
+          secret: SECRET,
+          resave: false,
+          saveUninitialized: true,
+          cookie: {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 1000 * 60 * 60 * 2,
+          },
+        }),
+    );
 
   // Swagger Options
   const options = new DocumentBuilder()

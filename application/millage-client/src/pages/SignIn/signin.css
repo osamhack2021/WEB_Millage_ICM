@@ -1,0 +1,96 @@
+#SignInContainer .text{
+    font-family: "Inter";
+    font-size: 12px;
+    line-height:30px;
+    color: rgba(0,0,0,0.5);
+    padding-top:5px;
+}
+
+#SignInContainer .block{
+    width: 100%;
+    height: 40px;
+    text-indent:10px;
+    margin-bottom:5px;
+}
+
+#SignInContainer .loginButton{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #FFFFFF;
+    height: 40px;
+    font-size: 15px;
+    font-family: "Inter";
+    font-weight: bold;
+    margin-bottom:10px;
+    line-height: 40px;
+    background-color: #10902C;
+    border-radius: 2px;
+}
+
+#SignInContainer input{
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 2px;
+    font-size: 12px;
+    font-family: "Inter";
+}
+
+.right{
+    float: right;
+    font-size: 11px;
+    font-family: "Inter";
+    color: rgba(0,0,0,0.85);
+    font-weight: 600;
+}
+
+#SignInContainer .center{
+    text-align: center;
+    padding:20px;
+    font-size: 14px;
+}
+
+#SignInContainer .registerLink{
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 700;
+    color: #10902C;
+}
+
+#SignInContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+
+#SignInContainer .logo{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#SignInContainer .bold{
+    font-weight:bold;
+}
+
+#SignInContainer img{
+    width: 30px;
+    height: 30px;
+    margin-left:10px;
+}
+
+.lighter{
+    color: rgba(0,0,0,0.7);
+}
+
+#SignInWrap{
+    width: 360px;
+    margin-right: auto;
+    margin-left: auto;
+    flex: 0 1 40%;
+}

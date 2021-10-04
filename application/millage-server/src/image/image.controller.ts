@@ -1,10 +1,36 @@
 import {Controller, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {Result} from '../common/common.interface';
-import {ImageService} from './image.service';
-import {UploadMultipleImagesDto} from './dto';
-import {UploadMultipleImagesRO} from './image.interface';
 import {FilesInterceptor} from '@nestjs/platform-express';
+import {ImageService} from './image.service';
+import {UploadMultipleImagesRO} from './image.interface';
+import {extname} from 'path';
+import {Result} from '../common/common.interface';
+
+const imageFileFilter = (
+    req: any,
+    file: Express.Multer.File,
+    callback: (error: Error, acceptFile: boolean) => void,
+) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    return callback(new Error('파일 확장자가 올바르지 않습니다.'), false);
+  }
+  return callback(null, true);
+};
+
+const editFileName = (
+    req: any,
+    file: Express.Multer.File,
+    callback: (error: Error, editedFileName: string) => void,
+) => {
+  const name = file.originalname.split('.').shift();
+  const fileExtName = extname(file.originalname);
+  const randomName = Array(4)
+      .fill(null)
+      .map(() => Math.round(Math.random() * 16).toString(16))
+      .join('');
+
+  callback(null, `${name}-${randomName}${fileExtName}`);
+};
 
 @ApiBearerAuth()
 @ApiTags('image')
@@ -12,20 +38,32 @@ import {FilesInterceptor} from '@nestjs/platform-express';
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
+  @UseInterceptors(FilesInterceptor(
+      'files',
+      10,
+      {
+        storage: ({
+          destination: './upload',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+      }))
   @Post('uploadMultipleImages')
-  @UseInterceptors(FilesInterceptor('files'))
-  async uploadMultipleImages(@UploadedFiles() files: Array<Express.Multer.File>): Promise<UploadMultipleImagesRO> {
+  async uploadMultipleImages(
+      @UploadedFiles() files: Array<Express.Multer.File>,
+  ): Promise<UploadMultipleImagesRO> {
+    let images = null;
     try {
-      const imageURLs = await this.imageService.uploadMultipleImages(dto);
-      return {
-        result: Result.SUCCESS,
-        urls: imageURLs,
-      };
+      images = await this.imageService.uploadMultipleImages(files);
     } catch (err) {
       return {
-        result: Result.FAIL,
+        result: Result.ERROR,
         message: err,
       };
     }
+    return {
+      result: Result.SUCCESS,
+      imageURLs: images.map((image) => image.url),
+    };
   }
 }

@@ -5,14 +5,25 @@ import SignIn from '@pages/SignIn';
 import Signup from '@pages/Signup';
 import Main from '@pages/Main';
 import './App.css';
+import UserType from '@pages/UserType';
+import UnitList from '@components/UnitList';
+import {
+  SIGNIN_PATH,
+  ROOT_PATH,
+  SIGNUP_PATH,
+  UNITSELECT_PATH,
+  USERTYPE_PATH,
+} from '@constants';
 
 function App() {
   return (
     <>
       <Switch>
-        <Route exact path='/login' component={SignIn} />
-        <Route exact path="/register" component={Signup} />
-        <Route path='/' component={Main} />
+        <Route exact path={SIGNIN_PATH} component={SignIn} />
+        <Route exact path={UNITSELECT_PATH} component={UnitList} />
+        <Route exact path={SIGNUP_PATH} component={Signup} />
+        <Route exact path={USERTYPE_PATH} component={UserType} />
+        <Route path={ROOT_PATH} component={Main} />
       </Switch>
       <Footer/>
     </>

@@ -9,26 +9,35 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {Link as RouterLink, RouteComponentProps} from 'react-router-dom';
+import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync} from '@modules/User/actions';
 import {UserState, UserSubmitData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {ROOT_PATH} from '@constants';
 const theme = createTheme();
 
-export default function SignUp({history}: RouteComponentProps) {
+interface SignupState{
+  unitId: number;
+  roleId: number;
+}
+
+export default function Signup() {
+  const location = useLocation<SignupState>();
+  const history = useHistory();
   const {register, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
   const [responseState, setResponseState] = useState<UserState>({
     result: '',
   });
+
   const onSubmit: SubmitHandler<UserSubmitData> = (data, e) => {
     if (e) {
       e.preventDefault();
     }
-    data.unitId = 1;
-    data.roleId = 1;
+    data.unitId = location.state.unitId;
+    data.roleId = location.state.roleId;
     dispatch(createUserAsync.request(data));
   };
 
@@ -41,13 +50,48 @@ export default function SignUp({history}: RouteComponentProps) {
   useEffect(() => {
     if (responseState.result == 'registerSuccess') {
       alert('회원가입 성공');
-      history.push('/');
+      history.push(ROOT_PATH);
     } else if (responseState.result == 'registerFail') {
       alert(responseState.message);
     } else if (responseState.result == 'registerError') {
       alert(responseState.message);
     }
   }, [responseState]);
+
+  let AdminComponent;
+
+  if (location.state.roleId == 2) {
+    AdminComponent = (
+      <>
+        <Grid item xs={12}>
+          <TextField
+            {
+              ...register('phonenumber',
+                  {required: 'Phone number is Required'})
+            }
+            fullWidth
+            id="phonenumber"
+            label="전화번호"
+            name="phonenumber"
+            autoComplete="phonenumber"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            {
+              ...register('unitName',
+                  {required: 'Phone number is Required'})
+            }
+            fullWidth
+            id="unitName"
+            label="부대 이름"
+            name="unitName"
+            autoComplete="unitName"
+          />
+        </Grid>
+      </>
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -121,19 +165,7 @@ export default function SignUp({history}: RouteComponentProps) {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {
-                    ...register('phonenumber',
-                        {required: 'Phone number is Required'})
-                  }
-                  fullWidth
-                  id="phonenumber"
-                  label="전화번호"
-                  name="phonenumber"
-                  autoComplete="phonenumber"
-                />
-              </Grid>
+              {AdminComponent}
             </Grid>
             <Button
               type="submit"
@@ -155,4 +187,4 @@ export default function SignUp({history}: RouteComponentProps) {
       </Container>
     </ThemeProvider>
   );
-}
+};
