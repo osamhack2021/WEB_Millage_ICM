@@ -5,7 +5,7 @@ import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
 import {CreateBoardDto, SelectBoardDto} from './dto';
-import {Result} from 'src/common/common.interface';
+import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('board')

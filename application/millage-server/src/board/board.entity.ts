@@ -1,6 +1,8 @@
-import {PostEntity} from 'src/post/post.entity';
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, JoinColumn, OneToMany} from 'typeorm';
+
 import {UnitEntity} from '../unit/unit.entity';
+import {PostEntity} from '../post/post.entity';
+import {PaginationObject} from './board.interface';
 
 @Entity('board')
 export class BoardEntity {
@@ -49,4 +51,6 @@ export class BoardEntity {
 
   @OneToMany(() => PostEntity, (post) => post.boardId)
   posts: PostEntity[];
+
+  paginationObject: PaginationObject;
 }
