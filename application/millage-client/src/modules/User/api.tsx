@@ -13,7 +13,7 @@ export async function createUserApi(data: UserSubmitData) : Promise<UserState> {
 
 export async function loginApi(data: UserLoginData) : Promise<UserState> {
   try {
-    const user = await axios.post(`${SERVER}/user/login'`, data);
+    const user = await axios.post(`${SERVER}/user/login`, data);
     return user.data;
   } catch (err: any) {
     return {result: 'error'};
