@@ -21,7 +21,7 @@ async function bootstrap() {
       appOptions);
     app.useStaticAssets(join(__dirname, '..', 'public'));
     app.useStaticAssets(join(__dirname, '..', 'dist'));
-    // app.setGlobalPrefix('api');
+    app.setGlobalPrefix('api');
     app.set('trust proxy', true);
     app.use(
         session({
