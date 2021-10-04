@@ -28,4 +28,20 @@ export class MessageController {
       };
     }
   }
+
+  @Get('detail/:id')
+  async getMessages(@Req() request : Request) : Promise<MessageRO> {
+    if (!request.session || !request.session.user || !request.session.user.id) {
+      return {
+        result: Result.FAIL,
+        message: '로그인이 필요합니다.',
+      };
+    } else {
+      const messages = await this.messageService.getMessages(+request.session.user.id, +request.params.id);
+      return {
+        result: Result.SUCCESS,
+        messages: messages,
+      };
+    }
+  }
 }
