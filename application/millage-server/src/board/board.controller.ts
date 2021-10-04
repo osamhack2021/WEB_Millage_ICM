@@ -5,7 +5,7 @@ import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
 import {CreateBoardDto, SelectBoardDto} from './dto';
-import { Result } from 'src/common/common.interface';
+import {Result} from 'src/common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('board')
@@ -39,10 +39,10 @@ export class BoardController {
   @Post('create')
   async create(@Body() boardData: CreateBoardDto): Promise<BoardRO> {
     try {
-      const resultObject = await this.boardService.create(boardData);
-      return resultObject;
+      const savedBoard = await this.boardService.create(boardData);
+      return {result: Result.SUCCESS, board: savedBoard};
     } catch (err) {
-      return {result: 'fail', message: err};
+      return {result: Result.ERROR, message: err};
     }
   }
 

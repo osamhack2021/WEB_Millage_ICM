@@ -1,7 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, JoinColumn, OneToMany} from 'typeorm';
 import {IsEmail} from 'class-validator';
-
 import * as argon2 from 'argon2';
+
 import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserPollEntity} from '../post/poll/user_poll.entity';

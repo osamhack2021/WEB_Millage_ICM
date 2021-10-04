@@ -1,15 +1,19 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
+import { PostEntity } from 'src/post/post.entity';
 import {Repository} from 'typeorm';
 import {BoardEntity} from './board.entity';
 import {BoardRO} from './board.interface';
-import {CreateBoardDto} from './dto';
+import {CreateBoardDto, SelectBoardDto} from './dto';
 
 @Injectable()
 export class BoardService {
   constructor(
         @InjectRepository(BoardEntity)
-        private readonly boardRepository: Repository<BoardEntity>
+        private readonly boardRepository: Repository<BoardEntity>,
+
+        @InjectRepository(PostEntity)
+        private readonly postRepository: Repository<PostEntity>,
   ) {}
 
 
@@ -23,25 +27,23 @@ export class BoardService {
     return list;
   }
 
-  async create(dto: CreateBoardDto): Promise<BoardRO> {
+  async create(dto: CreateBoardDto): Promise<BoardEntity> {
     const newBoard = this.boardRepository.create(dto);
     try {
       const savedBoard = await this.boardRepository.save(newBoard);
-      if (savedBoard) {
-        return {
-          result: 'success',
-          board: savedBoard,
-        };
-      }
-      return {
-        result: 'fail',
-        message: '알수 없는 오류가 발생했습니다.',
-      };
+      return savedBoard;
     } catch (err) {
-      return {
-        result: 'fail',
-        message: err,
-      };
+      throw new Error(err);
+    }
+  }
+
+  async getBoardData(id: number, dto: SelectBoardDto): Promise<BoardEntity> {
+    let board: BoardEntity = null;
+    try {
+      board = await this.boardRepository.findOne(id);
+      board.posts = await this.postRepository.find() // need to implement
+    } catch (err) {
+      throw new Error(`Cannot find board by id ${id}`);
     }
   }
 }
