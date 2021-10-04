@@ -35,7 +35,4 @@ export class PostEntity {
 
   @OneToMany(() => PollItemEntity, (pollItem) => pollItem.postId)
   pollItems: PollItemEntity[];
-
-  @OneToMany(() => ImageEntity, (image) => image.postId)
-  images: ImageEntity[];
 }
