@@ -2,8 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useHistory} from 'react-router';
 import {useBoard, useBoardViewPath} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
-import PostListBox from '@components/boards/PostListBox';
-import BoardHeader from '@components/boards/BoardHeader';
+import {PostListBox, BoardBoxTop} from '@components/boards';
 
 
 function BoardViewPage() {
@@ -61,7 +60,7 @@ function BoardViewPage() {
           max-w-screen-lg flex-1 w-full
           p-8 ring-1 ring-gray-500 min-h-screen flex flex-col
         '>
-          <BoardHeader authorityToWrite={data.authorityToWrite} />
+          <BoardBoxTop authorityToWrite={data.authorityToWrite} />
 
           {/* Post List Component */}
           { data.posts &&
