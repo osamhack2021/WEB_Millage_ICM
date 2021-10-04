@@ -4,8 +4,10 @@ import DMReducer from './DM/reducer';
 import BoardReducer from './board/reducer';
 import UnitReducer from './Unit/reducer';
 import UserReducer from './User/reducer';
+import ScheduleReducer from './Schedule/reducer'
 import dmSaga from './DM/sagas';
 import boardSaga from './board/sagas';
+import scheduleSaga from './Schedule/sagas'
 import {
   checkSessionListener,
   createUserSagaListener,
@@ -21,6 +23,7 @@ const rootReducer = combineReducers({
   user: UserReducer,
   Board: BoardReducer,
   unit: UnitReducer,
+  schedule: ScheduleReducer,
 });
 
 export default rootReducer;
@@ -33,6 +36,7 @@ export function* rootSaga() {
     checkSessionListener(),
     boardSaga(),
     getUnitListSagaListener(),
+    scheduleSaga(),
   ]);
 }
 
