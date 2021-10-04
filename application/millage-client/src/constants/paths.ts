@@ -1,8 +1,9 @@
 export const ROOT_PATH = '/';
 
 export const SIGNIN_PATH = '/login';
-export const REGISTER_PATH = '/register';
+export const USERTYPE_PATH = '/register';
 export const SIGNUP_PATH = '/register/user';
+export const UNITSELECT_PATH = '/register/unit';
 
 export const SCHEDULE_PATH = '/schedule';
 export const DM_PATH = '/dm';
