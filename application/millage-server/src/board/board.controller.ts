@@ -1,10 +1,11 @@
-import {Body, Controller, Get, Post, Req} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, Param} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {BoardListRO, BoardRO} from './board.interface';
 import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
-import {CreateBoardDto} from './dto';
+import {CreateBoardDto, SelectBoardDto} from './dto';
+import { Result } from 'src/common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('board')
@@ -42,6 +43,26 @@ export class BoardController {
       return resultObject;
     } catch (err) {
       return {result: 'fail', message: err};
+    }
+  }
+
+  @Get(':id')
+  async getBoardData(
+      @Param('id') id: number,
+      @Body() selectDto: SelectBoardDto,
+  ): Promise<BoardRO> {
+    try {
+      const loadedBoard: BoardEntity =
+        await this.boardService.getBoardData(id, selectDto);
+      return {
+        result: Result.SUCCESS,
+        board: loadedBoard,
+      };
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err,
+      };
     }
   }
 }
