@@ -7,7 +7,7 @@ import {
 } from '@nestjs/websockets';
 import {Server} from 'socket.io';
 
-@WebSocketGateway(3001)
+@WebSocketGateway(3001, {transports: ['websocket']})
 export class EventsGateway implements OnGatewayConnection{
     @WebSocketServer()
     server: Server;
