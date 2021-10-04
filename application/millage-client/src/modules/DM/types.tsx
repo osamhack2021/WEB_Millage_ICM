@@ -2,14 +2,17 @@ import {ActionType} from 'typesafe-actions';
 import * as actions from './actions';
 
 export interface MessageBox {
-    id: number;
-    name: string;
-    content: string;
-    date: string;
+  id: number;
+  senderId: number;
+  senderName: string;
+  message: string;
+  time: string;
 }
 
 export interface DMState {
-  messageboxes: MessageBox[];
+  result: string;
+  message: string;
+  messageboxes?: MessageBox[];
 };
 
 export type DMAction = ActionType<typeof actions>;

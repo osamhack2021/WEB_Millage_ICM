@@ -3,17 +3,17 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayConnection
+  OnGatewayConnection,
 } from '@nestjs/websockets';
 import {Server} from 'socket.io';
 
 @WebSocketGateway(3001, {transports: ['websocket']})
-export class EventsGateway implements OnGatewayConnection{
+export class EventsGateway implements OnGatewayConnection {
     @WebSocketServer()
     server: Server;
 
-    async handleConnection(){
-      console.log("a user has connected");
+    async handleConnection() {
+      console.log('a user has connected');
     }
 
     @SubscribeMessage('events')
