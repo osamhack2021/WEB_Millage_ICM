@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import MessageBoxes from './MessageBoxes';
 import Messages from './Messages';
-import {io} from 'socket.io-client'
+import {io} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
 import './DM.css';
 
 function DM() {
-
   useEffect(() => {
     const socket = io(SOCKET_SERVER);
     (() => {
