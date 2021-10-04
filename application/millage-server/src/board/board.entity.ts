@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, JoinColumn} from 'typeorm';
+import { PostEntity } from 'src/post/post.entity';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, JoinColumn, OneToMany} from 'typeorm';
 import {UnitEntity} from '../unit/unit.entity';
 
 @Entity('board')
@@ -35,14 +36,17 @@ export class BoardEntity {
   @Column({type: 'boolean', default: false})
   imageAllowed: boolean;
 
-  @ManyToOne((type) => UnitEntity)
+  @ManyToOne(() => UnitEntity)
   @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
   unitId: number;
 
-  @ManyToOne((type) => UnitEntity)
+  @ManyToOne(() => UnitEntity)
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
   })
   unit: UnitEntity
+
+  @OneToMany(() => PostEntity, (post) => post.boardId)
+  posts: PostEntity[];
 }
