@@ -1,11 +1,12 @@
-import {Controller, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Post, UploadedFiles, UseInterceptors} from '@nestjs/common';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {FilesInterceptor} from '@nestjs/platform-express';
 import {ImageService} from './image.service';
-import {UploadMultipleImagesRO} from './image.interface';
+import {UploadImagesRO} from './image.interface';
 import {extname} from 'path';
 import {Result} from '../common/common.interface';
 import {ImageEntity} from './image.entity';
+import {UploadImagesDto} from './dto';
 
 const imageFileFilter = (
     req: any,
@@ -43,19 +44,17 @@ export class ImageController {
       'files',
       10,
       {
-        storage: ({
-          destination: './upload',
-          filename: editFileName,
-        }),
+        storage: ({destination: './upload', filename: editFileName}),
         fileFilter: imageFileFilter,
       }))
-  @Post('uploadMultipleImages')
-  async uploadMultipleImages(
+  @Post('uploadImages')
+  async uploadImages(
+      @Body() data: UploadImagesDto,
       @UploadedFiles() files: Array<Express.Multer.File>,
-  ): Promise<UploadMultipleImagesRO> {
+  ): Promise<UploadImagesRO> {
     let images = null;
     try {
-      images = await this.imageService.uploadMultipleImages(files);
+      images = await this.imageService.uploadImages(files);
     } catch (err) {
       return {
         result: Result.ERROR,

@@ -1,6 +1,6 @@
 import {IsNotEmpty} from 'class-validator';
 
-export class UploadMultipleImagesDto {
+export class UploadImagesDto {
   @IsNotEmpty()
   postId: number;
 

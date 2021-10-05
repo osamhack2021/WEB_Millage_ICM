@@ -1,1 +1,1 @@
-export {UploadMultipleImagesDto} from './upload-multiple-images.dto';
+export {UploadImagesDto} from './upload-images.dto';
