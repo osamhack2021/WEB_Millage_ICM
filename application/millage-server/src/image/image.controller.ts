@@ -49,12 +49,13 @@ export class ImageController {
       }))
   @Post('uploadImages')
   async uploadImages(
-      @Body() data: UploadImagesDto,
+      @Body() dto: UploadImagesDto,
       @UploadedFiles() files: Array<Express.Multer.File>,
   ): Promise<UploadImagesRO> {
     let images = null;
+    const {postId} = dto;
     try {
-      images = await this.imageService.uploadImages(files);
+      images = await this.imageService.uploadImages(postId, files);
     } catch (err) {
       return {
         result: Result.ERROR,

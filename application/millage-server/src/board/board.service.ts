@@ -56,6 +56,7 @@ export class BoardService {
     const totalPages = Math.ceil(totalCounts / 10);
     searchOptions.skip = (curPage - 1) * POSTS_PER_PAGE;
     searchOptions.take = POSTS_PER_PAGE;
+    searchOptions.relations = ['images'];
     const posts = await this.postRepository.find(searchOptions);
     return <PaginationObject>{posts, curPage, totalCounts, totalPages};
   }
