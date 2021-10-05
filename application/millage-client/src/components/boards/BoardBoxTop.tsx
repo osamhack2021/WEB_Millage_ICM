@@ -3,7 +3,7 @@ import {Board} from '@modules/board/types';
 import {Link} from 'react-router-dom';
 import {useHistory} from 'react-router';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {BOARD_VIEW_PATH} from '@constants';
+import {BOARD_PATH} from '@constants';
 import {useBoardViewPath} from '@hooks/board';
 
 type Props = Pick<Board, 'authorityToWrite'>;
@@ -22,9 +22,9 @@ const BoardBoxTop: React.FC<Props> = ({authorityToWrite}) => {
   });
   const onSubmit: SubmitHandler<SearchInput> = ({query}) => {
     if (query === '') {
-      history.push(`${BOARD_VIEW_PATH}/${boardId}/`);
+      history.push(`${BOARD_PATH}/${boardId}/`);
     }
-    history.push(`${BOARD_VIEW_PATH}/${boardId}/?query=${query}`);
+    history.push(`${BOARD_PATH}/${boardId}/?query=${query}`);
   };
 
   return (
