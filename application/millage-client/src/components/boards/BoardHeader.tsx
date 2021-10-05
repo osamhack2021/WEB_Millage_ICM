@@ -1,11 +1,12 @@
 import React from 'react';
+import {XLayout} from '@components/common';
 
 function BoardHeader() {
   return (
     <div className='bg-gray-300 py-4'>
-      <div className='max-w-screen-xl mx-auto'>
+      <XLayout>
         Board Header
-      </div>
+      </XLayout>
     </div>
   );
 }

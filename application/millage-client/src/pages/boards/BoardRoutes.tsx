@@ -9,6 +9,7 @@ import {
 import MainPage from './MainPage';
 import BoardViewPage from './BoardView';
 import {BoardHeader, SideBox} from '@components/boards';
+import {XLayout} from '@components/common';
 
 function BoardRoutes() {
   return (
@@ -18,8 +19,8 @@ function BoardRoutes() {
       <BoardHeader />
 
       {/* Content Wrapper */}
-      <div className='
-        max-w-screen-xl mx-auto w-full flex-1 my-6
+      <XLayout className='
+        mx-auto w-full flex-1 my-6
         flex flex-row justify-between
       '>
 
@@ -36,7 +37,7 @@ function BoardRoutes() {
         </div>
 
         <SideBox />
-      </div>
+      </XLayout>
     </div>
   );
 }
