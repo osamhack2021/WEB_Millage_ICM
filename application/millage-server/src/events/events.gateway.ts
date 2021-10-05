@@ -10,7 +10,7 @@ import {MessageService} from '../message/message.service';
 
 import {Server} from 'socket.io';
 
-@WebSocketGateway(3001, {transports: ['websocket']})
+@WebSocketGateway({transports: ['websocket']})
 export class EventsGateway implements OnGatewayConnection {
   constructor(private readonly messageService: MessageService) {}
 
