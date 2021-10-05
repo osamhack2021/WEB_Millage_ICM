@@ -17,7 +17,7 @@ export async function apiGetScheduleList() : Promise<Schedules> {
         content: 'Long Event',
         start: new Date('2021-10-07'),
         end: new Date('2021-10-10'),
-        color: 'purple'
+        color: 'purple',
       },
       {
         id: '3',

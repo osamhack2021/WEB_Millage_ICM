@@ -12,7 +12,7 @@ export const GET_SCHEDULE_LIST_ERROR =
   'SCHEDULE/GET_SCHEDULE_LIST_ERROR' as const;
 
 export const getScheduleListAsync = createAsyncAction(
-  GET_SCHEDULE_LIST,
-  GET_SCHEDULE_LIST_SUCCESS,
-  GET_SCHEDULE_LIST_ERROR,
+    GET_SCHEDULE_LIST,
+    GET_SCHEDULE_LIST_SUCCESS,
+    GET_SCHEDULE_LIST_ERROR,
 )<undefined, Schedules, AxiosError>();
