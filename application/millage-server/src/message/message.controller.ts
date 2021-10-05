@@ -1,11 +1,11 @@
-import {Get, Req, Controller} from '@nestjs/common';
+import {Get, Post, Req, Controller} from '@nestjs/common';
 import {Request} from 'express';
 import {MessageService} from './message.service';
 import {MessageRO} from './message.interface';
+import {ResultObject, Result} from '../common/common.interface';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
-import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('message')
@@ -13,9 +13,18 @@ import {Result} from '../common/common.interface';
 export class MessageController {
   constructor(private readonly messageService: MessageService) {}
 
+  private checkAuth(@Req() request : Request) : boolean {
+    if (!request.session || !request.session.user || !request.session.user.id) {
+      return false;
+    }
+
+    return true;
+  }
+
+
   @Get('messagebox/list')
   async getMessageBoxList(@Req() request : Request) : Promise<MessageRO> {
-    if (!request.session || !request.session.user || !request.session.user.id) {
+    if (this.checkAuth(request)) {
       return {
         result: Result.FAIL,
         message: '로그인이 필요합니다.',
@@ -31,7 +40,7 @@ export class MessageController {
 
   @Get('detail/:id')
   async getMessages(@Req() request : Request) : Promise<MessageRO> {
-    if (!request.session || !request.session.user || !request.session.user.id) {
+    if (this.checkAuth(request)) {
       return {
         result: Result.FAIL,
         message: '로그인이 필요합니다.',
@@ -42,6 +51,26 @@ export class MessageController {
         result: Result.SUCCESS,
         messages: messages,
       };
+    }
+  }
+
+  @Post(':id')
+  async postMessage(@Req() request : Request) : Promise<ResultObject> {
+    if (this.checkAuth(request)) {
+      return {
+        result: Result.FAIL,
+        message: '로그인이 필요합니다.',
+      };
+    } else {
+      const messages = await this.messageService.sendMessage(
+          +request.session.user.id,
+          +request.params.id,
+          request.body.message,
+          request.body.anonymous
+      );
+
+      // add socket cocde
+      return messages;
     }
   }
 }
