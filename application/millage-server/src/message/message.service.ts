@@ -1,5 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
+import {Result, ResultObject} from '../common/common.interface';
 import {Repository} from 'typeorm';
 import {MessageEntity} from './message.entity';
 import {MessageBoxData, MessageData} from './message.interface';
@@ -72,5 +73,19 @@ export class MessageService {
     });
 
     return result;
+  }
+
+
+  async sendMessage(receiverId: number, senderId: number, message: string, anonymous: boolean): Promise<ResultObject> {
+    this.messageRepository.save({
+      senderId: senderId,
+      receiverId: receiverId,
+      message: message,
+      anonymous: anonymous,
+    });
+
+    return {
+      result: Result.SUCCESS,
+    };
   }
 }

@@ -1,7 +1,11 @@
 import {Module} from '@nestjs/common';
-import {EventsGateway} from './events.gateway';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import { MessageService } from '../message/message.service';
+import { MessageEntity } from '../message/message.entity';
+
 
 @Module({
-  providers: [EventsGateway],
+  imports: [TypeOrmModule.forFeature([MessageEntity])],
+  providers: [MessageService],
 })
 export class EventsModule {}
