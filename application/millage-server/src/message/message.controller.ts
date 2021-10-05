@@ -24,7 +24,7 @@ export class MessageController {
 
   @Get('messagebox/list')
   async getMessageBoxList(@Req() request : Request) : Promise<MessageRO> {
-    if (this.checkAuth(request)) {
+    if (!this.checkAuth(request)) {
       return {
         result: Result.FAIL,
         message: '로그인이 필요합니다.',
@@ -40,7 +40,7 @@ export class MessageController {
 
   @Get('detail/:id')
   async getMessages(@Req() request : Request) : Promise<MessageRO> {
-    if (this.checkAuth(request)) {
+    if (!this.checkAuth(request)) {
       return {
         result: Result.FAIL,
         message: '로그인이 필요합니다.',
@@ -56,7 +56,7 @@ export class MessageController {
 
   @Post(':id')
   async postMessage(@Req() request : Request) : Promise<ResultObject> {
-    if (this.checkAuth(request)) {
+    if (!this.checkAuth(request)) {
       return {
         result: Result.FAIL,
         message: '로그인이 필요합니다.',
