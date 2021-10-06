@@ -5,7 +5,10 @@ import BoardReducer from './board/reducer';
 import UnitReducer from './Unit/reducer';
 import UserReducer from './User/reducer';
 import ScheduleReducer from './Schedule/reducer';
-import dmSaga from './DM/sagas';
+import {
+  getMessageBoxListSagaListener,
+  getMessagesSagaListener,
+} from './DM/sagas';
 import boardSaga from './board/sagas';
 import scheduleSaga from './Schedule/sagas';
 import {
@@ -30,7 +33,8 @@ export default rootReducer;
 
 export function* rootSaga() {
   yield all([
-    dmSaga(),
+    getMessageBoxListSagaListener(),
+    getMessagesSagaListener(),
     createUserSagaListener(),
     loginSagaListener(),
     checkSessionListener(),

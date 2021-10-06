@@ -9,10 +9,20 @@ export interface MessageBox {
   time: string;
 }
 
+export interface MessageData{
+  id: number;
+  receiverId: number;
+  senderId: number;
+  senderName: string;
+  message: string;
+  time: string;
+}
+
 export interface DMState {
   result: string;
-  message: string;
+  message?: string;
   messageboxes?: MessageBox[];
+  messages?: MessageData[];
 };
 
 export type DMAction = ActionType<typeof actions>;

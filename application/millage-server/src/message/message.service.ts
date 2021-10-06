@@ -28,7 +28,7 @@ export class MessageService {
       }
       return {
         id: mb.id,
-        senderId: mb.senderId,
+        senderId: +mb.senderId,
         senderName: name,
         message: mb.message,
         time: mb.createdAt,
@@ -50,12 +50,11 @@ export class MessageService {
           senderId: receiverId,
         },
       ],
-      relations: ['sender'],
+      relations: ['sender', 'receiver'],
       order: {
         createdAt: 'DESC',
-      },
+      }
     });
-
 
     const result : MessageData[] = await messages.map((m) => {
       let name = m.sender.fullname;
@@ -64,8 +63,8 @@ export class MessageService {
       }
       return {
         id: m.id,
-        senderId: m.senderId,
-        receiverId: m.receiverId,
+        senderId: m.sender.id,
+        receiverId: m.receiver.id,
         senderName: name,
         message: m.message,
         time: m.createdAt,

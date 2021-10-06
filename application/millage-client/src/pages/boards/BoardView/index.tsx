@@ -2,8 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {useHistory} from 'react-router';
 import {useBoard, useBoardViewPath} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
-import PostListBox from '@components/boards/PostListBox';
-import BoardHeader from '@components/boards/BoardHeader';
+import {PostListBox, BoardBoxTop} from '@components/boards';
 
 
 function BoardViewPage() {
@@ -51,34 +50,24 @@ function BoardViewPage() {
 
   return (
     <div
-      className='max-w-screen-2xl py-4 mx-auto
-      sm:px-8 sm:py-8'
+      className=''
     >
-      <h1 className='text-3xl mb-8'>{data.name}</h1>
-      <div className='flex flex-row'>
-        {/* Main Component */}
-        <div className='
-          max-w-screen-lg flex-1 w-full
-          p-8 ring-1 ring-gray-500 min-h-screen flex flex-col
-        '>
-          <BoardHeader authorityToWrite={data.authorityToWrite} />
+      {/* Title */}
+      <h1 className='text-3xl mb-4 p-6 ring-1 ring-gray-500'>{data.name}</h1>
 
-          {/* Post List Component */}
-          { data.posts &&
-            <PostListBox
-              posts={data.posts}
-              getBoardWithPage={getBoardWithPage}
-            /> }
+      {/* Main Component */}
+      <div className='
+        max-w-screen-lg flex-1 w-full
+        p-8 ring-1 ring-gray-500 min-h-full flex flex-col
+      '>
+        <BoardBoxTop authorityToWrite={data.authorityToWrite} />
 
-        </div>
-
-        {/* Side Component */}
-        <div className='
-          hidden lg:block w-72 ml-6
-          ring-1 ring-gray-500 min-h-screen flex-col
-        '>
-
-        </div>
+        {/* Post List Component */}
+        { data.posts &&
+          <PostListBox
+            posts={data.posts}
+            getBoardWithPage={getBoardWithPage}
+          /> }
 
       </div>
     </div>

@@ -4,7 +4,7 @@ import {SOCKET_SERVER} from '@constants';
 import './DM.css';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
-import {getMessageBoxListAsync} from '@modules/DM/actions';
+import {getMessageBoxListAsync, getMessagesAsync} from '@modules/DM/actions';
 
 interface MessageData {
   message: string;
@@ -14,17 +14,31 @@ function DM() {
   const dispatch = useDispatch();
 
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
+  const messages = useSelector((state: any) => state.DM.messages);
   const {register, handleSubmit} = useForm<MessageData>();
   const [socket] = useState(io(SOCKET_SERVER, {transports: ['websocket']}));
+
+  const getMessage = (id: number) => {
+    console.log(id);
+    dispatch(getMessagesAsync.request(id));
+  };
 
   useEffect(() => {
     dispatch(getMessageBoxListAsync.request());
     socket.emit('events', {name: 'Nest'}, (data: any) => console.log(data));
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
+
   const renderMessageBoxes = () => {
     return messageboxes.map((mb: any) => {
-      return (<div key={mb.id}>{mb.message}</div>);
+      return (
+        <button onClick={()=>getMessage(mb.senderId)}
+          key={mb.id}>{mb.message}
+        </button>
+      );
     });
   };
 
