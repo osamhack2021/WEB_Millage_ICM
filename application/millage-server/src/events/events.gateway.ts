@@ -8,36 +8,46 @@ import {
 } from '@nestjs/websockets';
 import {MessageService} from '../message/message.service';
 
-import {Server} from 'socket.io';
+import {Server, Socket} from 'socket.io';
+
+interface connection{
+  [key: number]: Socket;
+}
+
 
 @WebSocketGateway({transports: ['websocket']})
 export class EventsGateway implements OnGatewayConnection {
+  private connectedUsers : connection = {};
   constructor(private readonly messageService: MessageService) {}
 
     @WebSocketServer()
     server: Server;
 
-    async handleConnection() {
-      console.log('a user has connected');
-    }
+    async handleConnection() {}
 
-    @SubscribeMessage('events')
-    handleEvent(@MessageBody() data: string): string {
-      return data;
+    @SubscribeMessage('subscribe')
+    handleEvent(@MessageBody() data: any,
+    @ConnectedSocket() client: Socket) {
+      console.log('a user has connected: ' + data.id);
+      this.connectedUsers[data.id] = client;
     }
 
     @SubscribeMessage('msgToServer')
-    async handleMessage(
-    @MessageBody() data: any,
-    @ConnectedSocket() client: any) {
+    async handleMessage(@MessageBody() data: any) {
       const res = {
-        msg: data.msg,
-        senderID: data.userID,
-        time: new Date(client.handshake.time).toLocaleString(),
+        message: data.message,
+        senderId: data.senderId,
+        receiverId: data.receiverId,
+        anonyomus: data.anonymous,
       };
 
-      await this.messageService.sendMessage(1, 9, '1', true);
+      await this.messageService.sendMessage(+data.receiverId, +data.senderId,data.message, data.anonymous);
 
-      this.server.emit('msgToClient', res);
+      if(this.connectedUsers[data.receiverId]){
+        console.log('send message to ' + data.receiverId);
+        this.connectedUsers[data.receiverId].emit('msgToClient',data);
+      } else{
+        console.log('receiver not connected');
+      }
     }
 }

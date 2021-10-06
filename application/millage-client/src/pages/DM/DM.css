@@ -1,4 +1,4 @@
-#container {
+#MessageContainer {
     position: fixed;
     width: 100vw;
     height: 80vh;
@@ -10,7 +10,7 @@
 }
 
 @media only screen and (min-width: 641px) {
-    #container #messageboxes{
+    #MessageContainer #messageboxes{
         position: relative;
         width:350px;
         height:100%;
@@ -19,7 +19,7 @@
         margin: 5px;
     }
 
-    #container #messages{
+    #MessageContainer #messages{
         position: relative;
         width: 780px;
         height:100%;
@@ -28,27 +28,39 @@
         margin: 5px;
     }
 
-    #container #messageboxes h2 {
+    #MessageContainer #messageboxes h2 {
       position: absolute; left: 16px; line-height: 33px; color: #292929; font-size: 22px; font-weight: bold;
     }
 }
 @media only screen and (max-width: 640px) {
-  #container #messageboxes {
+  #MessageContainer #messageboxes {
     display: none;
   }
-  #container #messageboxes.visible {
+  #MessageContainer #messageboxes.visible {
     display: block;
   }
 
-  #container #messages {
+  #MessageContainer #messages {
     display: none;
   }
-  #container #messages.visible {
+  #MessageContainer #messages.visible {
     display: block;
   }
 }
 
-#messages input{
+#MessageContainer #messages input{
   width:100%;
   border: 1px solid black;
 }
+
+#MessageContainer button{
+  width: 100%;
+  height:30px;
+}
+
+#MessageContainer .title{
+  height:30px;
+}
+
+
+
