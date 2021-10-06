@@ -8,3 +8,9 @@ export async function apiGetMessageBoxList() : Promise<DMState> {
 
   return messageboxes.data;
 }
+
+export async function apiGetMessages(id: number) : Promise<DMState> {
+  const messages = await axios.get(`${SERVER}/message/detail/${id}`,
+      {withCredentials: true});
+  return messages.data;
+}
