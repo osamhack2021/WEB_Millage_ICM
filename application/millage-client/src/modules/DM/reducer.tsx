@@ -4,6 +4,8 @@ import {DMAction, DMState} from './types';
 import {GET_MESSAGEBOX_LIST, GET_MESSAGEBOX_LIST_SUCCESS} from './actions';
 
 const initialState: DMState = {
+  result: '',
+  message: '',
   messageboxes: [],
 };
 

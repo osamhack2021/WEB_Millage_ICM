@@ -4,7 +4,7 @@ import {BoardListRO, BoardRO} from './board.interface';
 import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
-import {CreateBoardDto, SelectBoardDto} from './dto';
+import {CreateBoardDto, SelectBoardDto, BoardIdParam} from './dto';
 import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
@@ -31,7 +31,7 @@ export class BoardController {
     } catch (err) {
       return {
         result: 'error',
-        message: err,
+        message: err.message,
       };
     }
   }
@@ -42,18 +42,18 @@ export class BoardController {
       const savedBoard = await this.boardService.create(boardData);
       return {result: Result.SUCCESS, board: savedBoard};
     } catch (err) {
-      return {result: Result.ERROR, message: err};
+      return {result: Result.ERROR, message: err.message};
     }
   }
 
   @Get(':id')
   async getBoardData(
-      @Param('id') id: number,
+      @Param() params: BoardIdParam,
       @Body() selectDto: SelectBoardDto,
   ): Promise<BoardRO> {
     try {
       const loadedBoard: BoardEntity =
-        await this.boardService.getBoardData(id, selectDto);
+        await this.boardService.getBoardData(params.id, selectDto);
       return {
         result: Result.SUCCESS,
         board: loadedBoard,
@@ -61,7 +61,7 @@ export class BoardController {
     } catch (err) {
       return {
         result: Result.ERROR,
-        message: err,
+        message: err.message,
       };
     }
   }

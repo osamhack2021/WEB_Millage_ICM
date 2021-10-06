@@ -1,5 +1,5 @@
 import {ResultObject} from '../common/common.interface';
 
-export interface UploadMultipleImagesRO extends ResultObject {
+export interface UploadImagesRO extends ResultObject {
   imageURLs?: string[];
 }

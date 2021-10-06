@@ -3,6 +3,9 @@ import {useSelector} from 'react-redux';
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import './header.css';
 
@@ -10,8 +13,18 @@ function Header() {
   const history = useHistory();
   const user = useSelector((state: any) => state.user);
   const [pageState, setPageState] = useState('board');
+  const [anchorEl, setAnchorEl] = useState(null);
   const goMain = () => {
     history.push('/');
+  };
+
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -41,9 +54,21 @@ function Header() {
         <IconButton component={RouterLink} to='/dm'>
           <SendIcon />
         </IconButton>
-        <IconButton component={RouterLink} to='/user'>
+        <IconButton onClick={handleClick}>
           <PersonIcon />
         </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
       </div>
     </header>
   );

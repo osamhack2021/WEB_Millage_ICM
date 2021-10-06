@@ -6,6 +6,7 @@ import {EventsModule} from './events/events.module';
 import {UserModule} from './user/user.module';
 import {BoardModule} from './board/board.module';
 import {UnitModule} from './unit/unit.module';
+import {MessageModule} from './message/message.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import {UnitModule} from './unit/unit.module';
     UserModule,
     BoardModule,
     UnitModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

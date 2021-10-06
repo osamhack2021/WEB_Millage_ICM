@@ -1,45 +1,35 @@
 import * as React from 'react';
-import {
-  Button,
-  Dialog as _Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from '@mui/material';
-import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
+import {Dialog as _Dialog} from '@mui/material';
+import AddModal from './AddModal';
+import EditModal from './EditModal';
+import DeleteModal from './DeleteModal';
+import 'react-calendar/dist/Calendar.css';
+
+type StateTypes = 'add' | 'edit' | 'delete';
 
 interface Props {
   visible: boolean
-  handleOpen: () => void
   handleClose: () => void
+  state: StateTypes
 };
 
-const Dialog: React.FC<Props> = ({visible, handleOpen, handleClose}) => {
-  const [value, setValue] = React.useState<
-    [Date?, Date?] | null
-  >([new Date(), new Date()]);
-  // setEvents([{
-  //   id: '3',
-  //   title: 'test',
-  //   start: new Date(),
-  // }, ...events]);
+const Dialog: React.FC<Props> = ({visible, handleClose, state}) => {
+  const addEvents = () => {};
+  const editEvents = () => {};
+  const deleteEvents = () => {};
 
   return (
     <_Dialog
       open={visible}
       onClose={handleClose}
     >
-      <DialogTitle>일정 선택</DialogTitle>
-      <DialogContent>
-        <DateTimeRangePicker
-          value={value}
-          onChange={setValue}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>취소</Button>
-        <Button onClick={handleClose}>추가</Button>
-      </DialogActions>
+      {
+        state === 'add' ?
+        <AddModal handleClose={handleClose} handleSubmit={addEvents}/> :
+        state === 'edit' ?
+        <EditModal handleClose={handleClose} handleSubmit={editEvents}/> :
+        <DeleteModal handleClose={handleClose} handleSubmit={deleteEvents}/>
+      }
     </_Dialog>
   );
 };
