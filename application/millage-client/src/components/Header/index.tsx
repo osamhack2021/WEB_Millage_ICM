@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import './header.css';
+import {XLayout} from '@components/common';
 
 function Header() {
   const history = useHistory();
@@ -29,47 +30,53 @@ function Header() {
 
   return (
     <header className="header">
-      <div className="logo" onClick={()=>goMain()}>
-        <img src='img/logo.png'/>
-        <div className="unitNameContainer">
-          <div className="millage">
-            밀리지
-          </div>
-          <div className="unitName">
-            {user.session.unit.name}
+      <XLayout className='h-full flex justify-between items-center'>
+        <div className="logo" onClick={()=>goMain()}>
+          <img src='img/logo.png'/>
+          <div className="unitNameContainer">
+            <div className="millage">
+              밀리지
+            </div>
+            <div className="unitName">
+              {user.session.unit.name}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="navigation">
-        <RouterLink className={pageState == 'board' ? 'enabled' : ''}
-          to='/' onClick={()=>setPageState('board')}>게시판</RouterLink>
-        <RouterLink className={pageState == 'schedule' ? 'enabled' : ''}
-          to='/schedule' onClick={()=>setPageState('schedule')}>캘린더</RouterLink>
-        <RouterLink className={pageState == 'reserve' ? 'enabled' : ''}
-          to='/schedule' onClick={()=>setPageState('reserve')}>시설예약</RouterLink>
-        <RouterLink className={pageState == 'globalboard' ? 'enabled' : ''}
-          to='/' onClick={()=>setPageState('globalboard')}>전군게시판</RouterLink>
-      </div>
-      <div className="buttons">
-        <IconButton component={RouterLink} to='/dm'>
-          <SendIcon />
-        </IconButton>
-        <IconButton onClick={handleClick}>
-          <PersonIcon />
-        </IconButton>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
-          }}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-      </div>
+        <div className="navigation">
+          <RouterLink className={pageState == 'board' ? 'enabled' : ''}
+            to='/' onClick={()=>setPageState('board')}>게시판</RouterLink>
+          <RouterLink className={pageState == 'schedule' ? 'enabled' : ''}
+            to='/schedule' onClick={()=>setPageState('schedule')}>
+              캘린더
+          </RouterLink>
+          <RouterLink className={pageState == 'reserve' ? 'enabled' : ''}
+            to='/schedule' onClick={()=>setPageState('reserve')}>
+              시설예약
+          </RouterLink>
+          <RouterLink className={pageState == 'globalboard' ? 'enabled' : ''}
+            to='/' onClick={()=>setPageState('globalboard')}>전군게시판</RouterLink>
+        </div>
+        <div className="buttons">
+          <IconButton component={RouterLink} to='/dm'>
+            <SendIcon />
+          </IconButton>
+          <IconButton onClick={handleClick}>
+            <PersonIcon />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
+      </XLayout>
     </header>
   );
 }
