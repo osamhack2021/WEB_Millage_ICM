@@ -31,7 +31,7 @@ export class BoardController {
     } catch (err) {
       return {
         result: 'error',
-        message: err,
+        message: err.message,
       };
     }
   }
@@ -42,7 +42,7 @@ export class BoardController {
       const savedBoard = await this.boardService.create(boardData);
       return {result: Result.SUCCESS, board: savedBoard};
     } catch (err) {
-      return {result: Result.ERROR, message: err};
+      return {result: Result.ERROR, message: err.message};
     }
   }
 
@@ -61,7 +61,7 @@ export class BoardController {
     } catch (err) {
       return {
         result: Result.ERROR,
-        message: err,
+        message: err.message,
       };
     }
   }
