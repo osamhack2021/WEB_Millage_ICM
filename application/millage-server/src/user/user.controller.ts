@@ -7,7 +7,7 @@ import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
-import {Result} from '../common/common.interface';
+import {Result, ResultObject} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('user')
@@ -63,5 +63,18 @@ export class UserController {
         message: err,
       };
     }
+  }
+
+  @Get('logout')
+  async logout(@Req() req: Request): Promise<ResultObject> {
+    req.session.destroy((err) => {
+      if (err) {
+        return {
+          result: Result.ERROR,
+          message: err.message,
+        };
+      }
+    });
+    return {result: Result.SUCCESS};
   }
 }
