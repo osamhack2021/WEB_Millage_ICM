@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {PostEntity} from '../post/post.entity';
 import {BoardEntity} from './board.entity';
 
@@ -18,4 +19,9 @@ export interface PaginationObject {
     curPage: number;
     totalCounts: number;
     totalPages: number;
+}
+
+export enum AuthType {
+    ALL = 0,
+    ADMIN = 1,
 }

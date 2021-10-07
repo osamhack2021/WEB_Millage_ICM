@@ -53,7 +53,7 @@ export class MessageService {
       relations: ['sender', 'receiver'],
       order: {
         createdAt: 'DESC',
-      }
+      },
     });
 
     const result : MessageData[] = await messages.map((m) => {
