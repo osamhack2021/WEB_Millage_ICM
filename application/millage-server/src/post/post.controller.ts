@@ -34,7 +34,7 @@ export class PostController {
       return {
         result: Result.SUCCESS,
         post: selectedPost,
-      }
+      };
     } catch (err) {
       return {
         result: Result.ERROR,
