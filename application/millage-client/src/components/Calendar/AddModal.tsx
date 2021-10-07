@@ -12,7 +12,7 @@ type DateRangeType = [Date?, Date?] | null;
 
 interface Props {
   handleClose: () => void
-  handleSubmit: () => void
+  handleSubmit: (e?: any) => void
 }
 
 const AddModal: React.FC<Props> = ({handleClose, handleSubmit}) => {
@@ -20,7 +20,7 @@ const AddModal: React.FC<Props> = ({handleClose, handleSubmit}) => {
     DateRangeType
   >([new Date(), new Date()]);
 
-  const handleDate = (val: DateRangeType) => {
+  const handleDateRange = (val: DateRangeType) => {
     if (Array.isArray(val)) setDateRange(val);
   };
 
@@ -29,24 +29,23 @@ const AddModal: React.FC<Props> = ({handleClose, handleSubmit}) => {
       <DialogTitle>일정 추가하기</DialogTitle>
       <DialogContent>
         <TextField
+          label='제목'
           autoFocus
           required
           fullWidth
           margin='dense'
-          label='제목'
         />
         <TextField
+          label='내용'
           required
           fullWidth
           margin='dense'
-          label='내용'
-          id='event-contents'
         />
         <div style={{minHeight: 375}}>
           <label>기간: </label>
           <DateTimeRangePicker
             value={dateRange}
-            onChange={handleDate}
+            onChange={handleDateRange}
             locale='en-US'
             format='y. MM. dd H:mm'
             disableClock
@@ -55,7 +54,7 @@ const AddModal: React.FC<Props> = ({handleClose, handleSubmit}) => {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>취소</Button>
+        <Button onClick={handleClose}>닫기</Button>
         <Button onClick={handleSubmit}>추가</Button>
       </DialogActions>
     </>

@@ -1,10 +1,7 @@
 import * as React from 'react';
-import FullCalendar, {
-  EventInput,
-  CustomButtonInput,
-} from '@fullcalendar/react';
+import {useSchedule} from '@hooks/Schedule';
+import FullCalendar, {CustomButtonInput} from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Dialog from './Dialog';
 import './Calendar.css';
@@ -12,18 +9,8 @@ import './Calendar.css';
 const Calendar: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [state, setState] = React.useState<'add' | 'edit' | 'delete'>('add');
-  const [events, setEvents] = React.useState<Array<EventInput>>([{
-    id: '1',
-    title: 'hello',
-    start: new Date('2021-10-23 12:00'),
-    end: new Date('2021-10-24 12:00'),
-    content: 'test1',
-  }, {
-    id: '2',
-    title: 'dang jik',
-    start: new Date('2021-10-28'),
-    content: 'test2',
-  }]);
+
+  const [scheduleList] = useSchedule();
 
   const handleOpen = () => setVisible(true);
   const handleClose = () => setVisible(false);
@@ -55,38 +42,23 @@ const Calendar: React.FC = () => {
   return (
     <>
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin]}
         locale='ko'
         dayCellContent={({date}) => date.getDate()}
         weekNumbers
         weekNumberContent={(week) => `${week.num}주차`}
-        height={1000}
         headerToolbar={{
           start: 'prev,next today',
           center: 'addEvents,editEvents,deleteEvents',
           end: 'dayGridMonth,timeGridWeek,timeGridDay',
         }}
-        events={events}
-        editable
+        events={scheduleList}
         fixedWeekCount={false}
         customButtons={{
           addEvents,
           editEvents,
           deleteEvents,
         }}
-        eventDrop={(({event}) => {
-          console.log(event.toJSON());
-          const tmp: EventInput = {
-            id: event.id,
-            groupId: event.groupId,
-            title: event.title,
-            extendedProps: event.extendedProps,
-            start: event.start ? event.start : undefined,
-            end: event.end ? event.end : undefined,
-            color: event.textColor,
-          };
-          setEvents([tmp, ...events.filter((e) => e.id != tmp.id)]);
-        })}
       />
       <Dialog
         visible={visible}

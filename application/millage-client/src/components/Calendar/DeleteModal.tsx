@@ -12,7 +12,7 @@ type DateRangeType = [Date?, Date?] | null;
 
 interface Props {
   handleClose: () => void
-  handleSubmit: () => void
+  handleSubmit: (e?: any) => void
 }
 
 const DeleteModal: React.FC<Props> = ({handleClose, handleSubmit}) => {
