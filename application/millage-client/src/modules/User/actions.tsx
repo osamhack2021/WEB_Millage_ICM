@@ -28,6 +28,15 @@ export const CHECK_SESSION_SUCCESS =
 export const CHECK_SESSION_FAIL =
 'USER/CHECK_SESSION_FAIL' as const;
 
+export const UPDATE_UNREAD_REQUEST =
+'USER/UPDATE_UNREAD_REQUEST' as const;
+
+export const UPDATE_UNREAD_SUCCESS =
+'USER/UPDATE_UNREAD_SUCCESS' as const;
+
+export const UPDATE_UNREAD_FAIL =
+'USER/UPDATE_UNREAD_FAIL' as const;
+
 export const createUserAsync = createAsyncAction(
     CREATE_USER_REQUEST,
     CREATE_USER_SUCCESS,
@@ -48,3 +57,8 @@ export const checkSessionAsync = createAsyncAction(
 )<undefined, UserState, UserState>();
 
 
+export const updateUnreadAsync = createAsyncAction(
+    UPDATE_UNREAD_REQUEST,
+    UPDATE_UNREAD_SUCCESS,
+    UPDATE_UNREAD_FAIL,
+)<undefined, UserState, UserState>();

@@ -21,6 +21,14 @@ export class MessageController {
     return true;
   }
 
+  @Get('unread')
+  async getUnreadMessageCount(@Req() request: Request) : Promise<number> {
+    if (!this.checkAuth(request)) {
+      return 0;
+    } else {
+      return await this.messageService.getUnreadMessageCount(+request.session.user.id);
+    }
+  }
 
   @Get('messagebox/list')
   async getMessageBoxList(@Req() request : Request) : Promise<MessageRO> {

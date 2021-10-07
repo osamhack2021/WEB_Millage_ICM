@@ -26,7 +26,26 @@ export async function sessionApi() : Promise<UserState> {
   try {
     const session = await axios.get(`${SERVER}/user/session`,
         {withCredentials: true});
-    return session.data;
+
+    const unread = await axios.get(`${SERVER}/message/unread`,
+        {withCredentials: true});
+
+    const ro = session.data;
+    ro.unread = unread.data;
+    return ro;
+  } catch (err: any) {
+    return {result: 'error'};
+  }
+}
+
+export async function updateUnreadApi() : Promise<UserState> {
+  try {
+    const unread = await axios.get(`${SERVER}/message/unread`,
+        {withCredentials: true});
+    return {
+      result: 'success',
+      unread: unread.data,
+    };
   } catch (err: any) {
     return {result: 'error'};
   }

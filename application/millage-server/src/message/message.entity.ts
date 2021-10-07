@@ -1,6 +1,7 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
   Column,
   ManyToOne,
   JoinTable,
@@ -24,11 +25,11 @@ export class MessageEntity {
     anonymous: boolean;
 
     @Column({
-      type: 'timestamp',
-      default: () => {
-        'CURRENT_TIMESTAMP';
-      },
+      default: false,
     })
+    read: boolean;
+
+    @CreateDateColumn()
     createdAt: string;
 
     @ManyToOne((type) => UserEntity)
