@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
 import {PostType} from './post.interface';
-import {CreatePostDto} from './dto';
+import {CreatePostDto, UpdatePostDto} from './dto';
 import {PollItemEntity} from './poll/poll_item.entity';
 
 @Injectable()
@@ -52,6 +52,33 @@ export class PostService {
       return await this.postRepository.findOne(
           id, {relations: ['pollItems', 'images']}
       );
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  async delete(id: number): Promise<boolean> {
+    try {
+      if (!(await this.postRepository.delete(id)).affected) {
+        return false;
+      }
+      return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  async update(id: number, postdata: UpdatePostDto): Promise<boolean> {
+    const previousPost = await this.postRepository.findOne(id);
+    if (previousPost === undefined) {
+      throw new Error(`Cannot find post by id ${id}`);
+    }
+    try {
+      const changes = this.postRepository.create(postdata);
+      if (!(await this.postRepository.update(id, changes)).affected) {
+        return false;
+      }
+      return true;
     } catch (err) {
       throw new Error(err.message);
     }

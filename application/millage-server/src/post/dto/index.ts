@@ -1,2 +1,3 @@
 export {CreatePostDto} from './create-post.dto';
-export {GetPostParams} from './get-post-params';
+export {UpdatePostDto} from './update-post.dto';
+export {PostParams, GetPostParams} from './params';

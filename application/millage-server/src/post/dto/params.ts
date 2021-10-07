@@ -1,6 +1,9 @@
 import {IsNumberString} from 'class-validator';
 
-export class GetPostParams {
+export class PostParams {
   @IsNumberString()
   id: number;
+}
+
+export class GetPostParams extends PostParams {
 }
