@@ -22,7 +22,7 @@ export class BoardService {
   async getBoardList(id: number) : Promise<BoardEntity[]> {
     const list = await this.boardRepository.find({
       where: {
-        unit: id,
+        unitId: id,
       },
     });
 
