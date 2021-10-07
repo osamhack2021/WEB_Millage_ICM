@@ -5,5 +5,6 @@
     "rules": {
       "require-jsdoc": 0,
       "no-multi-spaces": 0,
+      "no-unused-vars": 0
     }
 }
