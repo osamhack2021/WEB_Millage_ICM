@@ -10,12 +10,13 @@ export class ImageService {
     private readonly imageRepository: Repository<ImageEntity>,
   ) {}
 
-  async uploadMultipleImages(files: Array<Express.Multer.File>) {
+  async uploadImages(postId: number, files: Array<Express.Multer.File>) {
     const filenames = [];
     files.forEach((file) => {
       const fileInfo = {
         url: file.filename,
         originalname: file.originalname,
+        postId,
       };
       filenames.push(fileInfo);
     });

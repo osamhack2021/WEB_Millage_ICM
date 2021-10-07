@@ -2,10 +2,9 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
-import {PostRO, PostType} from './post.interface';
+import {PostType} from './post.interface';
 import {CreatePostDto} from './dto';
 import {PollItemEntity} from './poll/poll_item.entity';
-import {Result} from 'src/common/common.interface';
 
 @Injectable()
 export class PostService {
@@ -23,7 +22,7 @@ export class PostService {
   ): Promise<PollItemEntity> {
     const newPollItem = new PollItemEntity();
     newPollItem.description = description;
-    newPollItem.postId =postId;
+    newPollItem.postId = postId;
     return this.pollItemRepository.save(newPollItem);
   }
 
@@ -34,7 +33,7 @@ export class PostService {
     return;
   }
 
-  async create(dto: CreatePostDto): Promise<PostRO> {
+  async create(dto: CreatePostDto): Promise<PostEntity> {
     const newPost: PostEntity = this.postRepository.create(dto);
     const {pollList} = dto;
     try {
@@ -42,15 +41,19 @@ export class PostService {
       if (savedPost.postType === PostType.POLL) {
         await this.createPoll(savedPost.id, pollList);
       }
-      return {
-        result: Result.SUCCESS,
-        post: savedPost,
-      };
+      return savedPost;
     } catch (err) {
-      return {
-        result: Result.FAIL,
-        message: err,
-      };
+      throw new Error(err.message);
+    }
+  }
+
+  async get(id: number): Promise<PostEntity> {
+    try {
+      return await this.postRepository.findOne(
+          id, {relations: ['pollItems', 'images']}
+      );
+    } catch (err) {
+      throw new Error(err.message);
     }
   }
 }

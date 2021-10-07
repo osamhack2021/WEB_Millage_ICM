@@ -38,6 +38,11 @@ function DM() {
     console.log(data);
   });
 
+  const getMessage = (id: number) => {
+    console.log(id);
+    dispatch(getMessagesAsync.request(id));
+  };
+
   useEffect(() => {
     dispatch(getMessageBoxListAsync.request());
     socket.emit('subscribe',

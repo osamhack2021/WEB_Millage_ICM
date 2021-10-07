@@ -14,7 +14,6 @@ interface connection{
   [key: number]: Socket;
 }
 
-
 @WebSocketGateway({transports: ['websocket']})
 export class EventsGateway implements OnGatewayConnection {
   private connectedUsers : connection = {};

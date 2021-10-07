@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, JoinColumn
 
 import {UnitEntity} from '../unit/unit.entity';
 import {PostEntity} from '../post/post.entity';
-import {PaginationObject} from './board.interface';
+import {PaginationObject, AuthType} from './board.interface';
 
 @Entity('board')
 export class BoardEntity {
@@ -24,7 +24,7 @@ export class BoardEntity {
   createdAt: string;
 
   @Column() // 권한 부여 관련 테이블 설계 필요
-  auth: number;
+  auth: AuthType;
 
   @Column({type: 'boolean', default: false})
   anonymous: boolean;
