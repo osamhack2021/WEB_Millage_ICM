@@ -67,15 +67,22 @@ export class UserController {
 
   @Get('logout')
   async logout(@Req() req: Request): Promise<ResultObject> {
-    req.session.destroy((err) => {
-      if (err) {
-        return {
-          result: Result.ERROR,
-          message: err.message,
-        };
-      }
-    });
-    return {result: Result.SUCCESS};
+    try {
+      await new Promise((res, rej) => {
+        req.session.destroy((err) => {
+          if (err) {
+            rej(err);
+          }
+          res(true);
+        });
+      });
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
   }
 
   @Patch(':id')
