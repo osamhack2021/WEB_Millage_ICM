@@ -6,12 +6,12 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {BOARD_PATH} from '@constants';
 import {useBoardViewPath} from '@hooks/board';
 
-type Props = Pick<Board, 'authorityToWrite'>;
+type Props = Pick<Board, 'auth'>;
 type SearchInput = {
   query: string;
 }
 
-const BoardBoxTop: React.FC<Props> = ({authorityToWrite}) => {
+const BoardBoxTop: React.FC<Props> = ({auth}) => {
   const history = useHistory();
   const {query, boardId} = useBoardViewPath();
 
@@ -43,7 +43,7 @@ const BoardBoxTop: React.FC<Props> = ({authorityToWrite}) => {
         </button>
       </div>
 
-      { authorityToWrite === 'all' &&
+      { auth === 0 &&
         <Link
           to='/create'
           className='px-4 py-2 ring-1 ring-gray-500'

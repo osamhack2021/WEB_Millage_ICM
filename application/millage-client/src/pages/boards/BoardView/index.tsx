@@ -53,14 +53,14 @@ function BoardViewPage() {
       className=''
     >
       {/* Title */}
-      <h1 className='text-3xl mb-4 p-6 ring-1 ring-gray-500'>{data.name}</h1>
+      <h1 className='text-3xl mb-4 p-6 ring-1 ring-gray-500'>{data.title}</h1>
 
       {/* Main Component */}
       <div className='
         max-w-screen-lg flex-1 w-full
         p-8 ring-1 ring-gray-500 min-h-full flex flex-col
       '>
-        <BoardBoxTop authorityToWrite={data.authorityToWrite} />
+        <BoardBoxTop auth={data.auth} />
 
         {/* Post List Component */}
         { data.posts &&
