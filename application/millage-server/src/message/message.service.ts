@@ -53,7 +53,7 @@ export class MessageService {
       relations: ['sender', 'receiver'],
       order: {
         createdAt: 'DESC',
-      },
+      }
     });
 
     const result : MessageData[] = await messages.map((m) => {
@@ -76,7 +76,7 @@ export class MessageService {
 
 
   async sendMessage(receiverId: number, senderId: number, message: string, anonymous: boolean): Promise<ResultObject> {
-    this.messageRepository.save({
+    await this.messageRepository.save({
       senderId: senderId,
       receiverId: receiverId,
       message: message,
