@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Repository, getRepository} from 'typeorm';
 import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
-import {CreateUserDto, LoginUserDto} from './dto';
+import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 import {validate} from 'class-validator';
 import * as argon2 from 'argon2';
 import {UserRoleEntity} from '../user_role/user_role.entity';
@@ -89,6 +89,22 @@ export class UserService {
     const result= await argon2.verify(user.password, password);
     if (result) return user;
     else return null;
+  }
+
+  async update(id: number, dto: UpdateUserDto): Promise<boolean> {
+    const previousUser = await this.userRepository.findOne(id);
+    if (previousUser === undefined) {
+      throw new Error(`Cannot find user by id ${id}`);
+    }
+    try {
+      const changes = this.userRepository.create(dto);
+      if (!(await this.userRepository.update(id, changes)).affected) {
+        return false;
+      }
+      return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
   }
 
 

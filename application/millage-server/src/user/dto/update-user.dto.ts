@@ -1,7 +1,7 @@
+import {OmitType} from '@nestjs/swagger';
+import {CreateUserDto} from '.';
 
-export class UpdateUserDto {
-  readonly username: string;
-  readonly email: string;
-  readonly bio: string;
-  readonly image: string;
-}
+export class UpdateUserDto extends OmitType(
+    CreateUserDto,
+    ['unitId', 'roleId'] as const,
+) {}
