@@ -1,13 +1,13 @@
-import {Get, Post, Body, Req, Controller, UsePipes} from '@nestjs/common';
+import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch} from '@nestjs/common';
 import {Request} from 'express';
 import {UserService} from './user.service';
 import {UserRO} from './user.interface';
-import {CreateUserDto, LoginUserDto} from './dto';
+import {CreateUserDto, LoginUserDto, UpdateUserDto, UserParams} from './dto';
 import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
-import {Result} from '../common/common.interface';
+import {Result, ResultObject} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('user')
@@ -62,6 +62,41 @@ export class UserController {
         result: Result.SUCCESS,
         message: err,
       };
+    }
+  }
+
+  @Get('logout')
+  async logout(@Req() req: Request): Promise<ResultObject> {
+    try {
+      await new Promise((res, rej) => {
+        req.session.destroy((err) => {
+          if (err) {
+            rej(err);
+          }
+          res(true);
+        });
+      });
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
+
+  @Patch(':id')
+  async update(
+    @Param() params: UserParams,
+    @Body() dto: UpdateUserDto
+  ): Promise<ResultObject> {
+    try {
+      if (await this.userService.update(params.id, dto)) {
+        return {result: Result.SUCCESS};
+      }
+      return {result: Result.FAIL, message: 'Nothing changed'};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
     }
   }
 }

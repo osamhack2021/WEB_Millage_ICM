@@ -65,7 +65,7 @@ export class PostController {
   async update(
     @Param() params: PostParams,
     @Body() postdata: UpdatePostDto
-  ): Promise<PostRO> {
+  ): Promise<ResultObject> {
     try {
       if (await this.postService.update(params.id, postdata)) {
         return {result: Result.SUCCESS};
