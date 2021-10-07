@@ -1,5 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {apiGetScheduleList} from './api';
+import {getScheduleListApi} from './api';
 import {Schedules} from './types';
 import {getScheduleListAsync} from './actions';
 
@@ -7,9 +7,9 @@ function* getScheduleListSaga(
     action: ReturnType<typeof getScheduleListAsync.request>,
 ) {
   try {
-    const response : Schedules = yield call(apiGetScheduleList);
+    const response : Schedules = yield call(getScheduleListApi);
     yield put(getScheduleListAsync.success(response));
-  } catch (error : any) {
+  } catch (error: any) {
     yield put(getScheduleListAsync.failure(error));
   }
 }

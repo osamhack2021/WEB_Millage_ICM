@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {useSchedule} from '@hooks/Schedule';
+import type {EventData} from '@modules/Schedule/types';
 import {Dialog as _Dialog} from '@mui/material';
 import AddModal from './AddModal';
 import EditModal from './EditModal';
@@ -14,9 +16,22 @@ interface Props {
 };
 
 const Dialog: React.FC<Props> = ({visible, handleClose, state}) => {
-  const addEvents = () => {};
-  const editEvents = () => {};
-  const deleteEvents = () => {};
+  const [
+    _scheduleList,
+    createSchedule,
+    updateSchedule,
+    deleteSchedule,
+  ] = useSchedule();
+
+  const addEvents = (event: EventData) => {
+    createSchedule(event);
+  };
+  const editEvents = (event: EventData) => {
+    updateSchedule(event);
+  };
+  const deleteEvents = (id: string) => {
+    deleteSchedule(id);
+  };
 
   return (
     <_Dialog
