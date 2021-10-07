@@ -18,9 +18,6 @@ export class PostEntity {
   @Column({type: 'text'})
   content: string;
 
-  @Column({type: 'text'})
-  imageURL: string;
-
   @Column({
     type: 'timestamp',
     default: () => {

@@ -1,8 +1,8 @@
-import {Get, Post, Body, Controller, Param, Delete} from '@nestjs/common';
+import {Get, Post, Body, Controller, Param, Delete, Patch} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {PostService} from './post.service';
 import {PostRO} from './post.interface';
-import {CreatePostDto, PostParams, GetPostParams} from './dto';
+import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto} from './dto';
 import {Result, ResultObject} from '../common/common.interface';
 
 @ApiBearerAuth()
@@ -53,6 +53,24 @@ export class PostController {
         };
       }
       return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
+
+  @Patch(':id')
+  async update(
+    @Param() params: PostParams,
+    @Body() postdata: UpdatePostDto
+  ): Promise<PostRO> {
+    try {
+      if (await this.postService.update(params.id, postdata)) {
+        return {result: Result.SUCCESS};
+      }
+      return {result: Result.FAIL, message: 'Nothing changed'};
     } catch (err) {
       return {
         result: Result.ERROR,
