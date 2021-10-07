@@ -56,4 +56,15 @@ export class PostService {
       throw new Error(err.message);
     }
   }
+
+  async delete(id: number): Promise<boolean> {
+    try {
+      if (!(await this.postRepository.delete(id)).affected) {
+        return false;
+      }
+      return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
 }

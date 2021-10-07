@@ -1,9 +1,9 @@
-import {Get, Post, Body, Controller, Param} from '@nestjs/common';
+import {Get, Post, Body, Controller, Param, Delete} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {PostService} from './post.service';
 import {PostRO} from './post.interface';
-import {CreatePostDto, GetPostParams} from './dto';
-import {Result} from '../common/common.interface';
+import {CreatePostDto, PostParams, GetPostParams} from './dto';
+import {Result, ResultObject} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('post')
@@ -35,6 +35,24 @@ export class PostController {
         result: Result.SUCCESS,
         post: selectedPost,
       };
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
+
+  @Delete(':id')
+  async delete(@Param() params: PostParams): Promise<ResultObject> {
+    try {
+      if (!(await this.postService.delete(params.id))) {
+        return {
+          result: Result.FAIL,
+          message: 'Nothing affected',
+        };
+      }
+      return {result: Result.SUCCESS};
     } catch (err) {
       return {
         result: Result.ERROR,
