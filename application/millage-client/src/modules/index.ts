@@ -15,6 +15,7 @@ import {
   checkSessionListener,
   createUserSagaListener,
   loginSagaListener,
+  updateUnreadListener,
 } from './User/sagas';
 import {
   getUnitListSagaListener,
@@ -41,6 +42,7 @@ export function* rootSaga() {
     boardSaga(),
     getUnitListSagaListener(),
     scheduleSaga(),
+    updateUnreadListener(),
   ]);
 }
 

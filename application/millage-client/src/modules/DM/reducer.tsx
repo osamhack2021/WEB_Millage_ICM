@@ -19,6 +19,7 @@ const initialState: DMState = {
 const DMReducer = createReducer<DMState, DMAction>(initialState, {
   [GET_MESSAGEBOX_LIST]: (state, action) => ({
     ...state,
+    messages: [],
   }),
   [GET_MESSAGEBOX_LIST_SUCCESS]: (state, action) => ({
     ...state,

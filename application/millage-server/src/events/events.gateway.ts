@@ -27,7 +27,6 @@ export class EventsGateway implements OnGatewayConnection {
     @SubscribeMessage('subscribe')
     handleEvent(@MessageBody() data: any,
     @ConnectedSocket() client: Socket) {
-      console.log('a user has connected: ' + data.id);
       this.connectedUsers[data.id] = client;
     }
 
@@ -38,15 +37,13 @@ export class EventsGateway implements OnGatewayConnection {
         senderId: data.senderId,
         receiverId: data.receiverId,
         anonyomus: data.anonymous,
+        time: data.time,
       };
 
-      await this.messageService.sendMessage(+data.receiverId, +data.senderId,data.message, data.anonymous);
+      await this.messageService.sendMessage(+data.receiverId, +data.senderId, data.message, data.anonymous);
 
-      if(this.connectedUsers[data.receiverId]){
-        console.log('send message to ' + data.receiverId);
-        this.connectedUsers[data.receiverId].emit('msgToClient',data);
-      } else{
-        console.log('receiver not connected');
+      if (this.connectedUsers[data.receiverId]) {
+        this.connectedUsers[data.receiverId].emit('msgToClient', res);
       }
     }
 }

@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {io} from 'socket.io-client';
-import {SOCKET_SERVER} from '@constants';
 import './DM.css';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import {getMessageBoxListAsync, getMessagesAsync} from '@modules/DM/actions';
+import {MessageBox} from '@modules/DM/types';
+import {updateUnreadAsync} from '@modules/User/actions';
 
 interface MessageInterface {
   message: string;
 }
 
-export interface MessageData{
+interface NewMessageInterface{
+  message: string;
+  time: string;
+}
+
+interface MessageData{
   id: number;
   receiverId: number;
   senderId: number;
@@ -21,27 +26,38 @@ export interface MessageData{
 
 function DM() {
   const dispatch = useDispatch();
-
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
   const user = useSelector((state: any) => state.user);
   const session = user.session;
   const messages = useSelector((state: any) => state.DM.messages);
-  const {register, handleSubmit} = useForm<MessageInterface>();
-  const [socket] = useState(io(SOCKET_SERVER, {transports: ['websocket']}));
+  const {register, handleSubmit, setValue} = useForm<MessageInterface>();
+  const socket = useSelector((state: any) => state.user.socket);
   const [receiverId, setReceiverId] = useState(-1);
-  const getMessage = (id: number) => {
-    dispatch(getMessagesAsync.request(id));
-    setReceiverId(id);
+  const [receiverName, setReceiverName] = useState('');
+  const [newMessages, setNewMessages] = useState<NewMessageInterface[]>([]);
+  const [anonymous, setAnonymous] = useState(false);
+  const [localMessageBoxes, setLocalMessageBoxes]= useState<MessageBox[]>([]);
+  const getMessage = (id: number, rId: number, name: string) => {
+    setReceiverId(rId);
+    setReceiverName(name);
+    setNewMessages([]);
+    if (name === '익명') {
+      setAnonymous(true);
+    }
+    dispatch(getMessagesAsync.request(rId));
+
+    const clone = JSON.parse(JSON.stringify(localMessageBoxes));
+    clone[id].unread = 0;
+    setLocalMessageBoxes(clone);
   };
 
   socket.on('msgToClient', (data:MessageData) => {
-    console.log(data);
+    const m = {
+      time: data.time,
+      message: data.message,
+    };
+    setNewMessages([...newMessages, m]);
   });
-
-  const getMessage = (id: number) => {
-    console.log(id);
-    dispatch(getMessagesAsync.request(id));
-  };
 
   useEffect(() => {
     dispatch(getMessageBoxListAsync.request());
@@ -50,15 +66,21 @@ function DM() {
   }, [dispatch]);
 
   useEffect(() => {
-    // console.log(messages);
+    setLocalMessageBoxes(messageboxes);
+  }, [messageboxes]);
+
+  useEffect(() => {
+    dispatch(updateUnreadAsync.request());
   }, [messages]);
 
   const renderMessageBoxes = () => {
-    return messageboxes.map((mb: any) => {
+    return localMessageBoxes.map((mb: any, idx: number) => {
       return (
         <div>
-          <button onClick={()=>getMessage(mb.senderId)}
-            key={mb.id}>{mb.message}
+          <button className={receiverId == mb.senderId ? 'enabled' : ''}
+            onClick={()=>getMessage(idx, mb.senderId, mb.senderName)}
+            key={mb.id}>
+            {mb.senderName} {mb.message} {mb.unread}
           </button>
         </div>
       );
@@ -69,22 +91,44 @@ function DM() {
     return messages.map((m: any) => {
       return (
         <div key={m.id}>
-          {m.message}
+          {m.time} {m.message}
         </div>
       );
     });
   };
 
+  const renderNewMessages = () => {
+    return newMessages.map((m: any) => {
+      return (
+        <div key={m.time}>
+          {m.time} {m.message}
+        </div>
+      );
+    });
+  };
+
+
   const onSubmit: SubmitHandler<MessageData> = (data, e) => {
     if (e) {
       e.preventDefault();
     }
+    let now = new Date().toLocaleString();
+    now = now.substring(0, now.length - 2);
     socket.emit('msgToServer', {
       message: data.message,
       senderId: session.id,
       receiverId: receiverId,
-      anonymous: false,
+      anonymous: anonymous,
+      time: now,
     });
+
+    const m = {
+      time: now,
+      message: data.message,
+    };
+
+    setNewMessages([...newMessages, m]);
+    setValue('message', '');
   };
 
   return (
@@ -98,13 +142,17 @@ function DM() {
         </div>
       </div>
       <div id="messages">
-        <div className="title"></div>
+        <div className="title">
+          {receiverName}
+        </div>
         <div className="items"></div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}
+          className={receiverId != -1 ? '' : 'hide'}>
           {renderMessages()}
-          <input type="text" placeholder="메시지 입력"
-            {...register('message', {})}
-          />
+          {renderNewMessages()}
+          <input
+            type="text" placeholder="메시지 입력"
+            {...register('message', {})} />
         </form>
       </div>
     </div>

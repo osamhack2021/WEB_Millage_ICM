@@ -1,16 +1,18 @@
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
-
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import './header.css';
 import {XLayout} from '@components/common';
+import {updateUnreadAsync} from '@modules/User/actions';
 
 function Header() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state: any) => state.user);
   const [pageState, setPageState] = useState('board');
@@ -19,7 +21,6 @@ function Header() {
     history.push('/');
   };
 
-
   const open = Boolean(anchorEl);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -27,6 +28,15 @@ function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const goToDM = () => {
+    setPageState('');
+    history.push('/dm');
+  };
+
+  useEffect(()=> {
+    dispatch(updateUnreadAsync.request());
+  }, []);
 
   return (
     <header className="header">
@@ -57,8 +67,10 @@ function Header() {
             to='/' onClick={()=>setPageState('globalboard')}>전군게시판</RouterLink>
         </div>
         <div className="buttons">
-          <IconButton component={RouterLink} to='/dm'>
-            <SendIcon />
+          <IconButton onClick={goToDM}>
+            <Badge badgeContent={user.unread} max={10} color="primary">
+              <SendIcon />
+            </Badge>
           </IconButton>
           <IconButton onClick={handleClick}>
             <PersonIcon />
