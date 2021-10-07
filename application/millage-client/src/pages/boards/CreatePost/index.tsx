@@ -104,11 +104,11 @@ function CreatePostPage() {
       window.alert('게시판을 선택해주세요.');
       return;
     }
-    if (!selectedBoard.allowPoll && postType === POLL) {
+    if (!selectedBoard.pollAllowed && postType === POLL) {
       window.alert('게시글 타입을 선택해주세요.');
       return;
     }
-    if (!selectedBoard.allowRecruit && postType === RECRUIT) {
+    if (!selectedBoard.recruitAllowed && postType === RECRUIT) {
       window.alert('게시글 타입을 선택해주세요.');
       return;
     }
@@ -152,17 +152,17 @@ function CreatePostPage() {
                   return <em>선택해주세요</em>;
                 }
 
-                return boardList?.find((b) => b.id === selected)?.name;
+                return boardList?.find((b) => b.id === selected)?.title;
               }}
             >
               {boardList?.map( (b) =>
-                <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>,
+                <MenuItem key={b.id} value={b.id}>{b.title}</MenuItem>,
               )}
             </Select>
           </FormControl>
         </div>
 
-        { (selectedBoard?.allowPoll || selectedBoard?.allowRecruit) &&
+        { (selectedBoard?.pollAllowed || selectedBoard?.recruitAllowed) &&
           <RadioGroup
             row
             value={postType}
@@ -176,14 +176,14 @@ function CreatePostPage() {
               control={<Radio />}
               label="일반 게시글"
             />
-            { selectedBoard?.allowPoll &&
+            { selectedBoard?.pollAllowed &&
               <FormControlLabel
                 value={POLL}
                 control={<Radio />}
                 label="설문 게시글"
               />
             }
-            { selectedBoard?.allowRecruit &&
+            { selectedBoard?.recruitAllowed &&
               <FormControlLabel
                 value={RECRUIT}
                 control={<Radio />}
@@ -217,7 +217,7 @@ function CreatePostPage() {
         {/* react-dropzone 사용하기 */}
 
         {/* 설문 기능 */}
-        { selectedBoard?.allowPoll && postType === POLL &&
+        { selectedBoard?.pollAllowed && postType === POLL &&
           <div className='w-full'>
             <h3 className='text-xl mt-4 mb-2' >설문지 만들기</h3>
             <div className='w-full'>
@@ -250,7 +250,7 @@ function CreatePostPage() {
           </div>
         }
 
-        { selectedBoard?.allowRecruit && postType === RECRUIT &&
+        { selectedBoard?.recruitAllowed && postType === RECRUIT &&
           <div className='flex my-6 items-center' >
             <h3 className='text-xl mr-4' >모집 인원</h3>
             <input

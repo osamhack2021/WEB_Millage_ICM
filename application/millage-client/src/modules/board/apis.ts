@@ -1,55 +1,28 @@
 import {
-  Board,
   GetBoardByIdReq,
   GetBoardByIdRes,
   GetBoardListRes,
-  Post,
 } from './types';
+import axios from 'axios';
 import {wait} from '@utils/timer';
-import {UserData} from '@modules/User/types';
+import {GET_BOARD_LIST_API} from '@constants';
 
 /**
  * 커뮤니티의 모든 게시판의 List를 요청하는 API\
- * Use: CreatePost Page
+ * Use: CreatePost Page, BoardHeader
  * @return {Promise<GetBoardListRes>}
  */
 export async function apiGetBoardList(): Promise<GetBoardListRes> {
   try {
-    await wait(500);
-    return {boardList: mockBoardList};
+    const {data} = await axios.get<GetBoardListRes>(
+        GET_BOARD_LIST_API,
+        {withCredentials: true},
+    );
+    return data;
   } catch (error) {
-    return {boardList: []};
+    return {result: 'error'};
   }
 }
-const mockBoardList: Board[] = [
-  {
-    id: 1,
-    name: '칭찬게시판',
-    authorityToWrite: 'all',
-    allowImage: false,
-    allowPoll: false,
-    allowRecruit: false,
-    isPublicWriter: true,
-  },
-  {
-    id: 2,
-    name: '설문게시판',
-    authorityToWrite: 'all',
-    allowImage: true,
-    allowPoll: true,
-    allowRecruit: false,
-    isPublicWriter: false,
-  },
-  {
-    id: 3,
-    name: '인원모집',
-    authorityToWrite: 'all',
-    allowImage: true,
-    allowPoll: false,
-    allowRecruit: true,
-    isPublicWriter: true,
-  },
-];
 
 /**
  * 게시판 정보를 받는 API\
@@ -67,9 +40,9 @@ export async function apiGetBoardById(
     //   (r) => r.board?.id === boardId
     // ) || mockResFail;
     switch (page) {
-      case 1: return mockRes11;
-      case 2: return mockRes12;
-      case 3: return mockRes13;
+      // case 1: return mockRes11;
+      // case 2: return mockRes12;
+      // case 3: return mockRes13;
       default: return mockResFail;
     }
   } catch (error: any) {
@@ -77,105 +50,105 @@ export async function apiGetBoardById(
   }
 }
 
-const mockUser: UserData = {
-  id: 1,
-  username: 'TestUser',
-  unit: {
-    id: 1,
-    name: 'test',
-  },
-  role: {
-    id: 1,
-    role: 'admin',
-  },
-  email: 'test@test.com',
-  fullname: 'Test Test',
-  nickname: 'TestUser',
-  phonenumber: '010-0000-0000',
-};
+// const mockUser: UserData = {
+//   id: 1,
+//   username: 'TestUser',
+//   unit: {
+//     id: 1,
+//     name: 'test',
+//   },
+//   role: {
+//     id: 1,
+//     role: 'admin',
+//   },
+//   email: 'test@test.com',
+//   fullname: 'Test Test',
+//   nickname: 'TestUser',
+//   phonenumber: '010-0000-0000',
+// };
 
-const mockPost1: Post = {
-  id: 1,
-  title: 'test1',
-  content: 'test',
-  created: new Date('2021-10-01T10:00:00'),
-  comments: [],
-  likeCount: 0,
-  postType: 'NORMAL',
-  writer: mockUser,
-};
+// const mockPost1: Post = {
+//   id: 1,
+//   title: 'test1',
+//   content: 'test',
+//   created: new Date('2021-10-01T10:00:00'),
+//   comments: [],
+//   likeCount: 0,
+//   postType: 'NORMAL',
+//   writer: mockUser,
+// };
 
-const mockRes11: GetBoardByIdRes = {
-  ok: true,
-  board: {
-    id: 1,
-    name: '자유게시판',
-    authorityToWrite: 'all',
-    allowPoll: true,
-    allowRecruit: true,
-    allowImage: true,
-    isPublicWriter: false,
-    posts: {
-      curPage: 1,
-      totalCounts: 12,
-      totalPages: 3,
-      results: [
-        mockPost1,
-        mockPost1,
-        mockPost1,
-        mockPost1,
-        mockPost1,
-      ],
-    },
-  },
-};
+// const mockRes11: GetBoardByIdRes = {
+//   ok: true,
+//   board: {
+//     id: 1,
+//     name: '자유게시판',
+//     authorityToWrite: 'all',
+//     allowPoll: true,
+//     allowRecruit: true,
+//     allowImage: true,
+//     isPublicWriter: false,
+//     posts: {
+//       curPage: 1,
+//       totalCounts: 12,
+//       totalPages: 3,
+//       results: [
+//         mockPost1,
+//         mockPost1,
+//         mockPost1,
+//         mockPost1,
+//         mockPost1,
+//       ],
+//     },
+//   },
+// };
 
-const mockRes12: GetBoardByIdRes = {
-  ok: true,
-  board: {
-    id: 1,
-    name: '자유게시판',
-    authorityToWrite: 'all',
-    allowPoll: true,
-    allowRecruit: true,
-    allowImage: true,
-    isPublicWriter: false,
-    posts: {
-      curPage: 2,
-      totalCounts: 12,
-      totalPages: 3,
-      results: [
-        mockPost1,
-        mockPost1,
-        mockPost1,
-        mockPost1,
-        mockPost1,
-      ],
-    },
-  },
-};
+// const mockRes12: GetBoardByIdRes = {
+//   ok: true,
+//   board: {
+//     id: 1,
+//     name: '자유게시판',
+//     authorityToWrite: 'all',
+//     allowPoll: true,
+//     allowRecruit: true,
+//     allowImage: true,
+//     isPublicWriter: false,
+//     posts: {
+//       curPage: 2,
+//       totalCounts: 12,
+//       totalPages: 3,
+//       results: [
+//         mockPost1,
+//         mockPost1,
+//         mockPost1,
+//         mockPost1,
+//         mockPost1,
+//       ],
+//     },
+//   },
+// };
 
-const mockRes13: GetBoardByIdRes = {
-  ok: true,
-  board: {
-    id: 1,
-    name: '자유게시판',
-    authorityToWrite: 'all',
-    allowPoll: true,
-    allowRecruit: true,
-    allowImage: true,
-    isPublicWriter: false,
-    posts: {
-      curPage: 3,
-      totalCounts: 12,
-      totalPages: 3,
-      results: [
-        mockPost1,
-        mockPost1,
-      ],
-    },
-  },
-};
+// const mockRes13: GetBoardByIdRes = {
+//   ok: true,
+//   board: {
+//     id: 1,
+//     name: '자유게시판',
+//     authorityToWrite: 'all',
+//     allowPoll: true,
+//     allowRecruit: true,
+//     allowImage: true,
+//     isPublicWriter: false,
+//     posts: {
+//       curPage: 3,
+//       totalCounts: 12,
+//       totalPages: 3,
+//       results: [
+//         mockPost1,
+//         mockPost1,
+//       ],
+//     },
+//   },
+// };
 
 // const mockRes2: GetBoardByIdRes = {
 //   ok: true,

@@ -35,7 +35,7 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
     ...state,
     boardListState: {
       loading: false,
-      data: action.payload.boardList,
+      data: action.payload.boards,
       error: null,
     },
   }),

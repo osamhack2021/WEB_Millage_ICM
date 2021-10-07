@@ -3,6 +3,6 @@
  */
 export type AsyncState<T> = {
     loading: boolean;
-    data: T | null;
+    data: T | null | undefined;
     error: Error | string | null | undefined;
 };

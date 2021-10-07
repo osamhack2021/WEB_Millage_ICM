@@ -1,7 +1,8 @@
 import {Board} from './entities';
 
 export type GetBoardListRes = {
-    boardList: Board[]
+    result: 'success' | 'fail' | 'error';
+    boards?: Board[];
 };
 
 export type GetBoardByIdRes = {
