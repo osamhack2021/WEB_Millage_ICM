@@ -1,7 +1,17 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {UserState} from './types';
-import {createUserApi, loginApi, sessionApi} from './api';
-import {createUserAsync, loginAsync, checkSessionAsync} from './actions';
+import {
+  createUserApi,
+  loginApi,
+  sessionApi,
+  updateUnreadApi,
+} from './api';
+import {
+  createUserAsync,
+  loginAsync,
+  checkSessionAsync,
+  updateUnreadAsync,
+} from './actions';
 
 function* createUserSaga(
     action: ReturnType<typeof createUserAsync.request>,
@@ -72,5 +82,20 @@ export function* checkSessionListener() {
   yield takeLatest(checkSessionAsync.request, checkSessionSaga);
 }
 
+
+function* updateUnreadSaga(
+    action: ReturnType<typeof updateUnreadAsync.request>,
+) {
+  try {
+    const response : UserState = yield call(updateUnreadApi);
+    yield put(updateUnreadAsync.success(response));
+  } catch (error : any) {
+    yield put(updateUnreadAsync.failure(error));
+  }
+}
+
+export function* updateUnreadListener() {
+  yield takeLatest(updateUnreadAsync.request, updateUnreadSaga);
+}
 
 export {createUserSagaListener as default};

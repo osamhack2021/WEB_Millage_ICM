@@ -62,5 +62,10 @@
   height:30px;
 }
 
+#MessageContainer .enabled{
+  background-color: rgba(0,0,0,0.15);
+}
 
-
+#MessageContainer .hide{
+  display: none;
+}

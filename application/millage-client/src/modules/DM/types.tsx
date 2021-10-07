@@ -7,6 +7,7 @@ export interface MessageBox {
   senderName: string;
   message: string;
   time: string;
+  unread?: number;
 }
 
 export interface MessageData{

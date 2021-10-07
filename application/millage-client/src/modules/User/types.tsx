@@ -1,6 +1,6 @@
 import {ActionType} from 'typesafe-actions';
 import * as actions from './actions';
-
+import {Socket} from 'socket.io-client';
 export interface UnitData{
     id: number;
     name: string;
@@ -44,6 +44,8 @@ export interface UserState {
     result: string;
     session?: UserData;
     message?: string;
+    socket?: Socket;
+    unread?: number;
 }
 
 export type UserAction = ActionType<typeof actions>;
