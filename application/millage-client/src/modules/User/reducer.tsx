@@ -31,7 +31,7 @@ const initialState: UserState = {
     },
     role: {
       id: -1,
-      role: '',
+      name: '',
     },
   },
   unread: 0,
