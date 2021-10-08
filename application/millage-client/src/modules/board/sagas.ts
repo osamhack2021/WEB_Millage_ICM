@@ -8,7 +8,10 @@ function* getBoardListSaga(
 ) {
   // user state에서 community_id 가져와야 함.
   try {
-    const response: GetBoardListRes = yield call(apiGetBoardList);
+    const response: GetBoardListRes = yield call(
+        apiGetBoardList,
+        action.payload,
+    );
     yield put(getBoardListAsync.success(response));
   } catch (error: any) {
     yield put(getBoardListAsync.failure(error));

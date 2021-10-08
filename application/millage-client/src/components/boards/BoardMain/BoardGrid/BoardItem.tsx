@@ -17,7 +17,7 @@ const BoardItem: React.FC<Props> = ({id, title, posts}) => {
         <Link to={`${BOARD_PATH}/${id}`}> {title} </Link>
       </div>
 
-      { posts ?
+      { posts && JSON.stringify(posts) !== JSON.stringify([]) ?
         posts.map((post) => (
           <PostItem
             id={post.id}

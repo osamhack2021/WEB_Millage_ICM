@@ -1,6 +1,11 @@
 import {createAsyncAction} from 'typesafe-actions';
 import {AxiosError} from 'axios';
-import {GetBoardByIdReq, GetBoardByIdRes, GetBoardListRes} from './types';
+import {
+  GetBoardByIdReq,
+  GetBoardByIdRes,
+  GetBoardListInput,
+  GetBoardListRes,
+} from './types';
 
 /**
  * GET Board List API Actions
@@ -13,7 +18,7 @@ export const getBoardListAsync = createAsyncAction(
     GET_BOARD_LIST,
     GET_BOARD_LIST_SUCCESS,
     GET_BOARD_LIST_ERROR,
-)<undefined, GetBoardListRes, AxiosError>();
+)<GetBoardListInput, GetBoardListRes, AxiosError>();
 
 
 /**

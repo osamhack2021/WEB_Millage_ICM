@@ -1,14 +1,13 @@
 import React, {useEffect} from 'react';
 import {useBoard} from '@hooks/board';
 import BoardItem from './BoardItem';
-import NoPostBoardItem from './NoPosts';
 
 function BoardGrid() {
   const {boardListState, getBoardList} = useBoard();
   const {loading, data} = boardListState;
 
   useEffect(() => {
-    getBoardList();
+    getBoardList({withPosts: true});
   }, []);
 
   return (
