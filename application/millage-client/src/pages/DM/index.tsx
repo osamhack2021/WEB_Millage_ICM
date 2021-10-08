@@ -63,7 +63,10 @@ function DM() {
 
   useEffect(() => {
     dispatch(getMessageBoxListAsync.request());
-    socket =  io(SOCKET_SERVER, {transports: ['websocket']});
+    socket = io(SOCKET_SERVER, {transports: ['websocket']});
+    socket.on('updateUnread', () => {
+      dispatch(updateUnreadAsync.request());
+    });
     socket.on('msgToClient', (data:MessageData) => {
       const m = {
         time: data.time,
@@ -94,10 +97,6 @@ function DM() {
     setLocalMessageBoxes(messageboxes);
     localMessageBoxRef.current = messageboxes;
   }, [messageboxes]);
-
-  useEffect(() => {
-    dispatch(updateUnreadAsync.request());
-  }, [messages]);
 
   const renderMessageBoxes = () => {
     return localMessageBoxes.map((mb: any, idx: number) => {

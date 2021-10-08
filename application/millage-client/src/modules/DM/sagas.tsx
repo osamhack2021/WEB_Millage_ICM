@@ -6,6 +6,7 @@ import {DMState} from './types';
 import {getMessageBoxListAsync,
   getMessagesAsync,
   setMessagesAsRead} from './actions';
+import {updateUnreadAsync} from '@modules/User/actions';
 
 function* getMessageBoxListSaga(
     action: ReturnType<typeof getMessageBoxListAsync.request>,
@@ -13,6 +14,7 @@ function* getMessageBoxListSaga(
   try {
     const response : DMState = yield call(apiGetMessageBoxList);
     yield put(getMessageBoxListAsync.success(response));
+    yield put(updateUnreadAsync.request());
   } catch (error : any) {
     yield put(getMessageBoxListAsync.failure({
       result: 'fail',
@@ -32,6 +34,7 @@ function* getMessagesSaga(
     const param = action.payload;
     const response : DMState = yield call(apiGetMessages, param);
     yield put(getMessagesAsync.success(response));
+    yield put(updateUnreadAsync.request());
   } catch (error : any) {
     yield put(getMessageBoxListAsync.failure({
       result: 'fail',
@@ -49,6 +52,7 @@ function* setMessagesAsReadSaga(
 ) {
   const param = action.payload;
   yield call(apiSetMessagesAsRead, param);
+  yield put(updateUnreadAsync.request());
 }
 
 export function* setMessagesAsReadSagaListener() {
