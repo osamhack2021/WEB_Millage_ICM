@@ -13,6 +13,7 @@ import {
   UPDATE_UNREAD_REQUEST,
   UPDATE_UNREAD_SUCCESS,
   UPDATE_UNREAD_FAIL,
+  CONNECT_SOCKET,
 } from './actions';
 
 const initialState: UserState = {
@@ -34,6 +35,7 @@ const initialState: UserState = {
     },
   },
   unread: 0,
+  socket: undefined,
 };
 
 const UserReducer = createReducer<UserState, UserAction>(initialState, {

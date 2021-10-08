@@ -10,6 +10,8 @@ import {Link as RouterLink, useHistory} from 'react-router-dom';
 import './header.css';
 import {XLayout} from '@components/common';
 import {updateUnreadAsync} from '@modules/User/actions';
+import {io, Socket} from 'socket.io-client';
+import {SOCKET_SERVER} from '@constants';
 
 function Header() {
   const dispatch = useDispatch();
@@ -17,6 +19,8 @@ function Header() {
   const user = useSelector((state: any) => state.user);
   const [pageState, setPageState] = useState('board');
   const [anchorEl, setAnchorEl] = useState(null);
+  let socket: Socket;
+  const [connectedSocket, setSocket] = useState<Socket>();
   const goMain = () => {
     history.push('/');
   };
@@ -36,6 +40,11 @@ function Header() {
 
   useEffect(()=> {
     dispatch(updateUnreadAsync.request());
+    socket = io(SOCKET_SERVER, {transports: ['websocket']});
+    socket.on('updateUnreadHeader', () => {
+      dispatch(updateUnreadAsync.request());
+    });
+    setSocket(socket);
   }, []);
 
   return (
