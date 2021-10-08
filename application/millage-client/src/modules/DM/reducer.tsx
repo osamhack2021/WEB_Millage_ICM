@@ -7,7 +7,8 @@ import {
   GET_MESSAGEBOX_LIST_FAIL,
   GET_MESSAGES_REQUEST,
   GET_MESSAGES_SUCCESS,
-  GET_MESSAGES_FAIL} from './actions';
+  GET_MESSAGES_FAIL,
+  SET_MESSAGES_AS_READ} from './actions';
 
 const initialState: DMState = {
   result: '',
@@ -19,7 +20,6 @@ const initialState: DMState = {
 const DMReducer = createReducer<DMState, DMAction>(initialState, {
   [GET_MESSAGEBOX_LIST]: (state, action) => ({
     ...state,
-    messages: [],
   }),
   [GET_MESSAGEBOX_LIST_SUCCESS]: (state, action) => ({
     ...state,
@@ -42,6 +42,9 @@ const DMReducer = createReducer<DMState, DMAction>(initialState, {
     ...state,
     result: action.payload.result,
     message: action.payload.message,
+  }),
+  [SET_MESSAGES_AS_READ]: (state, action) => ({
+    ...state,
   }),
 });
 

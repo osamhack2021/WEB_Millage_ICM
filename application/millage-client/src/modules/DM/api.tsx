@@ -14,3 +14,10 @@ export async function apiGetMessages(id: number) : Promise<DMState> {
       {withCredentials: true});
   return messages.data;
 }
+
+
+export async function apiSetMessagesAsRead(id: number) : Promise<boolean> {
+  await axios.post(`${SERVER}/message/read/${id}`,
+      {withCredentials: true});
+  return true;
+}

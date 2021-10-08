@@ -22,7 +22,8 @@ export class EventsGateway implements OnGatewayConnection {
     @WebSocketServer()
     server: Server;
 
-    async handleConnection() {}
+    async handleConnection() {
+    }
 
     @SubscribeMessage('subscribe')
     handleEvent(@MessageBody() data: any,

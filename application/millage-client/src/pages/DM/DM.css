@@ -26,6 +26,7 @@
         border: 1px solid #e0c7c7;
         border-radius: 12px;
         margin: 5px;
+        overflow-y: auto;
     }
 
     #MessageContainer #messageboxes h2 {

@@ -8,6 +8,7 @@ import ScheduleReducer from './Schedule/reducer';
 import {
   getMessageBoxListSagaListener,
   getMessagesSagaListener,
+  setMessagesAsReadSagaListener,
 } from './DM/sagas';
 import boardSaga from './board/sagas';
 import scheduleSaga from './Schedule/sagas';
@@ -43,6 +44,7 @@ export function* rootSaga() {
     getUnitListSagaListener(),
     scheduleSaga(),
     updateUnreadListener(),
+    setMessagesAsReadSagaListener(),
   ]);
 }
 

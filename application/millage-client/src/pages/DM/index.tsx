@@ -1,10 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './DM.css';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
-import {getMessageBoxListAsync, getMessagesAsync} from '@modules/DM/actions';
+import {getMessageBoxListAsync,
+  getMessagesAsync,
+  setMessagesAsRead} from '@modules/DM/actions';
 import {MessageBox} from '@modules/DM/types';
 import {updateUnreadAsync} from '@modules/User/actions';
+import {io, Socket} from 'socket.io-client';
+import {SOCKET_SERVER} from '@constants';
 
 interface MessageInterface {
   message: string;
@@ -31,18 +35,24 @@ function DM() {
   const session = user.session;
   const messages = useSelector((state: any) => state.DM.messages);
   const {register, handleSubmit, setValue} = useForm<MessageInterface>();
-  const socket = useSelector((state: any) => state.user.socket);
-  const [receiverId, setReceiverId] = useState(-1);
+  let socket: Socket;
+  const [connectedSocket, setSocket] = useState<Socket>();
+  const receiverId = useRef(-1);
   const [receiverName, setReceiverName] = useState('');
   const [newMessages, setNewMessages] = useState<NewMessageInterface[]>([]);
   const [anonymous, setAnonymous] = useState(false);
   const [localMessageBoxes, setLocalMessageBoxes]= useState<MessageBox[]>([]);
+  const localMessageBoxRef = useRef<MessageBox[]>([]);
+  const activeMessageBox = useRef(-1);
   const getMessage = (id: number, rId: number, name: string) => {
-    setReceiverId(rId);
+    receiverId.current = rId;
     setReceiverName(name);
+    activeMessageBox.current = id;
     setNewMessages([]);
     if (name === '익명') {
       setAnonymous(true);
+    } else {
+      setAnonymous(false);
     }
     dispatch(getMessagesAsync.request(rId));
 
@@ -51,22 +61,38 @@ function DM() {
     setLocalMessageBoxes(clone);
   };
 
-  socket.on('msgToClient', (data:MessageData) => {
-    const m = {
-      time: data.time,
-      message: data.message,
-    };
-    setNewMessages([...newMessages, m]);
-  });
-
   useEffect(() => {
     dispatch(getMessageBoxListAsync.request());
-    socket.emit('subscribe',
-        {id: session.id}, (data: any) => console.log(data));
-  }, [dispatch]);
+    socket =  io(SOCKET_SERVER, {transports: ['websocket']});
+    socket.on('msgToClient', (data:MessageData) => {
+      const m = {
+        time: data.time,
+        message: data.message,
+      };
+      if (receiverId.current == -1 || data.senderId != receiverId.current) {
+        dispatch(getMessageBoxListAsync.request());
+      } else if (data.senderId == receiverId.current) {
+        setNewMessages([...newMessages, m]);
+        const clone = JSON.parse(JSON.stringify(localMessageBoxRef.current));
+        clone[activeMessageBox.current].unread = 0;
+        clone[activeMessageBox.current].message = data.message;
+        setLocalMessageBoxes(clone);
+        dispatch(setMessagesAsRead(receiverId.current));
+      }
+    });
+    setSocket(socket);
+  }, []);
+
+  useEffect(() => {
+    if (connectedSocket) {
+      connectedSocket.emit('subscribe',
+          {id: session.id}, (data: any) => console.log(data));
+    }
+  }, [connectedSocket]);
 
   useEffect(() => {
     setLocalMessageBoxes(messageboxes);
+    localMessageBoxRef.current = messageboxes;
   }, [messageboxes]);
 
   useEffect(() => {
@@ -77,7 +103,7 @@ function DM() {
     return localMessageBoxes.map((mb: any, idx: number) => {
       return (
         <div>
-          <button className={receiverId == mb.senderId ? 'enabled' : ''}
+          <button className={receiverId.current == mb.senderId ? 'enabled' : ''}
             onClick={()=>getMessage(idx, mb.senderId, mb.senderName)}
             key={mb.id}>
             {mb.senderName} {mb.message} {mb.unread}
@@ -114,13 +140,17 @@ function DM() {
     }
     let now = new Date().toLocaleString();
     now = now.substring(0, now.length - 2);
-    socket.emit('msgToServer', {
-      message: data.message,
-      senderId: session.id,
-      receiverId: receiverId,
-      anonymous: anonymous,
-      time: now,
-    });
+    if (connectedSocket) {
+      connectedSocket.emit('msgToServer', {
+        message: data.message,
+        senderId: session.id,
+        receiverId: receiverId.current,
+        anonymous: anonymous,
+        time: now,
+      });
+    } else {
+      console.log('error');
+    }
 
     const m = {
       time: now,
@@ -147,7 +177,7 @@ function DM() {
         </div>
         <div className="items"></div>
         <form onSubmit={handleSubmit(onSubmit)}
-          className={receiverId != -1 ? '' : 'hide'}>
+          className={receiverId.current != -1 ? '' : 'hide'}>
           {renderMessages()}
           {renderNewMessages()}
           <input

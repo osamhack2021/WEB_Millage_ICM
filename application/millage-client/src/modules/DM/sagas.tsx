@@ -1,7 +1,11 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {apiGetMessageBoxList, apiGetMessages} from './api';
+import {apiGetMessageBoxList,
+  apiGetMessages,
+  apiSetMessagesAsRead} from './api';
 import {DMState} from './types';
-import {getMessageBoxListAsync, getMessagesAsync} from './actions';
+import {getMessageBoxListAsync,
+  getMessagesAsync,
+  setMessagesAsRead} from './actions';
 
 function* getMessageBoxListSaga(
     action: ReturnType<typeof getMessageBoxListAsync.request>,
@@ -40,5 +44,13 @@ export function* getMessagesSagaListener() {
   yield takeLatest(getMessagesAsync.request, getMessagesSaga);
 }
 
+function* setMessagesAsReadSaga(
+    action: ReturnType<typeof setMessagesAsRead>,
+) {
+  const param = action.payload;
+  yield call(apiSetMessagesAsRead, param);
+}
 
-export {getMessageBoxListSagaListener as default};
+export function* setMessagesAsReadSagaListener() {
+  yield takeLatest(setMessagesAsRead, setMessagesAsReadSaga);
+}
