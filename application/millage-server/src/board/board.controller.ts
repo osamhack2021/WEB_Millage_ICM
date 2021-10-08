@@ -16,7 +16,7 @@ export class BoardController {
   @Get('list')
   async getBoardList(@Req() request: Request): Promise<BoardListRO> {
     try {
-      // 이거 auth 쉽게 하는 authentication module 구현 필요 (@성흠)
+      // 이거 auth 쉽게 하는 authentication module 구현 필요 (@성흠) -> 이렇게 안하고 주말 중으로 guard 구현 예정임
       if (!(request.session && request.session.user && request.session.user.unit)) {
         return {
           result: 'fail',
@@ -31,6 +31,29 @@ export class BoardController {
     } catch (err) {
       return {
         result: 'error',
+        message: err.message,
+      };
+    }
+  }
+  @Get('listWithPosts')
+  async getBoardListWithPosts(@Req() request: Request): Promise<BoardListRO> {
+    const session = request.session;
+    try {
+      if (!(session && session.user && session.user.unit)) {
+        return {
+          result: Result.FAIL,
+          message: 'Failed to get right session info',
+        };
+      } else {
+        const boardListWithPosts : BoardEntity[] = await this.boardService.getBoardListWithPosts(session.user.unit.id);
+        return {
+          result: Result.SUCCESS,
+          boards: boardListWithPosts,
+        };
+      }
+    } catch (err) {
+      return {
+        result: Result.ERROR,
         message: err.message,
       };
     }

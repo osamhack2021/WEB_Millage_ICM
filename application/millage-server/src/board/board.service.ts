@@ -7,6 +7,7 @@ import {CreateBoardDto, SelectBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
 
 const POSTS_PER_PAGE = 10;
+const POSTS_PER_BOARD_PREVIEW = 4;
 
 @Injectable()
 export class BoardService {
@@ -29,13 +30,29 @@ export class BoardService {
     return list;
   }
 
+  async getBoardListWithPosts(unitId: number): Promise<BoardEntity[]> {
+    const boards = await this.boardRepository.find({
+      where: {
+        unitId: unitId,
+      },
+    });
+    return await Promise.all(boards.map(async (board) => {
+      board.posts = await this.postRepository.find({
+        where: {boardId: board.id},
+        order: {createdAt: 'DESC'},
+        take: POSTS_PER_BOARD_PREVIEW,
+      });
+      return board;
+    }));
+  }
+
   async create(dto: CreateBoardDto): Promise<BoardEntity> {
     const newBoard = this.boardRepository.create(dto);
     try {
       const savedBoard = await this.boardRepository.save(newBoard);
       return savedBoard;
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err.message);
     }
   }
 
@@ -68,7 +85,7 @@ export class BoardService {
       board.paginationObject = await this.getPaginationObject(board.id, dto.search, dto.page);
       return board;
     } catch (err) {
-      throw new Error(`Cannot find board by id ${id}`);
+      throw new Error(err.message);
     }
   }
 }
