@@ -65,7 +65,7 @@ function BoardViewPage() {
         {/* Post List Component */}
         { data.posts &&
           <PostListBox
-            posts={data.posts}
+            paginationObject={data.paginationObject}
             getBoardWithPage={getBoardWithPage}
           /> }
 

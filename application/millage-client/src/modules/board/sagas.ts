@@ -1,4 +1,4 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import {apiGetBoardById, apiGetBoardList} from './apis';
 import {GetBoardByIdRes, GetBoardListRes} from './types';
 import {getBoardByIdAsync, getBoardListAsync} from './actions';
@@ -30,8 +30,8 @@ function* getBoardByIdSaga(
 }
 
 export function* boardSagaListener() {
-  yield takeEvery(getBoardListAsync.request, getBoardListSaga);
-  yield takeEvery(getBoardByIdAsync.request, getBoardByIdSaga);
+  yield takeLatest(getBoardListAsync.request, getBoardListSaga);
+  yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
 }
 
 export default boardSagaListener;

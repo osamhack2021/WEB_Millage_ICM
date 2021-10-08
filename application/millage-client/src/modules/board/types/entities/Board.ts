@@ -14,5 +14,6 @@ export type Board = {
     recruitAllowed: boolean;
     imageAllowed: boolean;
     unit: UnitObject;
-    posts?: PaginationResults<Post>;
+    posts?: Post[];
+    paginationObject: PaginationResults<Post>;
 };
