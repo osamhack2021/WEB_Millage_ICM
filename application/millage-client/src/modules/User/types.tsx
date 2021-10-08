@@ -8,7 +8,7 @@ export interface UnitData{
 
 export interface UserRoleData{
     id: number;
-    role: string;
+    name: string;
 }
 
 export interface UserData {
