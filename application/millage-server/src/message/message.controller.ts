@@ -6,7 +6,6 @@ import {ResultObject, Result} from '../common/common.interface';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
-import {EventsGateway} from '../events/events.gateway';
 
 @ApiBearerAuth()
 @ApiTags('message')
@@ -91,7 +90,6 @@ export class MessageController {
           request.body.message,
           request.body.anonymous
       );
-
       return messages;
     }
   }

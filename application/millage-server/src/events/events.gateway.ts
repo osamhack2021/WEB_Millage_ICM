@@ -22,20 +22,17 @@ export class EventsGateway implements OnGatewayConnection {
     @WebSocketServer()
     server: Server;
 
-    async updateUnreadHeader(): Promise<boolean> {
-      console.log('emit updateUnread');
-      this.server.emit('updateUnread');
+    public async updateUnreadHeader(): Promise<boolean> {
+      this.server.emit('updateUnreadHeader');
       return true;
     }
 
     async handleConnection() {
-      console.log('a user has connected');
     }
 
     @SubscribeMessage('subscribe')
     handleEvent(@MessageBody() data: any,
     @ConnectedSocket() client: Socket) {
-      console.log('a user has subscribed');
       this.connectedUsers[data.id] = client;
     }
 
@@ -55,5 +52,7 @@ export class EventsGateway implements OnGatewayConnection {
         this.connectedUsers[data.receiverId].emit('msgToClient', res);
         this.connectedUsers[data.receiverId].emit('updateUnread');
       }
+
+      this.updateUnreadHeader();
     }
 }
