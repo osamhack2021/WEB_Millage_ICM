@@ -6,7 +6,7 @@ import {
   POST_VIEW_PATH,
   ROOT_PATH,
 } from '@constants';
-import MainPage from './MainPage';
+import BoardMainPage from './BoardMainPage';
 import BoardViewPage from './BoardView';
 import {BoardHeader, SideBox} from '@components/boards';
 import {XLayout} from '@components/common';
@@ -27,8 +27,8 @@ function BoardRoutes() {
         {/* Main Component */}
         <div className='flex-1 w-full'>
           <Switch>
-            <Route exact path={ROOT_PATH} component={MainPage} />
-            <Route exact path={BOARD_PATH} component={MainPage} />
+            <Route exact path={ROOT_PATH} component={BoardMainPage} />
+            <Route exact path={BOARD_PATH} component={BoardMainPage} />
             <Route path={POST_VIEW_PATH} render={
               () => <div>Post View Page</div>
             } />

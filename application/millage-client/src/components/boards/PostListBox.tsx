@@ -1,19 +1,19 @@
 import React from 'react';
-import {Post} from '@modules/board/types';
-import {PaginationResults} from '@utils/commonTypes';
+import {Board} from '@modules/board/types';
 import PostListItem from './PostListItem';
 
-type Props = {
-  posts: PaginationResults<Post>,
+type Props = Pick<Board, 'paginationObject'> & {
   getBoardWithPage: (page: number) => void,
 }
 
-const PostListBox: React.FC<Props> = ({posts, getBoardWithPage}) => {
+const PostListBox: React.FC<Props> = ({
+  paginationObject, getBoardWithPage,
+}) => {
   const {
     curPage,
     results,
     totalPages,
-  } = posts;
+  } = paginationObject;
 
   const isFirstPage = curPage === 1;
   const isLastPage = curPage === totalPages;

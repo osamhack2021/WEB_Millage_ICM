@@ -1,6 +1,6 @@
 import {RootState} from '@modules';
 import {getBoardByIdAsync, getBoardListAsync} from '@modules/board/actions';
-import {GetBoardByIdReq} from '@modules/board/types';
+import {GetBoardByIdReq, GetBoardListInput} from '@modules/board/types';
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -13,8 +13,10 @@ function useBoard() {
   );
 
   const dispatch = useDispatch();
-  const getBoardList = useCallback(() => {
-    dispatch(getBoardListAsync.request());
+  const getBoardList = useCallback((
+      getBoardListInput?: GetBoardListInput,
+  ) => {
+    dispatch(getBoardListAsync.request(getBoardListInput || {}));
   }, [dispatch]);
   const getBoardById = useCallback(
       (getBoardByIdReq: GetBoardByIdReq) => {

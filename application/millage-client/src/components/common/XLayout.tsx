@@ -11,7 +11,7 @@ type Props = ClassNameProps;
 const XLayout: React.FC<Props> = ({children, className}) => {
   return (
     <div className={`
-      max-w-screen-xl mx-auto
+      max-w-screen-xl mx-auto px-4 xl:p-0
       ${className}
     `}>
       {children}

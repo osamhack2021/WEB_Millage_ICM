@@ -1,5 +1,9 @@
 import {Board} from './entities';
 
+export type GetBoardListInput = {
+    withPosts?: boolean;
+}
+
 export type GetBoardListRes = {
     result: 'success' | 'fail' | 'error';
     boards?: Board[];

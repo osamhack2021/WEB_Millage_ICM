@@ -1,4 +1,4 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import {apiGetBoardById, apiGetBoardList} from './apis';
 import {GetBoardByIdRes, GetBoardListRes} from './types';
 import {getBoardByIdAsync, getBoardListAsync} from './actions';
@@ -8,7 +8,10 @@ function* getBoardListSaga(
 ) {
   // user state에서 community_id 가져와야 함.
   try {
-    const response: GetBoardListRes = yield call(apiGetBoardList);
+    const response: GetBoardListRes = yield call(
+        apiGetBoardList,
+        action.payload,
+    );
     yield put(getBoardListAsync.success(response));
   } catch (error: any) {
     yield put(getBoardListAsync.failure(error));
@@ -30,8 +33,8 @@ function* getBoardByIdSaga(
 }
 
 export function* boardSagaListener() {
-  yield takeEvery(getBoardListAsync.request, getBoardListSaga);
-  yield takeEvery(getBoardByIdAsync.request, getBoardByIdSaga);
+  yield takeLatest(getBoardListAsync.request, getBoardListSaga);
+  yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
 }
 
 export default boardSagaListener;

@@ -1,21 +1,28 @@
 import {
   GetBoardByIdReq,
   GetBoardByIdRes,
+  GetBoardListInput,
   GetBoardListRes,
 } from './types';
 import axios from 'axios';
 import {wait} from '@utils/timer';
-import {GET_BOARD_LIST_API} from '@constants';
+import {GET_BOARD_LIST_API, GET_BOARD_LIST_WITH_POSTS_API} from '@constants';
 
 /**
  * 커뮤니티의 모든 게시판의 List를 요청하는 API\
  * Use: CreatePost Page, BoardHeader
  * @return {Promise<GetBoardListRes>}
  */
-export async function apiGetBoardList(): Promise<GetBoardListRes> {
+export async function apiGetBoardList(
+    {withPosts}: GetBoardListInput,
+): Promise<GetBoardListRes> {
   try {
+    const API_URL = withPosts ?
+      GET_BOARD_LIST_WITH_POSTS_API :
+      GET_BOARD_LIST_API;
+
     const {data} = await axios.get<GetBoardListRes>(
-        GET_BOARD_LIST_API,
+        API_URL,
         {withCredentials: true},
     );
     return data;
