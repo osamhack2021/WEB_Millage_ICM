@@ -11,5 +11,5 @@ export class UserRoleEntity {
     unique: true,
     nullable: false,
   })
-  role: Role;
+  name: Role;
 }

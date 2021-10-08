@@ -102,7 +102,7 @@ export class UserController {
     }
   }
 
-  @Get('all')
+  @Get('allNormalUsers')
   @Roles(Role.SUPER_ADMIN)
   async getAll() {
     try {
