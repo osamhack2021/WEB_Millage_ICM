@@ -73,10 +73,7 @@ function DM() {
         dispatch(getMessageBoxListAsync.request());
       } else if (data.senderId == receiverId.current) {
         setNewMessages([...newMessages, m]);
-        console.log(activeMessageBox.current);
-
         const clone = JSON.parse(JSON.stringify(localMessageBoxRef.current));
-        console.log(clone);
         clone[activeMessageBox.current].unread = 0;
         clone[activeMessageBox.current].message = data.message;
         setLocalMessageBoxes(clone);
