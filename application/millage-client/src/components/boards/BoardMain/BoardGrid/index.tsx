@@ -1,5 +1,6 @@
 import React from 'react';
 import BoardItem from './BoardItem';
+import NoPostBoardItem from './NoPostBoardItem';
 
 function BoardGrid() {
   return (
@@ -11,7 +12,9 @@ function BoardGrid() {
     >
 
       <BoardItem />
-      <BoardItem />
+      <NoPostBoardItem />
+      <NoPostBoardItem />
+      <NoPostBoardItem />
       <BoardItem />
       <BoardItem />
 
