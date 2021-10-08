@@ -12,3 +12,4 @@ export const CREATE_BOARD_PATH = '/create-board';
 export const BOARD_PATH = '/board';
 export const BOARD_VIEW_PATH = '/board/:boardId';
 export const POST_VIEW_PATH = '/board/post/:postId';
+export const POST_PATH = '/board/post/';
