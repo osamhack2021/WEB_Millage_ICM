@@ -108,8 +108,8 @@ export class UserController {
     try {
       return {
         result: Result.SUCCESS,
-        
-      }
+        normalUsers: await this.userService.getAllNormalUsers(),
+      };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

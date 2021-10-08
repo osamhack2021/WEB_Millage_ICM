@@ -9,6 +9,7 @@ import * as argon2 from 'argon2';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserRO} from './user.interface';
 import {Result} from '../common/common.interface';
+import { Role } from 'src/user_role/user_role.interface';
 
 
 @Injectable()
@@ -105,6 +106,16 @@ export class UserService {
     } catch (err) {
       throw new Error(err.message);
     }
+  }
+
+  async getAllNormalUsers(): Promise<UserEntity[]> {
+    const normalUserRole = await this.userRoleRepository.findOne({
+      where: {name: Role.NORMAL_USER},
+    });
+    return await this.userRepository.find({
+      where: {roleId: normalUserRole.id},
+      relations: ['role', 'unit'],
+    });
   }
 
 
