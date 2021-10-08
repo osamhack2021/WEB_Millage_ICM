@@ -21,12 +21,11 @@ import BoardRoutes from '@pages/boards/BoardRoutes';
 const Main = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
-  const session = user.session;
   useEffect(()=>{
     dispatch(checkSessionAsync.request());
   }, []);
 
-  if (session.role.id > 0) {
+  if (user.session.role.id > 0) {
     return (
       <>
         <Header />

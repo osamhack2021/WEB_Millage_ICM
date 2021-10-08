@@ -6,12 +6,15 @@ import {ResultObject, Result} from '../common/common.interface';
 import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
+import {EventsGateway} from '../events/events.gateway';
 
 @ApiBearerAuth()
 @ApiTags('message')
 @Controller('message')
 export class MessageController {
-  constructor(private readonly messageService: MessageService) {}
+  constructor(private readonly messageService: MessageService) {
+
+  }
 
   private checkAuth(@Req() request : Request) : boolean {
     if (!request.session || !request.session.user || !request.session.user.id) {
@@ -89,7 +92,6 @@ export class MessageController {
           request.body.anonymous
       );
 
-      // add socket cocde
       return messages;
     }
   }
