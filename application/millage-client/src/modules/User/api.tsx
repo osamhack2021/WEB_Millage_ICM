@@ -50,3 +50,9 @@ export async function updateUnreadApi() : Promise<UserState> {
     return {result: 'error'};
   }
 }
+
+export async function logoutApi(): Promise<string> {
+  await axios.get(`${SERVER}/user/logout`,
+      {withCredentials: true});
+  return 'success';
+}

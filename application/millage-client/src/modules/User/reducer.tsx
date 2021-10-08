@@ -13,6 +13,7 @@ import {
   UPDATE_UNREAD_REQUEST,
   UPDATE_UNREAD_SUCCESS,
   UPDATE_UNREAD_FAIL,
+  LOGOUT,
 } from './actions';
 
 const initialState: UserState = {
@@ -83,6 +84,10 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
   [UPDATE_UNREAD_FAIL]: (state, action) => ({
     ...state,
     result: action.payload.result,
+  }),
+  [LOGOUT]: (state, action) => ({
+    initialState,
+    result: 'success',
   }),
 });
 

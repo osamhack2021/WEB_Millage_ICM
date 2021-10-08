@@ -1,4 +1,4 @@
-import {createAsyncAction} from 'typesafe-actions';
+import {createAction, createAsyncAction} from 'typesafe-actions';
 import {UserSubmitData, UserState, UserLoginData} from './types';
 
 export const CREATE_USER_REQUEST =
@@ -36,6 +36,11 @@ export const UPDATE_UNREAD_SUCCESS =
 
 export const UPDATE_UNREAD_FAIL =
 'USER/UPDATE_UNREAD_FAIL' as const;
+
+export const LOGOUT =
+'USER/LOGOUT' as const;
+
+export const logoutRequest = createAction(LOGOUT)<undefined>();
 
 export const createUserAsync = createAsyncAction(
     CREATE_USER_REQUEST,
