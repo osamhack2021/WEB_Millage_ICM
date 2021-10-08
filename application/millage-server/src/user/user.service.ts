@@ -85,10 +85,10 @@ export class UserService {
       },
       relations: ['role', 'unit'],
     });
-
-    const result= await argon2.verify(user.password, password);
-    if (result) return user;
-    else return null;
+    if (user) {
+      const result= await argon2.verify(user.password, password);
+      if (result) return user;
+    } else return null;
   }
 
   async update(id: number, dto: UpdateUserDto): Promise<boolean> {

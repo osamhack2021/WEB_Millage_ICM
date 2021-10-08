@@ -62,6 +62,18 @@ export class MessageController {
     }
   }
 
+  @Post('read/:id')
+  async readMessages(@Req() request : Request) : Promise<ResultObject> {
+    if (!this.checkAuth(request)) {
+      return {
+        result: Result.FAIL,
+        message: '로그인이 필요합니다.',
+      };
+    } else {
+      const messages = await this.messageService.setMessagesAsRead(+request.session.user.id, +request.params.id);
+      return messages;
+    }
+  }
   @Post(':id')
   async postMessage(@Req() request : Request) : Promise<ResultObject> {
     if (!this.checkAuth(request)) {

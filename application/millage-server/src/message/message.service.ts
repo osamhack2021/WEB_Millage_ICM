@@ -115,6 +115,22 @@ export class MessageService {
     return output;
   }
 
+  async setMessagesAsRead(receiverId: number, senderId: number) : Promise<ResultObject> {
+    await getConnection()
+        .createQueryBuilder()
+        .update('message')
+        .set({read: true})
+        .where({
+          receiverId: receiverId,
+          senderId: senderId,
+        })
+        .execute();
+
+    return {
+      result: Result.SUCCESS,
+    };
+  }
+
   async getMessages(receiverId: number, senderId: number): Promise<MessageData[]> {
     await getConnection()
         .createQueryBuilder()

@@ -1,6 +1,4 @@
 import {createReducer} from 'typesafe-actions';
-import {io} from 'socket.io-client';
-import {SOCKET_SERVER} from '@constants';
 import {UserAction, UserState} from './types';
 import {
   CREATE_USER_REQUEST,
@@ -35,7 +33,6 @@ const initialState: UserState = {
       role: '',
     },
   },
-  socket: undefined,
   unread: 0,
 };
 
@@ -70,7 +67,6 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
     ...state,
     result: action.payload.result,
     session: action.payload.session,
-    socket: io(SOCKET_SERVER, {transports: ['websocket']}),
   }),
   [CHECK_SESSION_FAIL]: (state, action) => ({
     ...state,

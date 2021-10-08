@@ -1,4 +1,4 @@
-import {createAsyncAction} from 'typesafe-actions';
+import {createAction, createAsyncAction} from 'typesafe-actions';
 import {DMState} from './types';
 
 export const GET_MESSAGEBOX_LIST =
@@ -18,6 +18,11 @@ export const GET_MESSAGES_SUCCESS =
 
 export const GET_MESSAGES_FAIL =
   'DM/GET_MESSAGES_FAIL' as const;
+
+export const SET_MESSAGES_AS_READ =
+  'DM/SET_MESSAGES_AS_READ' as const;
+
+export const setMessagesAsRead = createAction(SET_MESSAGES_AS_READ)<number>();
 
 export const getMessageBoxListAsync = createAsyncAction(
     GET_MESSAGEBOX_LIST,
