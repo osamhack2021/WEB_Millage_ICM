@@ -5,10 +5,18 @@ import {UserEntity} from './user.entity';
 import {UserService} from './user.service';
 import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
+import {APP_GUARD} from '@nestjs/core';
+import {UserRoleGuard} from 'src/user_role/user_role.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity, UnitEntity, UserRoleEntity])],
-  providers: [UserService],
+  providers: [
+    UserService,
+    {
+      provide: APP_GUARD,
+      useClass: UserRoleGuard,
+    },
+  ],
   controllers: [
     UserController,
   ],

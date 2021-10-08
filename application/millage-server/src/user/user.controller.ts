@@ -8,6 +8,8 @@ import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
 import {Result, ResultObject} from '../common/common.interface';
+import {Roles} from 'src/user_role/user_role.decorator';
+import {Role} from 'src/user_role/user_role.interface';
 
 @ApiBearerAuth()
 @ApiTags('user')
@@ -95,6 +97,19 @@ export class UserController {
         return {result: Result.SUCCESS};
       }
       return {result: Result.FAIL, message: 'Nothing changed'};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Get('all')
+  @Roles(Role.SUPER_ADMIN)
+  async getAll() {
+    try {
+      return {
+        result: Result.SUCCESS,
+        
+      }
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }
