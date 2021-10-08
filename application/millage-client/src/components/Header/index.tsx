@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import './header.css';
 import {XLayout} from '@components/common';
-import {updateUnreadAsync} from '@modules/User/actions';
+import {updateUnreadAsync, logoutRequest} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
 
@@ -31,6 +31,11 @@ function Header() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const goLogout = () => {
+    dispatch(logoutRequest());
+    window.location.replace('/');
   };
 
   const goToDM = () => {
@@ -94,7 +99,7 @@ function Header() {
             }}
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={goLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </XLayout>

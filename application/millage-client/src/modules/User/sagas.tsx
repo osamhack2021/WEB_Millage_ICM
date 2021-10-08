@@ -5,12 +5,14 @@ import {
   loginApi,
   sessionApi,
   updateUnreadApi,
+  logoutApi,
 } from './api';
 import {
   createUserAsync,
   loginAsync,
   checkSessionAsync,
   updateUnreadAsync,
+  logoutRequest,
 } from './actions';
 
 function* createUserSaga(
@@ -98,4 +100,17 @@ export function* updateUnreadListener() {
   yield takeLatest(updateUnreadAsync.request, updateUnreadSaga);
 }
 
+function* logoutSaga(
+    action: ReturnType<typeof logoutRequest>,
+) {
+  try {
+    yield call(logoutApi);
+  } catch (error : any) {
+    console.log(error);
+  }
+}
+
+export function* logoutSagaListener() {
+  yield takeLatest(logoutRequest, logoutSaga);
+}
 export {createUserSagaListener as default};
