@@ -1,10 +1,9 @@
-import {Controller, Get, Req} from '@nestjs/common';
+import {Controller, Get} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
 import {UnitInfo, UnitListRO} from './unit.interface';
 import {UnitService} from './unit.service';
-import {Request} from 'express';
 import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
@@ -35,7 +34,7 @@ export class UnitController {
     try {
       return {
         result: Result.SUCCESS,
-        units: await this.unitService.getListForSuperAdmin();
+        units: await this.unitService.getListForSuperAdmin(),
       };
     } catch (err) {
       return {
