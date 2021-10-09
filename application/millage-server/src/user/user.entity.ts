@@ -1,10 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, JoinColumn, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, JoinColumn, OneToMany, ManyToMany} from 'typeorm';
 import {IsEmail} from 'class-validator';
 import * as argon2 from 'argon2';
 
 import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserPollEntity} from '../post/poll/user_poll.entity';
+import {RecruitEntity} from '../post/recruit/recruit.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -80,4 +81,7 @@ export class UserEntity {
 
   @OneToMany(() => UserPollEntity, (userPoll) => userPoll.userId)
   userPolls: UserPollEntity[];
+
+  @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)
+  appliedRecruits: RecruitEntity[];
 }
