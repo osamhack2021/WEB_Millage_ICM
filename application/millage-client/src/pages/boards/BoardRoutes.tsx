@@ -10,6 +10,7 @@ import BoardMainPage from './BoardMainPage';
 import BoardViewPage from './BoardView';
 import {BoardHeader, SideBox} from '@components/boards';
 import {XLayout} from '@components/common';
+import PostViewPage from './PostViewPage';
 
 function BoardRoutes() {
   return (
@@ -29,9 +30,7 @@ function BoardRoutes() {
           <Switch>
             <Route exact path={ROOT_PATH} component={BoardMainPage} />
             <Route exact path={BOARD_PATH} component={BoardMainPage} />
-            <Route path={POST_VIEW_PATH} render={
-              () => <div>Post View Page</div>
-            } />
+            <Route path={POST_VIEW_PATH} component={PostViewPage} />
             <Route path={BOARD_VIEW_PATH} component={BoardViewPage} />
           </Switch>
         </div>
