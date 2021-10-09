@@ -25,6 +25,8 @@ export default function SignIn() {
   useEffect(()=>{
     if (user.result === 'success') {
       history.push('/');
+    } else if (user.message) {
+      alert(user.message);
     }
   }, [user]);
 
@@ -33,13 +35,7 @@ export default function SignIn() {
     <div id="SignInContainer">
       <div id="SignInWrap">
         <div className="logo">
-          <img src='img/logo.png'/>
-          <span className="text">
-            슬기로운 병영생활&nbsp;
-            <span className="bold">
-              밀리지
-            </span>
-          </span>
+          <img src='img/loginlogo.png'/>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input className="block" placeholder="아이디"

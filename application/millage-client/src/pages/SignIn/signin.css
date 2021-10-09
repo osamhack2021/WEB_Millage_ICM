@@ -59,7 +59,6 @@
 #SignInContainer{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 100vw;
     height: 100vh;
     align-items: center;
@@ -79,9 +78,11 @@
 }
 
 #SignInContainer img{
-    width: 30px;
-    height: 30px;
-    margin-left:10px;
+    width: 100px;
+    height:100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:30px;
 }
 
 .lighter{
@@ -93,4 +94,5 @@
     margin-right: auto;
     margin-left: auto;
     flex: 0 1 40%;
+    margin-top:50px;
 }
