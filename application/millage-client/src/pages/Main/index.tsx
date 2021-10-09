@@ -19,6 +19,7 @@ import {
   SCHEDULE_PATH,
 } from '@constants';
 import BoardRoutes from '@pages/boards/BoardRoutes';
+import AdminHeader from '@components/AdminHeader';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,13 @@ const Main = () => {
   }, []);
   if (user.session.role.name == Role.SUPER_ADMIN) {
     return (
-      <Admin />
+      <>
+        <AdminHeader />
+        <Switch>
+          <Route exact path={ROOT_PATH} component={Admin} />
+          <Route path={DM_PATH} component={DM} />
+        </Switch>
+      </>
     );
   } else if (user.session.role.id > 0) {
     return (

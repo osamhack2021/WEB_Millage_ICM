@@ -12,17 +12,21 @@ import {XLayout} from '@components/common';
 import {updateUnreadAsync, logoutRequest} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
+import {setPageStateAction} from '@modules/Admin/actions';
 
 function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state: any) => state.user);
-  const [pageState, setPageState] = useState('users');
+  const pageState = useSelector((state: any) => state.admin.page);
   const [anchorEl, setAnchorEl] = useState(null);
-  let socket: Socket;
 
   const goMain = () => {
     history.push('/');
+  };
+
+  const setPageState = (page: string) => {
+    dispatch(setPageStateAction(page));
   };
 
   const open = Boolean(anchorEl);

@@ -4,12 +4,14 @@ import {
   GET_USERLIST_REQUEST,
   GET_USERLIST_SUCCESS,
   GET_USERLIST_FAIL,
+  SET_PAGE_STATE,
 } from './actions';
 
 const initialState: AdminState = {
   result: '',
   role: undefined,
   users: [],
+  page: 'users',
 };
 
 const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
@@ -23,6 +25,10 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   [GET_USERLIST_FAIL]: (state, action) => ({
     ...state,
     users: action.payload.users,
+  }),
+  [SET_PAGE_STATE]: (state, action) => ({
+    ...state,
+    page: action.payload,
   }),
 
 });
