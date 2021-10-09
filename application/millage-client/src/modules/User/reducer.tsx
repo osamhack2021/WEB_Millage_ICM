@@ -85,10 +85,9 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
     ...state,
     result: action.payload.result,
   }),
-  [LOGOUT]: (state, action) => ({
-    initialState,
-    result: 'success',
-  }),
+  [LOGOUT]: (state, action) => (
+    initialState
+  ),
 });
 
 export default UserReducer;
