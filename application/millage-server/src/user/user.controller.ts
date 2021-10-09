@@ -102,13 +102,13 @@ export class UserController {
     }
   }
 
-  @Get('allNormalUsers')
+  @Get('role/:roleName')
   @Roles(Role.SUPER_ADMIN)
-  async getAll() {
+  async getUsersByRoleName(@Param('roleName') roleName: Role) {
     try {
       return {
         result: Result.SUCCESS,
-        normalUsers: await this.userService.getAllNormalUsers(),
+        normalUsers: await this.userService.getUsersByRoleName(roleName),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
