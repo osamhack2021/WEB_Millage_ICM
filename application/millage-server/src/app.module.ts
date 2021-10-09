@@ -7,6 +7,7 @@ import {UserModule} from './user/user.module';
 import {BoardModule} from './board/board.module';
 import {UnitModule} from './unit/unit.module';
 import {MessageModule} from './message/message.module';
+import {PostModule} from './post/post.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import {MessageModule} from './message/message.module';
     BoardModule,
     UnitModule,
     MessageModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
