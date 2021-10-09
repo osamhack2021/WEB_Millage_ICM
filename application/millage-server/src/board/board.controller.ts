@@ -69,7 +69,7 @@ export class BoardController {
     }
   }
 
-  @Get(':id')
+  @Post(':id')
   async getBoardData(
       @Param() params: BoardIdParam,
       @Body() selectDto: SelectBoardDto,
