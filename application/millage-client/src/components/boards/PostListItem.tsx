@@ -26,7 +26,7 @@ const PostListItem: React.FC<Props> = ({post}) => {
 
         <div>
           <span className='text-sm text-gray-400'>
-            {moment(post.created).format('MM/DD HH:mm:ss')}
+            {moment(post.createdAt).format('MM/DD HH:mm:ss')}
           </span>
           &nbsp;&nbsp;&nbsp;
           <span className='text-sm'>

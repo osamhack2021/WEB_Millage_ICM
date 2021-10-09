@@ -13,12 +13,12 @@ export type Post = {
     postType: PostType;
     title: string;
     content?: string;
-    imageURL?: string;
+    createdAt: Date;
     writer: UserData;
-    created: Date;
     likeCount: number;
     comments: Comment[];
-    polls?: Poll[];
+    pollItems?: Poll[];
+    images?: string[];
     recruitStatus?: RecruitStatus;
 };
 
@@ -27,7 +27,7 @@ export type PostInputs = Pick<Post,
 > & Partial<Pick<Post,
     | 'title'
     | 'content'
-    | 'imageURL'
+    | 'images'
 >> & {
     pollInputs?: PollInputs[];
     recruitTotal?: number;
