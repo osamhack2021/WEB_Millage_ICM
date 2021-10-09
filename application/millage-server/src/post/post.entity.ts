@@ -36,7 +36,7 @@ export class PostEntity {
   })
   writer: UserEntity;
 
-  @RelationId((user: UserEntity) => user.posts)
+  @RelationId((post: PostEntity) => post.writer)
   writerId: number;
 
   @ManyToOne(() => BoardEntity)
