@@ -55,7 +55,7 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
     },
   }),
   [GET_BOARD_BY_ID_SUCCESS]: (state, action) => {
-    if (action.payload.ok && action.payload.board) {
+    if (action.payload.result === 'success' && action.payload.board) {
       return {
         ...state,
         curBoardState: {
@@ -70,7 +70,7 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       curBoardState: {
         loading: false,
         data: null,
-        error: action.payload.errorMessage,
+        error: action.payload.message,
       },
     };
   },
