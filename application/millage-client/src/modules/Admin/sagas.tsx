@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {
-  getUserlistAsync,
+  getUserlistAsync, setPageStateAction,
 } from './actions';
 import {getUserList} from './api';
 import {AdminState} from './types';

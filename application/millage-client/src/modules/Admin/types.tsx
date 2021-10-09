@@ -8,6 +8,7 @@ export interface AdminState {
     role?: string;
     users?: UserData[];
     message?: string;
+    page?: string;
 }
 
 
