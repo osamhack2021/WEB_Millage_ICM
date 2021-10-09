@@ -1,5 +1,5 @@
 import {CommonResponse} from '@utils/commonTypes';
-import {Board} from './entities';
+import {Board, Post} from './entities';
 
 export type GetBoardListInput = {
     withPosts?: boolean;
@@ -18,3 +18,11 @@ export type GetBoardByIdReq = {
 export type GetBoardByIdRes = CommonResponse & {
     board?: Board;
 };
+
+export type GetPostReq = {
+    postId: number;
+}
+
+export type GetPostRes = CommonResponse & {
+    post?: Post;
+}

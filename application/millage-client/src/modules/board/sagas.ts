@@ -1,7 +1,7 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {apiGetBoardById, apiGetBoardList} from './apis';
-import {GetBoardByIdRes, GetBoardListRes} from './types';
-import {getBoardByIdAsync, getBoardListAsync} from './actions';
+import {apiGetBoardById, apiGetBoardList, apiGetPost} from './apis';
+import {GetBoardByIdRes, GetBoardListRes, GetPostRes} from './types';
+import {getBoardByIdAsync, getBoardListAsync, getPostAsync} from './actions';
 
 function* getBoardListSaga(
     action: ReturnType<typeof getBoardListAsync.request>,
@@ -32,9 +32,24 @@ function* getBoardByIdSaga(
   }
 }
 
+function* getPostSaga(
+    action: ReturnType<typeof getPostAsync.request>,
+) {
+  try {
+    const response: GetPostRes = yield call(
+        apiGetPost,
+        action.payload,
+    );
+    yield put(getPostAsync.success(response));
+  } catch (error: any) {
+    yield put(getPostAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
+  yield takeLatest(getPostAsync.request, getPostSaga);
 }
 
 export default boardSagaListener;
