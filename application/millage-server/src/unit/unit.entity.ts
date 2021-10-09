@@ -1,5 +1,5 @@
 import {UserEntity} from '../user/user.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, JoinColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, RelationId} from 'typeorm';
 
 
 @Entity('unit')
@@ -17,18 +17,4 @@ export class UnitEntity {
     default: false,
   })
   isConfirmed: boolean;
-
-  @OneToOne(() => UserEntity, (user) => user.ownedUnitId)
-  @JoinColumn({
-    name: 'adminUserId',
-    referencedColumnName: 'id',
-  })
-  adminUserId: number;
-
-  @OneToOne(() => UserEntity, (user) => user.ownedUnit)
-  @JoinTable({
-    name: 'adminUser',
-    joinColumn: {name: 'userId', referencedColumnName: 'id'},
-  })
-  adminUser: UserEntity;
 }

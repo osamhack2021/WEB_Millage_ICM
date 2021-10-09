@@ -89,18 +89,4 @@ export class UserEntity {
 
   @OneToMany(() => PostEntity, (post) => post.writer)
   posts: PostEntity[];
-
-  @OneToOne(
-      () => UnitEntity,
-      (unit) => unit.adminUser,
-      {nullable: true},
-  )
-  @JoinTable({
-    name: 'ownedUnit',
-    joinColumn: {name: 'ownedUnitId', referencedColumnName: 'id'},
-  })
-  ownedUnit: UnitEntity;
-
-  @RelationId((unit: UnitEntity) => unit.adminUser)
-  ownedUnitId: number;
 }
