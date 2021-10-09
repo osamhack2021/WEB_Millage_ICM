@@ -5,6 +5,7 @@ import {UserEntity} from '../user/user.entity';
 import {PollItemEntity} from './poll/poll_item.entity';
 import {ImageEntity} from '../image/image.entity';
 import {CommentEntity} from './comment/comment.entity';
+import {RecruitEntity} from './recruit/recruit.entity';
 
 @Entity('post')
 export class PostEntity {
@@ -57,9 +58,9 @@ export class PostEntity {
   comments: CommentEntity[];
 
   @OneToOne(
-    () => RecruitEntity,
-    (recruit) = > recruit.post),
-    {nullable: true},
+      () => RecruitEntity,
+      (recruit) => recruit.post,
+      {nullable: true},
   )
   recruitStatus: RecruitEntity;
 }
