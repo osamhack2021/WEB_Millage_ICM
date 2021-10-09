@@ -108,9 +108,9 @@ export class UserService {
     }
   }
 
-  async getAllNormalUsers(): Promise<UserEntity[]> {
+  async getUsersByRoleName(roleName: Role): Promise<UserEntity[]> {
     const normalUserRole = await this.userRoleRepository.findOne({
-      where: {name: Role.NORMAL_USER},
+      where: {name: roleName},
     });
     return await this.userRepository.find({
       where: {roleId: normalUserRole.id},
