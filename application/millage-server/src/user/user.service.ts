@@ -9,7 +9,7 @@ import * as argon2 from 'argon2';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserRO} from './user.interface';
 import {Result} from '../common/common.interface';
-import { Role } from 'src/user_role/user_role.interface';
+import { Role } from '../user_role/user_role.interface';
 
 
 @Injectable()
