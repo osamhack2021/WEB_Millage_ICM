@@ -84,6 +84,9 @@ export class UserService {
       where: {
         username: username,
       },
+      select: [
+        'id', 'username', 'password', 'email',
+        'phonenumber', 'fullname', 'nickname'],
       relations: ['role', 'unit'],
     });
     if (user) {
