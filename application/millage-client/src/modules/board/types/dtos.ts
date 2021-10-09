@@ -1,22 +1,20 @@
+import {CommonResponse} from '@utils/commonTypes';
 import {Board} from './entities';
 
 export type GetBoardListInput = {
     withPosts?: boolean;
 }
 
-export type GetBoardListRes = {
-    result: 'success' | 'fail' | 'error';
+export type GetBoardListRes = CommonResponse & {
     boards?: Board[];
-};
-
-export type GetBoardByIdRes = {
-    ok: boolean;
-    errorMessage?: string;
-    board?: Board;
 };
 
 export type GetBoardByIdReq = {
     boardId: number;
     page: number;
     search?: string;
+};
+
+export type GetBoardByIdRes = CommonResponse & {
+    board?: Board;
 };
