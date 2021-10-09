@@ -8,8 +8,8 @@ import {
   ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
 import {Result, ResultObject} from '../common/common.interface';
-import {Roles} from 'src/user_role/user_role.decorator';
-import {Role} from 'src/user_role/user_role.interface';
+import {Roles} from '../user_role/user_role.decorator';
+import {Role} from '../user_role/user_role.interface';
 
 @ApiBearerAuth()
 @ApiTags('user')

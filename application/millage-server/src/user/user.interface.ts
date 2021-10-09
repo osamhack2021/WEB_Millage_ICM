@@ -1,6 +1,6 @@
 import {ResultObject} from 'src/common/common.interface';
 import {UnitEntity} from 'src/unit/unit.entity';
-import {UserRoleEntity} from 'src/user_role/user_role.entity';
+import {UserRoleEntity} from '../user_role/user_role.entity';
 
 export interface UserData {
   id: number;
