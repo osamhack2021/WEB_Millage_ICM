@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {UserEntity} from 'src/user/user.entity';
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable} from 'typeorm';
 
 
 @Entity('unit')
@@ -11,4 +12,16 @@ export class UnitEntity {
     nullable: false,
   })
   name: string;
+
+  @Column({
+    default: false,
+  })
+  isConfirmed: boolean;
+
+  @OneToOne(() => UserEntity, (user) => user.ownedUnit)
+  @JoinTable({
+    name: 'adminUser',
+    joinColumn: {name: 'userId', referencedColumnName: 'id'},
+  })
+  adminUser: UserEntity;
 }
