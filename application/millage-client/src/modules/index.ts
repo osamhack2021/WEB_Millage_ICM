@@ -4,6 +4,7 @@ import DMReducer from './DM/reducer';
 import BoardReducer from './board/reducer';
 import UnitReducer from './Unit/reducer';
 import UserReducer from './User/reducer';
+import AdminReducer from './Admin/reducer';
 import ScheduleReducer from './Schedule/reducer';
 import {
   getMessageBoxListSagaListener,
@@ -22,7 +23,9 @@ import {
 import {
   getUnitListSagaListener,
 } from './Unit/sagas';
-
+import {
+  getUserListSagaListener,
+} from './Admin/sagas';
 
 const rootReducer = combineReducers({
   DM: DMReducer,
@@ -30,6 +33,7 @@ const rootReducer = combineReducers({
   Board: BoardReducer,
   unit: UnitReducer,
   schedule: ScheduleReducer,
+  admin: AdminReducer,
 });
 
 export default rootReducer;
@@ -47,6 +51,7 @@ export function* rootSaga() {
     updateUnreadListener(),
     setMessagesAsReadSagaListener(),
     logoutSagaListener(),
+    getUserListSagaListener(),
   ]);
 }
 
