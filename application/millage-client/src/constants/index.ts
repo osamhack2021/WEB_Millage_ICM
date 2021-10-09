@@ -8,3 +8,10 @@ export const FALSE = 'false';
 export const NORMAL = 'NORMAL';
 export const POLL = 'POLL';
 export const RECRUIT = 'RECRUIT';
+
+export enum Role {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ADMIN = 'ADMIN',
+  NORMAL_USER = 'NORMAL_USER',
+  NONE = 'NONE',
+}

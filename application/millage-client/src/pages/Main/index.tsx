@@ -8,6 +8,8 @@ import CreatePostPage from '@pages/boards/CreatePost';
 import Schedule from '@pages/Schedule';
 import Intro from '@pages/Intro';
 import DM from '@pages/DM';
+import Admin from '@pages/Admin';
+import {Role} from '@constants';
 import {
   BOARD_PATH,
   CREATE_BOARD_PATH,
@@ -24,8 +26,11 @@ const Main = () => {
   useEffect(()=>{
     dispatch(checkSessionAsync.request());
   }, []);
-
-  if (user.session.role.id > 0) {
+  if (user.session.role.name == Role.SUPER_ADMIN) {
+    return (
+      <Admin />
+    );
+  } else if (user.session.role.id > 0) {
     return (
       <>
         <Header />
