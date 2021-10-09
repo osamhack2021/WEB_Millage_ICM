@@ -15,3 +15,11 @@ export type PaginationResults<T> = {
 export type ClassNameProps = {
     className?: string;
 };
+
+/**
+ * Response의 상태 정보를 정의한 공통 Response 타입.
+ */
+export type CommonResponse = {
+    result: 'success' | 'fail' | 'error';
+    message?: string;
+};
