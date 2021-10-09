@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, JoinColumn, OneToMany, ManyToMany, OneToOne, RelationId} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, OneToMany, ManyToMany, RelationId} from 'typeorm';
 import {IsEmail} from 'class-validator';
 import * as argon2 from 'argon2';
 
@@ -52,34 +52,25 @@ export class UserEntity {
     this.password = await argon2.hash(this.password);
   }
 
-  @ManyToOne((type) => UnitEntity)
-  @JoinColumn({
-    name: 'unitId',
-    referencedColumnName: 'id',
-  })
-  unitId: number;
-
-
-  @ManyToOne((type) => UnitEntity)
+  @ManyToOne(() => UnitEntity)
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
   })
   unit: UnitEntity;
 
-  @ManyToOne((type) => UserRoleEntity)
-  @JoinColumn({
-    name: 'roleId',
-    referencedColumnName: 'id',
-  })
-  roleId: number;
+  @RelationId((user: UserEntity) => user.unit)
+  unitId: number;
 
-  @ManyToOne((type) => UserRoleEntity)
+  @ManyToOne(() => UserRoleEntity)
   @JoinTable({
     name: 'role',
     joinColumn: {name: 'roleId', referencedColumnName: 'id'},
   })
   role: UserRoleEntity
+
+  @RelationId((user: UserEntity) => user.role)
+  roleId: number;
 
   @OneToMany(() => UserPollEntity, (userPoll) => userPoll.userId)
   userPolls: UserPollEntity[];

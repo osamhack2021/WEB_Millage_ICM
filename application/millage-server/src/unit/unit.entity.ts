@@ -1,5 +1,4 @@
-import {UserEntity} from '../user/user.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, RelationId} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 
 
 @Entity('unit')
