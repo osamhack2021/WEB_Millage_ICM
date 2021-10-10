@@ -36,9 +36,13 @@
 #SignupContainer .warning{
     font-size: 8px;
     color: #f23d3d;
+    display: block;
+    position: absolute;
 }
 
 #SignupContainer .approve{
     font-size: 8px;
-    color: #294CFF
+    color: #294CFF;
+    display: block;
+    position: absolute;
 }
