@@ -26,8 +26,19 @@ export default function UserType() {
 
   return (
     <div id="UserTypeContainer">
-      <button onClick={()=>moveUser()}>일반 사용자</button>
-      <button onClick={()=>moveAdmin()}>부대 관리자</button>
+      <img className="headerImage" src='/img/SelectUserTypeLarge.png'/>
+      <div className="links">
+        <div className="imgButton" onClick={()=>moveUser()}>
+          <img src='/img/UserTypeUserLarge.png'/>
+        </div>
+        <div className="imgButton" onClick={()=>moveAdmin()}>
+          <img src='/img/UserTypeAdminLarge.png' />
+        </div>
+      </div>
+      <div className="text">
+        회원님께 해당하는 유형을 선택하여 주시기 바랍니다.
+      </div>
+
     </div>
   );
 };
