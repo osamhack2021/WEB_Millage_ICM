@@ -91,7 +91,7 @@ export class PostService {
   async toggleHeart(postId: number, userId: number): Promise<boolean> {
     const targetPost = await this.postRepository.findOne(
         postId,
-        {relations: ['heart']}
+        {relations: ['hearts']}
     );
     const isNotExist = targetPost.hearts.every(
         (user: UserEntity) => user.id !== userId
