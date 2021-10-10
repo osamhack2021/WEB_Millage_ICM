@@ -5,6 +5,7 @@ import {PostEntity} from './post.entity';
 import {PostType} from './post.interface';
 import {CreatePostDto, UpdatePostDto} from './dto';
 import {PollItemEntity} from './poll/poll_item.entity';
+import {UserEntity} from '../user/user.entity';
 
 @Injectable()
 export class PostService {
@@ -14,6 +15,9 @@ export class PostService {
 
         @InjectRepository(PollItemEntity)
         private readonly pollItemRepository: Repository<PollItemEntity>,
+
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   private createPollItem(
@@ -82,5 +86,23 @@ export class PostService {
     } catch (err) {
       throw new Error(err.message);
     }
+  }
+
+  async toggleHeart(postId: number, userId: number): Promise<boolean> {
+    const targetPost = await this.postRepository.findOne(
+        postId,
+        {relations: ['hearts']}
+    );
+    const isNotExist = targetPost.hearts.every(
+        (user: UserEntity) => user.id !== userId
+    );
+    if (isNotExist) {
+      const user = await this.userRepository.findOne(userId);
+      targetPost.hearts.push(user);
+    } else {
+      targetPost.hearts = targetPost.hearts.filter((user: UserEntity) => user.id !== userId);
+    }
+    await this.postRepository.save(targetPost);
+    return true;
   }
 }
