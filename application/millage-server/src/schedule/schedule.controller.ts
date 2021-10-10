@@ -1,8 +1,8 @@
-import {Controller, Get, Param, Req} from '@nestjs/common';
+import {Controller, Get, Req} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 
-import {ResultObject, Result} from '../common/common.interface';
+import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
@@ -16,8 +16,8 @@ export class ScheduleController {
       return {
         result: Result.SUCCESS,
         schedules: await this.scheduleService.getUserSchedule(
-          req.session.user.id, 
-          req.session.user.unit.id,
+            req.session.user.id,
+            req.session.user.unit.id,
         ),
       };
     } catch (err) {
@@ -34,7 +34,7 @@ export class ScheduleController {
       return {
         result: Result.SUCCESS,
         schedules: await this.scheduleService.getRecentScheduleForUnit(
-          req.session.user.unit.id,
+            req.session.user.unit.id,
         ),
       };
     } catch (err) {
