@@ -19,6 +19,7 @@ import {
   loginSagaListener,
   updateUnreadListener,
   logoutSagaListener,
+  validateUserSagaListener,
 } from './User/sagas';
 import {
   getUnitListSagaListener,
@@ -52,6 +53,7 @@ export function* rootSaga() {
     setMessagesAsReadSagaListener(),
     logoutSagaListener(),
     getUserListSagaListener(),
+    validateUserSagaListener(),
   ]);
 }
 

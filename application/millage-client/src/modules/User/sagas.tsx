@@ -6,6 +6,7 @@ import {
   sessionApi,
   updateUnreadApi,
   logoutApi,
+  validateUserApi,
 } from './api';
 import {
   createUserAsync,
@@ -13,6 +14,7 @@ import {
   checkSessionAsync,
   updateUnreadAsync,
   logoutRequest,
+  validateUserAsync,
 } from './actions';
 
 function* createUserSaga(
@@ -113,4 +115,25 @@ function* logoutSaga(
 export function* logoutSagaListener() {
   yield takeLatest(logoutRequest, logoutSaga);
 }
-export {createUserSagaListener as default};
+
+function* validateUserSaga(
+    action: ReturnType<typeof validateUserAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : string = yield call(validateUserApi, param);
+    yield put(validateUserAsync.success(
+        {
+          result: 'success',
+          message: response,
+        },
+    ));
+  } catch (error : any) {
+    yield put(validateUserAsync.failure(error));
+  }
+}
+
+export function* validateUserSagaListener() {
+  yield takeLatest(validateUserAsync.request, validateUserSaga);
+}
+

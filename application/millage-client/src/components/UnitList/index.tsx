@@ -5,7 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import CSS from 'csstype';
 import './unit.css';
 import {useHistory, useLocation} from 'react-router-dom';
-import {UNITSELECT_PATH, ROOT_PATH, SIGNUP_PATH} from '@constants';
+import {UNITSELECT_PATH, ROOT_PATH,
+  SIGNUP_PATH, ADMIN_UNITSELECT_PATH} from '@constants';
 
 interface UnitListState{
   roleId: number;
@@ -25,7 +26,7 @@ export default function UnitList() {
     borderBottom: '1px solid #e3e3e3',
     height: '520px',
   };
-  if (page === UNITSELECT_PATH) {
+  if (page === UNITSELECT_PATH || page == ADMIN_UNITSELECT_PATH) {
     containerStyle = {
       margin: '50px auto 0 auto',
       width: '480px',
@@ -45,21 +46,60 @@ export default function UnitList() {
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState('');
   const [unitId, setUnitId] = useState(-1);
-  const [unitList, setUnitList] = useState([]);
+  const [unitList, setUnitList] = useState<UnitObject[]>([]);
   const unit = useSelector((state: any) => state.unit);
   const units = unit.units;
 
   const goRegisterUser = () => {
-    if (unitId != -1) {
-      history.push({
-        pathname: SIGNUP_PATH,
-        state: {
-          unitId: unitId,
-          roleId: location.state.roleId,
-        },
-      });
+    if (page == ADMIN_UNITSELECT_PATH) {
+      if (keyword == '') {
+        alert('부대명을 입력해주세요');
+      } else if (unitId == -1 &&
+          unitList.length == 1 && keyword == unitList[0].name) {
+        const c = confirm(`${keyword}에 가입하시겠습니까?`);
+        if (c) {
+          history.push({
+            pathname: SIGNUP_PATH,
+            state: {
+              unitId: unitList[0].id,
+              roleId: location.state.roleId,
+              unitName: keyword,
+            },
+          });
+        }
+      } else {
+        let c;
+        if (unitId == -1) {
+          c = confirm(`${keyword} 커뮤니티를 새롭게 생성하시겠습니까?`);
+        } else {
+          c = confirm(`${keyword}에 가입하시겠습니까?`);
+        }
+        if (c) {
+          history.push({
+            pathname: SIGNUP_PATH,
+            state: {
+              unitId: unitId,
+              roleId: location.state.roleId,
+              unitName: keyword,
+            },
+          });
+        } else {
+          setUnitId(-1);
+        }
+      }
     } else {
-      alert('부대를 선택해주세요!');
+      if (unitId != -1) {
+        history.push({
+          pathname: SIGNUP_PATH,
+          state: {
+            unitId: unitId,
+            roleId: location.state.roleId,
+            unitName: keyword,
+          },
+        });
+      } else {
+        alert('부대를 선택해주세요!');
+      }
     }
   };
 
@@ -94,7 +134,7 @@ export default function UnitList() {
             <span className="count">{u.count}명</span>
           </div>
         );
-      } else if (page===UNITSELECT_PATH) {
+      } else if (page===UNITSELECT_PATH || page === ADMIN_UNITSELECT_PATH) {
         return (
           <a className="link" key={u.id} onClick={()=>{
             setKeyword(u.name);
@@ -109,7 +149,7 @@ export default function UnitList() {
   };
 
   let button;
-  if (page===UNITSELECT_PATH) {
+  if (page===UNITSELECT_PATH || ADMIN_UNITSELECT_PATH) {
     button = (
       <div className="nextButton">
         <button onClick={()=>{

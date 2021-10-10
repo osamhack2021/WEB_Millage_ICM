@@ -13,6 +13,7 @@ import {
   SIGNUP_PATH,
   UNITSELECT_PATH,
   USERTYPE_PATH,
+  ADMIN_UNITSELECT_PATH,
 } from '@constants';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Switch>
         <Route exact path={SIGNIN_PATH} component={SignIn} />
         <Route exact path={UNITSELECT_PATH} component={UnitList} />
+        <Route exact path={ADMIN_UNITSELECT_PATH} component={UnitList} />
         <Route exact path={SIGNUP_PATH} component={Signup} />
         <Route exact path={USERTYPE_PATH} component={UserType} />
         <Route path={ROOT_PATH} component={Main} />

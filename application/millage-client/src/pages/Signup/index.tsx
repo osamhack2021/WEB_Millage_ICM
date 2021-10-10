@@ -10,8 +10,8 @@ import Container from '@mui/material/Container';
 import {createTheme, makeStyles, ThemeProvider} from '@mui/material/styles';
 import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {createUserAsync} from '@modules/User/actions';
-import {UserState, UserSubmitData} from '@modules/User/types';
+import {createUserAsync, validateUserAsync} from '@modules/User/actions';
+import {UserState, UserSubmitData, UserValidateData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {ROOT_PATH} from '@constants';
 import CSS from 'csstype';
@@ -21,28 +21,46 @@ const theme = createTheme();
 interface SignupState{
   unitId: number;
   roleId: number;
+  unitName: string;
 }
 
 export default function Signup() {
   const location = useLocation<SignupState>();
   const history = useHistory();
-  const [passwordCheck, setPasswordCheck] = useState<string>('');
-  const {register, handleSubmit} = useForm<UserSubmitData>();
+  const {register, getValues, handleSubmit} = useForm<UserSubmitData>();
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const userValidate = useSelector((state: any) => state.user.validate);
   const [responseState, setResponseState] = useState<UserState>({
     result: '',
   });
 
-  const [validate, setValidate] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+  const checkPassword = (p : string, p2 : string) => {
+    if (p != p2) {
+      setVPassword(1);
+    } else {
+      setVPassword(0);
+    }
+  };
+
+  const [vUserName, setVUserName] = useState(0);
+  const [vNickName, setVNickName] = useState(0);
+  const [vEmail, setVEmail] = useState(0);
+  const [vPassword, setVPassword] = useState(0);
 
   const onSubmit: SubmitHandler<UserSubmitData> = (data, e) => {
     if (e) {
       e.preventDefault();
     }
+
     data.unitId = location.state.unitId;
     data.roleId = location.state.roleId;
+    data.unitName = location.state.unitName;
     dispatch(createUserAsync.request(data));
+  };
+
+  const validateInput = (data: UserValidateData) => {
+    dispatch(validateUserAsync.request(data));
   };
 
   useEffect(() => {
@@ -50,6 +68,24 @@ export default function Signup() {
       setResponseState(user);
     }
   }, [user]);
+
+  useEffect(()=>{
+    if (userValidate === 'Duplicate Nickname') {
+      setVNickName(1);
+    } else if (userValidate=== 'Duplicate Username') {
+      setVUserName(1);
+    } else if (userValidate=== 'Duplicate Email') {
+      setVEmail(1);
+    } else if (userValidate != '' && userValidate != 'undefined') {
+      if (+userValidate == 0) {
+        setVNickName(2);
+      } else if (+userValidate == 1) {
+        setVUserName(2);
+      } else if (+userValidate == 5) {
+        setVEmail(2);
+      }
+    }
+  }, [userValidate]);
 
   useEffect(() => {
     if (responseState.result == 'registerSuccess') {
@@ -71,12 +107,12 @@ export default function Signup() {
           <label>부대명</label>
           <input className="buttonStyle"
             {
-              ...register('unitName',
-                  {required: 'Phone number is Required'})
+              ...register('unitName')
             }
             id="unitName"
             name="unitName"
             autoComplete="unitName"
+            value={location.state.unitName}
             disabled
           />
         </Grid>
@@ -84,8 +120,7 @@ export default function Signup() {
           <label>전화번호 (선택)</label>
           <input className="buttonStyle"
             {
-              ...register('phonenumber',
-                  {required: 'Phone number is Required'})
+              ...register('phonenumber')
             }
             id="phonenumber"
             placeholder="전화번호를 입력하세요"
@@ -132,10 +167,16 @@ export default function Signup() {
                     id="nickname"
                     placeholder="밀리지에서 활동한 닉네임을 입력하세요."
                     name="nickname"
+                    onBlur={() =>
+                      validateInput({nickname: getValues('nickname')})
+                    }
                   />
                   <label className=
-                    {validate[0] == 0 ? 'hidden' : 'warning'}>
+                    {vNickName == 1 ? 'warning' : 'hidden'}>
                       이미 사용중인 닉네임입니다.</label>
+                  <label className=
+                    {vNickName == 2 ? 'approve' : 'hidden'}>
+                      사용가능한 닉네임입니다.</label>
                 </Grid>
                 <Grid item xs={12}>
                   <label>아이디</label>
@@ -146,12 +187,15 @@ export default function Signup() {
                     placeholder="로그인 시 사용할 아이디를 입력하세요."
                     name="username"
                     autoComplete="username"
+                    onBlur={() =>
+                      validateInput({username: getValues('username')})
+                    }
                   />
                   <label className=
-                    {validate[1] == 0 ? 'hidden' : 'warning'}>
+                    {vUserName == 1 ? 'warning' : 'hidden'}>
                       이미 사용중인 아이디입니다.</label>
                   <label className=
-                    {validate[2] == 0 ? 'hidden' : 'approve'}>
+                    {vUserName == 2 ? 'approve' : 'hidden'}>
                       사용가능한 아이디입니다.</label>
                 </Grid>
                 <Grid item xs={12}>
@@ -165,25 +209,21 @@ export default function Signup() {
                     id="password"
                     autoComplete="new-password"
                   />
-                  <label className=
-                    {validate[3] == 0 ? 'hidden' : 'warning'}>
-                      비밀번호가 맞지않습니다</label>
                 </Grid>
                 <Grid item xs={12}>
                   <label>비밀번호 확인</label>
                   <input className="buttonStyle"
-                    value={passwordCheck}
                     name="password_check"
                     placeholder="비밀번호를 한번 더 입력하세요."
                     type="password"
                     id="password_check"
                     onChange={(e) => {
-                      setPasswordCheck(e.target.value);
+                      checkPassword(getValues('password'), e.target.value);
                     }}
                   />
                   <label className=
-                    {validate[4] == 0 ? 'hidden' : 'warning'}>
-                      비밀번호가 맞지않습니다</label>
+                    {vPassword == 0 ? 'hidden' : 'warning'}>
+                      비밀번호가 일치하지 않습니다</label>
                 </Grid>
                 <Grid item xs={12}>
                   <label>이메일</label>
@@ -193,10 +233,16 @@ export default function Signup() {
                     placeholder="이메일을 입력하세요."
                     name="email"
                     autoComplete="email"
+                    onBlur={() =>
+                      validateInput({email: getValues('email')})
+                    }
                   />
                   <label className=
-                    {validate[5] == 0 ? 'hidden' : 'warning'}>
+                    {vEmail == 1 ? 'warning' : 'hidden'}>
                       이미 가입된 이메일입니다.</label>
+                  <label className=
+                    {vEmail == 2 ? 'approve' : 'hidden'}>
+                      사용가능한 이메일입니다.</label>
                 </Grid>
                 {AdminComponent}
               </Grid>
