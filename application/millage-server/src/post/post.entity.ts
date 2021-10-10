@@ -1,5 +1,5 @@
 import {BoardEntity} from '../board/board.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad, JoinColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad} from 'typeorm';
 import {PostType} from './post.interface';
 import {UserEntity} from '../user/user.entity';
 import {PollItemEntity} from './poll/poll_item.entity';
@@ -40,8 +40,8 @@ export class PostEntity {
   writerId: number;
 
   @ManyToOne(
-    () => BoardEntity, 
-    (board: BoardEntity) => board.posts
+      () => BoardEntity,
+      (board: BoardEntity) => board.posts
   )
   board: BoardEntity;
 
