@@ -3,6 +3,7 @@ import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 
 import {Result} from '../common/common.interface';
+import {SchedulesRO} from './schedule.interface';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
