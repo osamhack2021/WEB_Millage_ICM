@@ -59,7 +59,7 @@ export class UserEntity {
   })
   unit: UnitEntity;
 
-  @Column()
+  @Column({nullable: true})
   unitId: number;
 
   @ManyToOne(() => UserRoleEntity)
