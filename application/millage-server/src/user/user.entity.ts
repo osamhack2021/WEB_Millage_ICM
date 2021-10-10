@@ -72,6 +72,13 @@ export class UserEntity {
   @RelationId((user: UserEntity) => user.role)
   roleId: number;
 
+  @ManyToOne(() => UnitEntity, (unit) => unit.admins)
+  @JoinTable({name: 'ownedUnit', joinColumn: {name: 'ownedUnitId', referencedColumnName: 'id'}})
+  ownedUnit: UnitEntity[];
+
+  @RelationId((user: UserEntity) => user.ownedUnit)
+  ownedUnitId: number;
+
   @OneToMany(() => UserPollEntity, (userPoll) => userPoll.userId)
   userPolls: UserPollEntity[];
 

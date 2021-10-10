@@ -17,6 +17,6 @@ export class UnitService {
   }
 
   async getListForSuperAdmin(): Promise<UnitEntity[]> {
-    return await this.unitRepository.find({relations: ['adminUser']}); // need to fix
+    return await this.unitRepository.find({relations: ['admins']}); // need to fix
   }
 }
