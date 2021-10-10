@@ -59,7 +59,7 @@ export class UserEntity {
   })
   unit: UnitEntity;
 
-  @RelationId((user: UserEntity) => user.unit)
+  @Column()
   unitId: number;
 
   @ManyToOne(() => UserRoleEntity)
@@ -69,7 +69,7 @@ export class UserEntity {
   })
   role: UserRoleEntity
 
-  @RelationId((user: UserEntity) => user.role)
+  @Column()
   roleId: number;
 
   @ManyToOne(() => UnitEntity, (unit) => unit.admins)
