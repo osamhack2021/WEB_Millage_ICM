@@ -1,14 +1,76 @@
-#UserTypeContainer{
-  display:flex;
-  width: 100vw;
-  height: 100vh;
+@media only screen and (max-width: 640px) {
+  #UserTypeContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+  }
+
+  #UserTypeContainer .links{
+    display:flex;  
+  }
+
+  #UserTypeContainer .imgButton{
+    margin-top: 50px;
+    margin-left:20px;
+    margin-right:20px;
+    cursor:pointer;
+    width:100px;
+  }
+
+  #UserTypeContainer .headerImage{
+    margin-top:50px;
+    width: 310px;
+  }
+
+  #UserTypeContainer .text{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
+    margin-top:40px;
+  }
+
+  footer{
+    display:none;
+  }
 }
 
-#UserTypeContainer button {
-  flex: 0 1 10%;
-  justify-content: space-around;
-  align-items: center;
-  height: 50px;
-  background-color: #10902C;
-  margin:10px;
+@media only screen and (min-width: 641px) {
+  #UserTypeContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+  }
+
+  #UserTypeContainer .links{
+    display:flex;  
+  }
+
+  #UserTypeContainer .imgButton{
+    margin-top: 100px;
+    margin-left:50px;
+    margin-right:50px;
+    cursor:pointer;
+  }
+
+  #UserTypeContainer .imgButton:hover{
+    border: 3px solid black;
+    border-radius:50px;
+  }
+
+  #UserTypeContainer .headerImage{
+    margin-top:50px;
+  }
+
+  #UserTypeContainer .text{
+    display:none;
+  }
 }
