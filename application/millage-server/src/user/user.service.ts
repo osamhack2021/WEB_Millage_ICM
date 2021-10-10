@@ -25,12 +25,12 @@ export class UserService {
     private readonly userRoleRepository: Repository<UserRoleEntity>
   ) {}
 
-  async validateUser(dto: CreateUserDto): Promise<ResultObject>{
+  async validateUser(dto: CreateUserDto): Promise<ResultObject> {
     const {username, email, nickname} = dto;
     let qb = await getRepository(UserEntity)
         .createQueryBuilder('user')
-        .where('user.username = :username', {username})
-        let user = await qb.getOne();
+        .where('user.username = :username', {username});
+    let user = await qb.getOne();
     if (user) {
       return {
         result: Result.FAIL,
@@ -39,8 +39,8 @@ export class UserService {
     }
 
     qb = await getRepository(UserEntity)
-    .createQueryBuilder('user')
-    .where('user.email = :email', {email});
+        .createQueryBuilder('user')
+        .where('user.email = :email', {email});
     user = await qb.getOne();
     if (user) {
       return {
@@ -50,8 +50,8 @@ export class UserService {
     }
 
     qb = await getRepository(UserEntity)
-    .createQueryBuilder('user')
-    .where('user.nickname = :nickname', {nickname});
+        .createQueryBuilder('user')
+        .where('user.nickname = :nickname', {nickname});
     user = await qb.getOne();
     if (user) {
       return {
@@ -67,16 +67,21 @@ export class UserService {
       n = 1;
     } else if (email) {
       n = 5;
-    } 
+    }
     return {
       result: Result.SUCCESS,
       message: ''+n,
     };
   }
 
+  private async createNewUnit(name: string): Promise<UnitEntity> {
+    const newUnit = this.unitRepository.create({name: name});
+    return await this.unitRepository.save(newUnit);
+  }
+
   async create(dto: CreateUserDto): Promise<UserRO> {
     const {username, email, phonenumber} = dto;
-    const qb = await getRepository(UserEntity)
+    const qb = getRepository(UserEntity)
         .createQueryBuilder('user')
         .where('user.username = :username', {username})
         .orWhere('user.email = :email', {email})
@@ -90,16 +95,19 @@ export class UserService {
       };
     }
 
-    // create new user
-    const newUser = new UserEntity();
-    newUser.username = dto.username;
-    newUser.password = dto.password;
-    newUser.email = dto.email;
-    newUser.phonenumber = dto.phonenumber;
-    newUser.fullname = dto.fullname;
-    newUser.nickname = dto.nickname;
-    newUser.unitId = dto.unitId;
-    newUser.roleId = dto.roleId;
+    if (dto.unitId === -1) {
+      try {
+        const newUnit = await this.createNewUnit(dto.unitName);
+        dto.unitId = newUnit.id;
+      } catch (err) {
+        return {
+          result: Result.ERROR,
+          message: `부대 생성 실패 ${err.message}`,
+        };
+      }
+    }
+
+    const newUser = this.userRepository.create(dto);
 
     const errors = await validate(newUser);
     if (errors.length > 0) {
