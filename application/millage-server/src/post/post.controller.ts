@@ -78,4 +78,17 @@ export class PostController {
       };
     }
   }
+
+  @Post('/heart/:postId')
+  async toggleHeart(@Param('postId') postId: number) {
+    try {
+      await this.postService.toggleHeart(postId);
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
 }
