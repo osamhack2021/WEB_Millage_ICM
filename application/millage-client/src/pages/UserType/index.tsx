@@ -1,5 +1,5 @@
 import React from 'react';
-import {SIGNUP_PATH, UNITSELECT_PATH} from '@constants';
+import {ADMIN_UNITSELECT_PATH, UNITSELECT_PATH} from '@constants';
 import {useHistory} from 'react-router-dom';
 import './usertype.css';
 
@@ -17,7 +17,7 @@ export default function UserType() {
 
   const moveAdmin = () => {
     history.push({
-      pathname: SIGNUP_PATH,
+      pathname: ADMIN_UNITSELECT_PATH,
       state: {
         roleId: 2,
       },

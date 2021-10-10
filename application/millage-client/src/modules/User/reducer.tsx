@@ -14,6 +14,9 @@ import {
   UPDATE_UNREAD_SUCCESS,
   UPDATE_UNREAD_FAIL,
   LOGOUT,
+  VALIDATE_USER_REQUEST,
+  VALIDATE_USER_SUCCESS,
+  VALIDATE_USER_FAIL,
 } from './actions';
 
 const initialState: UserState = {
@@ -36,6 +39,7 @@ const initialState: UserState = {
   },
   unread: 0,
   socket: undefined,
+  validate: '',
 };
 
 const UserReducer = createReducer<UserState, UserAction>(initialState, {
@@ -88,6 +92,17 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
   [LOGOUT]: (state, action) => (
     initialState
   ),
+  [VALIDATE_USER_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [VALIDATE_USER_SUCCESS]: (state, action) => ({
+    ...state,
+    validate: action.payload.message,
+  }),
+  [VALIDATE_USER_FAIL]: (state, action) => ({
+    ...state,
+    validate: action.payload.message,
+  }),
 });
 
 export default UserReducer;

@@ -40,12 +40,20 @@ export interface UserSubmitData {
     unitName?: string;
 }
 
+export interface UserValidateData {
+    username?: string;
+    email?: string;
+    nickname?: string;
+    phonenumber?: string;
+}
+
 export interface UserState {
     result: string;
     session?: UserData;
     message?: string;
     socket?: Socket;
     unread?: number;
+    validate?: string;
 }
 
 export type UserAction = ActionType<typeof actions>;

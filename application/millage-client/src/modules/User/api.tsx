@@ -1,4 +1,5 @@
-import {UserSubmitData, UserState, UserLoginData} from './types';
+import {UserSubmitData, UserState,
+  UserValidateData, UserLoginData} from './types';
 import axios from 'axios';
 import {SERVER} from '@constants';
 
@@ -55,4 +56,14 @@ export async function logoutApi(): Promise<string> {
   await axios.get(`${SERVER}/user/logout`,
       {withCredentials: true});
   return 'success';
+}
+
+export async function validateUserApi(data: UserValidateData): Promise<string> {
+  try {
+    const user = await axios.post(`${SERVER}/user/validate`, data,
+        {withCredentials: true});
+    return user.data.message;
+  } catch (err: any) {
+    return 'error';
+  }
 }
