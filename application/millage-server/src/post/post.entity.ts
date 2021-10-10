@@ -1,5 +1,5 @@
 import {BoardEntity} from '../board/board.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn, JoinTable, OneToOne, RelationId} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad} from 'typeorm';
 import {PostType} from './post.interface';
 import {UserEntity} from '../user/user.entity';
 import {PollItemEntity} from './poll/poll_item.entity';
@@ -40,7 +40,13 @@ export class PostEntity {
   writerId: number;
 
   @ManyToOne(() => BoardEntity)
-  @JoinColumn({name: 'boardId', referencedColumnName: 'id'})
+  @JoinTable({
+    name: 'board',
+    joinColumn: {name: 'boardId', referencedColumnName: 'id'},
+  })
+  board: number;
+
+  @RelationId((post: PostEntity) => post.board)
   boardId: number;
 
   @OneToMany(
@@ -62,4 +68,14 @@ export class PostEntity {
       {nullable: true},
   )
   recruitStatus: RecruitEntity;
+
+  @ManyToMany(() => UserEntity)
+  hearts: UserEntity[];
+
+  heartCount: number;
+
+  @AfterLoad()
+  countHearts() {
+    this.heartCount = this.hearts !== undefined ? 0 : this.hearts.length;
+  }
 }
