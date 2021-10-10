@@ -1,5 +1,5 @@
 import {UserEntity} from '../../user/user.entity';
-import {Column, Entity, ManyToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {RecruitStatus} from './recruit.interface';
 
@@ -16,6 +16,9 @@ export class RecruitEntity {
 
   @OneToOne(() => PostEntity, (post) => post.recruitStatus)
   post: PostEntity;
+
+  @RelationId((recruit: RecruitEntity) => recruit.post)
+  postId: number;
 
   @ManyToMany(() => UserEntity, (user) => user.appliedRecruits)
   currentMember: UserEntity[];
