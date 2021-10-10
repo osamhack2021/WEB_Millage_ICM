@@ -1,5 +1,6 @@
-import {Get, Post, Body, Controller, Param, Delete, Patch} from '@nestjs/common';
+import {Get, Post, Body, Controller, Param, Delete, Patch, Req} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
+import {Request} from 'express';
 import {PostService} from './post.service';
 import {PostRO} from './post.interface';
 import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto} from './dto';
@@ -80,9 +81,10 @@ export class PostController {
   }
 
   @Post('/heart/:postId')
-  async toggleHeart(@Param('postId') postId: number) {
+  async toggleHeart(@Param('postId') postId: number, @Req() req: Request) {
     try {
-      await this.postService.toggleHeart(postId);
+      const userId = req.session.user.id;
+      await this.postService.toggleHeart(postId, userId);
       return {result: Result.SUCCESS};
     } catch (err) {
       return {

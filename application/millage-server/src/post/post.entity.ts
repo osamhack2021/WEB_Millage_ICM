@@ -69,6 +69,7 @@ export class PostEntity {
   recruitStatus: RecruitEntity;
 
   @ManyToMany(() => UserEntity)
+  @JoinTable({name: 'heart'})
   hearts: UserEntity[];
 
   heartCount: number;
