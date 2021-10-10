@@ -1,5 +1,6 @@
 import {UserEntity} from '../user/user.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {ScheduleEntity} from '../schedule/schedule.entity';
 
 
 @Entity('unit')
@@ -20,4 +21,7 @@ export class UnitEntity {
 
   @OneToMany(() => UserEntity, (user) => user.ownedUnit)
   admins: UserEntity[];
+
+  @OneToMany(() => ScheduleEntity, (schedule) => schedule.unitId)
+  schedules: ScheduleEntity[];
 }
