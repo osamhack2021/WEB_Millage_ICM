@@ -11,7 +11,7 @@ export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
 
   @Get('/personal') // validation 필요
-  async getUserSchedule(@Req() req: Request): Promise<ResultObject> {
+  async getUserSchedule(@Req() req: Request): Promise<SchedulesRO> {
     try {
       return {
         result: Result.SUCCESS,
@@ -29,7 +29,7 @@ export class ScheduleController {
   }
 
   @Get('/recentUnit')
-  async getRecentScheduleForUnit(@Req() req: Request): Promise<ResultObject> {
+  async getRecentScheduleForUnit(@Req() req: Request): Promise<SchedulesRO> {
     try {
       return {
         result: Result.SUCCESS,
