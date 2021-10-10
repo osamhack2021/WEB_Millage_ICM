@@ -87,4 +87,7 @@ export class UserEntity {
 
   @OneToMany(() => PostEntity, (post) => post.writer)
   posts: PostEntity[];
+
+  @ManyToMany(() => PostEntity)
+  likedPosts: PostEntity[];
 }
