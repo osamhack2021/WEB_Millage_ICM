@@ -41,7 +41,7 @@ export class UserService {
     qb = await getRepository(UserEntity)
     .createQueryBuilder('user')
     .where('user.email = :email', {email});
-    await qb.getOne();
+    user = await qb.getOne();
     if (user) {
       return {
         result: Result.FAIL,
@@ -52,7 +52,7 @@ export class UserService {
     qb = await getRepository(UserEntity)
     .createQueryBuilder('user')
     .where('user.nickname = :nickname', {nickname});
-    await qb.getOne();
+    user = await qb.getOne();
     if (user) {
       return {
         result: Result.FAIL,
@@ -63,7 +63,7 @@ export class UserService {
     qb = await getRepository(UserEntity)
     .createQueryBuilder('user')
     .where('user.phonenumber = :phonenumber', {phonenumber});
-    await qb.getOne();
+    user = await qb.getOne();
     if (user) {
       return {
         result: Result.FAIL,
