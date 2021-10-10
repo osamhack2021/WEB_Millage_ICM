@@ -2,7 +2,11 @@ import React, {useCallback, useEffect} from 'react';
 import {useHistory} from 'react-router';
 import {useBoard, useBoardViewPath} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
-import {PostListBox, BoardBoxTop} from '@components/boards';
+import {
+  PostListBox,
+  BoardBoxTop,
+  BoardTitle,
+} from '@components/boards';
 
 
 function BoardViewPage() {
@@ -53,7 +57,7 @@ function BoardViewPage() {
       className=''
     >
       {/* Title */}
-      <h1 className='text-3xl mb-4 p-6 ring-1 ring-gray-500'>{data.title}</h1>
+      <BoardTitle title={data.title} />
 
       {/* Main Component */}
       <div className='

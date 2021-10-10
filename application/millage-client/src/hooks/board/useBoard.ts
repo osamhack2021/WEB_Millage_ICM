@@ -1,6 +1,14 @@
 import {RootState} from '@modules';
-import {getBoardByIdAsync, getBoardListAsync} from '@modules/board/actions';
-import {GetBoardByIdReq, GetBoardListInput} from '@modules/board/types';
+import {
+  getBoardByIdAsync,
+  getBoardListAsync,
+  getPostAsync,
+} from '@modules/board/actions';
+import {
+  GetBoardByIdReq,
+  GetBoardListInput,
+  GetPostReq,
+} from '@modules/board/types';
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -10,6 +18,9 @@ function useBoard() {
   );
   const curBoardState = useSelector(
       (state: RootState) => state.Board.curBoardState,
+  );
+  const postState = useSelector(
+      (state: RootState) => state.Board.postState,
   );
 
   const dispatch = useDispatch();
@@ -22,12 +33,17 @@ function useBoard() {
       (getBoardByIdReq: GetBoardByIdReq) => {
         dispatch(getBoardByIdAsync.request(getBoardByIdReq));
       }, [dispatch]);
+  const getPost = useCallback((getPostReq: GetPostReq) => {
+    dispatch(getPostAsync.request(getPostReq));
+  }, [dispatch]);
 
   return {
     curBoardState,
     boardListState,
+    postState,
     getBoardList,
     getBoardById,
+    getPost,
   };
 }
 

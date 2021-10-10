@@ -5,6 +5,8 @@ import {
   GetBoardByIdRes,
   GetBoardListInput,
   GetBoardListRes,
+  GetPostReq,
+  GetPostRes,
 } from './types';
 
 /**
@@ -33,3 +35,17 @@ export const getBoardByIdAsync = createAsyncAction(
     GET_BOARD_BY_ID_SUCCESS,
     GET_BOARD_BY_ID_FAILURE,
 )<GetBoardByIdReq, GetBoardByIdRes, AxiosError>();
+
+
+/**
+ * GET Post API Actions
+ */
+export const GET_POST = 'board/GET_POST';
+export const GET_POST_SUCCESS = 'board/GET_POST_SUCCESS';
+export const GET_POST_FAILURE = 'board/GET_POST_FAILURE';
+
+export const getPostAsync = createAsyncAction(
+    GET_POST,
+    GET_POST_SUCCESS,
+    GET_POST_FAILURE,
+)<GetPostReq, GetPostRes, AxiosError>();

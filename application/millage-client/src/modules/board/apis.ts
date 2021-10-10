@@ -3,12 +3,15 @@ import {
   GetBoardByIdRes,
   GetBoardListInput,
   GetBoardListRes,
+  GetPostReq,
+  GetPostRes,
 } from './types';
 import axios from 'axios';
 import {
   GET_BOARD_API,
   GET_BOARD_LIST_API,
   GET_BOARD_LIST_WITH_POSTS_API,
+  GET_POST_API,
 } from '@constants';
 
 /**
@@ -50,5 +53,19 @@ export async function apiGetBoardById(
     return data;
   } catch (error: any) {
     return {result: 'fail', message: error};
+  }
+}
+
+export async function apiGetPost(
+    {postId}: GetPostReq,
+): Promise<GetPostRes> {
+  try {
+    const {data} = await axios.get<GetPostRes>(
+        `${GET_POST_API}/${postId}`,
+        {withCredentials: true},
+    );
+    return data;
+  } catch (error: any) {
+    return {result: 'error', message: error};
   }
 }

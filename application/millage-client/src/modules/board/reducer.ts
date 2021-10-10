@@ -8,6 +8,9 @@ import {
   GET_BOARD_LIST,
   GET_BOARD_LIST_ERROR,
   GET_BOARD_LIST_SUCCESS,
+  GET_POST,
+  GET_POST_FAILURE,
+  GET_POST_SUCCESS,
 } from './actions';
 
 const initialState: BoardState = {
@@ -17,6 +20,11 @@ const initialState: BoardState = {
     error: null,
   },
   curBoardState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  postState: {
     loading: false,
     data: null,
     error: null,
@@ -47,6 +55,7 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       error: action.payload,
     },
   }),
+
   [GET_BOARD_BY_ID]: (state) => ({
     ...state,
     curBoardState: {
@@ -80,6 +89,42 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       loading: false,
       data: null,
       error: action.payload,
+    },
+  }),
+
+  [GET_POST]: (state) => ({
+    ...state,
+    postState: {
+      ...state.postState,
+      loading: true,
+    },
+  }),
+  [GET_POST_SUCCESS]: (state, action) => {
+    if (action.payload.result === 'success' && action.payload.post) {
+      return {
+        ...state,
+        postState: {
+          loading: false,
+          data: action.payload.post,
+          error: null,
+        },
+      };
+    }
+    return {
+      ...state,
+      postState: {
+        loading: false,
+        data: null,
+        error: action.payload.message,
+      },
+    };
+  },
+  [GET_POST_FAILURE]: (state, action) => ({
+    ...state,
+    postState: {
+      loading: false,
+      data: null,
+      error: action.payload.message,
     },
   }),
 });
