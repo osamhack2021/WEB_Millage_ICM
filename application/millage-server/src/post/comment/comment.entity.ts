@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
@@ -32,4 +32,12 @@ export class CommentEntity {
   @ManyToOne(() => UserEntity)
   @JoinColumn({name: 'userId', referencedColumnName: 'id'})
   userId: number;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.parentCommentId)
+  @JoinTable({name: 'reply', joinColumn: {name: 'replyId', referencedColumnName: 'id'}})
+  replies: CommentEntity[];
+
+  @ManyToOne(() => CommentEntity, {nullable: true})
+  @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
+  parentCommentId?: number;
 }
