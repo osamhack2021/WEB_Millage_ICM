@@ -4,9 +4,9 @@ import * as argon2 from 'argon2';
 
 import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
-import {UserPollEntity} from '../post/poll/user_poll.entity';
 import {RecruitEntity} from '../post/recruit/recruit.entity';
 import {PostEntity} from '../post/post.entity';
+import {PollItemEntity} from '../post/poll/poll_item.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -79,9 +79,6 @@ export class UserEntity {
   @RelationId((user: UserEntity) => user.ownedUnit)
   ownedUnitId: number;
 
-  @OneToMany(() => UserPollEntity, (userPoll) => userPoll.userId)
-  userPolls: UserPollEntity[];
-
   @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)
   @JoinTable({name: 'recruitingUser', joinColumn: {name: 'appliedRecruitId', referencedColumnName: 'id'}})
   appliedRecruits: RecruitEntity[];
@@ -91,4 +88,7 @@ export class UserEntity {
 
   @ManyToMany(() => PostEntity)
   likedPosts: PostEntity[];
+
+  @ManyToMany(() => PollItemEntity, (pollItem) => pollItem.voters)
+  votes: PollItemEntity[];
 }
