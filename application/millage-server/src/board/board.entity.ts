@@ -49,7 +49,7 @@ export class BoardEntity {
   })
   unit: UnitEntity
 
-  @OneToMany(() => PostEntity, (post) => post.boardId)
+  @OneToMany(() => PostEntity, (post) => post.board)
   posts: PostEntity[];
 
   paginationObject: PaginationObject;
