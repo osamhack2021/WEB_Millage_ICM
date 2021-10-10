@@ -4,6 +4,7 @@ import {Request} from 'express';
 
 import {Result} from '../common/common.interface';
 import {SchedulesRO} from './schedule.interface';
+import {ScheduleService} from './schedule.service';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
