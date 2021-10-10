@@ -17,18 +17,18 @@ export class PostService {
   ) {}
 
   private createPollItem(
-      description: string,
+      content: string,
       postId: number,
   ): Promise<PollItemEntity> {
     const newPollItem = new PollItemEntity();
-    newPollItem.description = description;
+    newPollItem.content = content;
     newPollItem.postId = postId;
     return this.pollItemRepository.save(newPollItem);
   }
 
   private async createPoll(postId: number, pollList: string[]) {
-    await Promise.all(pollList.map((description: string): Promise<PollItemEntity> => {
-      return this.createPollItem(description, postId);
+    await Promise.all(pollList.map((content: string): Promise<PollItemEntity> => {
+      return this.createPollItem(content, postId);
     }));
     return;
   }
@@ -50,7 +50,7 @@ export class PostService {
   async get(id: number): Promise<PostEntity> {
     try {
       return await this.postRepository.findOne(
-          id, {relations: ['pollItems', 'images', 'writer']}
+          id, {relations: ['pollItems', 'pollItems.voters', 'images', 'writer']}
       );
     } catch (err) {
       throw new Error(err.message);
