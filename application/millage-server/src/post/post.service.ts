@@ -50,7 +50,7 @@ export class PostService {
   async get(id: number): Promise<PostEntity> {
     try {
       return await this.postRepository.findOne(
-          id, {relations: ['pollItems', 'pollItems.voters', 'images', 'writer', 'recruitStatus']}
+          id, {relations: ['pollItems', 'pollItems.voters', 'images', 'writer', 'recruitStatus', 'board']}
       );
     } catch (err) {
       throw new Error(err.message);
