@@ -50,3 +50,17 @@ header .enabled{
     color: #10902C;
     border-bottom: 3px solid #10902C;
 }
+
+
+header .loginlink{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.02em;
+
+    color: #000000;
+}

@@ -2,47 +2,177 @@
     margin-top: -30px;
 }
 
-#SignupContainer .buttonStyle{
-    border: 1px solid rgba(0,0,0,0.1);
-    background-color: rgba(0,0,0,0.05);
-    border-radius: 10px;
-    font-family: Inter;
-    font-size: 11px;
-    font-weight: normal;
-    width: 100%;
-    height: 45px;
-    text-indent: 10px;
+#SignupContainer .disabled{
+    color: rgba(0,0,0,0.4);
+}
+@media only screen and (max-width: 640px) {
+    #SignupContainer .container{
+        width: 360px;
+    }
+    #SignupContainer .buttonStyle{
+        border: 1px solid rgba(0,0,0,0.1);
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 10px;
+        font-family: 'Inter';
+        font-size: 11px;
+        font-weight: normal;
+        width: 100%;
+        height: 45px;
+        text-indent: 10px;
+    }
+
+    #SignupContainer label{
+        color: rgba(0,0,0,0.8);
+        font-family: Inter;
+        font-size: 9px;
+        font-weight: normal;
+        margin-left:10px;
+    }
+
+    #SignupContainer .title{
+        font-family: 'Inter';
+        font-size: '12px';
+        font-weight: 600;
+        width:100%;
+        display: block;
+        margin-left: -5px;
+        margin-bottom: 10px;
+    }
+
+    #SignupContainer .hidden{
+        display:hidden;
+    }
+
+    #SignupContainer .warning{
+        font-size: 8px;
+        color: #f23d3d;
+        display: block;
+        position: absolute;
+    }
+
+    #SignupContainer .approve{
+        font-size: 8px;
+        color: #294CFF;
+        display: block;
+        position: absolute;
+    }
+
+    #SignupContainer button{
+        background-color: #10902C;
+        font-family: 'Inter';
+        font-weight: bold;
+        font-size: 10px;
+    }
+
+    #SignupContainer .gridContainer{
+        margin:10px;
+    }
+
+    #SignupContainer .mainTitle{
+        display: none;
+    }
+    footer {
+        display:none;
+    }
 }
 
-#SignupContainer label{
-    color: rgba(0,0,0,0.8);
-    font-family: Inter;
-    font-size: 9px;
-    font-weight: normal;
-    margin-left:10px;
-}
+@media only screen and (min-width: 641px){
+    #SignupContainer .container{
+        width: 1000px;
+    }
 
-#SignupContainer .title{
-    font-family: 'Inter';
-    font-size: '12px';
-    font-weight: 600;
-    width:100%;
-}
+    #SignupContainer .box{
+        border: 1px solid rgba(0,0,0,0.15);
+    }
 
-#SignupContainer .hidden{
-    display:hidden;
-}
+    #SignupContainer .mainTitle {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 29px;
+        align-items: center;
+        text-align: center;
+        letter-spacing: -0.02em;
 
-#SignupContainer .warning{
-    font-size: 8px;
-    color: #f23d3d;
-    display: block;
-    position: absolute;
-}
+        color: #10902C;
+        margin-right: 450px;
+        margin-bottom: 25px;
+    }
 
-#SignupContainer .approve{
-    font-size: 8px;
-    color: #294CFF;
-    display: block;
-    position: absolute;
+    #SignupContainer .buttonStyle{
+        border: 1px solid rgba(0,0,0,0.1);
+        background-color: rgba(0,0,0,0.05);
+        font-family: 'Roboto';
+        font-size: 16px;
+        font-weight: normal;
+        width: 640px;
+        height: 35px;
+        text-indent: 10px;
+        float: right;
+        line-height:35px;
+        margin-right:103px;
+    }
+
+    #SignupContainer label{
+        color: rgba(0,0,0,0.8);
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: normal;
+        font-style: normal;
+        letter-spacing: -0.02em;
+        margin-left: 72px;
+        line-height:35px;
+    }
+
+    #SignupContainer .title{
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bolder;
+        font-size: 18px;
+        line-height: 35px;
+
+        letter-spacing: -0.02em;
+
+        width:100%;
+        margin-top:20px;
+        margin-bottom:20px;
+        margin-left: 65px;
+        display:block;
+    }
+
+    #SignupContainer .hidden{
+        display:hidden;
+    }
+
+    #SignupContainer .warning{
+        font-size: 8px;
+        color: #f23d3d;
+        display: block;
+        position: absolute;
+        margin-left:225px;
+        margin-top:-8px;
+    }
+
+    #SignupContainer .approve{
+        font-size: 8px;
+        color: #294CFF;
+        display: block;
+        position: absolute;
+        margin-left:225px;
+        margin-top:-8px;
+    }
+
+    #SignupContainer button{
+        width: 175px;
+        height: 40px;
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
+        font-size: 18px;
+        font-family: 'Inter';
+        border-radius:0px;
+        background-color: #10902C;
+        font-weight: normal;
+    }
 }

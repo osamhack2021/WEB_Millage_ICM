@@ -16,6 +16,7 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {ROOT_PATH} from '@constants';
 import CSS from 'csstype';
 import './signup.css';
+import LoginHeader from '@components/LoginHeader';
 const theme = createTheme();
 
 interface SignupState{
@@ -105,7 +106,7 @@ export default function Signup() {
       <>
         <Grid item xs={12}>
           <label>부대명</label>
-          <input className="buttonStyle"
+          <input className="buttonStyle disabled"
             {
               ...register('unitName')
             }
@@ -117,7 +118,7 @@ export default function Signup() {
           />
         </Grid>
         <Grid item xs={12}>
-          <label>전화번호 (선택)</label>
+          <label>전화번호(선택)</label>
           <input className="buttonStyle"
             {
               ...register('phonenumber')
@@ -134,8 +135,9 @@ export default function Signup() {
 
   return (
     <div id="SignupContainer">
+      <LoginHeader />
       <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container className="container" component="main">
           <CssBaseline />
           <Box
             sx={{
@@ -145,14 +147,17 @@ export default function Signup() {
               alignItems: 'center',
             }}
           >
+            <label className="mainTitle">
+              회원가입
+            </label>
             <img src="/img/register.png" />
-            <Box component="form" noValidate
+            <Box component="form" noValidate className="box"
               onSubmit={handleSubmit(onSubmit)} sx={{mt: 3}}
             >
-              <Typography className="title" variant="subtitle2" >
+              <label className="title">
                 회원정보 입력
-              </Typography>
-              <Grid container spacing={2}>
+              </label>
+              <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <label>이름</label>
                   <input className="buttonStyle"
@@ -176,7 +181,7 @@ export default function Signup() {
                       이미 사용중인 닉네임입니다.</label>
                   <label className=
                     {vNickName == 2 ? 'approve' : 'hidden'}>
-                      사용가능한 닉네임입니다.</label>
+                      사용 가능한 닉네임입니다.</label>
                 </Grid>
                 <Grid item xs={12}>
                   <label>아이디</label>
@@ -196,7 +201,7 @@ export default function Signup() {
                       이미 사용중인 아이디입니다.</label>
                   <label className=
                     {vUserName == 2 ? 'approve' : 'hidden'}>
-                      사용가능한 아이디입니다.</label>
+                      사용 가능한 아이디입니다.</label>
                 </Grid>
                 <Grid item xs={12}>
                   <label>비밀번호</label>
@@ -242,19 +247,13 @@ export default function Signup() {
                       이미 가입된 이메일입니다.</label>
                   <label className=
                     {vEmail == 2 ? 'approve' : 'hidden'}>
-                      사용가능한 이메일입니다.</label>
+                      사용 가능한 이메일입니다.</label>
                 </Grid>
                 {AdminComponent}
               </Grid>
               <Button
                 type="submit"
                 fullWidth
-                style={{
-                  backgroundColor: '#10902C',
-                  fontFamily: 'Inter',
-                  fontWeight: 'bold',
-                  fontSize: '10px',
-                }}
                 variant="contained"
                 sx={{mt: 3, mb: 2}}
               >
