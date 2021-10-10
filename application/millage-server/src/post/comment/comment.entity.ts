@@ -39,5 +39,5 @@ export class CommentEntity {
 
   @ManyToOne(() => CommentEntity, {nullable: true})
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
-  parentCommentId: number;
+  parentCommentId?: number;
 }
