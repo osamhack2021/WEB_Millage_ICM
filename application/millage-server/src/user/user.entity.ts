@@ -83,6 +83,7 @@ export class UserEntity {
   userPolls: UserPollEntity[];
 
   @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)
+  @JoinTable({name: 'recruitingUser', joinColumn: {name: 'appliedRecruitId', referencedColumnName: 'id'}})
   appliedRecruits: RecruitEntity[];
 
   @OneToMany(() => PostEntity, (post) => post.writer)
