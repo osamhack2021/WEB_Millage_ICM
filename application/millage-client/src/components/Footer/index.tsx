@@ -13,6 +13,7 @@ function Copyright(props: any) {
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
+      All rights reserved.
     </Typography>
   );
 }
