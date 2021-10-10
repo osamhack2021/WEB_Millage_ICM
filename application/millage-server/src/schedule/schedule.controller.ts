@@ -1,10 +1,11 @@
-import {Controller, Get, Post, Req, Body} from '@nestjs/common';
+import {Controller, Get, Post, Req, Body, Patch, Param} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 
-import {Result} from '../common/common.interface';
-import {SchedulesRO} from './schedule.interface';
+import {Result, ResultObject} from '../common/common.interface';
+import {SchedulesRO, ScheduleRO} from './schedule.interface';
 import {ScheduleService} from './schedule.service';
+import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
@@ -48,7 +49,41 @@ export class ScheduleController {
   }
 
   @Post('/create')
-  async createNewSchedule(@Body() dto: CreateScheduleDto): Promise<ResultObject> {
+  async createNewSchedule(
+    @Req() req: Request,
+    @Body() dto: CreateScheduleDto,
+  ): Promise<ScheduleRO> {
+    try {
+      const userId = req.session.user.id;
+      const unitId = req.session.user.unit.id;
 
+      return {
+        result: Result.SUCCESS,
+        schedule: await this.scheduleService.create(userId, unitId, dto),
+      };
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
+
+  @Patch('/update/:id')
+  async updateSchedule(
+    @Req() req: Request,
+    @Param('id') id: number,
+    @Body() dto: UpdateScheduleDto
+  ): Promise<ResultObject> {
+    try {
+      const userId = req.session.user.id;
+      await this.scheduleService.update(id, userId, dto);
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
   }
 }
