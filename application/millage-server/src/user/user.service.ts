@@ -26,7 +26,7 @@ export class UserService {
   ) {}
 
   async validateUser(dto: CreateUserDto): Promise<ResultObject>{
-    const {username, email, nickname,phonenumber} = dto;
+    const {username, email, nickname} = dto;
     let qb = await getRepository(UserEntity)
         .createQueryBuilder('user')
         .where('user.username = :username', {username})
@@ -60,19 +60,17 @@ export class UserService {
       };
     }
 
-    qb = await getRepository(UserEntity)
-    .createQueryBuilder('user')
-    .where('user.phonenumber = :phonenumber', {phonenumber});
-    user = await qb.getOne();
-    if (user) {
-      return {
-        result: Result.FAIL,
-        message: 'Duplicate PhoneNumber',
-      };
-    }
-
+    let n = 0;
+    if (nickname) {
+      n = 1;
+    } else if (username) {
+      n = 2;
+    } else if (email) {
+      n = 5;
+    } 
     return {
-      result: Result.SUCCESS
+      result: Result.SUCCESS,
+      message: ''+n,
     };
   }
 
