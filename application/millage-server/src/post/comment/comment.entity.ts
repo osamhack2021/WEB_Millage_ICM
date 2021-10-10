@@ -37,7 +37,7 @@ export class CommentEntity {
   @JoinTable({name: 'reply', joinColumn: {name: 'replyId', referencedColumnName: 'id'}})
   replies: CommentEntity[];
 
-  @ManyToOne(() => CommentEntity)
+  @ManyToOne(() => CommentEntity, {nullable: true})
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
   parentCommentId: number;
 }
