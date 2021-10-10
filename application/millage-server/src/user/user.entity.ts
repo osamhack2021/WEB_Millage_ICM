@@ -7,6 +7,7 @@ import {UserRoleEntity} from '../user_role/user_role.entity';
 import {RecruitEntity} from '../post/recruit/recruit.entity';
 import {PostEntity} from '../post/post.entity';
 import {PollItemEntity} from '../post/poll/poll_item.entity';
+import {ScheduleEntity} from '../schedule/schedule.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -91,4 +92,7 @@ export class UserEntity {
 
   @ManyToMany(() => PollItemEntity, (pollItem) => pollItem.voters)
   votes: PollItemEntity[];
+
+  @OneToMany(() => ScheduleEntity, (schedule) => schedule.userId)
+  schedules: ScheduleEntity[];
 }
