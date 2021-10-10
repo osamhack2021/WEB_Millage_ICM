@@ -42,9 +42,13 @@ function PostViewPage() {
         <h1 className='text-2xl' > {data.title} </h1>
         <p> {data.content} </p>
 
-        { data.postType === 'POLL' &&
-          <div>
-            ExtraBox (설문)
+        { data.postType === 'POLL' && data.pollItems &&
+          <div className='flex flex-col'>
+            {data.pollItems.map( (poll) => (
+              <div className='ring-1 ring-gray-300 p-2 cursor-pointer' >
+                {poll.content}
+              </div>
+            ))}
           </div>
         }
 
