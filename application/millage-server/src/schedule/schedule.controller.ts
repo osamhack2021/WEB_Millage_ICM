@@ -1,4 +1,4 @@
-import {Controller, Get, Req} from '@nestjs/common';
+import {Controller, Get, Post, Req, Body} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 
@@ -45,5 +45,10 @@ export class ScheduleController {
         message: err.message,
       };
     }
+  }
+
+  @Post('/create')
+  async createNewSchedule(@Body() dto: CreateScheduleDto): Promise<ResultObject> {
+
   }
 }
