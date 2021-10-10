@@ -76,6 +76,6 @@ export class PostEntity {
 
   @AfterLoad()
   countHearts() {
-    this.heartCount = this.hearts !== undefined ? 0 : this.hearts.length;
+    this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
   }
 }
