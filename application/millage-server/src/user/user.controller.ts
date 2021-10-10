@@ -61,7 +61,20 @@ export class UserController {
       return user;
     } catch (err) {
       return {
-        result: Result.SUCCESS,
+        result: Result.ERROR,
+        message: err,
+      };
+    }
+  }
+
+  @Post('validate')
+  async validate(@Body() userdata : CreateUserDto): Promise<UserRO> {
+    try {
+      const result = await this.userService.validateUser(userdata);
+      return result;
+    } catch (err) {
+      return {
+        result: Result.ERROR,
         message: err,
       };
     }

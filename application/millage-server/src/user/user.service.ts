@@ -8,7 +8,7 @@ import {validate} from 'class-validator';
 import * as argon2 from 'argon2';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserRO} from './user.interface';
-import {Result} from '../common/common.interface';
+import {Result, ResultObject} from '../common/common.interface';
 import {Role} from '../user_role/user_role.interface';
 
 
@@ -24,6 +24,57 @@ export class UserService {
     @InjectRepository(UserRoleEntity)
     private readonly userRoleRepository: Repository<UserRoleEntity>
   ) {}
+
+  async validateUser(dto: CreateUserDto): Promise<ResultObject>{
+    const {username, email, nickname,phonenumber} = dto;
+    let qb = await getRepository(UserEntity)
+        .createQueryBuilder('user')
+        .where('user.username = :username', {username})
+        let user = await qb.getOne();
+    if (user) {
+      return {
+        result: Result.FAIL,
+        message: 'Duplicate Username',
+      };
+    }
+
+    qb = await getRepository(UserEntity)
+    .createQueryBuilder('user')
+    .where('user.email = :email', {email});
+    await qb.getOne();
+    if (user) {
+      return {
+        result: Result.FAIL,
+        message: 'Duplicate Email',
+      };
+    }
+
+    qb = await getRepository(UserEntity)
+    .createQueryBuilder('user')
+    .where('user.nickname = :nickname', {nickname});
+    await qb.getOne();
+    if (user) {
+      return {
+        result: Result.FAIL,
+        message: 'Duplicate Nickname',
+      };
+    }
+
+    qb = await getRepository(UserEntity)
+    .createQueryBuilder('user')
+    .where('user.phonenumber = :phonenumber', {phonenumber});
+    await qb.getOne();
+    if (user) {
+      return {
+        result: Result.FAIL,
+        message: 'Duplicate PhoneNumber',
+      };
+    }
+
+    return {
+      result: Result.SUCCESS
+    };
+  }
 
   async create(dto: CreateUserDto): Promise<UserRO> {
     const {username, email, phonenumber} = dto;
