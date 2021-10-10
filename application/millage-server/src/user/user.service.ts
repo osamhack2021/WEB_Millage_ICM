@@ -60,11 +60,11 @@ export class UserService {
       };
     }
 
-    let n = 0;
+    let n;
     if (nickname) {
-      n = 1;
+      n = 0;
     } else if (username) {
-      n = 2;
+      n = 1;
     } else if (email) {
       n = 5;
     } 
