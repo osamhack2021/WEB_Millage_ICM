@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards';
+import {PollListBox} from '@components/boards/PostView';
 
 type Params = {
   postId: string;
@@ -43,13 +44,7 @@ function PostViewPage() {
         <p> {data.content} </p>
 
         { data.postType === 'POLL' && data.pollItems &&
-          <div className='flex flex-col'>
-            {data.pollItems.map( (poll) => (
-              <div className='ring-1 ring-gray-300 p-2 cursor-pointer' >
-                {poll.content}
-              </div>
-            ))}
-          </div>
+          <PollListBox pollItems={data.pollItems} />
         }
 
         { data.postType === 'RECRUIT' &&
