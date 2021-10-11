@@ -145,28 +145,17 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       return {...state};
     }
 
-    if (state.postState.data.hasHearted) {
-      return {
-        ...state,
-        postState: {
-          ...state.postState,
-          data: {
-            ...state.postState.data,
-            hasHearted: false,
-            heartCount: state.postState.data.heartCount - 1,
-          },
-        },
-      };
-    }
-
+    const {hasHearted, heartCount} = state.postState.data;
     return {
       ...state,
       postState: {
         ...state.postState,
         data: {
           ...state.postState.data,
-          hasHearted: true,
-          heartCount: state.postState.data.heartCount + 1,
+          hasHearted: !hasHearted,
+          heartCount: hasHearted ?
+            heartCount - 1 :
+            heartCount + 1,
         },
       },
     };
