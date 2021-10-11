@@ -1,6 +1,7 @@
 import React from 'react';
 import {ROOT_PATH} from '@constants';
 import {useHistory} from 'react-router-dom';
+import LoginHeader from '@components/LoginHeader';
 import './signupfinish.css';
 
 export default function UserType() {
@@ -10,6 +11,7 @@ export default function UserType() {
   };
   return (
     <div id="SignupFinishContainer">
+      <LoginHeader />
       <img className="headerImage" src='/img/register/RegisterFinishLarge.png'/>
       <div className="text">
         회원가입 <span className="green">완료</span>

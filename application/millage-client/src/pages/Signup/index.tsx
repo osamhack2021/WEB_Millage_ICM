@@ -147,10 +147,10 @@ export default function Signup() {
               alignItems: 'center',
             }}
           >
-            <label className="mainTitle">
+            {/* <label className="mainTitle">
               회원가입
-            </label>
-            <img src="/img/register/RegisterInput.png" />
+            </label> */}
+            <img src="/img/register/RegisterInputLarge.png" />
             <Box component="form" noValidate className="box"
               onSubmit={handleSubmit(onSubmit)} sx={{mt: 3}}
             >
