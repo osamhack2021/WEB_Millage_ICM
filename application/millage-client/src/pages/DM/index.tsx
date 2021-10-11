@@ -139,6 +139,9 @@ function DM() {
   }, [messageboxes]);
 
   const renderMessageBoxes = () => {
+    if (scrollbox.current) {
+      scrollbox.current.scrollTop = scrollbox.current.scrollHeight;
+    }
     if (localMessageBoxes.length == 0) {
       return (
         <div className="nomessage" style={{paddingBottom: '140px'}}>
