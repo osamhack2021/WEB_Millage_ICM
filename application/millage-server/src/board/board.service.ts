@@ -63,11 +63,10 @@ export class BoardService {
   ): Promise<PaginationObject> {
     searchKeyword = searchKeyword ? decodeURI(searchKeyword) : '';
     const searchOptions: FindManyOptions<PostEntity> = {
-      where: {
-        boardId: boardId,
-        title: Like(`%${searchKeyword}%`),
-        content: Like(`%${searchKeyword}%`),
-      },
+      where: [
+        {boardId: boardId, title: Like(`%${searchKeyword}%`)},
+        {boardId: boardId, content: Like(`%${searchKeyword}%`)},
+      ],
     };
     const totalCounts = await this.postRepository.count(searchOptions);
     const totalPages = Math.ceil(totalCounts / 10);
