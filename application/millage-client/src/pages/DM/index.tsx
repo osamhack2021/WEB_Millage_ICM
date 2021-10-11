@@ -239,7 +239,7 @@ function DM() {
     if (e) {
       e.preventDefault();
     }
-    let now = new Date();
+    const now = new Date();
     if (connectedSocket) {
       connectedSocket.emit('msgToServer', {
         message: data.message,
@@ -253,7 +253,7 @@ function DM() {
     }
 
     const m = {
-      time:  now.toLocaleString().slice(0,-2),
+      time: now.toLocaleString().slice(0, -2),
       message: data.message,
       senderId: session.id,
     };
