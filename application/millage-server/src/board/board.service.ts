@@ -61,12 +61,12 @@ export class BoardService {
       searchKeyword: string,
       curPage: number,
   ): Promise<PaginationObject> {
-    searchKeyword = searchKeyword ? searchKeyword : '';
+    searchKeyword = searchKeyword ? decodeURI(searchKeyword) : '';
     const searchOptions: FindManyOptions<PostEntity> = {
       where: {
         boardId: boardId,
-        title: Like(searchKeyword),
-        content: Like(searchKeyword),
+        title: Like(`%${searchKeyword}%`),
+        content: Like(`%${searchKeyword}%`),
       },
     };
     const totalCounts = await this.postRepository.count(searchOptions);
