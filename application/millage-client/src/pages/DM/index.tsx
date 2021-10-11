@@ -253,7 +253,7 @@ function DM() {
     }
 
     const m = {
-      time: now.toLocaleString().slice(0, -2),
+      time: new Date().toLocaleString().slice(0, -3),
       message: data.message,
       senderId: session.id,
     };
