@@ -4,6 +4,7 @@ import {PostEntity} from './post.entity';
 
 export interface PostRO extends ResultObject {
     post?: PostEntity;
+    isVoter?: boolean;
 }
 
 export enum PostType {
