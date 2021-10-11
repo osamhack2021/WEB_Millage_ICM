@@ -19,14 +19,6 @@ import {
   StepLabel,
 } from '@mui/material';
 
-type DateTime = Date | [Date, Date?] | null;
-
-interface IFormInput {
-  scheduleTitle: string;
-  scheduleContent: string;
-  scheduleDate: DateTime;
-}
-
 interface Props {
   handleClose: () => void
 }

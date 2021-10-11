@@ -23,12 +23,11 @@ import {
   Checkbox,
 } from '@mui/material';
 
-type DateTime = Date | [Date, Date?] | null;
-
 interface IFormInput {
   scheduleTitle: string;
   scheduleContent: string;
-  scheduleDate: DateTime;
+  scheduleDateRange: [Date, Date?];
+  scheduleDate: Date;
 }
 
 interface Props {
@@ -72,21 +71,19 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     if (checked) {
-      const date = data.scheduleDate as Date;
       updateSchedule({
         id: selectedSchedule.id,
         title: data.scheduleTitle,
         content: data.scheduleTitle,
-        start: date,
+        start: data.scheduleDate,
       });
     } else {
-      const date = data.scheduleDate as [Date, Date];
       updateSchedule({
         id: selectedSchedule.id,
         title: data.scheduleTitle,
         content: data.scheduleTitle,
-        start: date[0],
-        end: date[1],
+        start: data.scheduleDateRange[0],
+        end: data.scheduleDateRange[1],
       });
     }
   };
@@ -189,9 +186,9 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                 label="종일"
               />
             </FormGroup>
-            {checked ? (
+            {!checked ? (
               <Controller
-                name='scheduleDate'
+                name='scheduleDateRange'
                 control={control}
                 defaultValue={[selectedSchedule.start, selectedSchedule.end]}
                 render={({field: {onChange, value, ...props}}) => {
@@ -217,7 +214,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
               <Controller
                 name='scheduleDate'
                 control={control}
-                defaultValue={selectedSchedule?.start}
+                defaultValue={selectedSchedule.start}
                 render={({field: {onChange, value, ...props}}) => {
                   const handleDate = (e: Date | null) => {
                     if (Array.isArray(e)) onChange(e);
@@ -226,7 +223,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                     <div style={{minHeight: 375}}>
                       <label>일자: </label>
                       <DateTimePicker
-                        value={value as Date}
+                        value={value}
                         onChange={handleDate}
                         locale='en-US'
                         format='y. MM. dd H:mm'
@@ -238,30 +235,6 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                 }}
               />
             )}
-            <Controller
-              name='scheduleDate'
-              control={control}
-              defaultValue={[selectedSchedule?.start, selectedSchedule?.end]}
-              render={({field: {onChange, value, ...props}}) => {
-                const handleDate = (e: [Date?, Date?] | null) => {
-                  if (Array.isArray(e)) onChange(e);
-                };
-
-                return (
-                  <div style={{minHeight: 375}}>
-                    <label>기간: </label>
-                    <DateTimeRangePicker
-                      value={value}
-                      onChange={handleDate}
-                      locale='en-US'
-                      format='y. MM. dd H:mm'
-                      disableClock
-                      {...props}
-                    />
-                  </div>
-                );
-              }}
-            />
           </React.Fragment>
         )}
       </DialogContent>

@@ -14,12 +14,11 @@ import {
   Checkbox,
 } from '@mui/material';
 
-type DateTime = Date | [Date, Date] | null;
-
 interface IFormInput {
   scheduleTitle: string;
   scheduleContent: string;
-  scheduleDate: DateTime;
+  scheduleDateRange: [Date, Date];
+  scheduleDate: Date;
 }
 
 interface Props {
@@ -36,19 +35,17 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     if (checked) {
-      const date = data.scheduleDate as Date;
       createSchedule({
         title: data.scheduleTitle,
         content: data.scheduleTitle,
-        start: date,
+        start: data.scheduleDate,
       });
     } else {
-      const date = data.scheduleDate as [Date, Date];
       createSchedule({
         title: data.scheduleTitle,
         content: data.scheduleTitle,
-        start: date[0],
-        end: date[1],
+        start: data.scheduleDateRange[0],
+        end: data.scheduleDateRange[1],
       });
     }
   };
@@ -95,10 +92,11 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
             label="종일"
           />
         </FormGroup>
-        {checked ? (
+        {!checked ? (
           <Controller
-            name='scheduleDate'
+            name='scheduleDateRange'
             control={control}
+            defaultValue={[new Date(), new Date()]}
             render={({field: {onChange, value, ...props}}) => {
               const handleDate = (e: [Date?, Date?] | null) => {
                 if (Array.isArray(e)) onChange(e);
