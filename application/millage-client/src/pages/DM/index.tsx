@@ -39,14 +39,17 @@ function DM() {
   let socket: Socket;
   const [connectedSocket, setSocket] = useState<Socket>();
   const receiverId = useRef(-1);
+  const [lastReceived, setLastReceived] = useState('');
   const [receiverName, setReceiverName] = useState('');
   const [newMessages, setNewMessages] = useState<NewMessageInterface[]>([]);
   const [anonymous, setAnonymous] = useState(false);
   const [localMessageBoxes, setLocalMessageBoxes]= useState<MessageBox[]>([]);
   const localMessageBoxRef = useRef<MessageBox[]>([]);
   const activeMessageBox = useRef(-1);
-  const getMessage = (id: number, rId: number, name: string) => {
+  const scrollbox = useRef<HTMLDivElement>(null);
+  const getMessage = (id: number, rId: number, name: string, time:string) => {
     receiverId.current = rId;
+    setLastReceived(time);
     setReceiverName(name);
     activeMessageBox.current = id;
     setNewMessages([]);
@@ -62,9 +65,37 @@ function DM() {
     setLocalMessageBoxes(clone);
   };
 
+  const convert = (value:string) => {
+    const today = new Date();
+    const timeValue = new Date(value.slice(0, -1));
+
+    const betweenTime = Math.floor((today.getTime() -
+      timeValue.getTime()) / 1000 / 60);
+    console.log(`${value} ${betweenTime}`);
+    if (betweenTime < 1) {
+      return '방금전';
+    }
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  };
+
   useEffect(() => {
     dispatch(getMessageBoxListAsync.request());
-    socket = io(SOCKET_SERVER, {transports: ['websocket']});
+    socket = io(SOCKET_SERVER, {transports: ['websocket'],
+      withCredentials: true});
     socket.on('updateUnread', () => {
       dispatch(updateUnreadAsync.request());
     });
@@ -76,6 +107,7 @@ function DM() {
       if (receiverId.current == -1 || data.senderId != receiverId.current) {
         dispatch(getMessageBoxListAsync.request());
       } else if (data.senderId == receiverId.current) {
+        setLastReceived(data.time);
         setNewMessages([...newMessages, m]);
         const clone = JSON.parse(JSON.stringify(localMessageBoxRef.current));
         clone[activeMessageBox.current].unread = 0;
@@ -100,11 +132,14 @@ function DM() {
   }, [messageboxes]);
 
   const renderMessageBoxes = () => {
+    if (scrollbox.current) {
+      scrollbox.current.scrollTop = scrollbox.current.scrollHeight;
+    }
     return localMessageBoxes.map((mb: any, idx: number) => {
       return (
         <div>
           <button className={receiverId.current == mb.senderId ? 'enabled' : ''}
-            onClick={()=>getMessage(idx, mb.senderId, mb.senderName)}
+            onClick={()=>getMessage(idx, mb.senderId, mb.senderName, mb.time)}
             key={mb.id}>
             <Badge className="usericon" variant="dot"
               badgeContent={mb.unread == undefined ? 0 : mb.unread}
@@ -123,9 +158,9 @@ function DM() {
                 color: 'rgba(0, 0, 0, 0.5)',
               }}>
                 {mb.message.length < 15 ?
-                mb.message:
-                mb.message.substr(0, 15) + '...'}
-                {mb.unread}
+                mb.message + ' ':
+                mb.message.substr(0, 15) + '... '}
+                {convert(mb.time)}
               </div>
             </div>
           </button>
@@ -136,21 +171,51 @@ function DM() {
 
   const renderMessages = () => {
     return messages.map((m: any) => {
-      return (
-        <div key={m.id}>
-          {m.time} {m.message}
-        </div>
-      );
+      if (m.senderId == user.session.id) {
+        return (
+          <div key={m.id} className="messageReverse">
+            <div className="messageDetailContainer">
+              <span className="mine">{m.message}</span>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={m.id} className="message">
+            <div className="iconContainer ">
+              <img className="smallerIcon" src="/img/dm/usericon.png" />
+            </div>
+            <div className="messageDetailContainer">
+              <span className="others">{m.message}</span>
+            </div>
+          </div>
+        );
+      }
     });
   };
 
   const renderNewMessages = () => {
     return newMessages.map((m: any) => {
-      return (
-        <div key={m.time}>
-          {m.time} {m.message}
-        </div>
-      );
+      if (m.senderId == user.session.id) {
+        return (
+          <div key={m.id} className="messageReverse">
+            <div className="messageDetailContainer">
+              <span className="mine">{m.message}</span>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div key={m.id} className="message">
+            <div className="iconContainer ">
+              <img className="smallerIcon" src="/img/dm/usericon.png" />
+            </div>
+            <div className="messageDetailContainer">
+              <span className="others">{m.message}</span>
+            </div>
+          </div>
+        );
+      }
     });
   };
 
@@ -176,6 +241,7 @@ function DM() {
     const m = {
       time: now,
       message: data.message,
+      senderId: session.id,
     };
 
     setNewMessages([...newMessages, m]);
@@ -193,18 +259,33 @@ function DM() {
         </div>
       </div>
       <div id="messages">
-        <div className="title">
-          {receiverName}
+        <div className={receiverId.current == -1 ? 'hidden' : ''}>
+          <div className="messageTitle">
+            <div className="iconContainer">
+              <img className="smallerIcon" src="/img/dm/usericon.png" />
+            </div>
+            <div className="messageBoxDetail" style={{paddingTop: '12.5px'}}>
+              <div style= {{
+                fontWeight: 'bold',
+              }}>{receiverName}</div>
+              <div style = {{
+                color: 'rgba(0, 0, 0, 0.5)',
+              }}>
+                {convert(lastReceived)}
+              </div>
+            </div>
+          </div>
+          <div className="messagesContainer" ref={scrollbox}>
+            {renderMessages()}
+            {renderNewMessages()}
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}
+            className={receiverId.current != -1 ? '' : 'hide'}>
+            <input
+              type="text" placeholder="메시지 입력..."
+              {...register('message', {})} />
+          </form>
         </div>
-        <div className="items"></div>
-        <form onSubmit={handleSubmit(onSubmit)}
-          className={receiverId.current != -1 ? '' : 'hide'}>
-          {renderMessages()}
-          {renderNewMessages()}
-          <input
-            type="text" placeholder="메시지 입력"
-            {...register('message', {})} />
-        </form>
       </div>
     </div>
   );
