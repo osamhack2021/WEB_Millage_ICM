@@ -1,4 +1,6 @@
 import {Module} from '@nestjs/common';
+
+
 import {UserController} from './user.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserEntity} from './user.entity';
@@ -9,7 +11,8 @@ import {APP_GUARD} from '@nestjs/core';
 import {UserRoleGuard} from '../user_role/user_role.guard';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, UnitEntity, UserRoleEntity])],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity, UnitEntity, UserRoleEntity])],
   providers: [
     UserService,
     {

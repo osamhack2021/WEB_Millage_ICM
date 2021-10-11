@@ -1,11 +1,15 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository, getRepository} from 'typeorm';
+import {MailerService} from '@nestjs-modules/mailer';
+import {validate} from 'class-validator';
+import * as argon2 from 'argon2';
+import * as fs from 'fs';
+import * as path from 'path';
+
 import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
-import {validate} from 'class-validator';
-import * as argon2 from 'argon2';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {UserRO} from './user.interface';
 import {Result, ResultObject} from '../common/common.interface';
@@ -22,7 +26,9 @@ export class UserService {
     private readonly unitRepository: Repository<UnitEntity>,
 
     @InjectRepository(UserRoleEntity)
-    private readonly userRoleRepository: Repository<UserRoleEntity>
+    private readonly userRoleRepository: Repository<UserRoleEntity>,
+
+    private readonly mailerService: MailerService,
   ) {}
 
   async validateUser(dto: CreateUserDto): Promise<ResultObject> {
@@ -77,6 +83,18 @@ export class UserService {
   private async createNewUnit(name: string): Promise<UnitEntity> {
     const newUnit = this.unitRepository.create({name: name});
     return await this.unitRepository.save(newUnit);
+  }
+
+  async sendUserConfirmedMail(email: string, unitName: string): Promise<boolean> {
+    const htmlStream = fs.readFileSync(
+        path.join(__dirname, '/mailTemplate/userConfirmed.html')
+    );
+    await this.mailerService.sendMail({
+      to: email,
+      subject: `[Millage 승인 완료] ${unitName} 커뮤니티를 이용하실 수 있습니다.`,
+      html: htmlStream, // template 필요
+    });
+    return true;
   }
 
   async create(dto: CreateUserDto): Promise<UserRO> {

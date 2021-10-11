@@ -138,4 +138,14 @@ export class UserController {
       return {result: Result.ERROR, message: err.message};
     }
   }
+
+  @Get('mailtest/:email')
+  async mailTest(@Param('email') email: string): Promise<ResultObject> {
+    try {
+      await this.userService.sendUserConfirmedMail(email, '군견훈련소');
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
 }
