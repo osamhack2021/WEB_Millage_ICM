@@ -63,7 +63,6 @@ function DM() {
     const clone = JSON.parse(JSON.stringify(localMessageBoxes));
     clone[id].unread = 0;
     setLocalMessageBoxes(clone);
-    dispatch(getMessageBoxListAsync.request());
   };
 
   const deleteMessage = () => {
@@ -74,29 +73,38 @@ function DM() {
   };
 
   const convert = (value:string) => {
-    const today = new Date();
-    const timeValue = new Date(value.slice(0, -1));
+    try {
+      const today = new Date();
+      let timeValue;
+      if (value.slice(-1) == 'Z') {
+        timeValue = new Date(value.slice(0, -1));
+      } else {
+        timeValue = new Date();
+      }
 
-    const betweenTime = Math.floor((today.getTime() -
-      timeValue.getTime()) / 1000 / 60);
-    if (betweenTime < 1) {
-      return '방금전';
-    }
-    if (betweenTime < 60) {
-      return `${betweenTime}분전`;
-    }
+      const betweenTime = Math.floor((today.getTime() -
+        timeValue.getTime()) / 1000 / 60);
+      if (betweenTime < 1) {
+        return '방금전';
+      }
+      if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+      }
 
-    const betweenTimeHour = Math.floor(betweenTime / 60);
-    if (betweenTimeHour < 24) {
-      return `${betweenTimeHour}시간전`;
-    }
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+      }
 
-    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-    if (betweenTimeDay < 365) {
-      return `${betweenTimeDay}일전`;
-    }
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+      }
 
-    return `${Math.floor(betweenTimeDay / 365)}년전`;
+      return `${Math.floor(betweenTimeDay / 365)}년전`;
+    } catch (err: any) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -240,21 +248,21 @@ function DM() {
     if (e) {
       e.preventDefault();
     }
-    const now = new Date().toLocaleString().slice(0, -3);
+    const now = new Date();
     if (connectedSocket) {
       connectedSocket.emit('msgToServer', {
         message: data.message,
         senderId: session.id,
         receiverId: receiverId.current,
         anonymous: anonymous,
-        time: now,
+        time: now.toLocaleString().slice(0, -3),
       });
     } else {
       console.log('error');
     }
 
     const m = {
-      time: now,
+      time: now.toLocaleString().slice(0, -3),
       message: data.message,
       senderId: session.id,
     };
@@ -264,8 +272,9 @@ function DM() {
     const clone = JSON.parse(JSON.stringify(localMessageBoxRef.current));
     clone[activeMessageBox.current].unread = 0;
     clone[activeMessageBox.current].message = data.message;
-    clone[activeMessageBox.current].time = data.time;
+    clone[activeMessageBox.current].time = now.toLocaleString();
     setLocalMessageBoxes(clone);
+    setLastReceived(now.toLocaleString());
   };
 
   return (
