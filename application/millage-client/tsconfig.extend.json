@@ -2,6 +2,7 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "paths": {
+            "@index": ["./index.tsx"],
             "@pages": ["./pages/index.ts"],
             "@modules": ["./modules/index.ts"],
             "@hooks": ["./hooks/index.ts"],

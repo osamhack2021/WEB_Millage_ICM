@@ -1,7 +1,24 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
-import {apiGetBoardById, apiGetBoardList, apiGetPost} from './apis';
-import {GetBoardByIdRes, GetBoardListRes, GetPostRes} from './types';
-import {getBoardByIdAsync, getBoardListAsync, getPostAsync} from './actions';
+import {call, put, takeLatest, select} from 'redux-saga/effects';
+import {
+  apiGetBoardById,
+  apiGetBoardList,
+  apiGetPost,
+  apiTogglePostHeart,
+} from './apis';
+import {
+  GetBoardByIdRes,
+  GetBoardListRes,
+  GetPostRes,
+  TogglePostHeartRes,
+} from './types';
+import {
+  getBoardByIdAsync,
+  getBoardListAsync,
+  getPostAsync,
+  togglePostHeartAsync,
+} from './actions';
+import {RootState} from '@modules';
+import {UserData} from '@modules/User/types';
 
 function* getBoardListSaga(
     action: ReturnType<typeof getBoardListAsync.request>,
@@ -36,20 +53,41 @@ function* getPostSaga(
     action: ReturnType<typeof getPostAsync.request>,
 ) {
   try {
+    const session: UserData = yield select(
+        (state: RootState) => state.user.session,
+    );
     const response: GetPostRes = yield call(
         apiGetPost,
         action.payload,
     );
-    yield put(getPostAsync.success(response));
+
+    yield put(getPostAsync.success({
+      ...response, session,
+    }));
   } catch (error: any) {
     yield put(getPostAsync.failure(error));
   }
+}
+
+function* togglePostHeartSaga(
+  action: ReturnType<typeof togglePostHeartAsync.request>,
+) {
+try {
+  const response: TogglePostHeartRes = yield call(
+      apiTogglePostHeart,
+      action.payload,
+  );
+  yield put(togglePostHeartAsync.success(response));
+} catch (error: any) {
+  yield put(togglePostHeartAsync.failure(error));
+}
 }
 
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
   yield takeLatest(getPostAsync.request, getPostSaga);
+  yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);
 }
 
 export default boardSagaListener;
