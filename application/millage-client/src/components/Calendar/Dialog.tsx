@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {useSchedule} from '@hooks/Schedule';
-import type {EventData} from '@modules/Schedule/types';
 import {Dialog as _Dialog, useMediaQuery, useTheme} from '@mui/material';
 import AddModal from './AddModal';
 import EditModal from './EditModal';

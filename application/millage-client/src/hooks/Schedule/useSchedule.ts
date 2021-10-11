@@ -1,16 +1,26 @@
 import * as React from 'react';
 import {RootState} from '@modules';
-import {getScheduleListAsync} from '@modules/Schedule/actions';
+import {
+  getScheduleListAsync,
+  createScheduleAsync,
+  updateScheduleAsync,
+  deleteScheduleAsync,
+} from '@modules/Schedule/actions';
 import {useDispatch, useSelector} from 'react-redux';
-import {EventData} from '@modules/Schedule/types';
+import type {
+  ScheduleList,
+  CreateScheduleReq,
+  UpdateScheduleReq,
+  DeleteScheduleReq,
+} from '@modules/Schedule/types';
 
 const useSchedule: () => [
-  Array<EventData>,
-  (event: EventData) => void,
-  (event: EventData) => void,
-  (removeId: string) => void
+  ScheduleList,
+  (req: CreateScheduleReq) => void,
+  (req: UpdateScheduleReq) => void,
+  (req: DeleteScheduleReq) => void
 ] = () => {
-  const [events, setEvents] = React.useState<Array<EventData>>([]);
+  const [scheduleList, setscheduleList] = React.useState<ScheduleList>([]);
   const schedule = useSelector((state: RootState) => state.schedule);
 
   const dispatch = useDispatch();
@@ -18,28 +28,23 @@ const useSchedule: () => [
     dispatch(getScheduleListAsync.request());
   }, [dispatch]);
   React.useEffect(() => {
-    setEvents(schedule.schedules);
+    setscheduleList(schedule.schedules);
   }, [schedule]);
-  const createSchedule = React.useCallback((event: EventData) => {
-    setEvents([...events, event]);
-    // dispatch(getScheduleListAsync.request());
+  const createSchedule = React.useCallback((req: CreateScheduleReq) => {
+    dispatch(createScheduleAsync.request(req));
+    setscheduleList(schedule.schedules);
   }, []);
-  const updateSchedule = React.useCallback((event: EventData) => {
-    if (events.find(({id}) => id === event.id) !== undefined) {
-      const index = events.findIndex(({id}) => id === event.id);
-      const tmp = events;
-      tmp[index] = event;
-      setEvents(tmp);
-      // dispatch(getScheduleListAsync.request());
-    }
+  const updateSchedule = React.useCallback((req: UpdateScheduleReq) => {
+    dispatch(updateScheduleAsync.request(req));
+    setscheduleList(schedule.schedules);
   }, []);
-  const deleteSchedule = React.useCallback((removeId: string) => {
-    setEvents(events.filter(({id}) => id !== removeId));
-    // dispatch(getScheduleListAsync.request());
+  const deleteSchedule = React.useCallback((req: DeleteScheduleReq) => {
+    dispatch(deleteScheduleAsync.request(req));
+    setscheduleList(scheduleList.filter(({id}) => id !== req.id));
   }, []);
 
   return [
-    events,
+    scheduleList,
     createSchedule,
     updateSchedule,
     deleteSchedule,

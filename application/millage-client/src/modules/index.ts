@@ -12,7 +12,13 @@ import {
   setMessagesAsReadSagaListener,
 } from './DM/sagas';
 import boardSaga from './board/sagas';
-import scheduleSaga from './Schedule/sagas';
+import {
+  getScheduleListSagaListener,
+  getUnitScheduleListSagaListener,
+  createScheduleSagaListener,
+  updateScheduleSagaListener,
+  deleteScheduleSagaListener,
+} from './Schedule/sagas';
 import {
   checkSessionListener,
   createUserSagaListener,
@@ -48,7 +54,11 @@ export function* rootSaga() {
     checkSessionListener(),
     boardSaga(),
     getUnitListSagaListener(),
-    scheduleSaga(),
+    getScheduleListSagaListener(),
+    getUnitScheduleListSagaListener(),
+    createScheduleSagaListener(),
+    updateScheduleSagaListener(),
+    deleteScheduleSagaListener(),
     updateUnreadListener(),
     setMessagesAsReadSagaListener(),
     logoutSagaListener(),
