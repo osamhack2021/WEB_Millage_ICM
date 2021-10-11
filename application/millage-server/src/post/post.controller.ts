@@ -29,12 +29,14 @@ export class PostController {
   }
 
   @Get(':id')
-  async get(@Param() params: GetPostParams): Promise<PostRO> {
+  async get(@Param() params: GetPostParams, @Req() req: Request): Promise<PostRO> {
     try {
       const selectedPost = await this.postService.get(params.id);
+      const isVoter = await this.postService.isVoter(params.id, req.session.user.id);
       return {
         result: Result.SUCCESS,
         post: selectedPost,
+        isVoter,
       };
     } catch (err) {
       return {
