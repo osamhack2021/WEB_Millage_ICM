@@ -41,17 +41,17 @@ export class UserController {
     if (!_user) {
       return {
         result: Result.FAIL,
-        message: '정보가 일치하지 않습니다'
+        message: '정보가 일치하지 않습니다',
       };
-    } else if (_user.isConfirmed == false){
+    } else if (_user.isConfirmed == false) {
       return {
         result: Result.FAIL,
-        message: '승인되지 않은 사용자입니다.'
+        message: '승인되지 않은 사용자입니다.',
       };
     } else if (_user.unit.isConfirmed == false) {
       return {
         result: Result.FAIL,
-        message: '승인되지 않은 부대입니다.'
+        message: '승인되지 않은 부대입니다.',
       };
     }
 
@@ -114,7 +114,7 @@ export class UserController {
   @Patch(':id')
   async update(
     @Param() params: UserParams,
-    @Body() dto: UpdateUserDto
+    @Body() dto: UpdateUserDto,
   ): Promise<ResultObject> {
     try {
       if (await this.userService.update(params.id, dto)) {
@@ -134,16 +134,6 @@ export class UserController {
         result: Result.SUCCESS,
         users: await this.userService.getUsersByRoleName(roleName),
       };
-    } catch (err) {
-      return {result: Result.ERROR, message: err.message};
-    }
-  }
-
-  @Get('mailtest/:email')
-  async mailTest(@Param('email') email: string): Promise<ResultObject> {
-    try {
-      await this.userService.sendUserConfirmedMail(email, '군견훈련소');
-      return {result: Result.SUCCESS};
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

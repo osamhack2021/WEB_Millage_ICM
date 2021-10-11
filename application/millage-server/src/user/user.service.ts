@@ -85,13 +85,14 @@ export class UserService {
     return await this.unitRepository.save(newUnit);
   }
 
-  async sendUserConfirmedMail(email: string, unitName: string): Promise<boolean> {
+  async sendUserConfirmedMail(email: string, unitId: number): Promise<boolean> {
+    const unit = await this.unitRepository.findOne(unitId);
     const htmlStream = fs.readFileSync(
         path.join(__dirname, '/mailTemplate/userConfirmed.html')
     );
     await this.mailerService.sendMail({
       to: email,
-      subject: `[Millage 승인 완료] ${unitName} 커뮤니티를 이용하실 수 있습니다.`,
+      subject: `[Millage 승인 완료] ${unit.name} 커뮤니티를 이용하실 수 있습니다.`,
       html: htmlStream, // template 필요
     });
     return true;
@@ -161,7 +162,7 @@ export class UserService {
       },
       select: [
         'id', 'username', 'password', 'email',
-        'phonenumber', 'fullname', 'nickname', 'isConfirmed',],
+        'phonenumber', 'fullname', 'nickname', 'isConfirmed'],
       relations: ['role', 'unit'],
     });
     if (user) {
@@ -177,8 +178,13 @@ export class UserService {
     }
     try {
       const changes = this.userRepository.create(dto);
-      if (!(await this.userRepository.update(id, changes)).affected) {
+      const updateResult = await this.userRepository.update(id, changes);
+      if (updateResult.affected === 0) {
         return false;
+      }
+      if (dto.isConfirmed === true) {
+        const confirmedUser = updateResult.generatedMaps[0] as UserEntity;
+        await this.sendUserConfirmedMail(confirmedUser.email, confirmedUser.unitId);
       }
       return true;
     } catch (err) {
