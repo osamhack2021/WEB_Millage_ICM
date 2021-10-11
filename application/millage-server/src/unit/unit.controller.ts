@@ -1,10 +1,10 @@
-import {Controller, Get} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Req} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
-import {UnitInfo, UnitListRO} from './unit.interface';
+import {UnitDTO, UnitInfo, UnitListRO} from './unit.interface';
 import {UnitService} from './unit.service';
-import {Result} from '../common/common.interface';
+import {Result, ResultObject} from '../common/common.interface';
 
 @ApiBearerAuth()
 @ApiTags('unit')
@@ -41,6 +41,22 @@ export class UnitController {
         result: Result.ERROR,
         message: err.message,
       };
+    }
+  }
+
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() dto: UnitDTO
+  ): Promise<ResultObject> {
+    try {
+      if (await this.unitService.update(id, dto)) {
+        return {result: Result.SUCCESS};
+      }
+      return {result: Result.FAIL, message: 'Nothing changed'};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
     }
   }
 }
