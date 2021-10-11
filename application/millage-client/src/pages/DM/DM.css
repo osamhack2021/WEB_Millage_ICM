@@ -161,6 +161,23 @@
 #MessageContainer .messagesContainer {
   overflow-y: auto;
   height:610px;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+#MessageContainer .messagesContainer::-webkit-scrollbar {
+  display: none;
+}
+
+#MessageContainer .items {
+  overflow-y: auto;
+  height:610px;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+#MessageContainer .items::-webkit-scrollbar {
+  display: none;
 }
 
 

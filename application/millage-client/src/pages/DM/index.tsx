@@ -161,10 +161,9 @@ function DM() {
     }
     return localMessageBoxes.map((mb: any, idx: number) => {
       return (
-        <div>
+        <div key={idx}>
           <button className={receiverId.current == mb.senderId ? 'enabled' : ''}
-            onClick={()=>getMessage(idx, mb.senderId, mb.senderName, mb.time)}
-            key={mb.id}>
+            onClick={()=>getMessage(idx, mb.senderId, mb.senderName, mb.time)}>
             <Badge className="usericon" variant="dot"
               badgeContent={mb.unread == undefined ? 0 : mb.unread}
               anchorOrigin={{
