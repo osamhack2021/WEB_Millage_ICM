@@ -3,7 +3,7 @@ import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PostService} from './post.service';
 import {PostRO} from './post.interface';
-import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto} from './dto';
+import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto, VoteParams} from './dto';
 import {Result, ResultObject} from '../common/common.interface';
 
 @ApiBearerAuth()
@@ -94,7 +94,17 @@ export class PostController {
     }
   }
 
-  @Post('/:postId/poll/pollId')
-  async choosePoll
-
+  @Post('/:postId/poll/:pollId')
+  async vote(@Param() params: VoteParams, @Req() req: Request) {
+    try {
+      const userId = req.session.user.id;
+      await this.postService.vote(params.postId, userId, params.pollId);
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
 }

@@ -7,3 +7,11 @@ export class PostParams {
 
 export class GetPostParams extends PostParams {
 }
+
+export class VoteParams {
+  @IsNumberString()
+  postId: number;
+
+  @IsNumberString()
+  pollId: number;
+}
