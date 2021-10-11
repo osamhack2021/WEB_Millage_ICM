@@ -22,6 +22,7 @@ const BoardItem: React.FC<Props> = ({id, title, posts}) => {
           <PostItem
             id={post.id}
             title={post.title}
+            key={post.id}
           />
         )) :
         <NoPosts />
