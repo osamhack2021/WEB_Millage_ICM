@@ -23,6 +23,7 @@
   },
   "include": [
     "src",
-    "src/index.tsx"
+    "src/index.tsx",
+    "src/types/react-datetime-picker.d.ts"
   ]
 }
