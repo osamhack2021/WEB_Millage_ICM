@@ -6,7 +6,7 @@ import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {RecruitEntity} from '../post/recruit/recruit.entity';
 import {PostEntity} from '../post/post.entity';
-import {PollItemEntity} from '../post/poll/poll_item.entity';
+import {PollEntity} from '../post/poll/poll_item.entity';
 import {ScheduleEntity} from '../schedule/schedule.entity';
 
 @Entity('user')
@@ -89,8 +89,8 @@ export class UserEntity {
   @ManyToMany(() => PostEntity)
   likedPosts: PostEntity[];
 
-  @ManyToMany(() => PollItemEntity, (pollItem) => pollItem.voters)
-  votes: PollItemEntity[];
+  @ManyToMany(() => PollEntity, (pollItem) => pollItem.voters)
+  votes: PollEntity[];
 
   @OneToMany(() => ScheduleEntity, (schedule) => schedule.userId)
   schedules: ScheduleEntity[];

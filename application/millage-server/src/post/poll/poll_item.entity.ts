@@ -2,8 +2,8 @@ import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGen
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
-@Entity('pollItem')
-export class PollItemEntity {
+@Entity('poll')
+export class PollEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

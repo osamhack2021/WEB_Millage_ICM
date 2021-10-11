@@ -4,7 +4,7 @@ import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
 import {PostType} from './post.interface';
 import {CreatePostDto, UpdatePostDto} from './dto';
-import {PollItemEntity} from './poll/poll_item.entity';
+import {PollEntity} from './poll/poll_item.entity';
 import {UserEntity} from '../user/user.entity';
 
 @Injectable()
@@ -13,8 +13,8 @@ export class PostService {
         @InjectRepository(PostEntity)
         private readonly postRepository: Repository<PostEntity>,
 
-        @InjectRepository(PollItemEntity)
-        private readonly pollItemRepository: Repository<PollItemEntity>,
+        @InjectRepository(PollEntity)
+        private readonly pollItemRepository: Repository<PollEntity>,
 
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
@@ -23,15 +23,15 @@ export class PostService {
   private createPollItem(
       content: string,
       postId: number,
-  ): Promise<PollItemEntity> {
-    const newPollItem = new PollItemEntity();
+  ): Promise<PollEntity> {
+    const newPollItem = new PollEntity();
     newPollItem.content = content;
     newPollItem.postId = postId;
     return this.pollItemRepository.save(newPollItem);
   }
 
   private async createPoll(postId: number, pollList: string[]) {
-    await Promise.all(pollList.map((content: string): Promise<PollItemEntity> => {
+    await Promise.all(pollList.map((content: string): Promise<PollEntity> => {
       return this.createPollItem(content, postId);
     }));
     return;

@@ -93,4 +93,8 @@ export class PostController {
       };
     }
   }
+
+  @Post('/:postId/poll/pollId')
+  async choosePoll
+
 }
