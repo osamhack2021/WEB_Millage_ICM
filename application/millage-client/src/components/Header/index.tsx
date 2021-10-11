@@ -22,6 +22,7 @@ function Header() {
   let socket: Socket;
   const [connectedSocket, setSocket] = useState<Socket>();
   const goMain = () => {
+    setPageState('board');
     history.push('/');
   };
 
