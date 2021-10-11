@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards';
-import {PollListBox} from '@components/boards/PostView';
+import {PollListBox, RecruitBox} from '@components/boards/PostView';
 
 type Params = {
   postId: string;
@@ -52,10 +52,8 @@ function PostViewPage() {
           <PollListBox pollItems={data.pollItems} />
         }
 
-        { data.postType === 'RECRUIT' &&
-          <div>
-            ExtraBox (모집)
-          </div>
+        { data.postType === 'RECRUIT' && data.recruitStatus &&
+          <RecruitBox {...data.recruitStatus} />
         }
 
         <div>

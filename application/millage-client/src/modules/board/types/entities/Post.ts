@@ -21,6 +21,7 @@ export type Post = {
     hasHearted: boolean;
     comments: Comment[];
     pollItems?: Poll[];
+    isVoter?: boolean;
     images?: string[];
     recruitStatus?: RecruitStatus;
 };

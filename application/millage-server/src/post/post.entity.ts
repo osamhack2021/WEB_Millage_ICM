@@ -74,6 +74,8 @@ export class PostEntity {
 
   heartCount: number;
 
+  isVoter?: boolean;
+
   @AfterLoad()
   countHearts() {
     this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
