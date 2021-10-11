@@ -3,7 +3,7 @@ import {PostController} from './post.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {PostEntity} from './post.entity';
 import {PostService} from './post.service';
-import {PollItemEntity} from './poll/poll_item.entity';
+import {PollEntity} from './poll/poll.entity';
 import {RecruitEntity} from './recruit/recruit.entity';
 import {CommentEntity} from './comment/comment.entity';
 import {UserEntity} from '../user/user.entity';
@@ -11,7 +11,7 @@ import {UserEntity} from '../user/user.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([
     PostEntity,
-    PollItemEntity,
+    PollEntity,
     RecruitEntity,
     CommentEntity,
     UserEntity,
