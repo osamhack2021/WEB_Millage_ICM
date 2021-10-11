@@ -2,20 +2,24 @@ import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
+import DateTimePicker from 'react-datetime-picker';
 import {
   Button,
   TextField,
   DialogTitle,
   DialogContent,
   DialogActions,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 
-type DateRangeType = [Date, Date?];
+type DateTime = Date | [Date, Date] | null;
 
 interface IFormInput {
-  scheduleTitle: string
-  scheduleContent: string
-  scheduleDate: DateRangeType
+  scheduleTitle: string;
+  scheduleContent: string;
+  scheduleDate: DateTime;
 }
 
 interface Props {
@@ -23,20 +27,31 @@ interface Props {
 }
 
 const AddModal: React.FC<Props> = ({handleClose}) => {
+  const [checked, setChecked] = React.useState(false);
   const {control, handleSubmit} = useForm<IFormInput>();
   const [
     _scheduleList,
     createSchedule,
   ] = useSchedule();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => createSchedule({
-    id: '100',
-    groupId: '1',
-    title: data.scheduleTitle,
-    content: data.scheduleTitle,
-    start: data.scheduleDate[0],
-    end: data.scheduleDate[1],
-  });
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    if (checked) {
+      const date = data.scheduleDate as Date;
+      createSchedule({
+        title: data.scheduleTitle,
+        content: data.scheduleTitle,
+        start: date,
+      });
+    } else {
+      const date = data.scheduleDate as [Date, Date];
+      createSchedule({
+        title: data.scheduleTitle,
+        content: data.scheduleTitle,
+        start: date[0],
+        end: date[1],
+      });
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,30 +84,65 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
             />
           )}
         />
-        <Controller
-          name='scheduleDate'
-          control={control}
-          defaultValue={[new Date(), new Date()]}
-          render={({field: {onChange, value, ...props}}) => {
-            const handleDate = (e: [Date?, Date?] | null) => {
-              if (Array.isArray(e)) onChange(e);
-            };
-
-            return (
-              <div style={{minHeight: 375}}>
-                <label>기간: </label>
-                <DateTimeRangePicker
-                  value={value}
-                  onChange={handleDate}
-                  locale='en-US'
-                  format='y. MM. dd H:mm'
-                  disableClock
-                  {...props}
-                />
-              </div>
-            );
-          }}
-        />
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checked}
+                onChange={(e) => setChecked(e.target.checked)}
+              />
+            }
+            label="종일"
+          />
+        </FormGroup>
+        {checked ? (
+          <Controller
+            name='scheduleDate'
+            control={control}
+            render={({field: {onChange, value, ...props}}) => {
+              const handleDate = (e: [Date?, Date?] | null) => {
+                if (Array.isArray(e)) onChange(e);
+              };
+              return (
+                <div style={{minHeight: 375}}>
+                  <label>기간: </label>
+                  <DateTimeRangePicker
+                    value={value}
+                    onChange={handleDate}
+                    locale='en-US'
+                    format='y. MM. dd H:mm'
+                    disableClock
+                    {...props}
+                  />
+                </div>
+              );
+            }}
+          />
+        ) : (
+          <Controller
+            name='scheduleDate'
+            control={control}
+            defaultValue={new Date()}
+            render={({field: {onChange, value, ...props}}) => {
+              const handleDate = (e: Date | null) => {
+                if (Array.isArray(e)) onChange(e);
+              };
+              return (
+                <div style={{minHeight: 375}}>
+                  <label>일자: </label>
+                  <DateTimePicker
+                    value={value}
+                    onChange={handleDate}
+                    locale='en-US'
+                    format='y. MM. dd H:mm'
+                    disableClock
+                    {...props}
+                  />
+                </div>
+              );
+            }}
+          />
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>닫기</Button>

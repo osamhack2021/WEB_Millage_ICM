@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
-import type {EventData} from '@modules/Schedule/types';
+import type {Schedule} from '@modules/Schedule/types';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import Calendar from 'react-calendar';
 import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
+import DateTimePicker from 'react-datetime-picker';
 import {
   Box,
   Button,
@@ -17,14 +18,17 @@ import {
   Step,
   TextField,
   StepLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from '@mui/material';
 
-type DateRangeType = [Date, Date?];
+type DateTime = Date | [Date, Date?] | null;
 
 interface IFormInput {
-  scheduleTitle: string
-  scheduleContent: string
-  scheduleDate: DateRangeType
+  scheduleTitle: string;
+  scheduleContent: string;
+  scheduleDate: DateTime;
 }
 
 interface Props {
@@ -50,14 +54,13 @@ const compareDateRange = (start: Date, end: Date, date: Date) => {
 const EditModal: React.FC<Props> = ({handleClose}) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [selectedSchedule, setSelectedSchedule] = React.useState<EventData>({
+  const [checked, setChecked] = React.useState(false);
+  const [selectedSchedule, setSelectedSchedule] = React.useState<Schedule>({
     id: '',
     groupId: '',
     title: '',
     content: '',
     start: new Date(),
-    end: new Date(),
-    color: '',
   });
   const {control, handleSubmit} = useForm<IFormInput>();
   const [
@@ -67,13 +70,26 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     _deleteSchedule,
   ] = useSchedule();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => updateSchedule({
-    ...selectedSchedule,
-    title: data.scheduleTitle,
-    content: data.scheduleTitle,
-    start: data.scheduleDate[0],
-    end: data.scheduleDate[1],
-  });
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    if (checked) {
+      const date = data.scheduleDate as Date;
+      updateSchedule({
+        id: selectedSchedule.id,
+        title: data.scheduleTitle,
+        content: data.scheduleTitle,
+        start: date,
+      });
+    } else {
+      const date = data.scheduleDate as [Date, Date];
+      updateSchedule({
+        id: selectedSchedule.id,
+        title: data.scheduleTitle,
+        content: data.scheduleTitle,
+        start: date[0],
+        end: date[1],
+      });
+    }
+  };
 
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
@@ -82,7 +98,8 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     setSelectedDate(val);
     setActiveStep(1);
   };
-  const handleItemClick = (e: EventData) => {
+  const handleItemClick = (e: Schedule) => {
+    setChecked(e.end === undefined);
     setSelectedSchedule(e);
     setActiveStep(2);
   };
@@ -161,6 +178,66 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                 />
               )}
             />
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked}
+                    onChange={(e) => setChecked(e.target.checked)}
+                  />
+                }
+                label="종일"
+              />
+            </FormGroup>
+            {checked ? (
+              <Controller
+                name='scheduleDate'
+                control={control}
+                defaultValue={[selectedSchedule.start, selectedSchedule?.end]}
+                render={({field: {onChange, value, ...props}}) => {
+                  const handleDate = (e: [Date?, Date?] | null) => {
+                    if (Array.isArray(e)) onChange(e);
+                  };
+                  return (
+                    <div style={{minHeight: 375}}>
+                      <label>기간: </label>
+                      <DateTimeRangePicker
+                        value={value}
+                        onChange={handleDate}
+                        locale='en-US'
+                        format='y. MM. dd H:mm'
+                        disableClock
+                        {...props}
+                      />
+                    </div>
+                  );
+                }}
+              />
+            ) : (
+              <Controller
+                name='scheduleDate'
+                control={control}
+                defaultValue={selectedSchedule?.start}
+                render={({field: {onChange, value, ...props}}) => {
+                  const handleDate = (e: Date | null) => {
+                    if (Array.isArray(e)) onChange(e);
+                  };
+                  return (
+                    <div style={{minHeight: 375}}>
+                      <label>일자: </label>
+                      <DateTimePicker
+                        value={value}
+                        onChange={handleDate}
+                        locale='en-US'
+                        format='y. MM. dd H:mm'
+                        disableClock
+                        {...props}
+                      />
+                    </div>
+                  );
+                }}
+              />
+            )}
             <Controller
               name='scheduleDate'
               control={control}

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
-import type {EventData} from '@modules/Schedule/types';
-import {useForm, Controller, SubmitHandler} from 'react-hook-form';
+import type {Schedule} from '@modules/Schedule/types';
 import moment from 'moment';
 import Calendar from 'react-calendar';
 import {
@@ -20,12 +19,12 @@ import {
   StepLabel,
 } from '@mui/material';
 
-type DateRangeType = [Date, Date?];
+type DateTime = Date | [Date, Date?] | null;
 
 interface IFormInput {
-  scheduleTitle: string
-  scheduleContent: string
-  scheduleDate: DateRangeType
+  scheduleTitle: string;
+  scheduleContent: string;
+  scheduleDate: DateTime;
 }
 
 interface Props {
@@ -51,23 +50,22 @@ const compareDateRange = (start: Date, end: Date, date: Date) => {
 const DeleteModal: React.FC<Props> = ({handleClose}) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [selectedSchedule, setSelectedSchedule] = React.useState<EventData>({
+  const [selectedSchedule, setSelectedSchedule] = React.useState<Schedule>({
     id: '',
     groupId: '',
     title: '',
     content: '',
     start: new Date(),
-    end: new Date(),
-    color: '',
   });
-  const {control, handleSubmit} = useForm<IFormInput>();
   const [
     scheduleList,
     _createSchedule,
     _updateSchedule,
     deleteSchedule,
   ] = useSchedule();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {};
+  const handleDelete = () => {
+    deleteSchedule({id: selectedSchedule.id});
+  };
 
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
@@ -76,13 +74,13 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
     setSelectedDate(val);
     setActiveStep(1);
   };
-  const handleItemClick = (e: EventData) => {
+  const handleItemClick = (e: Schedule) => {
     setSelectedSchedule(e);
     setActiveStep(2);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <React.Fragment>
       <DialogTitle>일정 삭제하기</DialogTitle>
       <DialogContent>
         <Stepper activeStep={activeStep}>
@@ -144,8 +142,8 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             <TextField
               value={
                 moment(selectedSchedule.start).format('YYYY-MM-DD HH:mm') +
-                ' - ' +
-                moment(selectedSchedule.end).format('YYYY-MM-DD HH:mm')
+                selectedSchedule.end !== undefined ? '' :
+                ' - ' + moment(selectedSchedule.end).format('YYYY-MM-DD HH:mm')
               }
               label='날짜'
               variant='filled'
@@ -159,7 +157,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
         {activeStep === steps.length ? (
           <React.Fragment>
             <Button onClick={handleClose}>닫기</Button>
-            <Button type='submit'>삭제</Button>
+            <Button onClick={handleDelete}>삭제</Button>
           </React.Fragment>
         ) : (
           <React.Fragment>
@@ -168,7 +166,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
           </React.Fragment>
         )}
       </DialogActions>
-    </form>
+    </React.Fragment>
   );
 };
 
