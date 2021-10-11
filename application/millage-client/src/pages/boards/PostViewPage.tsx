@@ -52,9 +52,11 @@ function PostViewPage() {
           <PollListBox pollItems={data.pollItems} />
         }
 
-        { data.postType === 'RECRUIT' &&
+        { data.postType === 'RECRUIT' && data.recruitStatus &&
           <div>
-            ExtraBox (모집)
+            {data.recruitStatus.status}
+            {data.recruitStatus.currentMember.length}
+            {data.recruitStatus.totalMember}
           </div>
         }
 
