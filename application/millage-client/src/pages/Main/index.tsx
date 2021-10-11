@@ -19,7 +19,7 @@ import {
   SCHEDULE_PATH,
 } from '@constants';
 import BoardRoutes from '@pages/boards/BoardRoutes';
-import AdminHeader from '@components/AdminHeader';
+import AdminHeader from '@components/Admin/AdminHeader';
 
 const Main = () => {
   const dispatch = useDispatch();

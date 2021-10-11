@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
-import '../Header/header.css';
+import '../../Header/header.css';
 import {XLayout} from '@components/common';
 import {updateUnreadAsync, logoutRequest} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
