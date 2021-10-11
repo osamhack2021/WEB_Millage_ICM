@@ -118,9 +118,9 @@ function DM() {
         const clone = JSON.parse(JSON.stringify(localMessageBoxRef.current));
         clone[activeMessageBox.current].unread = 0;
         clone[activeMessageBox.current].message = data.message;
+        clone[activeMessageBox.current].time = data.time;
         setLocalMessageBoxes(clone);
         dispatch(setMessagesAsRead(receiverId.current));
-        dispatch(getMessageBoxListAsync.request());
       }
     });
     setSocket(socket);
