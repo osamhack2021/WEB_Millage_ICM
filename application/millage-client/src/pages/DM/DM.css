@@ -11,7 +11,7 @@
 
 #MessageContainer #messageboxes{
     position: relative;
-    width:350px;
+    width:388px;
     height:100%;
     border: 1px solid rgba(0,0,0,0.2);
     margin: 5px;
@@ -19,16 +19,29 @@
 
 #MessageContainer #messages{
     position: relative;
-    width: 780px;
+    width: 600px;
     height:100%;
     border: 1px solid rgba(0,0,0,0.2);
     margin: 5px;
-    overflow-y: auto;
 }
 
 #MessageContainer #messages input{
-  width:100%;
-  border: 1px solid black;
+  width: 552px;
+  height: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  border-radius: 15px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: -0.02em;
+  text-indent:20px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 #MessageContainer button{
@@ -48,7 +61,19 @@
   letter-spacing: -0.02em;
   border-bottom: 1px solid rgba(0,0,0,0.2);
   text-indent:15px;
+}
 
+#MessageContainer .messageTitle{
+  height:55px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 55px;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  text-indent:15px;
+  display:flex;
 }
 
 #MessageContainer .enabled{
@@ -68,8 +93,8 @@
   font-size: 11px;
   letter-spacing: -0.02em;
   text-align:left;
-  padding-top:10px;
-  line-height:20px;
+  padding-top:15px;
+  line-height:15px;
   text-indent:10px;
 }
 
@@ -81,4 +106,68 @@
 #MessageContainer .MuiBadge-dot{
   background-color:#E16913;
   
+}
+
+#MessageContainer .smallerIcon{
+  width:30px; 
+  margin-left:20px;
+}
+
+#MessageContainer .hidden{
+  display:none;
+}
+
+#MessageContainer .message{
+  display: flex;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: -0.02em;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#MessageContainer .messageReverse{
+  display: flex;
+  flex-direction: row-reverse;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: -0.02em;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#MessageContainer .mine, .others{
+  background: #C4C4C4;
+  border-radius: 15px;
+  height:auto;
+  max-width:240px;
+  padding:10px;
+  margin-left:5px;
+  margin-right:10px;
+}
+
+#MessageContainer .iconContainer, .messageDetailContainer{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+}
+
+#MessageContainer .messagesContainer {
+  overflow-y: auto;
+  height:610px;
+}
+
+
+#MessageContainer .deleteicon{
+  display:flex;
+  flex-direction:row-reverse;
+  margin-top:8px;
+  width:100%;
+  padding-right:10px;
 }

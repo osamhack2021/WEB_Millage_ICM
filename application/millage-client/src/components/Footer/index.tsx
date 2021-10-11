@@ -11,7 +11,6 @@ function Copyright(props: any) {
       <Link color="inherit" href="https://github.com/osamhack2021/WEB_Millage_ICM">
         OSAM Hack 2021 - ICM
       </Link>{' '}
-      {new Date().getFullYear()}
       {'.'}
       All rights reserved.
     </Typography>

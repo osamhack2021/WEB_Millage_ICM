@@ -45,7 +45,8 @@ function Header() {
 
   useEffect(()=> {
     dispatch(updateUnreadAsync.request());
-    socket = io(SOCKET_SERVER, {transports: ['websocket']});
+    socket = io(SOCKET_SERVER, {transports: ['websocket'],
+      withCredentials: true});
     socket.on('updateUnreadHeader', () => {
       dispatch(updateUnreadAsync.request());
     });
