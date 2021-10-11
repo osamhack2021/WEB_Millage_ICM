@@ -16,6 +16,16 @@ export async function getUserList(role: string): Promise<AdminState> {
   }
 }
 
+export async function getUnitList(): Promise<AdminState> {
+  try {
+    const units = await axios.get(`${SERVER}/unit/listForSuperAdmin`,
+        {withCredentials: true});
+    return units.data;
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
 export async function authUserApi(id: number) : Promise<AdminState> {
   try {
     const result = await axios.patch(`${SERVER}/user/${id}`, {
@@ -30,3 +40,19 @@ export async function authUserApi(id: number) : Promise<AdminState> {
     return {result: 'error', message: err};
   }
 }
+
+export async function authUnitApi(id: number) : Promise<AdminState> {
+  try {
+    const result = await axios.patch(`${SERVER}/unit/${id}`, {
+      id: id,
+      isConfirmed: true,
+    }, {withCredentials: true});
+
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
