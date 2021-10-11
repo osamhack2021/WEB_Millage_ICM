@@ -9,6 +9,8 @@ import {UnitModule} from './unit/unit.module';
 import {MessageModule} from './message/message.module';
 import {PostModule} from './post/post.module';
 import {ScheduleModule} from './schedule/schedule.module';
+import {ConfigModule} from '@nestjs/config';
+import {MailerModule} from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -19,7 +21,24 @@ import {ScheduleModule} from './schedule/schedule.module';
     UnitModule,
     MessageModule,
     PostModule,
-    ScheduleModule
+    ScheduleModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
+    MailerModule.forRoot({
+      transport: {
+        service: 'Naver',
+        host: 'smtp.naver.com',
+        port: 587,
+        auth: {
+          user: process.env.EMAIL_ID,
+          pass: process.env.EMAIL_PWD,
+        },
+      },
+      defaults: {
+        from: '"Millage" <military_village@naver.com>',
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

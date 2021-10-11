@@ -18,7 +18,9 @@
     "type": "git"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.6.0",
     "@nestjs/common": "^7.0.5",
+    "@nestjs/config": "^1.0.2",
     "@nestjs/core": "^7.0.5",
     "@nestjs/microservices": "^7.0.5",
     "@nestjs/platform-express": "^7.0.5",
@@ -36,7 +38,9 @@
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.3",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.6.5",
     "passport-jwt": "^4.0.0",
+    "pug": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.5",
     "slug": "^1.1.0",
