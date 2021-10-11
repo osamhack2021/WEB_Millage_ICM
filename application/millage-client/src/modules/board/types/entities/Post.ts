@@ -15,7 +15,9 @@ export type Post = {
     content?: string;
     createdAt: Date;
     writer: UserData;
-    likeCount: number;
+    hearts: UserData[];
+    heartCount: number;
+    hasHearted: boolean;
     comments: Comment[];
     pollItems?: Poll[];
     images?: string[];

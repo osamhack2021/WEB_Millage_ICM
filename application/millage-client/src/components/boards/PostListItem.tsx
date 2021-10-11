@@ -43,7 +43,7 @@ const PostListItem: React.FC<Props> = ({post}) => {
               fontSize: '0.875rem',
             }} />
             <span>
-              {post.likeCount}
+              {post.heartCount}
             </span>
           </div>
           &nbsp;&nbsp;&nbsp;
