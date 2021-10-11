@@ -34,7 +34,7 @@ export class PostController {
       const selectedPost = await this.postService.get(params.id);
       const postRO: PostRO = {result: Result.SUCCESS, post: selectedPost};
       if (selectedPost.postType === PostType.POLL) {
-        postRO.isVoter = await this.postService.isVoter(params.id, req.session.user.id);
+        postRO.post.isVoter = await this.postService.isVoter(params.id, req.session.user.id);
       }
       return postRO;
     } catch (err) {
