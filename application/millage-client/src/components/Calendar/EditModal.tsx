@@ -193,7 +193,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
               <Controller
                 name='scheduleDate'
                 control={control}
-                defaultValue={[selectedSchedule.start, selectedSchedule?.end]}
+                defaultValue={[selectedSchedule.start, selectedSchedule.end]}
                 render={({field: {onChange, value, ...props}}) => {
                   const handleDate = (e: [Date?, Date?] | null) => {
                     if (Array.isArray(e)) onChange(e);
@@ -226,7 +226,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                     <div style={{minHeight: 375}}>
                       <label>일자: </label>
                       <DateTimePicker
-                        value={value}
+                        value={value as Date}
                         onChange={handleDate}
                         locale='en-US'
                         format='y. MM. dd H:mm'
