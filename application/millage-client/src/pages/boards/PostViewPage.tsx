@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards';
-import {PollListBox} from '@components/boards/PostView';
+import {PollListBox, RecruitBox} from '@components/boards/PostView';
 
 type Params = {
   postId: string;
@@ -53,11 +53,7 @@ function PostViewPage() {
         }
 
         { data.postType === 'RECRUIT' && data.recruitStatus &&
-          <div>
-            {data.recruitStatus.status}
-            {data.recruitStatus.currentMember.length}
-            {data.recruitStatus.totalMember}
-          </div>
+          <RecruitBox {...data.recruitStatus} />
         }
 
         <div>
