@@ -44,7 +44,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [selectedSchedule, setSelectedSchedule] = React.useState<Schedule>({
     id: '',
-    groupId: '',
+    groupId: 'person',
     title: '',
     content: '',
     start: new Date(),
@@ -100,7 +100,8 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
         ) : activeStep === 1 ? (
           <Box>
             <List>
-              {scheduleList.filter(({start, end}) => {
+              {scheduleList.filter(({groupId, start, end}) => {
+                if(groupId === 'unit') return false;
                 if (!end) {
                   return compareDate(start, selectedDate);
                 } else {
