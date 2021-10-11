@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
 import type {EventData} from '@modules/Schedule/types';
-import {Dialog as _Dialog} from '@mui/material';
+import {Dialog as _Dialog, useMediaQuery, useTheme} from '@mui/material';
 import AddModal from './AddModal';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
@@ -16,34 +16,21 @@ interface Props {
 };
 
 const Dialog: React.FC<Props> = ({visible, handleClose, state}) => {
-  const [
-    _scheduleList,
-    createSchedule,
-    updateSchedule,
-    deleteSchedule,
-  ] = useSchedule();
-
-  const addEvents = (event: EventData) => {
-    createSchedule(event);
-  };
-  const editEvents = (event: EventData) => {
-    updateSchedule(event);
-  };
-  const deleteEvents = (id: string) => {
-    deleteSchedule(id);
-  };
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <_Dialog
+      fullScreen={fullScreen}
       open={visible}
       onClose={handleClose}
     >
       {
         state === 'add' ?
-        <AddModal handleClose={handleClose} handleSubmit={addEvents}/> :
+        <AddModal handleClose={handleClose} /> :
         state === 'edit' ?
-        <EditModal handleClose={handleClose} handleSubmit={editEvents}/> :
-        <DeleteModal handleClose={handleClose} handleSubmit={deleteEvents}/>
+        <EditModal handleClose={handleClose} /> :
+        <DeleteModal handleClose={handleClose} />
       }
     </_Dialog>
   );

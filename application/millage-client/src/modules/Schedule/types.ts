@@ -11,6 +11,13 @@ export interface EventData {
     color?: string;
 }
 
+export interface EventPostData {
+  title: string;
+  content: string;
+  start: Date;
+  end?: Date;
+}
+
 export interface Schedules {
   schedules: Array<EventData>;
 };

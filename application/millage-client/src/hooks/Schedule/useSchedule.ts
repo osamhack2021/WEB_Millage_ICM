@@ -22,7 +22,7 @@ const useSchedule: () => [
   }, [schedule]);
   const createSchedule = React.useCallback((event: EventData) => {
     setEvents([...events, event]);
-    dispatch(getScheduleListAsync.request());
+    // dispatch(getScheduleListAsync.request());
   }, []);
   const updateSchedule = React.useCallback((event: EventData) => {
     if (events.find(({id}) => id === event.id) !== undefined) {
@@ -30,12 +30,12 @@ const useSchedule: () => [
       const tmp = events;
       tmp[index] = event;
       setEvents(tmp);
-      dispatch(getScheduleListAsync.request());
+      // dispatch(getScheduleListAsync.request());
     }
   }, []);
   const deleteSchedule = React.useCallback((removeId: string) => {
     setEvents(events.filter(({id}) => id !== removeId));
-    dispatch(getScheduleListAsync.request());
+    // dispatch(getScheduleListAsync.request());
   }, []);
 
   return [
