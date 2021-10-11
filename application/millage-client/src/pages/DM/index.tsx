@@ -252,7 +252,7 @@ function DM() {
     } else {
       console.log('error');
     }
-    
+
     const m = {
       time: now,
       message: data.message,
