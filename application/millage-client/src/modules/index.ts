@@ -32,6 +32,7 @@ import {
 } from './Unit/sagas';
 import {
   getUserListSagaListener,
+  authUserSagaListener,
 } from './Admin/sagas';
 
 const rootReducer = combineReducers({
@@ -64,6 +65,7 @@ export function* rootSaga() {
     logoutSagaListener(),
     getUserListSagaListener(),
     validateUserSagaListener(),
+    authUserSagaListener(),
   ]);
 }
 

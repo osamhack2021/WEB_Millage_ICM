@@ -143,7 +143,7 @@ export class UserService {
       },
       select: [
         'id', 'username', 'password', 'email',
-        'phonenumber', 'fullname', 'nickname'],
+        'phonenumber', 'fullname', 'nickname', 'isConfirmed',],
       relations: ['role', 'unit'],
     });
     if (user) {

@@ -41,6 +41,12 @@ export class UserController {
     if (!_user) {
       return {
         result: Result.FAIL,
+        message: '정보가 일치하지 않습니다'
+      };
+    } else if (_user.isConfirmed == false){
+      return {
+        result: Result.FAIL,
+        message: '승인되지 않은 사용자입니다.'
       };
     }
 

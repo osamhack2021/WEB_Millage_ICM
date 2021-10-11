@@ -1,15 +1,35 @@
 #AdminContainer{
-
+    width: 100%;
 }
 
-#ListContainer{
-    width:80%;
-    height:400px;
+#AdminContainer #ListContainer{
+    height:500px;
     margin-left:auto;
     margin-right:auto;
-    margin-top:100px;
+    margin-top:10px;
+    width: 80%;
 }
 
-#ListContainer button{
-    margin-right:10px;
+#AdminContainer #ListContainer button{
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#AdminContainer #ListContainer .hidden{
+    display:none;
+}
+
+#AdminContainer #SearchContainer{
+    padding-top:50px;
+}
+
+#AdminContainer #SearchContainer input{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width:500px;
+    border: 1px solid rgba(0,0,0,0.5);
+    text-indent:10px;
+    height:30px;
 }

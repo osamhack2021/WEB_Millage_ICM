@@ -100,8 +100,8 @@ function Header() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={goLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>내 정보</MenuItem>
+            <MenuItem onClick={goLogout}>로그아웃</MenuItem>
           </Menu>
         </div>
       </XLayout>
