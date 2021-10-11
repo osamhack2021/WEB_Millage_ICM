@@ -48,6 +48,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
         end: data.scheduleDateRange[1],
       });
     }
+    handleClose();
   };
 
   return (

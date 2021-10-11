@@ -5,7 +5,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Dialog from './Dialog';
 import './Calendar.css';
-
 const Calendar: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [state, setState] = React.useState<'add' | 'edit' | 'delete'>('add');
@@ -40,17 +39,27 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <>
+    <div className='calendar-wrapper'>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin]}
         locale='ko'
+        height='80vh'
+        nowIndicator
         dayCellContent={({date}) => date.getDate()}
         weekNumbers
-        weekNumberContent={(week) => `${week.num}주차`}
+        weekNumberContent={(week) => `${week.num}주`}
         headerToolbar={{
-          start: 'prev,next today',
-          center: 'addEvents,editEvents,deleteEvents',
-          end: 'dayGridMonth,timeGridWeek,timeGridDay',
+          start: 'today',
+          center: 'prev,next',
+          end: 'dayGridMonth,timeGridWeek',
+        }}
+        footerToolbar={{
+          end: 'addEvents,editEvents,deleteEvents',
+        }}
+        buttonText={{
+          today: '당일로 이동',
+          month: '월간',
+          week: '주간',
         }}
         events={scheduleList}
         fixedWeekCount={false}
@@ -65,7 +74,7 @@ const Calendar: React.FC = () => {
         handleClose={handleClose}
         state={state}
       />
-    </>
+    </div>
   );
 };
 

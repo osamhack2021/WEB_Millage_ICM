@@ -1,0 +1,7 @@
+#schedule-container {
+  display:flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 90vh;
+  flex: 1 1 100%;
+}

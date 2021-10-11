@@ -13,3 +13,14 @@
 .fc-day-sat a.fc-col-header-cell-cushion {
   color: blue;
 }
+
+.calendar-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width:642px)  { 
+  .calendar-wrapper{
+    padding: 1em;
+  }
+}

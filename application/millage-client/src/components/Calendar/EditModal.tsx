@@ -86,6 +86,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
         end: data.scheduleDateRange[1],
       });
     }
+    handleClose();
   };
 
   const handleBack = () => {
