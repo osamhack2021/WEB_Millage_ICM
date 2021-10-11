@@ -48,6 +48,11 @@ export class UserController {
         result: Result.FAIL,
         message: '승인되지 않은 사용자입니다.'
       };
+    } else if (_user.unit.isConfirmed == false) {
+      return {
+        result: Result.FAIL,
+        message: '승인되지 않은 부대입니다.'
+      };
     }
 
     const {id, username, email, phonenumber, fullname, nickname, unit, role} = _user;
