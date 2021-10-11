@@ -48,4 +48,9 @@ export class ScheduleService {
     const updateResult = await this.scheduleRepository.update(id, editedSchedule);
     return updateResult.affected === 1;
   }
+
+  async delete(id: number): Promise<boolean> {
+    await this.scheduleRepository.delete(id);
+    return true;
+  }
 }
