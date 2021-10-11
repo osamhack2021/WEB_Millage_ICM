@@ -42,10 +42,15 @@ export class ScheduleService {
       id: number,
       userId: number,
       dto: UpdateScheduleDto,
-  ): Promise<boolean> {
+  ): Promise<ScheduleEntity> {
     Object.assign(dto, {userId});
     const editedSchedule = this.scheduleRepository.create(dto);
     const updateResult = await this.scheduleRepository.update(id, editedSchedule);
-    return updateResult.affected === 1;
+    return updateResult.generatedMaps[0] as ScheduleEntity;
+  }
+
+  async delete(id: number): Promise<boolean> {
+    await this.scheduleRepository.delete(id);
+    return true;
   }
 }
