@@ -70,17 +70,17 @@ function* getPostSaga(
 }
 
 function* togglePostHeartSaga(
-  action: ReturnType<typeof togglePostHeartAsync.request>,
+    action: ReturnType<typeof togglePostHeartAsync.request>,
 ) {
-try {
-  const response: TogglePostHeartRes = yield call(
-      apiTogglePostHeart,
-      action.payload,
-  );
-  yield put(togglePostHeartAsync.success(response));
-} catch (error: any) {
-  yield put(togglePostHeartAsync.failure(error));
-}
+  try {
+    const response: TogglePostHeartRes = yield call(
+        apiTogglePostHeart,
+        action.payload,
+    );
+    yield put(togglePostHeartAsync.success(response));
+  } catch (error: any) {
+    yield put(togglePostHeartAsync.failure(error));
+  }
 }
 
 export function* boardSagaListener() {

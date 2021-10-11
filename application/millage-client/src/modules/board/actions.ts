@@ -56,12 +56,12 @@ export const getPostAsync = createAsyncAction(
 /**
  * POST Toggle Post Heart API Actions
  */
- export const TOGGLE_POST_HEART = 'board/TOGGLE_POST_HEART';
- export const TOGGLE_POST_HEART_SUCCESS = 'board/TOGGLE_POST_HEART_SUCCESS';
- export const TOGGLE_POST_HEART_FAILURE = 'board/TOGGLE_POST_HEART_FAILURE';
- 
- export const togglePostHeartAsync = createAsyncAction(
-     TOGGLE_POST_HEART,
-     TOGGLE_POST_HEART_SUCCESS,
-     TOGGLE_POST_HEART_FAILURE,
- )<TogglePostHeartReq, TogglePostHeartRes, AxiosError>();
+export const TOGGLE_POST_HEART = 'board/TOGGLE_POST_HEART';
+export const TOGGLE_POST_HEART_SUCCESS = 'board/TOGGLE_POST_HEART_SUCCESS';
+export const TOGGLE_POST_HEART_FAILURE = 'board/TOGGLE_POST_HEART_FAILURE';
+
+export const togglePostHeartAsync = createAsyncAction(
+    TOGGLE_POST_HEART,
+    TOGGLE_POST_HEART_SUCCESS,
+    TOGGLE_POST_HEART_FAILURE,
+)<TogglePostHeartReq, TogglePostHeartRes, AxiosError>();
