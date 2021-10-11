@@ -1,0 +1,92 @@
+#SignupFinishContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+
+
+#SignupFinishContainer .green{
+    color: #10902C;
+}
+
+@media only screen and (max-width: 640px) {
+    #SignupFinishContainer .headerImage{
+        width: 310px;
+        margin-top:40px;
+    }
+    
+    #SignupFinishContainer .welcome{
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.02em;
+    }
+
+    #SignupFinishContainer .text{
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: -0.02em;
+        margin-top:80px;
+    }
+
+    #SignupFinishContainer button{
+        display:block;
+        width: 100px;
+        height: 30px;
+        background-color: #10902C;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 30px;
+        letter-spacing: -0.02em;
+        color: #FFFFFF;
+        margin-top:80px;
+    }
+}
+
+@media only screen and (min-width: 641px) {
+    #SignupFinishContainer .headerImage{
+        width: 610px;
+        margin-top:40px;
+    }
+
+    #SignupFinishContainer .welcome{
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        letter-spacing: -0.02em;
+    }
+
+    #SignupFinishContainer .text{
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 34px;
+        letter-spacing: -0.02em;
+        margin-top:80px;
+    }
+
+    #SignupFinishContainer button{
+        display:block;
+        width: 200px;
+        height: 60px;
+        background-color: #10902C;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 60px;
+        letter-spacing: -0.02em;
+        color: #FFFFFF;
+        margin-top:80px;
+    }
+}

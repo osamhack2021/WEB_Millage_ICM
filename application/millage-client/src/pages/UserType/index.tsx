@@ -26,13 +26,13 @@ export default function UserType() {
 
   return (
     <div id="UserTypeContainer">
-      <img className="headerImage" src='/img/SelectUserTypeLarge.png'/>
+      <img className="headerImage" src='/img/register/SelectUserTypeLarge.png'/>
       <div className="links">
         <div className="imgButton" onClick={()=>moveUser()}>
-          <img src='/img/UserTypeUserLarge.png'/>
+          <img src='/img/register/UserTypeUserLarge.png'/>
         </div>
         <div className="imgButton" onClick={()=>moveAdmin()}>
-          <img src='/img/UserTypeAdminLarge.png' />
+          <img src='/img/register/UserTypeAdminLarge.png' />
         </div>
       </div>
       <div className="text">

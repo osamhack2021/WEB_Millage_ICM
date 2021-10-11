@@ -7,6 +7,7 @@ import Main from '@pages/Main';
 import './App.css';
 import UserType from '@pages/UserType';
 import UnitList from '@components/UnitList';
+import SignupFinish from '@pages/SignupFinish';
 import {
   SIGNIN_PATH,
   ROOT_PATH,
@@ -14,6 +15,7 @@ import {
   UNITSELECT_PATH,
   USERTYPE_PATH,
   ADMIN_UNITSELECT_PATH,
+  REGISTER_FINISH_PATH,
 } from '@constants';
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <Route exact path={ADMIN_UNITSELECT_PATH} component={UnitList} />
         <Route exact path={SIGNUP_PATH} component={Signup} />
         <Route exact path={USERTYPE_PATH} component={UserType} />
+        <Route exact path={REGISTER_FINISH_PATH} component={SignupFinish} />
         <Route path={ROOT_PATH} component={Main} />
       </Switch>
       <Footer/>

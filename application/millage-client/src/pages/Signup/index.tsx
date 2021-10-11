@@ -13,7 +13,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync, validateUserAsync} from '@modules/User/actions';
 import {UserState, UserSubmitData, UserValidateData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {ROOT_PATH} from '@constants';
+import {REGISTER_FINISH_PATH} from '@constants';
 import CSS from 'csstype';
 import './signup.css';
 import LoginHeader from '@components/LoginHeader';
@@ -91,7 +91,7 @@ export default function Signup() {
   useEffect(() => {
     if (responseState.result == 'registerSuccess') {
       alert('회원가입 성공');
-      history.push(ROOT_PATH);
+      history.push(REGISTER_FINISH_PATH);
     } else if (responseState.result == 'registerFail') {
       alert(responseState.message);
     } else if (responseState.result == 'registerError') {
@@ -147,10 +147,10 @@ export default function Signup() {
               alignItems: 'center',
             }}
           >
-            <label className="mainTitle">
+            {/* <label className="mainTitle">
               회원가입
-            </label>
-            <img src="/img/register.png" />
+            </label> */}
+            <img src="/img/register/RegisterInputLarge.png" />
             <Box component="form" noValidate className="box"
               onSubmit={handleSubmit(onSubmit)} sx={{mt: 3}}
             >
