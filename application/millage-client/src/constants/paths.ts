@@ -5,7 +5,7 @@ export const USERTYPE_PATH = '/register';
 export const SIGNUP_PATH = '/register/user';
 export const UNITSELECT_PATH = '/register/unit';
 export const ADMIN_UNITSELECT_PATH = '/register/adminunit';
-
+export const REGISTER_FINISH_PATH = '/register/finish';
 
 export const SCHEDULE_PATH = '/schedule';
 export const DM_PATH = '/dm';
