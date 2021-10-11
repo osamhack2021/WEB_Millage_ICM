@@ -9,6 +9,7 @@ import {MessageBox} from '@modules/DM/types';
 import {updateUnreadAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
+import Badge from '@mui/material/Badge';
 
 interface MessageInterface {
   message: string;
@@ -105,7 +106,28 @@ function DM() {
           <button className={receiverId.current == mb.senderId ? 'enabled' : ''}
             onClick={()=>getMessage(idx, mb.senderId, mb.senderName)}
             key={mb.id}>
-            {mb.senderName} {mb.message} {mb.unread}
+            <Badge className="usericon" variant="dot"
+              badgeContent={mb.unread == undefined ? 0 : mb.unread}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <img src="/img/dm/usericon.png" />
+            </Badge>
+            <div className="messageBoxDetail">
+              <div style= {{
+                fontWeight: 'bold',
+              }}>{mb.senderName}</div>
+              <div style = {{
+                color: 'rgba(0, 0, 0, 0.5)',
+              }}>
+                {mb.message.length < 15 ?
+                mb.message:
+                mb.message.substr(0, 15) + '...'}
+                {mb.unread}
+              </div>
+            </div>
           </button>
         </div>
       );
@@ -164,7 +186,7 @@ function DM() {
     <div id="MessageContainer">
       <div id="messageboxes">
         <div className="title">
-          <h2>메시지 함</h2>
+          <span>메시지함</span>
         </div>
         <div className="items">
           {renderMessageBoxes()}

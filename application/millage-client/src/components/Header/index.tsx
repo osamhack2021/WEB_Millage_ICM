@@ -82,7 +82,7 @@ function Header() {
         </div>
         <div className="buttons">
           <IconButton onClick={goToDM}>
-            <Badge badgeContent={user.unread} max={10} color="primary">
+            <Badge badgeContent={user.unread} variant="dot">
               <SendIcon />
             </Badge>
           </IconButton>
