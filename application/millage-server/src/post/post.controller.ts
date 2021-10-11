@@ -98,7 +98,7 @@ export class PostController {
   async vote(@Param() params: VoteParams, @Req() req: Request) {
     try {
       const userId = req.session.user.id;
-      await this.postService.vote(params.postId, userId, params.pollId);
+      await this.postService.vote(parseInt(params.postId), userId, parseInt(params.pollId));
       return {result: Result.SUCCESS};
     } catch (err) {
       return {

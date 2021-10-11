@@ -1,8 +1,8 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, AfterLoad} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
-@Entity('poll')
+@Entity('pollItem')
 export class PollEntity {
   @PrimaryGeneratedColumn()
   id: number;

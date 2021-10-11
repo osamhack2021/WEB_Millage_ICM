@@ -4,7 +4,7 @@ import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
 import {PostType} from './post.interface';
 import {CreatePostDto, UpdatePostDto} from './dto';
-import {PollEntity} from './poll/poll_item.entity';
+import {PollEntity} from './poll/poll.entity';
 import {UserEntity} from '../user/user.entity';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class PostService {
         private readonly postRepository: Repository<PostEntity>,
 
         @InjectRepository(PollEntity)
-        private readonly pollItemRepository: Repository<PollEntity>,
+        private readonly pollRepository: Repository<PollEntity>,
 
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
@@ -27,7 +27,7 @@ export class PostService {
     const newPollItem = new PollEntity();
     newPollItem.content = content;
     newPollItem.postId = postId;
-    return this.pollItemRepository.save(newPollItem);
+    return this.pollRepository.save(newPollItem);
   }
 
   private async createPoll(postId: number, pollList: string[]) {
@@ -103,6 +103,36 @@ export class PostService {
       targetPost.hearts = targetPost.hearts.filter((user: UserEntity) => user.id !== userId);
     }
     await this.postRepository.save(targetPost);
+    return true;
+  }
+
+  async vote(postId: number, userId: number, pollId: number): Promise<boolean> {
+    const targetPost = await this.postRepository.findOne(
+        postId, {relations: ['pollItems', 'pollItems.voters']}
+    );
+    const targetPollItem: PollEntity = targetPost.pollItems.filter((poll) => poll.id === pollId)[0];
+
+    let pollUserExists: PollEntity = null;
+    for (const pollItem of targetPost.pollItems) {
+      if (pollItem.voters.some((voter) => voter.id == userId)) {
+        pollUserExists = pollItem;
+        break;
+      }
+    }
+
+    if (pollUserExists && pollUserExists.id === pollId) { // canceling
+      targetPollItem.voters = targetPollItem.voters.filter((voter) => voter.id === userId);
+      await this.pollRepository.save(targetPollItem);
+      return true;
+    }
+
+    const user: UserEntity = await this.userRepository.findOne(userId);
+    if (pollUserExists) { // changing choice
+      pollUserExists.voters = pollUserExists.voters.filter((voter) => voter.id === userId);
+      await this.pollRepository.save(pollUserExists);
+    }
+    targetPollItem.voters.push(user);
+    await this.pollRepository.save(targetPollItem);
     return true;
   }
 }

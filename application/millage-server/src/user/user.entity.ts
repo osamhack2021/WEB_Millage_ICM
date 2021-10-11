@@ -6,7 +6,7 @@ import {UnitEntity} from '../unit/unit.entity';
 import {UserRoleEntity} from '../user_role/user_role.entity';
 import {RecruitEntity} from '../post/recruit/recruit.entity';
 import {PostEntity} from '../post/post.entity';
-import {PollEntity} from '../post/poll/poll_item.entity';
+import {PollEntity} from '../post/poll/poll.entity';
 import {ScheduleEntity} from '../schedule/schedule.entity';
 
 @Entity('user')

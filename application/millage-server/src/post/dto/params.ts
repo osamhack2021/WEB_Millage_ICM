@@ -1,4 +1,4 @@
-import {IsNumberString} from 'class-validator';
+import {IsInt, IsNumberString} from 'class-validator';
 
 export class PostParams {
   @IsNumberString()
@@ -9,9 +9,9 @@ export class GetPostParams extends PostParams {
 }
 
 export class VoteParams {
-  @IsNumberString()
-  postId: number;
+  @IsInt()
+  postId: string;
 
-  @IsNumberString()
-  pollId: number;
+  @IsInt()
+  pollId: string;
 }

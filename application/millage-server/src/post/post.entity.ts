@@ -2,7 +2,7 @@ import {BoardEntity} from '../board/board.entity';
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad} from 'typeorm';
 import {PostType} from './post.interface';
 import {UserEntity} from '../user/user.entity';
-import {PollEntity} from './poll/poll_item.entity';
+import {PollEntity} from './poll/poll.entity';
 import {ImageEntity} from '../image/image.entity';
 import {CommentEntity} from './comment/comment.entity';
 import {RecruitEntity} from './recruit/recruit.entity';
