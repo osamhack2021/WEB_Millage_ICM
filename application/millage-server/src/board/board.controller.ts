@@ -1,10 +1,10 @@
-import {Body, Controller, Get, Post, Req, Param} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, Param, Query} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {BoardListRO, BoardRO} from './board.interface';
 import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
-import {CreateBoardDto, SelectBoardDto, BoardIdParam} from './dto';
+import {CreateBoardDto, BoardIdParam} from './dto';
 import {Result} from '../common/common.interface';
 
 @ApiBearerAuth()
@@ -69,14 +69,15 @@ export class BoardController {
     }
   }
 
-  @Post(':id')
+  @Get(':id?')
   async getBoardData(
       @Param() params: BoardIdParam,
-      @Body() selectDto: SelectBoardDto,
+      @Query('page') page: string,
+      @Query('search') searchKeyword: string,
   ): Promise<BoardRO> {
     try {
       const loadedBoard: BoardEntity =
-        await this.boardService.getBoardData(params.id, selectDto);
+        await this.boardService.getBoardData(params.id, parseInt(page), searchKeyword);
       return {
         result: Result.SUCCESS,
         board: loadedBoard,
