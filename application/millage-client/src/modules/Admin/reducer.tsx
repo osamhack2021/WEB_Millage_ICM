@@ -5,6 +5,9 @@ import {
   GET_USERLIST_SUCCESS,
   GET_USERLIST_FAIL,
   SET_PAGE_STATE,
+  AUTH_USER_SUCCESS,
+  AUTH_USER_REQUEST,
+  AUTH_USER_FAIL,
 } from './actions';
 
 const initialState: AdminState = {
@@ -30,7 +33,18 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
     ...state,
     page: action.payload,
   }),
-
+  [AUTH_USER_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [AUTH_USER_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'confirmsuccess',
+  }),
+  [AUTH_USER_FAIL]: (state, action) => ({
+    ...state,
+    result: 'confirmfail',
+  }),
 });
 
 export default UserReducer;
