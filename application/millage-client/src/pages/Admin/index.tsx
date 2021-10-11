@@ -157,10 +157,6 @@ export default function Admin() {
           pageSize={10}
           checkboxSelection
           disableSelectionOnClick
-          sortModel={[{
-            field: 'id',
-            sort: 'desc',
-          }]}
         />
       </div>
     </div>
