@@ -65,13 +65,19 @@ function DM() {
     setLocalMessageBoxes(clone);
   };
 
+  const deleteMessage = () => {
+    const c = confirm(`정말로 ${receiverName}님과의 대화를 삭제하시겠습니까?`);
+    if (c) {
+      console.log('delete messages with ' + receiverId.current);
+    }
+  };
+
   const convert = (value:string) => {
     const today = new Date();
     const timeValue = new Date(value.slice(0, -1));
 
     const betweenTime = Math.floor((today.getTime() -
       timeValue.getTime()) / 1000 / 60);
-    console.log(`${value} ${betweenTime}`);
     if (betweenTime < 1) {
       return '방금전';
     }
@@ -264,7 +270,9 @@ function DM() {
             <div className="iconContainer">
               <img className="smallerIcon" src="/img/dm/usericon.png" />
             </div>
-            <div className="messageBoxDetail" style={{paddingTop: '12.5px'}}>
+            <div className="messageBoxDetail" style={{
+              paddingTop: '12.5px',
+              width: '60px'}}>
               <div style= {{
                 fontWeight: 'bold',
               }}>{receiverName}</div>
@@ -273,6 +281,17 @@ function DM() {
               }}>
                 {convert(lastReceived)}
               </div>
+            </div>
+            <div className="deleteicon">
+              <button style={{cursor: 'pointer', width: '36px'}}
+                onClick={() => deleteMessage()}
+              >
+                <img style = {{
+                  width: '36px',
+                  height: '36px',
+                }}
+                src="/img/dm/deleteicon.png"/>
+              </button>
             </div>
           </div>
           <div className="messagesContainer" ref={scrollbox}>

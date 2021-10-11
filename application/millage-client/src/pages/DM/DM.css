@@ -152,10 +152,6 @@
   margin-right:10px;
 }
 
-#MessageContainer .others {
-
-}
-
 #MessageContainer .iconContainer, .messageDetailContainer{
   display:flex;
   justify-content: center;
@@ -165,4 +161,13 @@
 #MessageContainer .messagesContainer {
   overflow-y: auto;
   height:610px;
+}
+
+
+#MessageContainer .deleteicon{
+  display:flex;
+  flex-direction:row-reverse;
+  margin-top:8px;
+  width:100%;
+  padding-right:10px;
 }
