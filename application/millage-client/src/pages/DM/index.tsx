@@ -120,6 +120,7 @@ function DM() {
         clone[activeMessageBox.current].message = data.message;
         setLocalMessageBoxes(clone);
         dispatch(setMessagesAsRead(receiverId.current));
+        dispatch(getMessageBoxListAsync.request());
       }
     });
     setSocket(socket);
