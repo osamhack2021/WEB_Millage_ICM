@@ -74,11 +74,13 @@ export class ScheduleController {
     @Req() req: Request,
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateScheduleDto
-  ): Promise<ResultObject> {
+  ): Promise<ScheduleRO> {
     try {
       const userId = req.session.user.id;
-      await this.scheduleService.update(id, userId, dto);
-      return {result: Result.SUCCESS};
+      return {
+        result: Result.SUCCESS,
+        schedule: await this.scheduleService.update(id, userId, dto),
+      };
     } catch (err) {
       return {
         result: Result.ERROR,
