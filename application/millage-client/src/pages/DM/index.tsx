@@ -111,6 +111,7 @@ function DM() {
         time: data.time,
         message: data.message,
       };
+      console.log(data);
       if (receiverId.current == -1 || data.senderId != receiverId.current) {
         dispatch(getMessageBoxListAsync.request());
       } else if (data.senderId == receiverId.current) {
@@ -239,7 +240,7 @@ function DM() {
     if (e) {
       e.preventDefault();
     }
-    const now = new Date();
+    const now = new Date().toLocaleString().slice(0, -3);
     if (connectedSocket) {
       connectedSocket.emit('msgToServer', {
         message: data.message,
@@ -251,9 +252,9 @@ function DM() {
     } else {
       console.log('error');
     }
-
+    
     const m = {
-      time: new Date().toLocaleString().slice(0, -3),
+      time: now,
       message: data.message,
       senderId: session.id,
     };
