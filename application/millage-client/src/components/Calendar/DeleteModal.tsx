@@ -57,6 +57,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
   ] = useSchedule();
   const handleDelete = () => {
     deleteSchedule({id: selectedSchedule.id});
+    handleClose();
   };
 
   const handleBack = () => {
