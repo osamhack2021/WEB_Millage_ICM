@@ -13,7 +13,7 @@ import {SERVER} from '@constants';
 export async function getScheduleListApi() : Promise<GetScheduleListRes> {
   return axios.get<GetScheduleListRes>(
       `${SERVER}/schedule/personal`,
-      {withCredentials: true}
+      {withCredentials: true},
   ).then((res) => {
     return res.data;
   }).catch((err) => {
@@ -24,7 +24,7 @@ export async function getScheduleListApi() : Promise<GetScheduleListRes> {
 export async function getUnitScheduleListApi(): Promise<GetScheduleListRes> {
   return axios.get<GetScheduleListRes>(
       `${SERVER}/schedule/recentUnit`,
-      {withCredentials: true}
+      {withCredentials: true},
   ).then((res) => {
     return res.data;
   }).catch((err) => {
@@ -33,12 +33,12 @@ export async function getUnitScheduleListApi(): Promise<GetScheduleListRes> {
 };
 
 export async function createScheduleApi(
-    data: CreateScheduleReq
+    data: CreateScheduleReq,
 ): Promise<CreateScheduleRes> {
   return axios.post<CreateScheduleRes>(
       `${SERVER}/schedule/create`,
       data,
-      {withCredentials: true}
+      {withCredentials: true},
   ).then((res) => {
     return res.data;
   }).catch((err) => {
@@ -47,12 +47,12 @@ export async function createScheduleApi(
 };
 
 export async function updateScheduleApi(
-    {id, ...data}: UpdateScheduleReq
+    {id, ...data}: UpdateScheduleReq,
 ) : Promise<UpdateScheduleRes> {
   return axios.patch<UpdateScheduleRes>(
       `${SERVER}/schedule/update/${id}`,
       data,
-      {withCredentials: true}
+      {withCredentials: true},
   ).then((res) => {
     return res.data;
   }).catch((err) => {
@@ -61,11 +61,11 @@ export async function updateScheduleApi(
 };
 
 export async function deleteScheduleApi(
-    {id}: DeleteScheduleReq
+    {id}: DeleteScheduleReq,
 ) : Promise<DeleteScheduleRes> {
   return axios.delete<DeleteScheduleRes>(
       `${SERVER}/schedule/delete/${id}`,
-      {withCredentials: true}
+      {withCredentials: true},
   ).then((res) => {
     return res.data;
   }).catch((err) => {
