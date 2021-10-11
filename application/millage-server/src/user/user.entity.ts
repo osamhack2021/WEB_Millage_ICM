@@ -47,6 +47,9 @@ export class UserEntity {
   })
   nickname: string;
 
+  @Column({default: false})
+  isConfirmed: boolean;
+
   @BeforeInsert()
   async hashPassword() {
     this.password = await argon2.hash(this.password);
