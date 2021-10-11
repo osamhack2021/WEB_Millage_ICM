@@ -2,7 +2,7 @@ import {Get, Post, Body, Controller, Param, Delete, Patch, Req} from '@nestjs/co
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PostService} from './post.service';
-import {PostRO} from './post.interface';
+import {PostRO, PostType} from './post.interface';
 import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto, VoteParams} from './dto';
 import {Result, ResultObject} from '../common/common.interface';
 
@@ -32,12 +32,11 @@ export class PostController {
   async get(@Param() params: GetPostParams, @Req() req: Request): Promise<PostRO> {
     try {
       const selectedPost = await this.postService.get(params.id);
-      const isVoter = await this.postService.isVoter(params.id, req.session.user.id);
-      return {
-        result: Result.SUCCESS,
-        post: selectedPost,
-        isVoter,
-      };
+      const postRO: PostRO = {result: Result.SUCCESS, post: selectedPost};
+      if (selectedPost.postType === PostType.POLL) {
+        postRO.isVoter = await this.postService.isVoter(params.id, req.session.user.id);
+      }
+      return postRO;
     } catch (err) {
       return {
         result: Result.ERROR,
