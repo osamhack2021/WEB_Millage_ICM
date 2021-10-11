@@ -9,44 +9,21 @@
     padding: 10px;
 }
 
-@media only screen and (min-width: 641px) {
-    #MessageContainer #messageboxes{
-        position: relative;
-        width:350px;
-        height:100%;
-        border: 1px solid #ededed;
-        border-radius: 12px;
-        margin: 5px;
-    }
-
-    #MessageContainer #messages{
-        position: relative;
-        width: 780px;
-        height:100%;
-        border: 1px solid #e0c7c7;
-        border-radius: 12px;
-        margin: 5px;
-        overflow-y: auto;
-    }
-
-    #MessageContainer #messageboxes h2 {
-      position: absolute; left: 16px; line-height: 33px; color: #292929; font-size: 22px; font-weight: bold;
-    }
+#MessageContainer #messageboxes{
+    position: relative;
+    width:350px;
+    height:100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 5px;
 }
-@media only screen and (max-width: 640px) {
-  #MessageContainer #messageboxes {
-    display: none;
-  }
-  #MessageContainer #messageboxes.visible {
-    display: block;
-  }
 
-  #MessageContainer #messages {
-    display: none;
-  }
-  #MessageContainer #messages.visible {
-    display: block;
-  }
+#MessageContainer #messages{
+    position: relative;
+    width: 780px;
+    height:100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 5px;
+    overflow-y: auto;
 }
 
 #MessageContainer #messages input{
@@ -56,11 +33,22 @@
 
 #MessageContainer button{
   width: 100%;
-  height:30px;
+  height:60px;
+  display: flex;
+
 }
 
 #MessageContainer .title{
-  height:30px;
+  height:55px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 55px;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  text-indent:15px;
+
 }
 
 #MessageContainer .enabled{
@@ -69,4 +57,28 @@
 
 #MessageContainer .hide{
   display: none;
+}
+
+#MessageContainer .messageBoxDetail{
+  display:flex;
+  flex-direction: column;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: -0.02em;
+  text-align:left;
+  padding-top:10px;
+  line-height:20px;
+  text-indent:10px;
+}
+
+#MessageContainer .usericon{
+  margin-top:10px;
+  margin-left:20px;
+}
+
+#MessageContainer .MuiBadge-dot{
+  background-color:#E16913;
+  
 }

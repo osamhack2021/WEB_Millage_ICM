@@ -22,6 +22,9 @@ header .logo img{
 header button{
     justify-content: center;
     align-items: center;
+    border: 1px solid #B9D1BE !important;
+    border-radius: 8px !important;
+    margin-right:10px !important;
 }
 
 header .navigation a{
@@ -63,4 +66,8 @@ header .loginlink{
     letter-spacing: -0.02em;
 
     color: #000000;
+}
+
+header .MuiBadge-dot{
+    background-color:#E16913;
 }
