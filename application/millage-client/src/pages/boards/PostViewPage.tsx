@@ -9,7 +9,12 @@ type Params = {
 }
 
 function PostViewPage() {
-  const {postState, getPost, curBoardState} = useBoard();
+  const {
+    postState,
+    getPost,
+    curBoardState,
+    togglePostHeart,
+  } = useBoard();
   const {postId} = useParams<Params>();
   const {loading, data} = postState;
 
@@ -54,6 +59,12 @@ function PostViewPage() {
         }
 
         <div>
+          <button onClick={() => togglePostHeart({postId: +postId})}>
+            { data.hasHearted ?
+              '하트 취소' :
+              '하트'
+            }
+          </button>
           PostBottom (좋아요, 댓글수, 좋아요 / 취소 기능)
         </div>
 

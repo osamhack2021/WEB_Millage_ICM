@@ -30,3 +30,9 @@ export type GetPostRes = CommonResponse & {
 
 export type GetPostSuccessPayload =
     GetPostRes & Required<Pick<UserState, 'session'>>
+
+export type TogglePostHeartReq = {
+    postId: number;
+}
+
+export type TogglePostHeartRes = CommonResponse

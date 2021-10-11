@@ -10,6 +10,7 @@ import {
   GET_POST,
   GET_POST_FAILURE,
   GET_POST_SUCCESS,
+  TOGGLE_POST_HEART,
 } from './actions';
 
 const initialState: BoardState = {
@@ -138,6 +139,38 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       error: action.payload.message,
     },
   }),
+
+  [TOGGLE_POST_HEART]: (state) => {
+    if (!state.postState.data) {
+      return {...state};
+    }
+
+    if (state.postState.data.hasHearted) {
+      return {
+        ...state,
+        postState: {
+          ...state.postState,
+          data: {
+            ...state.postState.data,
+            hasHearted: false,
+            heartCount: state.postState.data.heartCount - 1,
+          },
+        },
+      };
+    }
+
+    return {
+      ...state,
+      postState: {
+        ...state.postState,
+        data: {
+          ...state.postState.data,
+          hasHearted: true,
+          heartCount: state.postState.data.heartCount + 1,
+        },
+      },
+    };
+  },
 });
 
 export default BoardReducer;

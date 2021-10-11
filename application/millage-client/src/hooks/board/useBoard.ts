@@ -3,11 +3,13 @@ import {
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
+  togglePostHeartAsync,
 } from '@modules/board/actions';
 import {
   GetBoardByIdReq,
   GetBoardListInput,
   GetPostReq,
+  TogglePostHeartReq,
 } from '@modules/board/types';
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -36,6 +38,10 @@ function useBoard() {
   const getPost = useCallback((getPostReq: GetPostReq) => {
     dispatch(getPostAsync.request(getPostReq));
   }, [dispatch]);
+  const togglePostHeart = useCallback(
+      (togglePostHeartReq: TogglePostHeartReq) => {
+        dispatch(togglePostHeartAsync.request(togglePostHeartReq));
+      }, []);
 
   return {
     curBoardState,
@@ -44,6 +50,7 @@ function useBoard() {
     getBoardList,
     getBoardById,
     getPost,
+    togglePostHeart,
   };
 }
 

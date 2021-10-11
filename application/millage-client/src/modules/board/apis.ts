@@ -5,6 +5,8 @@ import {
   GetBoardListRes,
   GetPostReq,
   GetPostRes,
+  TogglePostHeartReq,
+  TogglePostHeartRes,
 } from './types';
 import axios from 'axios';
 import {
@@ -12,6 +14,7 @@ import {
   GET_BOARD_LIST_API,
   GET_BOARD_LIST_WITH_POSTS_API,
   GET_POST_API,
+  TOGGLE_POST_HEART_API,
 } from '@constants';
 
 /**
@@ -62,6 +65,23 @@ export async function apiGetPost(
   try {
     const {data} = await axios.get<GetPostRes>(
         `${GET_POST_API}/${postId}`,
+        {withCredentials: true},
+    );
+    return data;
+  } catch (error: any) {
+    return {result: 'error', message: error};
+  }
+}
+
+/**
+ * Toggle Heart API
+ */
+export async function apiTogglePostHeart(
+    {postId}: TogglePostHeartReq,
+): Promise<TogglePostHeartRes> {
+  try {
+    const {data} = await axios.post<TogglePostHeartRes>(
+        `${TOGGLE_POST_HEART_API}/${postId}`, {},
         {withCredentials: true},
     );
     return data;

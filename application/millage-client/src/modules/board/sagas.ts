@@ -3,16 +3,19 @@ import {
   apiGetBoardById,
   apiGetBoardList,
   apiGetPost,
+  apiTogglePostHeart,
 } from './apis';
 import {
   GetBoardByIdRes,
   GetBoardListRes,
   GetPostRes,
+  TogglePostHeartRes,
 } from './types';
 import {
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
+  togglePostHeartAsync,
 } from './actions';
 import {RootState} from '@modules';
 import {UserData} from '@modules/User/types';
@@ -66,10 +69,25 @@ function* getPostSaga(
   }
 }
 
+function* togglePostHeartSaga(
+  action: ReturnType<typeof togglePostHeartAsync.request>,
+) {
+try {
+  const response: TogglePostHeartRes = yield call(
+      apiTogglePostHeart,
+      action.payload,
+  );
+  yield put(togglePostHeartAsync.success(response));
+} catch (error: any) {
+  yield put(togglePostHeartAsync.failure(error));
+}
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
   yield takeLatest(getPostAsync.request, getPostSaga);
+  yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);
 }
 
 export default boardSagaListener;

@@ -7,6 +7,8 @@ import {
   GetBoardListRes,
   GetPostReq,
   GetPostSuccessPayload,
+  TogglePostHeartReq,
+  TogglePostHeartRes,
 } from './types';
 
 /**
@@ -49,3 +51,17 @@ export const getPostAsync = createAsyncAction(
     GET_POST_SUCCESS,
     GET_POST_FAILURE,
 )<GetPostReq, GetPostSuccessPayload, AxiosError>();
+
+
+/**
+ * POST Toggle Post Heart API Actions
+ */
+ export const TOGGLE_POST_HEART = 'board/TOGGLE_POST_HEART';
+ export const TOGGLE_POST_HEART_SUCCESS = 'board/TOGGLE_POST_HEART_SUCCESS';
+ export const TOGGLE_POST_HEART_FAILURE = 'board/TOGGLE_POST_HEART_FAILURE';
+ 
+ export const togglePostHeartAsync = createAsyncAction(
+     TOGGLE_POST_HEART,
+     TOGGLE_POST_HEART_SUCCESS,
+     TOGGLE_POST_HEART_FAILURE,
+ )<TogglePostHeartReq, TogglePostHeartRes, AxiosError>();
