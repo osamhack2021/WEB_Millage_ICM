@@ -63,6 +63,7 @@ function DM() {
     const clone = JSON.parse(JSON.stringify(localMessageBoxes));
     clone[id].unread = 0;
     setLocalMessageBoxes(clone);
+    dispatch(getMessageBoxListAsync.request());
   };
 
   const deleteMessage = () => {
@@ -238,8 +239,7 @@ function DM() {
     if (e) {
       e.preventDefault();
     }
-    let now = new Date().toLocaleString();
-    now = now.substring(0, now.length - 2);
+    let now = new Date();
     if (connectedSocket) {
       connectedSocket.emit('msgToServer', {
         message: data.message,
@@ -253,13 +253,18 @@ function DM() {
     }
 
     const m = {
-      time: now,
+      time:  now.toLocaleString().slice(0,-2),
       message: data.message,
       senderId: session.id,
     };
 
     setNewMessages([...newMessages, m]);
     setValue('message', '');
+    const clone = JSON.parse(JSON.stringify(localMessageBoxRef.current));
+    clone[activeMessageBox.current].unread = 0;
+    clone[activeMessageBox.current].message = data.message;
+    clone[activeMessageBox.current].time = data.time;
+    setLocalMessageBoxes(clone);
   };
 
   return (
