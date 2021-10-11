@@ -94,6 +94,20 @@ export class PostController {
     }
   }
 
+  @Post(':postId/recruit')
+  async toggleRecruit(@Param('postId') postId: number, @Req() req: Request) {
+    try {
+      const userId = req.session.user.id;
+      await this.postService.toggleRecruit(postId, userId);
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
+
   @Post('/:postId/poll/:pollId')
   async vote(@Param() params: VoteParams, @Req() req: Request) {
     try {

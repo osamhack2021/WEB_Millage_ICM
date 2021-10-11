@@ -80,7 +80,7 @@ export class UserEntity {
   ownedUnitId: number;
 
   @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)
-  @JoinTable({name: 'recruitingUser', joinColumn: {name: 'appliedRecruitId', referencedColumnName: 'id'}})
+  @JoinTable({name: 'recruitingUser'})
   appliedRecruits: RecruitEntity[];
 
   @OneToMany(() => PostEntity, (post) => post.writer)

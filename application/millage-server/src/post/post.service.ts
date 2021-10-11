@@ -6,6 +6,7 @@ import {PostType} from './post.interface';
 import {CreatePostDto, UpdatePostDto} from './dto';
 import {PollEntity} from './poll/poll.entity';
 import {UserEntity} from '../user/user.entity';
+import {RecruitEntity} from './recruit/recruit.entity';
 
 @Injectable()
 export class PostService {
@@ -18,6 +19,9 @@ export class PostService {
 
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
+
+        @InjectRepository(RecruitEntity)
+        private readonly recruitRepository: Repository<RecruitEntity>,
   ) {}
 
   private createPollItem(
@@ -103,6 +107,25 @@ export class PostService {
       targetPost.hearts = targetPost.hearts.filter((user: UserEntity) => user.id !== userId);
     }
     await this.postRepository.save(targetPost);
+    return true;
+  }
+
+  async toggleRecruit(postId: number, userId: number): Promise<boolean> {
+    const targetPost = await this.postRepository.findOne(
+        postId, {relations: ['recruitStatus', 'recruitStatus.currentMember']});
+    const recruit = targetPost.recruitStatus;
+    const isNotExist = recruit.currentMember.every(
+        (user: UserEntity) => user.id !== userId
+    );
+    if (isNotExist) {
+      const user = await this.userRepository.findOne(userId);
+      recruit.currentMember.push(user);
+    } else {
+      recruit.currentMember = recruit.currentMember.filter(
+          (user: UserEntity) => user.id !== userId
+      );
+    }
+    await this.recruitRepository.save(recruit);
     return true;
   }
 
