@@ -57,14 +57,17 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
   }),
   [LOGIN_USER_REQUEST]: (state, action) => ({
     ...state,
+    message: undefined,
   }),
   [LOGIN_USER_SUCCESS]: (state, action) => ({
     ...state,
     result: action.payload.result,
+    message: undefined,
   }),
   [LOGIN_USER_FAIL]: (state, action) => ({
     ...state,
     result: action.payload.result,
+    message: action.payload.message,
   }),
   [CHECK_SESSION_REQUEST]: (state, action) => ({
     ...state,

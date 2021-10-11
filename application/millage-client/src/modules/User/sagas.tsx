@@ -56,7 +56,10 @@ function* loginUserSaga(
     if (response.result == 'success') {
       yield put(loginAsync.success(response));
     } else {
-      yield put(loginAsync.failure(response));
+      yield put(loginAsync.failure({
+        ...response,
+        message: '로그인에 실패하였습니다',
+      }));
     }
   } catch (error : any) {
     yield put(loginAsync.failure(error));
