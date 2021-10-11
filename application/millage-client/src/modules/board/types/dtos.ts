@@ -1,3 +1,4 @@
+import {UserState} from '@modules/User/types';
 import {CommonResponse} from '@utils/commonTypes';
 import {Board, Post} from './entities';
 
@@ -26,3 +27,6 @@ export type GetPostReq = {
 export type GetPostRes = CommonResponse & {
     post?: Post;
 }
+
+export type GetPostSuccessPayload =
+    GetPostRes & Required<Pick<UserState, 'session'>>

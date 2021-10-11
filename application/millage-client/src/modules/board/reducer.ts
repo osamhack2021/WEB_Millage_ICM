@@ -1,5 +1,4 @@
 import {createReducer} from 'typesafe-actions';
-
 import {BoardAction, BoardState} from './types';
 import {
   GET_BOARD_BY_ID,
@@ -12,8 +11,6 @@ import {
   GET_POST_FAILURE,
   GET_POST_SUCCESS,
 } from './actions';
-import {store} from '@index';
-import {UserState} from '@modules/User/types';
 
 const initialState: BoardState = {
   boardListState: {
@@ -103,13 +100,17 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
   }),
   [GET_POST_SUCCESS]: (state, action) => {
     if (action.payload.result === 'success' && action.payload.post) {
-      const me = store.getState().user.session;
-      const hasHearted: boolean = me ?
+      const me = action.payload.session;
+      const hasHearted: boolean = action.payload.post.hearts ?
         action.payload.post.hearts.every((user) => user.id === me.id) :
         false;
 
       return {
         ...state,
+        curBoardState: {
+          ...state.curBoardState,
+          data: action.payload.post.board,
+        },
         postState: {
           loading: false,
           data: {

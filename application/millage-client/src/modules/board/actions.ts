@@ -6,7 +6,7 @@ import {
   GetBoardListInput,
   GetBoardListRes,
   GetPostReq,
-  GetPostRes,
+  GetPostSuccessPayload,
 } from './types';
 
 /**
@@ -48,4 +48,4 @@ export const getPostAsync = createAsyncAction(
     GET_POST,
     GET_POST_SUCCESS,
     GET_POST_FAILURE,
-)<GetPostReq, GetPostRes, AxiosError>();
+)<GetPostReq, GetPostSuccessPayload, AxiosError>();

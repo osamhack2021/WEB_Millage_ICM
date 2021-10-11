@@ -1,6 +1,6 @@
 import {NORMAL, POLL, RECRUIT} from '@constants';
 import {UserData} from '@modules/User/types';
-import {Poll, PollInputs, RecruitStatus} from './';
+import {Poll, PollInputs, RecruitStatus, Board} from './';
 
 /* Types of Post */
 export type PostType =
@@ -10,6 +10,7 @@ export type PostType =
 
 export type Post = {
     id: number;
+    board: Board;
     postType: PostType;
     title: string;
     content?: string;
