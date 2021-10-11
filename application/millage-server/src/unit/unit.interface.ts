@@ -6,6 +6,11 @@ export interface UnitInfo{
     count: number;
 }
 
+export interface UnitDTO{
+    name: string;
+    isConfirmed: boolean;
+}
+
 export interface UnitListRO extends ResultObject {
     units?: UnitInfo[];
 }
