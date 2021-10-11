@@ -8,6 +8,7 @@ import {BoardModule} from './board/board.module';
 import {UnitModule} from './unit/unit.module';
 import {MessageModule} from './message/message.module';
 import {PostModule} from './post/post.module';
+import {ScheduleModule} from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import {PostModule} from './post/post.module';
     UnitModule,
     MessageModule,
     PostModule,
+    ScheduleModule
   ],
   controllers: [AppController],
   providers: [AppService],
