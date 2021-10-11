@@ -66,7 +66,8 @@ export class PostService {
   }
 
   async isVoter(id: number, userId: number): Promise<boolean> {
-    return await this.pollRepository.findOne({where: {postId: id, userId: userId}}) !== undefined;
+    const pollItems = await this.pollRepository.find({where: {postId: id}, relations: ['voters']});
+    return pollItems.some((pollItem) => pollItem.voters.some((voter) => voter.id === userId));
   }
 
   async delete(id: number): Promise<boolean> {
