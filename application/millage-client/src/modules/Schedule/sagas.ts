@@ -56,7 +56,7 @@ function* createScheduleSaga(
   try {
     const response : CreateScheduleRes = yield call(
         createScheduleApi,
-        action.payload
+        action.payload,
     );
     yield put(createScheduleAsync.success(response));
   } catch (error: any) {

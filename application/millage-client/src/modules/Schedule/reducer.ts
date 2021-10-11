@@ -42,8 +42,8 @@ const ScheduleReducer = createReducer<ScheduleState, ScheduleAction>(
       }),
       [GET_SCHEDULE_LIST_SUCCESS]: (state, action) => ({
         ...state,
-        schedules: action.payload.schedules.map<Schedule>(
-            (schedule) => convertResToData(schedule)
+        schedules: action.payload.schedules.map<Schedule>((schedule) =>
+          convertResToData(schedule),
         ),
       }),
       [GET_SCHEDULE_LIST_ERROR]: (state, action) => ({
@@ -56,8 +56,8 @@ const ScheduleReducer = createReducer<ScheduleState, ScheduleAction>(
       }),
       [GET_UNIT_SCHEDULE_LIST_SUCCESS]: (state, action) => ({
         ...state,
-        schedules: action.payload.schedules.map<Schedule>(
-            (schedule) => convertResToData(schedule)
+        schedules: action.payload.schedules.map<Schedule>((schedule) =>
+          convertResToData(schedule),
         ),
       }),
       [GET_UNIT_SCHEDULE_LIST_ERROR]: (state, action) => ({
