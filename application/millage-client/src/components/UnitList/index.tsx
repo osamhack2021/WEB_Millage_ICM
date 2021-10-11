@@ -149,7 +149,7 @@ export default function UnitList() {
   };
 
   let button;
-  if (page===UNITSELECT_PATH || ADMIN_UNITSELECT_PATH) {
+  if (page===UNITSELECT_PATH || page === ADMIN_UNITSELECT_PATH) {
     button = (
       <div className="nextButton">
         <button onClick={()=>{
