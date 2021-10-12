@@ -36,3 +36,14 @@ export type TogglePostHeartReq = {
 }
 
 export type TogglePostHeartRes = CommonResponse
+
+export type ToggleVoteReq = {
+    postId: number;
+    pollId: number;
+}
+// export type ToggleVoteReq = Pick<UserState, 'session'> & {
+//     postId: number;
+//     pollId: number;
+// }
+
+export type ToggleVoteRes = CommonResponse & Pick<Post, 'pollItems'>;
