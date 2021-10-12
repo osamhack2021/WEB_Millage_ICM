@@ -43,7 +43,7 @@ const BoardBoxTop: React.FC<Props> = ({auth}) => {
         </button>
       </div>
 
-      { auth === 0 &&
+      { auth === 1 &&
         <Link
           to='/create'
           className='px-4 py-2 ring-1 ring-gray-500'
