@@ -19,7 +19,6 @@ export class CommentEntity {
   createdAt: string;
 
   @ManyToOne(() => PostEntity)
-  @JoinColumn({name: 'postId', referencedColumnName: 'id'})
   postId: number;
 
   @ManyToOne(() => UserEntity)
@@ -29,9 +28,8 @@ export class CommentEntity {
   })
   writer: UserEntity;
 
-  @ManyToOne(() => UserEntity)
-  @JoinColumn({name: 'userId', referencedColumnName: 'id'})
-  userId: number;
+  @Column()
+  writerId: number;
 
   @OneToMany(() => CommentEntity, (comment) => comment.parentCommentId)
   @JoinTable({name: 'reply', joinColumn: {name: 'replyId', referencedColumnName: 'id'}})
