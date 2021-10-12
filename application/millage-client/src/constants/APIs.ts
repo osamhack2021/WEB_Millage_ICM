@@ -14,3 +14,7 @@ export const GET_BOARD_API                  = BOARD_API;
 export const POST_API               = `${SERVER}/post`;
 export const GET_POST_API           = POST_API;
 export const TOGGLE_POST_HEART_API  = `${POST_API}/heart`;
+export const TOGGLE_VOTE_API        =
+    (postId: number, pollId: number) => `${POST_API}/${postId}/poll/${pollId}`;
+export const TOGGLE_RECRUIT_API     =
+    (postId: number) => `${POST_API}/${postId}/recruit`;

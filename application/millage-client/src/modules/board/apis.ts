@@ -7,6 +7,8 @@ import {
   GetPostRes,
   TogglePostHeartReq,
   TogglePostHeartRes,
+  ToggleVoteReq,
+  ToggleVoteRes,
 } from './types';
 import axios from 'axios';
 import {
@@ -15,6 +17,7 @@ import {
   GET_BOARD_LIST_WITH_POSTS_API,
   GET_POST_API,
   TOGGLE_POST_HEART_API,
+  TOGGLE_VOTE_API,
 } from '@constants';
 
 /**
@@ -82,6 +85,23 @@ export async function apiTogglePostHeart(
   try {
     const {data} = await axios.post<TogglePostHeartRes>(
         `${TOGGLE_POST_HEART_API}/${postId}`, {},
+        {withCredentials: true},
+    );
+    return data;
+  } catch (error: any) {
+    return {result: 'error', message: error};
+  }
+}
+
+/**
+ * Toggle Vote API
+ */
+export async function apiToggleVote(
+    {postId, pollId}: ToggleVoteReq,
+): Promise<ToggleVoteRes> {
+  try {
+    const {data} = await axios.post<ToggleVoteRes>(
+        TOGGLE_VOTE_API(postId, pollId), {},
         {withCredentials: true},
     );
     return data;

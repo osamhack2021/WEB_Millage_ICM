@@ -49,7 +49,11 @@ function PostViewPage() {
         <p> {data.content} </p>
 
         { data.postType === 'POLL' && data.pollItems &&
-          <PollListBox pollItems={data.pollItems} />
+          <PollListBox
+            pollItems={data.pollItems}
+            isVoter={data.isVoter || false}
+            postId={+postId}
+          />
         }
 
         { data.postType === 'RECRUIT' && data.recruitStatus &&

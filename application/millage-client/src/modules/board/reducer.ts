@@ -11,6 +11,7 @@ import {
   GET_POST_FAILURE,
   GET_POST_SUCCESS,
   TOGGLE_POST_HEART,
+  TOGGLE_VOTE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -160,6 +161,50 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       },
     };
   },
+
+  [TOGGLE_VOTE]: (state) => {
+    if (
+      !state.postState.data ||
+      state.postState.data.postType !== 'POLL'
+    ) {
+      return {...state};
+    }
+
+    /**
+     * API에 따라서 success 시 isvoter, pollist 반환하면 그걸 이용하자
+     */
+    // const {session, pollId} = action.payload;
+    const {isVoter} = state.postState.data;
+    // if (!isVoter) {
+    //   return {
+    //     ...state,
+    //     postState: {
+    //       ...state.postState,
+    //       data: {
+    //         ...state.postState.data,
+    //         isVoter: true,
+    //         pollItems
+    //       }
+    //     }
+    //   }
+    // }
+
+    return {
+      ...state,
+      postState: {
+        ...state.postState,
+        data: {
+          ...state.postState.data,
+          // 변경해야 함 (pollItem의 voters에 user가 있는 지 확인)
+          isVoter: !isVoter,
+        },
+      },
+    };
+  },
+  /**
+   * Toggle Vote Success에 변경된 pollList를 state에 업데이트 하는 내용 추가
+   */
+
 });
 
 export default BoardReducer;

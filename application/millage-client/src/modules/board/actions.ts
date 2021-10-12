@@ -9,6 +9,8 @@ import {
   GetPostSuccessPayload,
   TogglePostHeartReq,
   TogglePostHeartRes,
+  ToggleVoteReq,
+  ToggleVoteRes,
 } from './types';
 
 /**
@@ -65,3 +67,16 @@ export const togglePostHeartAsync = createAsyncAction(
     TOGGLE_POST_HEART_SUCCESS,
     TOGGLE_POST_HEART_FAILURE,
 )<TogglePostHeartReq, TogglePostHeartRes, AxiosError>();
+
+/**
+ * POST Toggle Vote API Actions
+ */
+export const TOGGLE_VOTE = 'borad/TOGGLE_VOTE';
+export const TOGGLE_VOTE_SUCCESS = 'borad/TOGGLE_VOTE_SUCCESS';
+export const TOGGLE_VOTE_FAILURE = 'borad/TOGGLE_VOTE_FAILURE';
+
+export const toggleVoteAsync = createAsyncAction(
+    TOGGLE_VOTE,
+    TOGGLE_VOTE_SUCCESS,
+    TOGGLE_VOTE_FAILURE,
+)<ToggleVoteReq, ToggleVoteRes, AxiosError>();

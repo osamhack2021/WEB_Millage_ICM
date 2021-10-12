@@ -4,12 +4,14 @@ import {
   getBoardListAsync,
   getPostAsync,
   togglePostHeartAsync,
+  toggleVoteAsync,
 } from '@modules/board/actions';
 import {
   GetBoardByIdReq,
   GetBoardListInput,
   GetPostReq,
   TogglePostHeartReq,
+  ToggleVoteReq,
 } from '@modules/board/types';
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -41,7 +43,15 @@ function useBoard() {
   const togglePostHeart = useCallback(
       (togglePostHeartReq: TogglePostHeartReq) => {
         dispatch(togglePostHeartAsync.request(togglePostHeartReq));
-      }, []);
+      }, [dispatch]);
+  const toggleVote = useCallback(
+      (toggleVoteReq: ToggleVoteReq) => {
+        dispatch(toggleVoteAsync.request(toggleVoteReq));
+      }, [dispatch]);
+  // const toggleVote = useCallback(
+  //   (toggleVoteReq: Omit<ToggleVoteReq, 'session'>) => {
+  //     dispatch(toggleVoteAsync.request({...toggleVoteReq, session}));
+  // }, [dispatch]);
 
   return {
     curBoardState,
@@ -51,6 +61,7 @@ function useBoard() {
     getBoardById,
     getPost,
     togglePostHeart,
+    toggleVote,
   };
 }
 
