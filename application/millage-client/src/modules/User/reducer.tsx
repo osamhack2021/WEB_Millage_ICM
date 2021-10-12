@@ -17,6 +17,9 @@ import {
   VALIDATE_USER_REQUEST,
   VALIDATE_USER_SUCCESS,
   VALIDATE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
 } from './actions';
 
 const initialState: UserState = {
@@ -106,6 +109,17 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
   [VALIDATE_USER_FAIL]: (state, action) => ({
     ...state,
     validate: action.payload.message,
+  }),
+  [UPDATE_USER_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [UPDATE_USER_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'updateUserSuccess',
+  }),
+  [UPDATE_USER_FAIL]: (state, action) => ({
+    ...state,
+    result: 'updateUserFail',
   }),
 });
 

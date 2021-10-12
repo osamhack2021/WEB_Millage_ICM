@@ -1,20 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {createTheme, makeStyles, ThemeProvider} from '@mui/material/styles';
-import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {useLocation, useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {createUserAsync, validateUserAsync} from '@modules/User/actions';
 import {UserState, UserSubmitData, UserValidateData} from '@modules/User/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {REGISTER_FINISH_PATH} from '@constants';
-import CSS from 'csstype';
 import './signup.css';
 import LoginHeader from '@components/LoginHeader';
 const theme = createTheme();
@@ -53,11 +49,14 @@ export default function Signup() {
     if (e) {
       e.preventDefault();
     }
-
-    data.unitId = location.state.unitId;
-    data.roleId = location.state.roleId;
-    data.unitName = location.state.unitName;
-    dispatch(createUserAsync.request(data));
+    if (vUserName == 1 || vNickName == 1 || vEmail == 1 || vPassword == 1) {
+      alert('입력 값을 확인해주세요.');
+    } else {
+      data.unitId = location.state.unitId;
+      data.roleId = location.state.roleId;
+      data.unitName = location.state.unitName;
+      dispatch(createUserAsync.request(data));
+    }
   };
 
   const validateInput = (data: UserValidateData) => {

@@ -40,6 +40,15 @@ export interface UserSubmitData {
     unitName?: string;
 }
 
+
+export interface UserUpdateData {
+    id?: number;
+    email?: string;
+    nickname?: string;
+    password?: string;
+    phonenumber?: string;
+}
+
 export interface UserValidateData {
     username?: string;
     email?: string;

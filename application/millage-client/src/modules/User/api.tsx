@@ -1,5 +1,5 @@
 import {UserSubmitData, UserState,
-  UserValidateData, UserLoginData} from './types';
+  UserValidateData, UserLoginData, UserUpdateData} from './types';
 import axios from 'axios';
 import {SERVER} from '@constants';
 
@@ -12,6 +12,17 @@ export async function createUserApi(data: UserSubmitData) : Promise<UserState> {
     return {result: 'error', message: err};
   }
 }
+
+export async function updateUserApi(data: UserUpdateData) : Promise<UserState> {
+  try {
+    const user = await axios.patch(`${SERVER}/user/${data.id}`, data,
+        {withCredentials: true});
+    return user.data;
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
 
 export async function loginApi(data: UserLoginData) : Promise<UserState> {
   try {
