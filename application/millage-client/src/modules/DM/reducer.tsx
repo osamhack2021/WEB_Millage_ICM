@@ -8,7 +8,11 @@ import {
   GET_MESSAGES_REQUEST,
   GET_MESSAGES_SUCCESS,
   GET_MESSAGES_FAIL,
-  SET_MESSAGES_AS_READ} from './actions';
+  SET_MESSAGES_AS_READ,
+  DELETE_MESSAGES_REQUEST,
+  DELETE_MESSAGES_SUCCESS,
+  DELETE_MESSAGES_FAIL,
+} from './actions';
 
 const initialState: DMState = {
   result: '',
@@ -44,6 +48,16 @@ const DMReducer = createReducer<DMState, DMAction>(initialState, {
     message: action.payload.message,
   }),
   [SET_MESSAGES_AS_READ]: (state, action) => ({
+    ...state,
+  }),
+  [DELETE_MESSAGES_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [DELETE_MESSAGES_SUCCESS]: (state, action) => ({
+    ...state,
+    messages: [],
+  }),
+  [DELETE_MESSAGES_FAIL]: (state, action) => ({
     ...state,
   }),
 });

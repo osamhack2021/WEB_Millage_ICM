@@ -10,6 +10,7 @@ import {
   getMessageBoxListSagaListener,
   getMessagesSagaListener,
   setMessagesAsReadSagaListener,
+  deleteMessagesSagaListener,
 } from './DM/sagas';
 import boardSaga from './board/sagas';
 import {
@@ -76,6 +77,7 @@ export function* rootSaga() {
     deleteUnitSagaListener(),
     deleteUserSagaListener(),
     updateUserSagaListener(),
+    deleteMessagesSagaListener(),
   ]);
 }
 

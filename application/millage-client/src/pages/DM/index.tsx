@@ -4,7 +4,8 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {useDispatch, useSelector} from 'react-redux';
 import {getMessageBoxListAsync,
   getMessagesAsync,
-  setMessagesAsRead} from '@modules/DM/actions';
+  setMessagesAsRead,
+  deleteMessagesAsync} from '@modules/DM/actions';
 import {MessageBox} from '@modules/DM/types';
 import {updateUnreadAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
@@ -69,7 +70,12 @@ function DM() {
   const deleteMessage = () => {
     const c = confirm(`정말로 ${receiverName}님과의 대화를 삭제하시겠습니까?`);
     if (c) {
-      console.log('delete messages with ' + receiverId.current);
+      dispatch(deleteMessagesAsync.request(receiverId.current));
+      receiverId.current = -1;
+      setLastReceived('');
+      setReceiverName('');
+      activeMessageBox.current = -1;
+      setNewMessages([]);
     }
   };
 
@@ -296,7 +302,7 @@ function DM() {
             </div>
             <div className="messageBoxDetail" style={{
               paddingTop: '12.5px',
-              width: '60px'}}>
+              width: '70px'}}>
               <div style= {{
                 fontWeight: 'bold',
               }}>{receiverName}</div>

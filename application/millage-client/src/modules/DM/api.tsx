@@ -21,3 +21,9 @@ export async function apiSetMessagesAsRead(id: number) : Promise<boolean> {
       {withCredentials: true});
   return true;
 }
+
+export async function deleteMessages(id: number): Promise<DMState> {
+  const result = await axios.delete(`${SERVER}/message/${id}`,
+      {withCredentials: true});
+  return result.data;
+}
