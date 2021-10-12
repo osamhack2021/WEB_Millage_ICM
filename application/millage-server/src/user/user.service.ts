@@ -217,14 +217,19 @@ export class UserService {
   }
 
 
-  async getUsersByRoleName(roleName: Role): Promise<UserEntity[]> {
-    const normalUserRole = await this.userRoleRepository.findOne({
-      where: {name: roleName},
-    });
-    return await this.userRepository.find({
-      where: {roleId: normalUserRole.id},
-      relations: ['role', 'unit'],
-    });
+  async getUsersByRoleName(roleName: Role, id: number): Promise<UserEntity[]> {
+    if(roleName == Role.ADMIN){
+      return await this.userRepository.find({
+        where: {
+          unitId: id
+        },
+        relations: ['role', 'unit'],
+      });
+    } else {
+      return await this.userRepository.find({
+        relations: ['role', 'unit'],
+      });
+    }
   }
 
 

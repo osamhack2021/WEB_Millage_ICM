@@ -140,12 +140,12 @@ export class UserController {
   }
 
   @Get('role/:roleName')
-  @Roles(Role.SUPER_ADMIN)
-  async getUsersByRoleName(@Param('roleName') roleName: Role) {
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
+  async getUsersByRoleName(@Param('roleName') roleName: Role, @Req() req: Request) {
     try {
       return {
         result: Result.SUCCESS,
-        users: await this.userService.getUsersByRoleName(roleName),
+        users: await this.userService.getUsersByRoleName(roleName, req.session.user.unit.id),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
