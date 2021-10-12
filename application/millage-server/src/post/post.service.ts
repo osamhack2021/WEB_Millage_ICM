@@ -61,7 +61,7 @@ export class PostService {
           id, {relations: [
             'pollItems', 'pollItems.voters',
             'images', 'writer', 'board',
-            'recruitStatus', 'recruitStatus.currentMember'
+            'recruitStatus', 'recruitStatus.currentMember',
           ]}
       );
     } catch (err) {
