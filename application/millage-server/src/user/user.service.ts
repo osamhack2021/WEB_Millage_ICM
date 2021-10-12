@@ -154,6 +154,16 @@ export class UserService {
     return await this.userRepository.find();
   }
 
+  async findOneById(id: number) {
+    const user = await this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    return user;
+  }
+
   async findOne(loginUserDto: LoginUserDto) {
     const {username, password} = loginUserDto;
     const user = await this.userRepository.findOne({
@@ -177,6 +187,7 @@ export class UserService {
       throw new Error(`Cannot find user by id ${id}`);
     }
     try {
+      console.log(dto);
       const changes = this.userRepository.create(dto);
       const updateResult = await this.userRepository.update(id, changes);
       if (updateResult.affected === 0) {
