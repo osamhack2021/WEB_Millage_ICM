@@ -2,6 +2,8 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
   authUnitAsync,
   authUserAsync,
+  deleteUnitAsync,
+  deleteUserAsync,
   getUnitlistAsync,
   getUserlistAsync, setPageStateAction,
 } from './actions';
@@ -9,7 +11,10 @@ import {
   getUserList,
   getUnitList,
   authUserApi,
-  authUnitApi} from './api';
+  authUnitApi,
+  deleteUnitApi,
+  deleteUserApi,
+} from './api';
 import {AdminState} from './types';
 
 function* getUserListSaga(
@@ -91,3 +96,45 @@ function* authUnitSaga(
 export function* authUnitSagaListener() {
   yield takeLatest(authUnitAsync.request, authUnitSaga);
 }
+
+function* deleteUnitSaga(
+    action: ReturnType<typeof deleteUnitAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(deleteUnitApi, param);
+    if (response.result == 'success') {
+      yield put(deleteUnitAsync.success(response));
+    } else {
+      yield put(deleteUnitAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(deleteUnitAsync.failure(error));
+  }
+}
+
+function* deleteUserSaga(
+    action: ReturnType<typeof deleteUserAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(deleteUserApi, param);
+    if (response.result == 'success') {
+      yield put(deleteUserAsync.success(response));
+    } else {
+      yield put(deleteUserAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(deleteUserAsync.failure(error));
+  }
+}
+
+
+export function* deleteUnitSagaListener() {
+  yield takeLatest(deleteUnitAsync.request, deleteUnitSaga);
+}
+
+export function* deleteUserSagaListener() {
+  yield takeLatest(deleteUserAsync.request, deleteUserSaga);
+}
+

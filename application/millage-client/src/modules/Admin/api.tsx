@@ -29,7 +29,6 @@ export async function getUnitList(): Promise<AdminState> {
 export async function authUserApi(id: number) : Promise<AdminState> {
   try {
     const result = await axios.patch(`${SERVER}/user/${id}`, {
-      id: id,
       isConfirmed: true,
     }, {withCredentials: true});
 
@@ -44,7 +43,6 @@ export async function authUserApi(id: number) : Promise<AdminState> {
 export async function authUnitApi(id: number) : Promise<AdminState> {
   try {
     const result = await axios.patch(`${SERVER}/unit/${id}`, {
-      id: id,
       isConfirmed: true,
     }, {withCredentials: true});
 
@@ -56,3 +54,28 @@ export async function authUnitApi(id: number) : Promise<AdminState> {
   }
 }
 
+export async function deleteUserApi(id: number) : Promise<AdminState> {
+  try {
+    const result = await axios.delete(`${SERVER}/user/${id}`,
+        {withCredentials: true});
+
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+export async function deleteUnitApi(id: number) : Promise<AdminState> {
+  try {
+    const result = await axios.delete(`${SERVER}/unit/${id}`,
+        {withCredentials: true});
+
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}

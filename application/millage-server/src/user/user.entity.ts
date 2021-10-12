@@ -55,7 +55,9 @@ export class UserEntity {
     this.password = await argon2.hash(this.password);
   }
 
-  @ManyToOne(() => UnitEntity)
+  @ManyToOne(() => UnitEntity, {
+    onDelete: 'CASCADE',
+  })
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
@@ -75,7 +77,9 @@ export class UserEntity {
   @Column()
   roleId: number;
 
-  @ManyToOne(() => UnitEntity, (unit) => unit.admins)
+  @ManyToOne(() => UnitEntity, (unit) => unit.admins, {
+    onDelete: 'CASCADE',
+  })
   @JoinTable({name: 'ownedUnit', joinColumn: {name: 'ownedUnitId', referencedColumnName: 'id'}})
   ownedUnit: UnitEntity[];
 

@@ -3,7 +3,7 @@ import {UserData} from '@modules/User/types';
 import {ActionType} from 'typesafe-actions';
 import * as actions from './actions';
 
-interface UnitData{
+export interface UnitData{
     id: number;
     name: string;
     isConfiremd: boolean;

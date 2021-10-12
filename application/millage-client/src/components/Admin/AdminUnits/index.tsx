@@ -1,37 +1,53 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
 import {useDispatch, useSelector} from 'react-redux';
-import {authUnitAsync, getUnitlistAsync} from '@modules/Admin/actions';
+import {
+  authUnitAsync,
+  getUnitlistAsync,
+  deleteUnitAsync} from '@modules/Admin/actions';
 import Button from '@mui/material/Button';
+import {UnitData} from '@modules/Admin/types';
 
 export default function Admin() {
   const dispatch = useDispatch();
   const adminState = useSelector((state: any) => state.admin);
   const authResult = useSelector((state: any) => state.admin.result);
   const [units, setUnits] = useState([]);
+  const [deletedRows, setDeletedRows] = useState([]);
+
   useEffect(()=>{
     dispatch(getUnitlistAsync.request());
   }, []);
 
   useEffect(() => {
     setUnits(adminState.units);
-    console.log(adminState.units);
   }, [adminState.units]);
 
   useEffect(() => {
-    if (authResult=== 'unitconfirmsuccess') {
+    if (authResult=== 'confirmUnitSuccess') {
       alert('정상적으로 승인되었습니다');
-    } else if (authResult === 'unitconfirmfail') {
+    } else if (authResult === 'confirmUnitFail') {
       alert('승인에 실패하였습니다.');
+    } else if (authResult === 'deleteUnitSuccess') {
+      alert('부대를 삭제하였습니다.');
+    } else if (authResult === 'deleteUnitFail') {
+      alert('삭제에 실패하였습니다.');
     }
   }, [authResult]);
 
   const authenticate = (id: number) => {
-    dispatch(authUnitAsync.request(id));
+    const c = confirm('정말로 이 부대를 승인하시겠습니까?');
+    if (c) {
+      dispatch(authUnitAsync.request(id));
+    }
   };
 
   const deleteUnit = (id: number) => {
-    console.log('delete unit ' + id);
+    const c = confirm('정말로 이 부대를 삭제하시겠습니까?');
+    if (c) {
+      dispatch(deleteUnitAsync.request(id));
+      dispatch(getUnitlistAsync.request());
+    }
   };
 
   const [keyword, setKeyword] = useState('');

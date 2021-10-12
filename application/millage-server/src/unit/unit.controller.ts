@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Patch, Req} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
@@ -55,6 +55,19 @@ export class UnitController {
         return {result: Result.SUCCESS};
       }
       return {result: Result.FAIL, message: 'Nothing changed'};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Delete(':id')
+  async delete(
+    @Param('id') id: number,
+  ): Promise<ResultObject> {
+    try {
+      if (await this.unitService.delete(id)) {
+        return {result: Result.SUCCESS};
+      }
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

@@ -1,4 +1,4 @@
-import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch} from '@nestjs/common';
+import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch, Delete} from '@nestjs/common';
 import {Request} from 'express';
 import {UserService} from './user.service';
 import {UserRO} from './user.interface';
@@ -121,6 +121,19 @@ export class UserController {
         return {result: Result.SUCCESS};
       }
       return {result: Result.FAIL, message: 'Nothing changed'};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Delete(':id')
+  async delete(
+    @Param() params: UserParams,
+  ): Promise<ResultObject> {
+    try {
+      if (await this.userService.delete(params.id)) {
+        return {result: Result.SUCCESS};
+      }
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

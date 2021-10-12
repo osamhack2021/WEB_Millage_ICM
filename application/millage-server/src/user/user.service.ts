@@ -192,6 +192,21 @@ export class UserService {
     }
   }
 
+  async delete(id: number): Promise<boolean> {
+    try {
+      await this.userRepository.delete({
+        id: id,
+      });
+
+      // add send email
+
+      return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+
   async getUsersByRoleName(roleName: Role): Promise<UserEntity[]> {
     const normalUserRole = await this.userRoleRepository.findOne({
       where: {name: roleName},

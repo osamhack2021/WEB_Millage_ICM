@@ -1,8 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
 import {useDispatch, useSelector} from 'react-redux';
-import {authUserAsync, getUserlistAsync} from '@modules/Admin/actions';
+import {
+  authUserAsync,
+  getUserlistAsync,
+  deleteUserAsync} from '@modules/Admin/actions';
 import Button from '@mui/material/Button';
+import {UserData} from '@modules/User/types';
 
 export default function Admin() {
   const dispatch = useDispatch();
@@ -18,10 +22,14 @@ export default function Admin() {
   }, [adminState.users]);
 
   useEffect(() => {
-    if (authResult=== 'confirmsuccess') {
+    if (authResult=== 'confirmUserSuccess') {
       alert('정상적으로 승인되었습니다');
-    } else if (authResult === 'confirmfail') {
+    } else if (authResult === 'confirmUserFail') {
       alert('승인에 실패하였습니다.');
+    } else if (authResult === 'deleteUserSuccess') {
+      alert('유저를 삭제하였습니다.');
+    } else if (authResult === 'deleteUserFail') {
+      alert('삭제에 실패하였습니다.');
     }
   }, [authResult]);
 
@@ -32,7 +40,8 @@ export default function Admin() {
   };
 
   const deleteUser = (id: number) => {
-    console.log('delete user ' + id);
+    dispatch(deleteUserAsync.request(id));
+    dispatch(getUserlistAsync.request(''));
   };
 
   const columns = useRef<GridColDef[]>([
