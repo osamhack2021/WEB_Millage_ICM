@@ -44,6 +44,8 @@ function BoardViewPage() {
     history.replace(ROOT_PATH);
   }
 
+  console.log(data);
+
   if (!data || loading) {
     return (
       <div>
@@ -67,11 +69,10 @@ function BoardViewPage() {
         <BoardBoxTop auth={data.auth} />
 
         {/* Post List Component */}
-        { data.posts &&
-          <PostListBox
-            paginationObject={data.paginationObject}
-            getBoardWithPage={getBoardWithPage}
-          /> }
+        <PostListBox
+          paginationObject={data.paginationObject}
+          getBoardWithPage={getBoardWithPage}
+        />
 
       </div>
     </div>
