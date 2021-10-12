@@ -5,11 +5,8 @@ import {AdminState} from './types';
 
 export async function getUserList(role: string): Promise<AdminState> {
   try {
-    const users = await axios.get(`${SERVER}/user/role/NORMAL_USER`,
+    const users = await axios.get(`${SERVER}/user/role/${role}`,
         {withCredentials: true});
-    const adminUsers = await axios.get(`${SERVER}/user/role/ADMIN`,
-        {withCredentials: true});
-    users.data.users = [...users.data.users, ...adminUsers.data.users];
     return users.data;
   } catch (err: any) {
     return {result: 'error', message: err};
@@ -72,6 +69,20 @@ export async function deleteUnitApi(id: number) : Promise<AdminState> {
     const result = await axios.delete(`${SERVER}/unit/${id}`,
         {withCredentials: true});
 
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+export async function updateUserRoleApi(id: number,
+    roleId: number) : Promise<AdminState> {
+  try {
+    const result = await axios.patch(`${SERVER}/user/${id}`, {
+      roleId: roleId,
+    }, {withCredentials: true});
     return {
       result: 'success',
     };

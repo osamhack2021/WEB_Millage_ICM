@@ -14,8 +14,8 @@ export interface BoardRO {
     board?: BoardEntity;
 }
 
-export interface PaginationObject {
-    posts: PostEntity[];
+export interface PaginationObject<T> {
+    results: T[];
     curPage: number;
     totalCounts: number;
     totalPages: number;

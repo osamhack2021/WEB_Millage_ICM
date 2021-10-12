@@ -6,6 +6,7 @@ import {
   deleteUserAsync,
   getUnitlistAsync,
   getUserlistAsync, setPageStateAction,
+  updateUserRoleAsync,
 } from './actions';
 import {
   getUserList,
@@ -14,6 +15,7 @@ import {
   authUnitApi,
   deleteUnitApi,
   deleteUserApi,
+  updateUserRoleApi,
 } from './api';
 import {AdminState} from './types';
 
@@ -138,3 +140,23 @@ export function* deleteUserSagaListener() {
   yield takeLatest(deleteUserAsync.request, deleteUserSaga);
 }
 
+function* updateUserRoleSaga(
+    action: ReturnType<typeof updateUserRoleAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(updateUserRoleApi,
+        param.id, param.roleId);
+    if (response.result == 'success') {
+      yield put(updateUserRoleAsync.success(response));
+    } else {
+      yield put(updateUserRoleAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(updateUserRoleAsync.failure(error));
+  }
+}
+
+export function* updateUserRoleSagaListener() {
+  yield takeLatest(updateUserRoleAsync.request, updateUserRoleSaga);
+}

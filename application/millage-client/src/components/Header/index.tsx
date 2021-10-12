@@ -169,6 +169,15 @@ function Header() {
     history.push('/dm');
   };
 
+  const adminHeaderLink = () => {
+    if (user.session.role.name == 'ADMIN') {
+      return (
+        <RouterLink className={pageState == 'users' ? 'enabled' : ''}
+          to='/users' onClick={()=>setPageState('users')}>사용자관리</RouterLink>
+      );
+    }
+  };
+
   useEffect(()=> {
     dispatch(updateUnreadAsync.request());
     socket = io(SOCKET_SERVER, {transports: ['websocket'],
@@ -209,6 +218,7 @@ function Header() {
           </RouterLink>
           <RouterLink className={pageState == 'globalboard' ? 'enabled' : ''}
             to='/' onClick={()=>setPageState('globalboard')}>전군게시판</RouterLink>
+          {adminHeaderLink()}
         </div>
         <div className="buttons">
           <IconButton onClick={goToDM}>

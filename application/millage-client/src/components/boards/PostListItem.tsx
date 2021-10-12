@@ -5,12 +5,15 @@ import {
   ChatBubbleOutlineOutlined,
   ThumbUpOutlined,
 } from '@mui/icons-material';
+import {Link} from 'react-router-dom';
+import {POST_PATH} from '@constants';
 
 type Props = {
   post: Post;
 };
 
 const PostListItem: React.FC<Props> = ({post}) => {
+  console.log(post);
   return (
     <div
       key={post.id}
@@ -19,7 +22,9 @@ const PostListItem: React.FC<Props> = ({post}) => {
         marginTop: '-1px',
       }}
     >
-      <h3 className='text-xl' >{post.title}</h3>
+      <Link to={`${POST_PATH}/${post.id}`}>
+        <h3 className='text-xl' >{post.title}</h3>
+      </Link>
       <p className='text-base text-gray-400' >{post.content}</p>
 
       <div className='flex justify-between items-center'>

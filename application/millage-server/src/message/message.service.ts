@@ -32,7 +32,7 @@ export class MessageService {
     return `${year}. ${month}. ${day}. ${ampm} ${time}`;
   }
 
-  async deleteMessages(receiverId: number, senderId: number){
+  async deleteMessages(receiverId: number, senderId: number) {
     await this.messageRepository.createQueryBuilder()
         .delete()
         .where([
@@ -44,7 +44,7 @@ export class MessageService {
             receiverId: senderId,
             senderId: receiverId,
           },
-         ])
+        ])
         .execute();
   }
 

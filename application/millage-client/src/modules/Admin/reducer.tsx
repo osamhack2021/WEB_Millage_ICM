@@ -20,6 +20,9 @@ import {
   DELETE_UNIT_REQUEST,
   DELETE_UNIT_SUCCESS,
   DELETE_UNIT_FAIL,
+  UPDATE_USER_ROLE_REQUEST,
+  UPDATE_USER_ROLE_SUCCESS,
+  UPDATE_USER_ROLE_FAIL,
 } from './actions';
 
 const initialState: AdminState = {
@@ -102,6 +105,18 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   [DELETE_UNIT_FAIL]: (state, action) => ({
     ...state,
     result: 'deleteUnitFail',
+  }),
+  [UPDATE_USER_ROLE_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [UPDATE_USER_ROLE_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'updateUserRoleSuccess',
+  }),
+  [UPDATE_USER_ROLE_FAIL]: (state, action) => ({
+    ...state,
+    result: 'updateUserRoleFail',
   }),
 });
 

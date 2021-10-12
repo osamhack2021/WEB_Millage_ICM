@@ -52,5 +52,5 @@ export class BoardEntity {
   @OneToMany(() => PostEntity, (post) => post.board)
   posts: PostEntity[];
 
-  paginationObject: PaginationObject;
+  paginationObject: PaginationObject<PostEntity>;
 }
