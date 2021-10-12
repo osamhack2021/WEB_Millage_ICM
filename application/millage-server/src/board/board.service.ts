@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {PostEntity} from '../post/post.entity';
 import {FindManyOptions, Like, Repository} from 'typeorm';
 import {BoardEntity} from './board.entity';
-import {CreateBoardDto, SelectBoardDto} from './dto';
+import {CreateBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
 
 const POSTS_PER_PAGE = 10;
@@ -61,13 +61,12 @@ export class BoardService {
       searchKeyword: string,
       curPage: number,
   ): Promise<PaginationObject> {
-    searchKeyword = searchKeyword ? searchKeyword : '';
+    searchKeyword = searchKeyword ? decodeURI(searchKeyword) : '';
     const searchOptions: FindManyOptions<PostEntity> = {
-      where: {
-        boardId: boardId,
-        title: Like(searchKeyword),
-        content: Like(searchKeyword),
-      },
+      where: [
+        {boardId: boardId, title: Like(`%${searchKeyword}%`)},
+        {boardId: boardId, content: Like(`%${searchKeyword}%`)},
+      ],
     };
     const totalCounts = await this.postRepository.count(searchOptions);
     const totalPages = Math.ceil(totalCounts / 10);
@@ -78,11 +77,11 @@ export class BoardService {
     return <PaginationObject>{posts, curPage, totalCounts, totalPages};
   }
 
-  async getBoardData(id: number, dto: SelectBoardDto): Promise<BoardEntity> {
+  async getBoardData(id: number, page: number, searchKeyword: string): Promise<BoardEntity> {
     let board: BoardEntity = null;
     try {
       board = await this.boardRepository.findOne(id);
-      board.paginationObject = await this.getPaginationObject(board.id, dto.search, dto.page);
+      board.paginationObject = await this.getPaginationObject(board.id, searchKeyword, page);
       return board;
     } catch (err) {
       throw new Error(err.message);

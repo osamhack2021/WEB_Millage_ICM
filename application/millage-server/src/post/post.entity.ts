@@ -45,7 +45,7 @@ export class PostEntity {
   )
   board: BoardEntity;
 
-  @RelationId((post: PostEntity) => post.board)
+  @Column()
   boardId: number;
 
   @OneToMany(
