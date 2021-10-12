@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, useHistory} from 'react-router-dom';
 import Header from '@components/Header';
 import {checkSessionAsync} from '@modules/User/actions';
 import CreateBoardPage from '@pages/boards/CreateBoard';
@@ -17,9 +17,11 @@ import {
   DM_PATH,
   ROOT_PATH,
   SCHEDULE_PATH,
+  USER_MANAGE_PATH,
 } from '@constants';
 import BoardRoutes from '@pages/boards/BoardRoutes';
 import AdminHeader from '@components/Admin/AdminHeader';
+import AdminUsers from '@components/Admin/AdminUsers';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -48,6 +50,15 @@ const Main = () => {
           <Route path={CREATE_BOARD_PATH} component={CreateBoardPage} />
           <Route path={SCHEDULE_PATH} component={Schedule} />
           <Route path={DM_PATH} component={DM} />
+          <Route path={USER_MANAGE_PATH} render={
+            () => {
+              return (
+                <div id="AdminContainer">
+                  <AdminUsers />
+                </div>
+              );
+            }
+          } />
         </Switch>
       </>
     );

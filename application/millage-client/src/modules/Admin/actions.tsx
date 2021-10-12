@@ -97,3 +97,23 @@ export const deleteUserAsync = createAsyncAction(
 export const setPageStateAction = createAction(
     SET_PAGE_STATE,
 )<string>();
+
+export const UPDATE_USER_ROLE_REQUEST =
+  'ADMIN/UPDATE_USER_ROLE_REQUEST' as const;
+
+export const UPDATE_USER_ROLE_SUCCESS =
+  'ADMIN/UPDATE_USER_ROLE_SUCCESS' as const;
+
+export const UPDATE_USER_ROLE_FAIL=
+  'ADMIN/UPDATE_USER_ROLE_FAIL' as const;
+
+export interface updateUserRoleInterface{
+  id: number;
+  roleId: number;
+}
+
+export const updateUserRoleAsync = createAsyncAction(
+    UPDATE_USER_ROLE_REQUEST,
+    UPDATE_USER_ROLE_SUCCESS,
+    UPDATE_USER_ROLE_FAIL,
+)<updateUserRoleInterface, AdminState, AdminState>();

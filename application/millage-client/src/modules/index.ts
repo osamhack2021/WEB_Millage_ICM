@@ -39,6 +39,7 @@ import {
   authUnitSagaListener,
   deleteUnitSagaListener,
   deleteUserSagaListener,
+  updateUserRoleSagaListener,
 } from './Admin/sagas';
 
 const rootReducer = combineReducers({
@@ -78,6 +79,7 @@ export function* rootSaga() {
     deleteUserSagaListener(),
     updateUserSagaListener(),
     deleteMessagesSagaListener(),
+    updateUserRoleSagaListener(),
   ]);
 }
 

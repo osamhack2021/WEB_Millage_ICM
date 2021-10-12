@@ -218,10 +218,10 @@ export class UserService {
 
 
   async getUsersByRoleName(roleName: Role, id: number): Promise<UserEntity[]> {
-    if(roleName == Role.ADMIN){
+    if (roleName == Role.ADMIN) {
       return await this.userRepository.find({
         where: {
-          unitId: id
+          unitId: id,
         },
         relations: ['role', 'unit'],
       });

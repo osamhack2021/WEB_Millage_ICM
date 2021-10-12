@@ -4,17 +4,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   authUserAsync,
   getUserlistAsync,
-  deleteUserAsync} from '@modules/Admin/actions';
+  deleteUserAsync,
+  updateUserRoleAsync} from '@modules/Admin/actions';
 import Button from '@mui/material/Button';
-import {UserData} from '@modules/User/types';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
+interface OptionType {
+  value: string;
+  label: string;
+};
 
 export default function Admin() {
   const dispatch = useDispatch();
+  const userState = useSelector((state: any) => state.user);
   const adminState = useSelector((state: any) => state.admin);
   const authResult = useSelector((state: any) => state.admin.result);
   const [users, setUsers] = useState([]);
   useEffect(()=>{
-    dispatch(getUserlistAsync.request(''));
+    dispatch(getUserlistAsync.request(userState.session.role.name));
   }, []);
 
   useEffect(() => {
@@ -35,6 +43,7 @@ export default function Admin() {
 
   const [keyword, setKeyword] = useState('');
 
+
   const authenticate = (id: number) => {
     dispatch(authUserAsync.request(id));
   };
@@ -42,6 +51,13 @@ export default function Admin() {
   const deleteUser = (id: number) => {
     dispatch(deleteUserAsync.request(id));
     dispatch(getUserlistAsync.request(''));
+  };
+
+  const handleChange = (id: number, event: any) => {
+    dispatch(updateUserRoleAsync.request({
+      id: id,
+      roleId: event.target.value,
+    }));
   };
 
   const columns = useRef<GridColDef[]>([
@@ -81,10 +97,28 @@ export default function Admin() {
       field: 'role',
       headerName: '권한',
       editable: false,
+      headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => {
         return `${params.row.role.name}`;
       },
       flex: 1,
+      renderCell: (params: GridValueGetterParams) => {
+        return (
+          <>
+            <Select variant="standard"
+              className="select"
+              defaultValue={params.row.role.id}
+              onChange={(event) => {
+                handleChange(params.row.id, event);
+              }}
+            >
+              <MenuItem value={1}>일반사용자</MenuItem>
+              <MenuItem value={2}>부대관리자</MenuItem>
+              <MenuItem value={3}>최고관리자</MenuItem>
+            </Select>
+          </>
+        );
+      },
     },
     {
       field: 'auth',
@@ -98,6 +132,7 @@ export default function Admin() {
           <Button
             variant="contained"
             color="primary"
+            className="actionButton"
             onClick={
               (event) => {
                 authenticate(params.row.id);
@@ -120,6 +155,7 @@ export default function Admin() {
           <Button
             variant="contained"
             color="error"
+            className="actionButton"
             onClick={
               (event) => {
                 deleteUser(params.row.id);
