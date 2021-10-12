@@ -34,6 +34,7 @@ function DM() {
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
   const user = useSelector((state: any) => state.user);
   const session = user.session;
+  const [sessionId, setSessionId] = useState(-1);
   const messages = useSelector((state: any) => state.DM.messages);
   const {register, handleSubmit, setValue} = useForm<MessageInterface>();
   let socket: Socket;
@@ -134,6 +135,7 @@ function DM() {
       }
     });
     setSocket(socket);
+    setSessionId(session.id);
   }, []);
 
   useEffect(() => {
@@ -194,7 +196,7 @@ function DM() {
 
   const renderMessages = () => {
     return messages.map((m: any) => {
-      if (m.senderId == user.session.id) {
+      if (m.senderId == sessionId) {
         return (
           <div key={m.id} className="messageReverse">
             <div className="messageDetailContainer">
@@ -219,7 +221,7 @@ function DM() {
 
   const renderNewMessages = () => {
     return newMessages.map((m: any) => {
-      if (m.senderId == user.session.id) {
+      if (m.senderId == sessionId) {
         return (
           <div key={m.id} className="messageReverse">
             <div className="messageDetailContainer">

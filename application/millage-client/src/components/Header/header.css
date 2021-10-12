@@ -71,3 +71,69 @@ header .loginlink{
 header .MuiBadge-dot{
     background-color:#E16913;
 }
+
+#UserDialog .container{
+    width: 360px;
+}
+#UserDialog .buttonStyle{
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 10px;
+    font-family: 'Inter';
+    font-size: 11px;
+    font-weight: normal;
+    width: 100%;
+    height: 45px;
+    text-indent: 10px;
+}
+
+#UserDialog label{
+    color: rgba(0,0,0,0.8);
+    font-family: Inter;
+    font-size: 9px;
+    font-weight: normal;
+    margin-left:10px;
+}
+
+#UserDialog .title{
+    font-family: 'Inter';
+    font-size: '12px';
+    font-weight: 600;
+    width:100%;
+    display: block;
+    margin-left: -5px;
+    margin-bottom: 10px;
+}
+
+#UserDialog .hidden{
+    display:hidden;
+}
+
+#UserDialog .warning{
+    font-size: 8px;
+    color: #f23d3d;
+    display: block;
+    position: absolute;
+}
+
+#UserDialog .approve{
+    font-size: 8px;
+    color: #294CFF;
+    display: block;
+    position: absolute;
+}
+
+#UserDialog .submitButton{
+    background-color: #10902C;
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 10px;
+}
+
+#UserDialog .gridContainer{
+    margin:10px;
+}
+
+#UserDialog .mainTitle{
+    display: none;
+}

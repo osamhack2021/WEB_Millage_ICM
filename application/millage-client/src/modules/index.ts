@@ -26,6 +26,7 @@ import {
   updateUnreadListener,
   logoutSagaListener,
   validateUserSagaListener,
+  updateUserSagaListener,
 } from './User/sagas';
 import {
   getUnitListSagaListener,
@@ -74,6 +75,7 @@ export function* rootSaga() {
     authUnitSagaListener(),
     deleteUnitSagaListener(),
     deleteUserSagaListener(),
+    updateUserSagaListener(),
   ]);
 }
 

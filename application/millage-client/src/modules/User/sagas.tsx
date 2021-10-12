@@ -7,6 +7,7 @@ import {
   updateUnreadApi,
   logoutApi,
   validateUserApi,
+  updateUserApi,
 } from './api';
 import {
   createUserAsync,
@@ -15,6 +16,7 @@ import {
   updateUnreadAsync,
   logoutRequest,
   validateUserAsync,
+  updateUserAsync,
 } from './actions';
 
 function* createUserSaga(
@@ -135,5 +137,24 @@ function* validateUserSaga(
 
 export function* validateUserSagaListener() {
   yield takeLatest(validateUserAsync.request, validateUserSaga);
+}
+
+
+function* updateUserSaga(
+    action: ReturnType<typeof updateUserAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : string = yield call(updateUserApi, param);
+    yield put(updateUserAsync.success({
+      result: 'success',
+    }));
+  } catch (error : any) {
+    yield put(updateUserAsync.failure(error));
+  }
+}
+
+export function* updateUserSagaListener() {
+  yield takeLatest(updateUserAsync.request, updateUserSaga);
 }
 

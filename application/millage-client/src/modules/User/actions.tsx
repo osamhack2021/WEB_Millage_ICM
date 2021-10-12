@@ -1,6 +1,6 @@
 import {createAction, createAsyncAction} from 'typesafe-actions';
 import {UserSubmitData, UserState,
-  UserLoginData, UserValidateData} from './types';
+  UserLoginData, UserValidateData, UserUpdateData} from './types';
 
 export const CREATE_USER_REQUEST =
   'USER/CREATE_USER_REQUEST' as const;
@@ -10,6 +10,16 @@ export const CREATE_USER_SUCCESS =
 
 export const CREATE_USER_FAIL =
   'USER/CREATE_USER_FAIL' as const;
+
+export const UPDATE_USER_REQUEST =
+  'USER/UPDATE_USER_REQUEST' as const;
+
+export const UPDATE_USER_SUCCESS =
+  'USER/UPDATE_USER_SUCCESS' as const;
+
+export const UPDATE_USER_FAIL =
+  'USER/UPDATE_USER_FAIL' as const;
+
 
 export const LOGIN_USER_REQUEST =
   'USER/LOGIN_USER_REQUEST' as const;
@@ -47,7 +57,6 @@ export const VALIDATE_USER_SUCCESS =
 export const VALIDATE_USER_FAIL =
 'USER/VALIDATE_USER_FAIL' as const;
 
-
 export const LOGOUT =
 'USER/LOGOUT' as const;
 
@@ -58,6 +67,12 @@ export const createUserAsync = createAsyncAction(
     CREATE_USER_SUCCESS,
     CREATE_USER_FAIL,
 )<UserSubmitData, UserState, UserState>();
+
+export const updateUserAsync = createAsyncAction(
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAIL,
+)<UserUpdateData, UserState, UserState>();
 
 export const loginAsync = createAsyncAction(
     LOGIN_USER_REQUEST,
