@@ -4,6 +4,7 @@ import {
   apiGetBoardList,
   apiGetPost,
   apiTogglePostHeart,
+  apiToggleRecruit,
   apiToggleVote,
 } from './apis';
 import {
@@ -11,6 +12,7 @@ import {
   GetBoardListRes,
   GetPostRes,
   TogglePostHeartRes,
+  ToggleRecruitRes,
   ToggleVoteRes,
 } from './types';
 import {
@@ -18,6 +20,7 @@ import {
   getBoardListAsync,
   getPostAsync,
   togglePostHeartAsync,
+  toggleRecruitAsync,
   toggleVoteAsync,
 } from './actions';
 import {RootState} from '@modules';
@@ -100,12 +103,27 @@ function* toggleVoteSaga(
   }
 }
 
+function* toggleRecruitSaga(
+    action: ReturnType<typeof toggleRecruitAsync.request>,
+) {
+  try {
+    const response: ToggleRecruitRes = yield call(
+        apiToggleRecruit,
+        action.payload,
+    );
+    yield put(toggleRecruitAsync.success(response));
+  } catch (error: any) {
+    yield put(toggleRecruitAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
   yield takeLatest(getPostAsync.request, getPostSaga);
   yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);
   yield takeLatest(toggleVoteAsync.request, toggleVoteSaga);
+  yield takeLatest(toggleRecruitAsync.request, toggleRecruitSaga);
 }
 
 export default boardSagaListener;

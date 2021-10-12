@@ -47,3 +47,11 @@ export type ToggleVoteReq = {
 // }
 
 export type ToggleVoteRes = CommonResponse & Pick<Post, 'pollItems'>;
+
+export type ToggleRecruitReq = {
+    postId: number,
+}
+
+export type ToggleRecruitRes = CommonResponse & Pick<
+    Post, 'recruitStatus'
+>;

@@ -3,10 +3,12 @@ import {useHistory} from 'react-router';
 import {useBoard, useBoardViewPath} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
 import {
-  PostListBox,
-  BoardBoxTop,
   BoardTitle,
 } from '@components/boards';
+import {
+  PostListBox,
+  BoardBoxTop,
+} from '@components/boards/BoardView';
 
 
 function BoardViewPage() {

@@ -55,15 +55,22 @@ export class PostService {
     }
   }
 
-  async get(id: number): Promise<PostEntity> {
+  async get(id: number, userId: number): Promise<PostEntity> {
     try {
-      return await this.postRepository.findOne(
+      const post =  await this.postRepository.findOne(
           id, {relations: [
             'pollItems', 'pollItems.voters',
             'images', 'writer', 'board',
             'recruitStatus', 'recruitStatus.currentMember',
           ]}
       );
+      if (post.postType ===  PostType.RECRUIT) {
+        const isMemeber = post.recruitStatus.currentMember.every(
+          member => member.id === userId
+        );
+        post.recruitStatus.isMember = isMemeber;
+      }
+      return post;
     } catch (err) {
       throw new Error(err.message);
     }
@@ -119,7 +126,7 @@ export class PostService {
     return true;
   }
 
-  async toggleRecruit(postId: number, userId: number): Promise<boolean> {
+  async toggleRecruit(postId: number, userId: number): Promise<RecruitEntity> {
     const targetPost = await this.postRepository.findOne(
         postId, {relations: ['recruitStatus', 'recruitStatus.currentMember']});
     const recruit = targetPost.recruitStatus;
@@ -129,13 +136,15 @@ export class PostService {
     if (isNotExist) {
       const user = await this.userRepository.findOne(userId);
       recruit.currentMember.push(user);
+      recruit.isMember = true;
     } else {
       recruit.currentMember = recruit.currentMember.filter(
           (user: UserEntity) => user.id !== userId
       );
+      recruit.isMember = false;
     }
     await this.recruitRepository.save(recruit);
-    return true;
+    return recruit;
   }
 
   async vote(postId: number, userId: number, pollId: number): Promise<boolean> {

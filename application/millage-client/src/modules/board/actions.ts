@@ -9,6 +9,8 @@ import {
   GetPostSuccessPayload,
   TogglePostHeartReq,
   TogglePostHeartRes,
+  ToggleRecruitReq,
+  ToggleRecruitRes,
   ToggleVoteReq,
   ToggleVoteRes,
 } from './types';
@@ -80,3 +82,16 @@ export const toggleVoteAsync = createAsyncAction(
     TOGGLE_VOTE_SUCCESS,
     TOGGLE_VOTE_FAILURE,
 )<ToggleVoteReq, ToggleVoteRes, AxiosError>();
+
+/**
+ * POST Toggle Recruit API Actions
+ */
+export const TOGGLE_RECRUIT = 'borad/TOGGLE_RECRUIT';
+export const TOGGLE_RECRUIT_SUCCESS = 'borad/TOGGLE_RECRUIT_SUCCESS';
+export const TOGGLE_RECRUIT_FAILURE = 'borad/TOGGLE_RECRUIT_FAILURE';
+
+export const toggleRecruitAsync = createAsyncAction(
+    TOGGLE_RECRUIT,
+    TOGGLE_RECRUIT_SUCCESS,
+    TOGGLE_RECRUIT_FAILURE,
+)<ToggleRecruitReq, ToggleRecruitRes, AxiosError>();
