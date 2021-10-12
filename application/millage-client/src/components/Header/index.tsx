@@ -26,6 +26,13 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {UserUpdateData, UserValidateData} from '@modules/User/types';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import PersonOutlineOutlinedIcon from
+  '@mui/icons-material/PersonOutlineOutlined';
 
 function Header() {
   const dispatch = useDispatch();
@@ -45,6 +52,7 @@ function Header() {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPhone, setNewPhone] = useState('');
+  const [value, setValue] = useState(0);
   useEffect(()=>{
     if (userValidate === 'Duplicate Nickname') {
       setVNickName(1);
@@ -162,6 +170,7 @@ function Header() {
 
   const closeDialog = () => {
     setOpenDialog(false);
+    setPageState('');
   };
 
   const goToDM = () => {
@@ -243,6 +252,53 @@ function Header() {
           </Menu>
         </div>
       </XLayout>
+      <div id="BottomNavigationContainer">
+        <Paper sx={{position: 'fixed', width: '100%',
+          bottom: 0, left: 0, right: 0}} elevation={3}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              label="게시판" icon={<EventNoteOutlinedIcon />}
+              className={pageState == 'board' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('board');
+                history.push('/');
+              }}
+            />
+            <BottomNavigationAction
+              label="메시지" icon={<SendIcon />}
+              className={pageState == 'dm' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('dm');
+                history.push('/dm');
+              }}
+            />
+            <BottomNavigationAction
+              label="켈린더" icon={<ListAltIcon />}
+              className={pageState == 'schedule' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('schedule');
+                history.push('/schedule');
+              }}
+            />
+            <BottomNavigationAction label="전군게시판"
+              icon={<EventNoteOutlinedIcon />} />
+            <BottomNavigationAction
+              label="마이페이지" icon={<ListAltIcon />}
+              className={pageState == 'my' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('my');
+                setOpenDialog(true);
+              }}
+            />
+          </BottomNavigation>
+        </Paper>
+      </div>
       <Dialog id="UserDialog" onClose={closeDialog} open={openDialog}>
         <IconButton
           aria-label="close"
