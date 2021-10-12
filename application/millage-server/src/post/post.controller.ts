@@ -31,7 +31,7 @@ export class PostController {
   @Get(':id')
   async get(@Param() params: GetPostParams, @Req() req: Request): Promise<PostRO> {
     try {
-      const selectedPost = await this.postService.get(params.id);
+      const selectedPost = await this.postService.get(params.id, req.session.user.id);
       const postRO: PostRO = {result: Result.SUCCESS, post: selectedPost};
       if (selectedPost.postType === PostType.POLL) {
         postRO.post.isVoter = await this.postService.isVoter(params.id, req.session.user.id);
@@ -99,8 +99,8 @@ export class PostController {
   async toggleRecruit(@Param('postId') postId: number, @Req() req: Request) {
     try {
       const userId = req.session.user.id;
-      await this.postService.toggleRecruit(postId, userId);
-      return {result: Result.SUCCESS};
+      const recruitStatus = await this.postService.toggleRecruit(postId, userId);
+      return {result: Result.SUCCESS, recruitStatus};
     } catch (err) {
       return {
         result: Result.ERROR,

@@ -23,4 +23,6 @@ export class RecruitEntity {
 
   @ManyToMany(() => UserEntity, (user) => user.appliedRecruits)
   currentMember: UserEntity[];
+
+  isMember: boolean;
 }
