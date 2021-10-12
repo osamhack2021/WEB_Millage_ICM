@@ -87,7 +87,7 @@ function* togglePostHeartSaga(
 }
 
 function* toggleVoteSaga(
-    action: ReturnType<typeof toggleVoteAsync.request>
+    action: ReturnType<typeof toggleVoteAsync.request>,
 ) {
   try {
     const response: ToggleVoteRes = yield call(
