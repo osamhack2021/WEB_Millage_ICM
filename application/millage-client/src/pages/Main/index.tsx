@@ -17,9 +17,11 @@ import {
   DM_PATH,
   ROOT_PATH,
   SCHEDULE_PATH,
+  RESERVATION_PATH,
 } from '@constants';
 import BoardRoutes from '@pages/boards/BoardRoutes';
 import AdminHeader from '@components/Admin/AdminHeader';
+import Reservation from '@pages/Reservation';
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -48,6 +50,7 @@ const Main = () => {
           <Route path={CREATE_BOARD_PATH} component={CreateBoardPage} />
           <Route path={SCHEDULE_PATH} component={Schedule} />
           <Route path={DM_PATH} component={DM} />
+          <Route path={RESERVATION_PATH} component={Reservation} />
         </Switch>
       </>
     );
