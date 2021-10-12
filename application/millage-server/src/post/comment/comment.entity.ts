@@ -25,7 +25,7 @@ export class CommentEntity {
   @Column()
   postId: number;
 
-  @Column({nullable: false})
+  @Column({nullable: false, default: false})
   isDeleted: boolean;
 
   @ManyToOne(() => UserEntity)
