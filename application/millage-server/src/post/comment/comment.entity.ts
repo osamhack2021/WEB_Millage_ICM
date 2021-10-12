@@ -25,6 +25,9 @@ export class CommentEntity {
   @Column()
   postId: number;
 
+  @Column({nullable: false})
+  isDeleted: boolean;
+
   @ManyToOne(() => UserEntity)
   @JoinTable({
     name: 'writer',

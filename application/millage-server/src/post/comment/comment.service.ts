@@ -44,10 +44,13 @@ export class CommentService {
 
     if (comment.replies.length !== 0) {
       comment.content = '삭제된 댓글입니다.';
+      comment.isDeleted = true;
       await this.commentRepository.save(comment);
       return true;
     }
     await this.commentRepository.delete(commentId);
     return true;
   }
+
+  // isDeleted일 시 update 불가하게 해야됨
 }
