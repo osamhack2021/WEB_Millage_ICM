@@ -115,7 +115,6 @@ export class UserController {
   async update(
     @Param() params: UserParams,
     @Body() dto: UpdateUserDto,
-    @Req() request : Request,
   ): Promise<ResultObject> {
     try {
       if (await this.userService.update(params.id, dto)) {

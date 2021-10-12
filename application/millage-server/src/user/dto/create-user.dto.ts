@@ -6,7 +6,6 @@ export class CreateUserDto {
 
   readonly email: string;
 
-  @IsNotEmpty()
   readonly password: string;
 
   readonly phonenumber: string;
