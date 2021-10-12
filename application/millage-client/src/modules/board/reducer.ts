@@ -11,6 +11,7 @@ import {
   GET_POST_FAILURE,
   GET_POST_SUCCESS,
   TOGGLE_POST_HEART,
+  TOGGLE_RECRUIT_SUCCESS,
   TOGGLE_VOTE,
 } from './actions';
 
@@ -204,6 +205,22 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
   /**
    * Toggle Vote Success에 변경된 pollList를 state에 업데이트 하는 내용 추가
    */
+
+  [TOGGLE_RECRUIT_SUCCESS]: (state, action) => {
+    if (action.payload.result !== 'success') {
+      return {...state};
+    }
+    return {
+      ...state,
+      postState: {
+        ...state.postState,
+        data: state.postState.data && {
+          ...state.postState.data,
+          recruitStatus: action.payload.recruitStatus,
+        },
+      },
+    };
+  },
 
 });
 
