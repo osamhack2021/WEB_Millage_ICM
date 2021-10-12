@@ -18,4 +18,16 @@ export class CommentService {
     const savedComment = await this.commentRepository.save(newComment);
     return savedComment;
   }
+
+  async delete(postId: number, userId: number, commentId: number): Promise<boolean> {
+    const comment = await this.commentRepository.findOne(commentId);
+    if (comment === undefined) {
+      throw new Error(`Cannot find comment by id ${commentId}`);
+    }
+    if (comment.writerId !== userId) {
+      return false;
+    }
+    await this.commentRepository.delete(commentId);
+    return true;
+  }
 }
