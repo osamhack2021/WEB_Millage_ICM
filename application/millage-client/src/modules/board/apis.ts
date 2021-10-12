@@ -51,9 +51,11 @@ export async function apiGetBoardById(
     {boardId, page, search}: GetBoardByIdReq,
 ): Promise<GetBoardByIdRes> {
   try {
-    const {data} = await axios.post<GetBoardByIdRes>(
-        `${GET_BOARD_API}/${boardId}`,
-        {page, search},
+    const API_PATH = search ?
+    `${GET_BOARD_API}/${boardId}?page=${page}&search=${search}` :
+    `${GET_BOARD_API}/${boardId}?page=${page}`;
+    const {data} = await axios.get<GetBoardByIdRes>(
+        API_PATH,
         {withCredentials: true},
     );
     return data;

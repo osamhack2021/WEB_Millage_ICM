@@ -15,6 +15,8 @@ const PostListBox: React.FC<Props> = ({
     totalPages,
   } = paginationObject;
 
+  console.log(results);
+
   const isFirstPage = curPage === 1;
   const isLastPage = curPage === totalPages;
 
