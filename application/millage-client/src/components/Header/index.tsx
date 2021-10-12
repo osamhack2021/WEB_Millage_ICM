@@ -179,6 +179,7 @@ function Header() {
     setSocket(socket);
     setNewNickName(user.session.nickname);
     setNewEmail(user.session.email);
+    setNewPhone(user.session.phonenumber);
   }, []);
 
   return (

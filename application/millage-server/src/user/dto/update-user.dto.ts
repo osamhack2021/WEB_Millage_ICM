@@ -6,8 +6,5 @@ export class UpdateUserDto extends OmitType(
     ['unitId', 'roleId'] as const,
 ) {
     isConfirmed: boolean;
-    username: string;
-    email: string;
-    password: string;
-    phonenumber: string;
+    id: number;
 }

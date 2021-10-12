@@ -187,15 +187,14 @@ export class UserService {
       throw new Error(`Cannot find user by id ${id}`);
     }
     try {
-      console.log(dto);
-      const changes = this.userRepository.create(dto);
-      const updateResult = await this.userRepository.update(id, changes);
+      const updateResult = await this.userRepository.update(id, dto);
       if (updateResult.affected === 0) {
         return false;
       }
       if (dto.isConfirmed === true) {
-        const confirmedUser = updateResult.generatedMaps[0] as UserEntity;
-        await this.sendUserConfirmedMail(confirmedUser.email, confirmedUser.unitId);
+        // userRepositoy.create 안쓰니까 오류남. 근데 create 쓰니까 업데이트가 오류남.
+        // const confirmedUser = updateResult.generatedMaps[0] as UserEntity;
+        // await this.sendUserConfirmedMail(confirmedUser.email, confirmedUser.unitId);
       }
       return true;
     } catch (err) {
