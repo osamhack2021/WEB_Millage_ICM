@@ -101,7 +101,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
           <Box>
             <List>
               {scheduleList.filter(({groupId, start, end}) => {
-                if(groupId === 'unit') return false;
+                if (groupId === 'unit') return false;
                 if (!end) {
                   return compareDate(start, selectedDate);
                 } else {

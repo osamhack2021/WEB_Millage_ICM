@@ -19,9 +19,13 @@ export class UnitEntity {
   })
   isConfirmed: boolean;
 
-  @OneToMany(() => UserEntity, (user) => user.ownedUnit)
+  @OneToMany(() => UserEntity, (user) => user.ownedUnit, {
+    onDelete: 'CASCADE',
+  })
   admins: UserEntity[];
 
-  @OneToMany(() => ScheduleEntity, (schedule) => schedule.unitId)
+  @OneToMany(() => ScheduleEntity, (schedule) => schedule.unitId, {
+    onDelete: 'CASCADE',
+  })
   schedules: ScheduleEntity[];
 }

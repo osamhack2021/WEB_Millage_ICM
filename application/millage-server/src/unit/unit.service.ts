@@ -35,4 +35,18 @@ export class UnitService {
       throw new Error(err.message);
     }
   }
+
+  async delete(id: number): Promise<boolean> {
+    try {
+      await this.unitRepository.delete({
+        id: id,
+      });
+
+      // add send email
+
+      return true;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
 }

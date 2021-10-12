@@ -34,7 +34,6 @@ export const authUserAsync = createAsyncAction(
     AUTH_USER_FAIL,
 )<number, AdminState, AdminState>();
 
-
 export const GET_UNITLIST_REQUEST =
   'ADMIN/GET_UNITLIST_REQUEST' as const;
 
@@ -65,6 +64,35 @@ export const authUnitAsync = createAsyncAction(
     AUTH_UNIT_FAIL,
 )<number, AdminState, AdminState>();
 
+export const DELETE_UNIT_REQUEST =
+  'ADMIN/DELETE_UNIT_REQUEST' as const;
+
+export const DELETE_UNIT_SUCCESS =
+  'ADMIN/DELETE_UNIT_SUCCESS' as const;
+
+export const DELETE_UNIT_FAIL=
+  'ADMIN/DELETE_UNIT_FAIL' as const;
+
+export const DELETE_USER_REQUEST =
+  'ADMIN/DELETE_USER_REQUEST' as const;
+
+export const DELETE_USER_SUCCESS =
+  'ADMIN/DELETE_USER_SUCCESS' as const;
+
+export const DELETE_USER_FAIL=
+  'ADMIN/DELETE_USER_FAIL' as const;
+
+export const deleteUnitAsync = createAsyncAction(
+    DELETE_UNIT_REQUEST,
+    DELETE_UNIT_SUCCESS,
+    DELETE_UNIT_FAIL,
+)<number, AdminState, AdminState>();
+
+export const deleteUserAsync = createAsyncAction(
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
+)<number, AdminState, AdminState>();
 
 export const setPageStateAction = createAction(
     SET_PAGE_STATE,

@@ -14,6 +14,12 @@ import {
   AUTH_UNIT_SUCCESS,
   AUTH_UNIT_REQUEST,
   AUTH_UNIT_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_UNIT_REQUEST,
+  DELETE_UNIT_SUCCESS,
+  DELETE_UNIT_FAIL,
 } from './actions';
 
 const initialState: AdminState = {
@@ -55,11 +61,11 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   }),
   [AUTH_USER_SUCCESS]: (state, action) => ({
     ...state,
-    result: 'confirmsuccess',
+    result: 'confirmUserSuccess',
   }),
   [AUTH_USER_FAIL]: (state, action) => ({
     ...state,
-    result: 'confirmfail',
+    result: 'confirmUserFail',
   }),
   [AUTH_UNIT_REQUEST]: (state, action) => ({
     ...state,
@@ -67,11 +73,35 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   }),
   [AUTH_UNIT_SUCCESS]: (state, action) => ({
     ...state,
-    result: 'unitconfirmsuccess',
+    result: 'confirmUnitSuccess',
   }),
   [AUTH_UNIT_FAIL]: (state, action) => ({
     ...state,
-    result: 'unitconfirmfail',
+    result: 'confirmUnitFail',
+  }),
+  [DELETE_USER_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [DELETE_USER_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'deleteUserSuccess',
+  }),
+  [DELETE_USER_FAIL]: (state, action) => ({
+    ...state,
+    result: 'deleteUserFail',
+  }),
+  [DELETE_UNIT_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [DELETE_UNIT_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'deleteUnitSuccess',
+  }),
+  [DELETE_UNIT_FAIL]: (state, action) => ({
+    ...state,
+    result: 'deleteUnitFail',
   }),
 });
 
