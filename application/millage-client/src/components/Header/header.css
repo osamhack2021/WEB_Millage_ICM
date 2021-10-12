@@ -9,68 +9,101 @@ header .unitNameContainer{
     line-height:1;
 }
 
-header .logo{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-header .logo img{
-    margin:10px;
-}
-
-header button{
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #B9D1BE !important;
-    border-radius: 8px !important;
-    margin-right:10px !important;
-}
-
-header .navigation a{
-    width: 100px;
-    margin: 30px;
-    font-family: "Roboto";
-    font-weight: bold;
-    font-size: 18px;
-}
-
-header .millage{
-    color: #10902C;
-    font-family: "Roboto";
-    font-size: 12px;
-    font-weight: normal;
-}
-
-header .unitName {
-    color: #000000;
-    font-family: "Roboto";
-    font-size: 26px;
-    font-weight: normal;
-}
-
-header .enabled{
-    color: #10902C;
-    border-bottom: 3px solid #10902C;
-}
-
-
-header .loginlink{
-    font-family: Inter;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.02em;
-
-    color: #000000;
-}
-
 header .MuiBadge-dot{
     background-color:#E16913;
 }
+
+@media only screen and (min-width: 641px) {
+    header .logo{
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    header .logo img{
+        margin:10px;
+    }
+
+    header button{
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #B9D1BE !important;
+        border-radius: 8px !important;
+        margin-right:10px !important;
+    }
+
+    header .navigation a{
+        width: 100px;
+        margin: 30px;
+        font-family: "Roboto";
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    header .millage{
+        color: #10902C;
+        font-family: "Roboto";
+        font-size: 12px;
+        font-weight: normal;
+    }
+
+    header .unitName {
+        color: #000000;
+        font-family: "Roboto";
+        font-size: 26px;
+        font-weight: normal;
+    }
+
+    header .enabled{
+        color: #10902C;
+        border-bottom: 3px solid #10902C;
+    }
+
+
+    header .loginlink{
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        letter-spacing: -0.02em;
+
+        color: #000000;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+  header .logo img{
+    display:none;
+  }
+  header .navigation{
+    display:none;
+  }
+  header .buttons{
+    display:none;
+  }
+  header .millage{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: -0.02em;
+    color: #10902C;
+    margin-bottom:5px;
+  }
+
+  header .unitName {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+    color: #000000;
+  }
+}
+
 
 #UserDialog .container{
     width: 360px;
