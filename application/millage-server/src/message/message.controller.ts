@@ -96,16 +96,16 @@ export class MessageController {
 
   @Delete(':id')
   async deleteMessage(@Req() request : Request) : Promise<ResultObject> {
-    try{
+    try {
       await this.messageService.deleteMessages(+request.session.user.id, +request.params.id);
       return {
         result: Result.SUCCESS,
       };
-    } catch(err){
-      return{
+    } catch (err) {
+      return {
         result: Result.ERROR,
         message: err,
-      }
+      };
     }
   }
 }

@@ -77,6 +77,7 @@ export default function Admin() {
           <Button
             variant="contained"
             color="primary"
+            className="actionButton"
             onClick={
               (event) => {
                 authenticate(params.row.id);
@@ -99,6 +100,7 @@ export default function Admin() {
           <Button
             variant="contained"
             color="error"
+            className="actionButton"
             onClick={
               (event) => {
                 deleteUnit(params.row.id);
