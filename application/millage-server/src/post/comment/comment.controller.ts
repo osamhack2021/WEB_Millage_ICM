@@ -27,7 +27,7 @@ export class CommentController {
     }
   }
 
-  @Get('/:postId/comment/delete/:commentId')
+  @Delete('/:postId/comment/delete/:commentId')
   async delete(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
