@@ -7,7 +7,7 @@ import {
   ROOT_PATH,
 } from '@constants';
 import BoardMainPage from './BoardMainPage';
-import BoardViewPage from './BoardView';
+import BoardViewPage from './BoardViewPage';
 import {BoardHeader, SideBox} from '@components/boards';
 import {XLayout} from '@components/common';
 import PostViewPage from './PostViewPage';

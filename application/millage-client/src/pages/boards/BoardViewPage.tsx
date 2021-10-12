@@ -69,10 +69,11 @@ function BoardViewPage() {
         <BoardBoxTop auth={data.auth} />
 
         {/* Post List Component */}
-        <PostListBox
-          paginationObject={data.paginationObject}
-          getBoardWithPage={getBoardWithPage}
-        />
+        { data.paginationObject &&
+          <PostListBox
+            paginationObject={data.paginationObject}
+            getBoardWithPage={getBoardWithPage}
+          />}
 
       </div>
     </div>
