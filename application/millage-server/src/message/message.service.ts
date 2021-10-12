@@ -32,6 +32,22 @@ export class MessageService {
     return `${year}. ${month}. ${day}. ${ampm} ${time}`;
   }
 
+  async deleteMessages(receiverId: number, senderId: number){
+    await this.messageRepository.createQueryBuilder()
+        .delete()
+        .where([
+          {
+            receiverId: receiverId,
+            senderId: senderId,
+          },
+          {
+            receiverId: senderId,
+            senderId: receiverId,
+          },
+         ])
+        .execute();
+  }
+
   // needs refactor
   async getMessageBoxes(id: number) : Promise<MessageBoxData[]> {
     const m :d = {};

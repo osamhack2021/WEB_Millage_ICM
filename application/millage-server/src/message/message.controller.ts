@@ -1,4 +1,4 @@
-import {Get, Post, Req, Controller} from '@nestjs/common';
+import {Get, Post, Req, Controller, Delete} from '@nestjs/common';
 import {Request} from 'express';
 import {MessageService} from './message.service';
 import {MessageRO} from './message.interface';
@@ -91,6 +91,21 @@ export class MessageController {
           request.body.anonymous
       );
       return messages;
+    }
+  }
+
+  @Delete(':id')
+  async deleteMessage(@Req() request : Request) : Promise<ResultObject> {
+    try{
+      await this.messageService.deleteMessages(+request.session.user.id, +request.params.id);
+      return {
+        result: Result.SUCCESS,
+      };
+    } catch(err){
+      return{
+        result: Result.ERROR,
+        message: err,
+      }
     }
   }
 }
