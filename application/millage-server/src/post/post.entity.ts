@@ -58,7 +58,7 @@ export class PostEntity {
   @OneToMany(() => ImageEntity, (image) => image.postId)
   images: ImageEntity[];
 
-  @OneToMany(() => CommentEntity, (comment) => comment.postId)
+  @OneToMany(() => CommentEntity, (comment) => comment.post)
   comments: CommentEntity[];
 
   @OneToOne(

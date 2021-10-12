@@ -18,8 +18,15 @@ export class CommentEntity {
   })
   createdAt: string;
 
-  @ManyToOne(() => PostEntity)
+  @ManyToOne(() => PostEntity, (post) => post.comments)
+  @JoinTable({name: 'post', joinColumn: {name: 'postId', referencedColumnName: 'id'}})
+  post: PostEntity;
+
+  @Column()
   postId: number;
+
+  @Column({nullable: false, default: false})
+  isDeleted: boolean;
 
   @ManyToOne(() => UserEntity)
   @JoinTable({
@@ -32,10 +39,12 @@ export class CommentEntity {
   writerId: number;
 
   @OneToMany(() => CommentEntity, (comment) => comment.parentCommentId)
-  @JoinTable({name: 'reply', joinColumn: {name: 'replyId', referencedColumnName: 'id'}})
   replies: CommentEntity[];
 
-  @ManyToOne(() => CommentEntity, {nullable: true})
+  @ManyToOne(
+      () => CommentEntity,
+      (comment) => comment.replies,
+  )
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
   parentCommentId?: number;
 }
