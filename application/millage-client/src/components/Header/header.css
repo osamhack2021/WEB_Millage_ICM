@@ -59,7 +59,6 @@ header .MuiBadge-dot{
         border-bottom: 3px solid #10902C;
     }
 
-
     header .loginlink{
         font-family: Inter;
         font-style: normal;
@@ -72,9 +71,40 @@ header .MuiBadge-dot{
 
         color: #000000;
     }
+    header #BottomNavigationContainer{
+      display: none;
+    }
 }
 
 @media only screen and (max-width: 640px) {
+  header #BottomNavigationContainer{
+    display:block;
+    width:100%;
+  }
+  header #BottomNavigationContainer button{
+    padding: 0;
+    min-width:0;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: -0.02em;
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  header .enabled{
+    color: #10902C; 
+  }
+
+  header .enabled span{
+    color: #10902C; 
+  }
+
+  header .enabled svg{
+    color: #10902C; 
+  }
+
+
   header .logo img{
     display:none;
   }
