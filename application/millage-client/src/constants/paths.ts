@@ -8,6 +8,7 @@ export const ADMIN_UNITSELECT_PATH = '/register/adminunit';
 export const REGISTER_FINISH_PATH = '/register/finish';
 
 export const SCHEDULE_PATH = '/schedule';
+export const RESERVATION_PATH = '/reservation';
 export const DM_PATH = '/dm';
 export const USER_MANAGE_PATH ='/users';
 export const CREATE_POST_PATH = '/create';
