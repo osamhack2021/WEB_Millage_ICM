@@ -60,7 +60,7 @@ export class BoardService {
       boardId: number,
       searchKeyword: string,
       curPage: number,
-  ): Promise<PaginationObject> {
+  ): Promise<PaginationObject<PostEntity>> {
     searchKeyword = searchKeyword ? decodeURI(searchKeyword) : '';
     const searchOptions: FindManyOptions<PostEntity> = {
       where: [
@@ -73,8 +73,8 @@ export class BoardService {
     searchOptions.skip = (curPage - 1) * POSTS_PER_PAGE;
     searchOptions.take = POSTS_PER_PAGE;
     searchOptions.relations = ['images', 'writer', 'comments'];
-    const posts = await this.postRepository.find(searchOptions);
-    return <PaginationObject>{posts, curPage, totalCounts, totalPages};
+    const results = await this.postRepository.find(searchOptions);
+    return {results, curPage, totalCounts, totalPages};
   }
 
   async getBoardData(id: number, page: number, searchKeyword: string): Promise<BoardEntity> {
