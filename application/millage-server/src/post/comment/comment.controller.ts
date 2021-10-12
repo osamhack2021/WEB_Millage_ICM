@@ -2,7 +2,7 @@ import {Post, Body, Controller, Param, Delete, Req, ParseIntPipe} from '@nestjs/
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {CommentService} from './comment.service';
-import {CreateCommentDto} from './dto';
+import {CreateCommentDto, UpdateCommentDto} from './dto';
 import {Result, ResultObject} from '../../common/common.interface';
 import {CommentRO} from './comment.interface';
 
@@ -39,6 +39,23 @@ export class CommentController {
         return {result: Result.SUCCESS};
       }
       return {result: Result.FAIL, message: '작성자 id가 맞지 않습니다.'};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Patch('/:postId/comment/update/:commentId')
+  async update(
+    @Req() req: Request,
+    @Param('postId', ParseIntPipe) postId: number,
+    @Param('commentId', ParseIntPipe) commentId: number,
+    @Body() dto: UpdateCommentDto,
+  ): Promise<CommentRO> {
+    try {
+      const userId = req.session.user.id;
+      Object.assign(dto, {id: commentId, postId, writerId: userId});
+      const updatedComment = await this.commentService.update(dto);
+      return {result: Result.SUCCESS, comment: updatedComment};
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

@@ -2,7 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {CommentEntity} from './comment.entity';
 import {Repository} from 'typeorm';
-import {CreateCommentDto} from './dto';
+import {CreateCommentDto, UpdateCommentDto} from './dto';
 
 @Injectable()
 export class CommentService {
@@ -19,12 +19,12 @@ export class CommentService {
     return savedComment;
   }
 
-  private validateForDeletion(postId: number, userId: number, comment: CommentEntity): void {
-    if (postId !== comment.postId) {
-      throw new Error(`Not matched post id ${postId}`);
-    }
+  private validateComment(postId: number, userId: number, comment: CommentEntity): void {
     if (comment === undefined) {
       throw new Error(`Cannot find comment by id ${comment.id}`);
+    }
+    if (postId !== comment.postId) {
+      throw new Error(`Not matched post id ${postId}`);
     }
     if (comment.writerId !== userId) {
       throw new Error(`Not matched writer id ${userId}`);
@@ -40,7 +40,7 @@ export class CommentService {
       throw new Error(err.message);
     }
 
-    this.validateForDeletion(postId, userId, comment);
+    this.validateComment(postId, userId, comment);
 
     if (comment.replies.length !== 0) {
       comment.content = '삭제된 댓글입니다.';
@@ -52,5 +52,16 @@ export class CommentService {
     return true;
   }
 
-  // isDeleted일 시 update 불가하게 해야됨
+  async update(dto: UpdateCommentDto): Promise<CommentEntity> {
+    const comment = await this.commentRepository.findOne(dto.id);
+    this.validateComment(dto.postId, dto.userId, comment);
+    if (comment.isDeleted) {
+      throw new Error('This comment has been deleted');
+    }
+    const updateResult = await this.commentRepository.update(dto.id, dto);
+    if (updateResult.affected === 0) {
+      throw new Error('Unknown error');
+    }
+    return updateResult.generatedMaps[0] as CommentEntity;
+  }
 }
