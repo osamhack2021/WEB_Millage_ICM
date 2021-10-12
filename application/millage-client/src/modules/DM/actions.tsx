@@ -22,6 +22,15 @@ export const GET_MESSAGES_FAIL =
 export const SET_MESSAGES_AS_READ =
   'DM/SET_MESSAGES_AS_READ' as const;
 
+export const DELETE_MESSAGES_REQUEST =
+  'DM/DELETE_MESSAGES_SUCCESS' as const;
+
+export const DELETE_MESSAGES_SUCCESS =
+  'DM/DELETE_MESSAGES_SUCCESS' as const;
+
+export const DELETE_MESSAGES_FAIL =
+  'DM/DELETE_MESSAGES_FAIL' as const;
+
 export const setMessagesAsRead = createAction(SET_MESSAGES_AS_READ)<number>();
 
 export const getMessageBoxListAsync = createAsyncAction(
@@ -35,4 +44,10 @@ export const getMessagesAsync = createAsyncAction(
     GET_MESSAGES_REQUEST,
     GET_MESSAGES_SUCCESS,
     GET_MESSAGES_FAIL,
+)<number, DMState, DMState>();
+
+export const deleteMessagesAsync = createAsyncAction(
+    DELETE_MESSAGES_REQUEST,
+    DELETE_MESSAGES_SUCCESS,
+    DELETE_MESSAGES_FAIL,
 )<number, DMState, DMState>();
