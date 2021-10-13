@@ -5,7 +5,7 @@ import {
   deleteUnitAsync,
   deleteUserAsync,
   getUnitlistAsync,
-  getUserlistAsync, setPageStateAction,
+  getUserlistAsync,
   updateUserRoleAsync,
 } from './actions';
 import {
@@ -35,10 +35,6 @@ function* getUserListSaga(
   }
 }
 
-export function* getUserListSagaListener() {
-  yield takeLatest(getUserlistAsync.request, getUserListSaga);
-}
-
 function* authUserSaga(
     action: ReturnType<typeof authUserAsync.request>,
 ) {
@@ -55,11 +51,6 @@ function* authUserSaga(
   }
 }
 
-export function* authUserSagaListener() {
-  yield takeLatest(authUserAsync.request, authUserSaga);
-}
-
-
 function* getUnitListSaga(
     action: ReturnType<typeof getUnitlistAsync.request>,
 ) {
@@ -73,10 +64,6 @@ function* getUnitListSaga(
   } catch (error : any) {
     yield put(getUnitlistAsync.failure(error));
   }
-}
-
-export function* getAdminUnitListSagaListener() {
-  yield takeLatest(getUnitlistAsync.request, getUnitListSaga);
 }
 
 function* authUnitSaga(
@@ -93,10 +80,6 @@ function* authUnitSaga(
   } catch (error : any) {
     yield put(authUnitAsync.failure(error));
   }
-}
-
-export function* authUnitSagaListener() {
-  yield takeLatest(authUnitAsync.request, authUnitSaga);
 }
 
 function* deleteUnitSaga(
@@ -131,15 +114,6 @@ function* deleteUserSaga(
   }
 }
 
-
-export function* deleteUnitSagaListener() {
-  yield takeLatest(deleteUnitAsync.request, deleteUnitSaga);
-}
-
-export function* deleteUserSagaListener() {
-  yield takeLatest(deleteUserAsync.request, deleteUserSaga);
-}
-
 function* updateUserRoleSaga(
     action: ReturnType<typeof updateUserRoleAsync.request>,
 ) {
@@ -157,6 +131,12 @@ function* updateUserRoleSaga(
   }
 }
 
-export function* updateUserRoleSagaListener() {
+export default function* AdminSagaListener() {
+  yield takeLatest(getUserlistAsync.request, getUserListSaga);
   yield takeLatest(updateUserRoleAsync.request, updateUserRoleSaga);
+  yield takeLatest(deleteUserAsync.request, deleteUserSaga);
+  yield takeLatest(deleteUnitAsync.request, deleteUnitSaga);
+  yield takeLatest(authUnitAsync.request, authUnitSaga);
+  yield takeLatest(getUnitlistAsync.request, getUnitListSaga);
+  yield takeLatest(authUserAsync.request, authUserSaga);
 }

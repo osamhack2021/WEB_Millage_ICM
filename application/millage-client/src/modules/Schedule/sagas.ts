@@ -31,10 +31,6 @@ function* getScheduleListSaga(
   }
 }
 
-export function* getScheduleListSagaListener() {
-  yield takeLatest(getScheduleListAsync.request, getScheduleListSaga);
-}
-
 function* getUnitScheduleListSaga(
     action: ReturnType<typeof getUnitScheduleListAsync.request>,
 ) {
@@ -44,10 +40,6 @@ function* getUnitScheduleListSaga(
   } catch (error: any) {
     yield put(getUnitScheduleListAsync.failure(error));
   }
-}
-
-export function* getUnitScheduleListSagaListener() {
-  yield takeLatest(getUnitScheduleListAsync.request, getUnitScheduleListSaga);
 }
 
 function* createScheduleSaga(
@@ -64,10 +56,6 @@ function* createScheduleSaga(
   }
 }
 
-export function* createScheduleSagaListener() {
-  yield takeLatest(createScheduleAsync.request, createScheduleSaga);
-}
-
 function* updateScheduleSaga(
     action: ReturnType<typeof updateScheduleAsync.request>,
 ) {
@@ -82,9 +70,6 @@ function* updateScheduleSaga(
   }
 }
 
-export function* updateScheduleSagaListener() {
-  yield takeLatest(updateScheduleAsync.request, updateScheduleSaga);
-}
 
 function* deleteScheduleSaga(
     action: ReturnType<typeof deleteScheduleAsync.request>,
@@ -100,6 +85,10 @@ function* deleteScheduleSaga(
   }
 }
 
-export function* deleteScheduleSagaListener() {
+export default function* ScheduleSagaListener() {
+  yield takeLatest(getScheduleListAsync.request, getScheduleListSaga);
   yield takeLatest(deleteScheduleAsync.request, deleteScheduleSaga);
+  yield takeLatest(getUnitScheduleListAsync.request, getUnitScheduleListSaga);
+  yield takeLatest(createScheduleAsync.request, createScheduleSaga);
+  yield takeLatest(updateScheduleAsync.request, updateScheduleSaga);
 }
