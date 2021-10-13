@@ -2,10 +2,12 @@ import {Get, Controller, Req, Param, Post, Delete, Body, Patch, ParseIntPipe} fr
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PlaceService} from './place.service';
-import {ReservationSerivce} from './reservation/reservation.service';
+import {ReservationService} from './reservation/reservation.service';
 import {PlaceRO, PlaceListRO} from './place.interface';
+import {ReservationRO} from './reservation/reservation.interface';
 import {Result, DeleteRO} from '../common/common.interface';
 import {CreatePlaceDto, UpdatePlaceDto} from './dto';
+import {CreateReservationDto} from './reservation/dto';
 
 @ApiBearerAuth()
 @ApiTags('place')
@@ -14,7 +16,7 @@ export class PlaceController {
   constructor(
     private readonly placeService: PlaceService,
     private readonly reservationService: ReservationService,
-    ) {}
+  ) {}
 
   @Get('/place')
   async getPlaceListByUnitId(@Req() req: Request): Promise<PlaceListRO> {
@@ -76,12 +78,15 @@ export class PlaceController {
 
   @Post('/reservation')
   async createReservation(
+    @Req() req: Request,
     @Body() dto: CreateReservationDto,
   ): Promise<ReservationRO> {
     try {
+      const bookerId = req.session.user.id;
+      const unitId = req.session.user.unit.id;
       return {
         result: Result.SUCCESS,
-        reservation: await this.reservationService.create(dto),
+        reservation: await this.reservationService.create(dto, bookerId, unitId),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
