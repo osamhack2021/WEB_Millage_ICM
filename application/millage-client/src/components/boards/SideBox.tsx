@@ -1,13 +1,15 @@
 import {CREATE_BOARD_PATH, CREATE_POST_PATH} from '@constants';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import './sidebox.css';
 
 function SideBox() {
-  return (
-    <div id="BoardSideBox" className='
-      hidden lg:block w-72 ml-4
-      min-h-full flex-col
-    '>
+  const dispatch = useDispatch();
+  const user = useSelector((state: any) => state.user);
+
+  const adminMenu = () => {
+    return (
       <div className="box link">
         <div className="head">
           <RouterLink to={CREATE_BOARD_PATH} className="head">
@@ -16,6 +18,15 @@ function SideBox() {
           </RouterLink>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div id="BoardSideBox" className='
+      hidden lg:block w-72 ml-4
+      min-h-full flex-col
+    '>
+      {user.session && user.session.role.name == 'ADMIN' ? adminMenu() : ''}
       <div className="box link">
         <div className="head">
           <RouterLink to={CREATE_POST_PATH} className="head">
