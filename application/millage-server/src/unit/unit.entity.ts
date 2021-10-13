@@ -1,6 +1,7 @@
 import {UserEntity} from '../user/user.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable} from 'typeorm';
 import {ScheduleEntity} from '../schedule/schedule.entity';
+import {PlaceEntity} from '../place/place.entity';
 
 
 @Entity('unit')
@@ -28,4 +29,13 @@ export class UnitEntity {
     onDelete: 'CASCADE',
   })
   schedules: ScheduleEntity[];
+
+  @OneToMany(() => PlaceEntity, (place) => place.unit, {
+    onDelete: 'CASCADE',
+  })
+  @JoinTable({
+    name: 'places',
+    joinColumn: {name: 'unitId', referencedColumnName: 'id'}}
+  )
+  places: PlaceEntity[];
 }
