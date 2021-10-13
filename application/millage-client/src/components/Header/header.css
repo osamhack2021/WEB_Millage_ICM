@@ -74,9 +74,16 @@ header .MuiBadge-dot{
     header #BottomNavigationContainer{
       display: none;
     }
+    #root{
+      padding-bottom:10px;
+    }
 }
 
 @media only screen and (max-width: 640px) {
+  #root{
+    padding-bottom:50px;
+  }
+
   header #BottomNavigationContainer{
     display:block;
     width:100%;

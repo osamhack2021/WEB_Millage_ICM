@@ -1,7 +1,7 @@
 #MessageContainer {
     position: fixed;
     width: 100vw;
-    height: 80vh;
+    height: 610px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -161,7 +161,7 @@
 
 #MessageContainer .messagesContainer {
   overflow-y: auto;
-  height:610px;
+  height:500px;
   -ms-overflow-style: none;
   scrollbar-width: none; 
 }
@@ -172,7 +172,7 @@
 
 #MessageContainer .items {
   overflow-y: auto;
-  height:610px;
+  height:500px;
   -ms-overflow-style: none;
   scrollbar-width: none; 
 }
@@ -197,6 +197,7 @@
   width:100%;
   padding-right:10px;
 }
+
 
 #MessageContainer .nomessage{
   margin-left:auto;
@@ -227,6 +228,7 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none; 
+  max-height: 600px;
 }
 
 #DMUsersDialog .DMUserContainer::-webkit-scrollbar {
@@ -234,18 +236,45 @@
 }
 
 #DMUsersDialog .userButton{
-  width:100%;
-  height:30px;
+  height:50px;
   margin: 2px;
-  display:block;
+  display:flex;
+  line-height:50px;
+  text-align:left;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  width:100%;
 }
 
-#DMUsersDialog button:hover{
+#DMUsersDialog .userButton img{
+  display: block;
+  margin-top:5px;
+  padding-right:10px;
+}
+
+
+#DMUsersDialog .userButton:hover{
   background-color: rgba(0,0,0,0.2);
 }
 
 #DMUsersDialog #SearchContainer{
-  padding-top:50px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+#DMUsersDialog .dialogTitle{
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: #000000;
+  text-align:center;
 }
 
 #DMUsersDialog #SearchContainer input{
