@@ -73,9 +73,9 @@ export const togglePostHeartAsync = createAsyncAction(
 /**
  * POST Toggle Vote API Actions
  */
-export const TOGGLE_VOTE = 'borad/TOGGLE_VOTE';
-export const TOGGLE_VOTE_SUCCESS = 'borad/TOGGLE_VOTE_SUCCESS';
-export const TOGGLE_VOTE_FAILURE = 'borad/TOGGLE_VOTE_FAILURE';
+export const TOGGLE_VOTE = 'board/TOGGLE_VOTE';
+export const TOGGLE_VOTE_SUCCESS = 'board/TOGGLE_VOTE_SUCCESS';
+export const TOGGLE_VOTE_FAILURE = 'board/TOGGLE_VOTE_FAILURE';
 
 export const toggleVoteAsync = createAsyncAction(
     TOGGLE_VOTE,
@@ -86,9 +86,9 @@ export const toggleVoteAsync = createAsyncAction(
 /**
  * POST Toggle Recruit API Actions
  */
-export const TOGGLE_RECRUIT = 'borad/TOGGLE_RECRUIT';
-export const TOGGLE_RECRUIT_SUCCESS = 'borad/TOGGLE_RECRUIT_SUCCESS';
-export const TOGGLE_RECRUIT_FAILURE = 'borad/TOGGLE_RECRUIT_FAILURE';
+export const TOGGLE_RECRUIT = 'board/TOGGLE_RECRUIT';
+export const TOGGLE_RECRUIT_SUCCESS = 'board/TOGGLE_RECRUIT_SUCCESS';
+export const TOGGLE_RECRUIT_FAILURE = 'board/TOGGLE_RECRUIT_FAILURE';
 
 export const toggleRecruitAsync = createAsyncAction(
     TOGGLE_RECRUIT,
