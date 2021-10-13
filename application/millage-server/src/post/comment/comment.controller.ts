@@ -63,7 +63,7 @@ export class CommentController {
 
   @Post('/comment/:commentId/heart')
   async toggleHeart(
-    @Param('commentId') commentId: ParseIntPipe,
+    @Param('commentId', ParseIntPipe) commentId: number,
     @Req() req: Request
   ): Promise<ResultObject> {
     try {
