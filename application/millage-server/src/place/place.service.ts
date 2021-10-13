@@ -12,7 +12,10 @@ export class PlaceService {
   ) {}
 
   async getAllPlace(unitId: number): Promise<PlaceEntity[]> {
-    return await this.placeRepository.find({where: {unitId: unitId}});
+    return await this.placeRepository.find({
+      where: {unitId: unitId},
+      relations: ['reservations'],
+    });
     // reservations relation 필요
   }
 }
