@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany, CreateDateColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany, CreateDateColumn, ManyToMany, AfterLoad} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
@@ -42,4 +42,15 @@ export class CommentEntity {
   )
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
   parentCommentId?: number;
+
+  @ManyToMany(() => UserEntity)
+  @JoinTable({name: 'commentHeart'})
+  hearts: UserEntity[];
+
+  heartCount: number;
+
+  @AfterLoad()
+  countHearts() {
+    this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
+  }
 }

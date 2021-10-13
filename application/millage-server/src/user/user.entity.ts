@@ -8,6 +8,7 @@ import {RecruitEntity} from '../post/recruit/recruit.entity';
 import {PostEntity} from '../post/post.entity';
 import {PollEntity} from '../post/poll/poll.entity';
 import {ScheduleEntity} from '../schedule/schedule.entity';
+import {CommentEntity} from '../post/comment/comment.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -100,6 +101,9 @@ export class UserEntity {
 
   @ManyToMany(() => PostEntity)
   likedPosts: PostEntity[];
+
+  @ManyToMany(() => CommentEntity)
+  likedComments: CommentEntity[];
 
   @ManyToMany(() => PollEntity, (pollItem) => pollItem.voters)
   votes: PollEntity[];
