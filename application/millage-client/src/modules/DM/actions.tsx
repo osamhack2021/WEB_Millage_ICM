@@ -63,7 +63,7 @@ export const deleteMessagesAsync = createAsyncAction(
 )<number, DMState, DMState>();
 
 export const getUsersAsync = createAsyncAction(
-  DELETE_MESSAGES_REQUEST,
-  DELETE_MESSAGES_SUCCESS,
-  DELETE_MESSAGES_FAIL,
+    DELETE_MESSAGES_REQUEST,
+    DELETE_MESSAGES_SUCCESS,
+    DELETE_MESSAGES_FAIL,
 )<undefined, DMState, DMState>();

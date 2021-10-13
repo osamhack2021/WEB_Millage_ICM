@@ -102,9 +102,9 @@ export class UserService {
     const users = await this.userRepository.find({
       where: {
         unitId: unitId,
-        isConfirmed: true
+        isConfirmed: true,
       },
-      select: ['id','nickname']
+      select: ['id', 'nickname'],
     });
     return users;
   }

@@ -57,16 +57,16 @@ export class PostService {
 
   async get(id: number, userId: number): Promise<PostEntity> {
     try {
-      const post =  await this.postRepository.findOne(
+      const post = await this.postRepository.findOne(
           id, {relations: [
             'pollItems', 'pollItems.voters',
             'images', 'writer', 'board',
             'recruitStatus', 'recruitStatus.currentMember',
           ]}
       );
-      if (post.postType ===  PostType.RECRUIT) {
+      if (post.postType === PostType.RECRUIT) {
         const isMemeber = post.recruitStatus.currentMember.every(
-          member => member.id === userId
+            (member) => member.id === userId
         );
         post.recruitStatus.isMember = isMemeber;
       }

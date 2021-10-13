@@ -1,7 +1,7 @@
 import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch, Delete} from '@nestjs/common';
 import {Request} from 'express';
 import {UserService} from './user.service';
-import {UserData, UserRO} from './user.interface';
+import {UserRO} from './user.interface';
 import {CreateUserDto, LoginUserDto, UpdateUserDto, UserParams} from './dto';
 import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
@@ -32,17 +32,17 @@ export class UserController {
   }
 
   @Get('list')
-  async getUsersList(@Req() req : Request) : Promise<UserRO>{
+  async getUsersList(@Req() req : Request) : Promise<UserRO> {
     try {
       const users = await this.userService.findByUnit(req.session.user.unit.id);
       return {
         result: Result.SUCCESS,
         users: users,
       };
-    } catch(err: any){
+    } catch (err: any) {
       return {
         result: Result.ERROR,
-      }; 
+      };
     }
   }
 

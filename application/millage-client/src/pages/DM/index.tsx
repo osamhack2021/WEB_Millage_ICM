@@ -77,7 +77,7 @@ function DM() {
 
   const handleOpen = () => {
     dispatch(getUsersAsync.request());
-  }
+  };
 
   const deleteMessage = () => {
     const c = confirm(`정말로 ${receiverName}님과의 대화를 삭제하시겠습니까?`);
@@ -178,7 +178,7 @@ function DM() {
         </div>
       );
     });
-  }
+  };
 
   const renderMessageBoxes = () => {
     if (scrollbox.current) {
@@ -364,7 +364,8 @@ function DM() {
           <span>좌측에서 메시지 목록 또는 메시지 작성 아이콘을 클릭하여 메시지를 작성하세요.</span>
         </div>
       </div>
-      <Dialog id="DMUsersDialog" onClose={closeDialog} open={openDialog} onOpen={handleOpen}>
+      <Dialog id="DMUsersDialog" onClose={closeDialog}
+        open={openDialog} onOpen={handleOpen}>
         <IconButton
           aria-label="close"
           onClick={closeDialog}
