@@ -13,7 +13,13 @@ export interface UserData {
   role: UserRoleEntity;
 }
 
+export interface UserDataForChat {
+  id: number;
+  nickname: string;
+}
+
 export interface UserRO extends ResultObject {
   session?: UserData;
+  users?: UserDataForChat[];
 }
 
