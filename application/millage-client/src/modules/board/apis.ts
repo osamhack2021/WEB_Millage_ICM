@@ -5,6 +5,8 @@ import {
   GetBoardListRes,
   GetPostReq,
   GetPostRes,
+  getRecruitAndPollListRes,
+  PostPartial,
   TogglePostHeartReq,
   TogglePostHeartRes,
   ToggleRecruitReq,
@@ -18,6 +20,7 @@ import {
   GET_BOARD_LIST_API,
   GET_BOARD_LIST_WITH_POSTS_API,
   GET_POST_API,
+  SERVER,
   TOGGLE_POST_HEART_API,
   TOGGLE_RECRUIT_API,
   TOGGLE_VOTE_API,
@@ -130,4 +133,16 @@ export async function apiToggleRecruit(
   } catch (error: any) {
     return {result: 'error', message: error};
   }
+}
+
+export async function getRecruitAndPollList(
+): Promise<getRecruitAndPollListRes> {
+  const posts = await axios.get(
+      `${SERVER}/board/recruitAndPollList`,
+      {withCredentials: true},
+  );
+  return {
+    result: 'success',
+    posts: posts.data.posts,
+  };
 }

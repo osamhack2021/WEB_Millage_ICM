@@ -14,6 +14,7 @@
 
 #BoardSideBox .box{
     display: flex;
+    flex-direction: column;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     margin-bottom:5px;
@@ -31,4 +32,8 @@
 
 #BoardSideBox .link:hover{
     background-color: rgba(0,0,0,0.1);
+}
+
+#BoardSideBox .post{
+    display: flex;
 }

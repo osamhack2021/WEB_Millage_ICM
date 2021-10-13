@@ -1,6 +1,6 @@
 import {UserState} from '@modules/User/types';
 import {CommonResponse} from '@utils/commonTypes';
-import {Board, Post} from './entities';
+import {Board, Post, PostPartial} from './entities';
 
 export type GetBoardListInput = {
     withPosts?: boolean;
@@ -55,3 +55,7 @@ export type ToggleRecruitReq = {
 export type ToggleRecruitRes = CommonResponse & Pick<
     Post, 'recruitStatus'
 >;
+
+export type getRecruitAndPollListRes = CommonResponse & {
+    posts: PostPartial[],
+};

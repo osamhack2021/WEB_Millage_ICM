@@ -87,4 +87,16 @@ export class BoardService {
       throw new Error(err.message);
     }
   }
+
+  async getRecruitAndPollList(unitId: number) {
+    const posts = await this.boardRepository.query(`
+    select post.id, post.title, recruit.totalMember,(select count(*) from recruitingUser where recruitId = recruit.id) as currentCount
+      from post 
+        inner join board on post.boardId = board.id
+        inner join recruit on recruit.postId = post.id 
+        where (recruitAllowed = true or pollAllowed = true) and unitID = ${unitId} order by post.createdAt DESC LIMIT 5
+    `);
+
+    return posts;
+  }
 }

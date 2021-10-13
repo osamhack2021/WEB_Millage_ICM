@@ -1,5 +1,8 @@
 import {CREATE_BOARD_PATH, CREATE_POST_PATH} from '@constants';
-import {useEffect} from 'react';
+import {RootState} from '@modules';
+import {getRecruitAndPostListAsync} from '@modules/board/actions';
+import {PostPartial} from '@modules/board/types';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import './sidebox.css';
@@ -7,6 +10,36 @@ import './sidebox.css';
 function SideBox() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
+  const sideboxState = useSelector(
+      (state: RootState) => state.Board.sideboxState);
+  const loading = useSelector(
+      (state: RootState) => state.Board.sideboxState.loading);
+  useEffect(() => {
+    dispatch(getRecruitAndPostListAsync.request());
+  }, []);
+
+  const renderRecruitAndPollList = () => {
+    if (sideboxState.data && sideboxState.data.posts) {
+      return sideboxState.data.posts.map((post: PostPartial) => {
+        return (
+          <div className="post">
+            <RouterLink style={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+            }} to={`/board/post/${post.id}`}>
+              <div>
+                {post.title}
+              </div>
+              <div>
+                {post.currentCount}/{post.totalMember}
+              </div>
+            </RouterLink>
+          </div>
+        );
+      });
+    }
+  };
 
   const adminMenu = () => {
     return (
@@ -50,7 +83,12 @@ function SideBox() {
       <div className="box">
         <div className="head">
           <img src="/img/board/recruiticon.png"/>
-          <span className = "title">설문/모집 게시글</span>
+          <span className = "title">최근 모집 게시글</span>
+        </div>
+        <div>
+          {!loading ? renderRecruitAndPollList() :
+            'loading...'
+          }
         </div>
       </div>
     </div>

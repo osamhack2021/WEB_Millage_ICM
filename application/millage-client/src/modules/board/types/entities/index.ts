@@ -3,3 +3,4 @@ export * from './Post';
 export * from './Comment';
 export * from './Poll';
 export * from './Recruit';
+export * from './SideBox';
