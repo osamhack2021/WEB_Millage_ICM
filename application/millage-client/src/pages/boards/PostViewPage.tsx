@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards';
-import {PollListBox, RecruitBox} from '@components/boards/PostView';
+import {PollListBox, RecruitBox, PostTopBox} from '@components/boards/PostView';
 
 type Params = {
   postId: string;
@@ -36,14 +36,7 @@ function PostViewPage() {
 
       <div className='ring-1 ring-gray-300 p-3 flex flex-col'>
 
-        <div className='h-16 w-full bg-red-300'>
-          PostHeader (
-            아이콘: {data.postType},
-            작성자: {data.writer.nickname},
-            작성시각: {data.createdAt},
-            쪽지 등등
-          )
-        </div>
+        <PostTopBox {...data} />
 
         <h1 className='text-2xl' > {data.title} </h1>
         <p> {data.content} </p>
