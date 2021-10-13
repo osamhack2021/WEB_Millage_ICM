@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Dialog from './Dialog';
 import './Calendar.css';
+
 const Calendar: React.FC = () => {
   const [visible, setVisible] = React.useState(false);
   const [state, setState] = React.useState<'add' | 'edit' | 'delete'>('add');
@@ -21,7 +22,6 @@ const Calendar: React.FC = () => {
       handleOpen();
     },
   };
-
   const editEvents: CustomButtonInput = {
     text: '편집',
     click: () => {
@@ -29,7 +29,6 @@ const Calendar: React.FC = () => {
       handleOpen();
     },
   };
-
   const deleteEvents: CustomButtonInput = {
     text: '삭제',
     click: () => {
@@ -43,17 +42,25 @@ const Calendar: React.FC = () => {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin]}
         locale='ko'
-        height='80vh'
         nowIndicator
+        aspectRatio={0.8}
         dayCellContent={({date}) => date.getDate()}
+        views={{
+          timeGrid: {
+            dayHeaderFormat: {
+              day: 'numeric',
+            },
+            dayHeaderClassNames: 'fc-time-grid-day-header',
+          },
+        }}
         weekNumbers
         weekNumberContent={(week) => `${week.num}주`}
         headerToolbar={{
-          start: 'today',
-          center: 'prev,next',
-          end: 'dayGridMonth,timeGridWeek',
+          start: 'dayGridMonth,timeGridWeek title',
+          end: 'prev,next',
         }}
         footerToolbar={{
+          start: 'today',
           end: 'addEvents,editEvents,deleteEvents',
         }}
         buttonText={{

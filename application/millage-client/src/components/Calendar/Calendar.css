@@ -14,13 +14,50 @@
   color: blue;
 }
 
+.fc .fc-toolbar-title {
+  font-weight: bold;
+}
+
+@media (max-width:641px) {
+  .fc .fc-toolbar-title {
+    font-size: 1.1em;
+  }
+}
+
 .calendar-wrapper {
   height: 100%;
   width: 100%;
+  margin: auto;
+}
+
+.fc .fc-daygrid-day {
+  height: 3em;
+}
+
+.fc .fc-view-harness {
+  max-height: 1080px;
+}
+
+.fc .fc-daygrid-week-number {
+  font-size: 0.75em;
+}
+
+.fc .fc-time-grid-day-header {
+  font-size: 0.75em;
 }
 
 @media (min-width:642px)  { 
   .calendar-wrapper{
     padding: 1em;
+    width: 1200px;
+  }
+  .fc .fc-daygrid-day {
+    height: 166px;
+  }
+  .fc .fc-daygrid-week-number {
+    font-size: 1em;
+  }
+  .fc .fc-time-grid-day-header {
+    font-size: 1em;
   }
 }
