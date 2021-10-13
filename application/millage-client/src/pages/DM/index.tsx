@@ -216,6 +216,7 @@ function DM() {
           onClick={() => {
             newMessageToUser(u.id);
           }}>
+          <img src="/img/dm/usericon.png" />
           {u.nickname}
         </button>
       );
@@ -268,6 +269,9 @@ function DM() {
 
   const renderMessages = () => {
     return messages.map((m: any) => {
+      if (m.message == '') {
+        return;
+      }
       if (m.senderId == sessionId) {
         return (
           <div key={m.id} className="messageReverse">
@@ -293,6 +297,9 @@ function DM() {
 
   const renderNewMessages = () => {
     return newMessages.map((m: any) => {
+      if (m.message == '') {
+        return;
+      }
       if (m.senderId == sessionId) {
         return (
           <div key={m.id} className="messageReverse">
@@ -361,7 +368,7 @@ function DM() {
             <button style={{cursor: 'pointer', width: '36px'}}
               onClick={() => setOpenDialog(true)}
             >
-              <EmailOutlinedIcon />
+              <img src="/img/dm/newicon.png" />
             </button>
           </div>
         </div>
@@ -430,7 +437,7 @@ function DM() {
           >
             <CloseIcon />
           </IconButton>
-          <DialogTitle>
+          <DialogTitle className="dialogTitle">
             메시지 작성하기
           </DialogTitle>
           <DialogContent>
