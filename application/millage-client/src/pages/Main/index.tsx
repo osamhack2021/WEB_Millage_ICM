@@ -41,7 +41,7 @@ const Main = () => {
         </Switch>
       </>
     );
-  } else if (true) {// user.session.role.id > 0) {
+  } else if (user.session.role.id > 0) {
     return (
       <>
         <Header />

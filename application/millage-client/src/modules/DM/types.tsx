@@ -19,11 +19,17 @@ export interface MessageData{
   time: string;
 }
 
+export interface UserData{
+  id: number;
+  nickname: string;
+}
+
 export interface DMState {
   result: string;
   message?: string;
   messageboxes?: MessageBox[];
   messages?: MessageData[];
+  users?: UserData[];
 };
 
 export type DMAction = ActionType<typeof actions>;

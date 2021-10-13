@@ -12,6 +12,9 @@ import {
   DELETE_MESSAGES_REQUEST,
   DELETE_MESSAGES_SUCCESS,
   DELETE_MESSAGES_FAIL,
+  GET_USERS_REQUEST,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAIL,
 } from './actions';
 
 const initialState: DMState = {
@@ -19,6 +22,7 @@ const initialState: DMState = {
   message: '',
   messageboxes: [],
   messages: [],
+  users: [],
 };
 
 const DMReducer = createReducer<DMState, DMAction>(initialState, {
@@ -59,6 +63,19 @@ const DMReducer = createReducer<DMState, DMAction>(initialState, {
   }),
   [DELETE_MESSAGES_FAIL]: (state, action) => ({
     ...state,
+  }),
+  [GET_USERS_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [GET_USERS_SUCCESS]: (state, action) => ({
+    ...state,
+    result: action.payload.result,
+    users: action.payload.users,
+  }),
+  [GET_USERS_FAIL]: (state, action) => ({
+    ...state,
+    result: action.payload.result,
+    message: action.payload.message,
   }),
 });
 

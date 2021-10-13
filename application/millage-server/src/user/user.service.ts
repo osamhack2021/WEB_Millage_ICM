@@ -11,7 +11,7 @@ import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 import {UserRoleEntity} from '../user_role/user_role.entity';
-import {UserRO} from './user.interface';
+import {UserDataForChat, UserRO} from './user.interface';
 import {Result, ResultObject} from '../common/common.interface';
 import {Role} from '../user_role/user_role.interface';
 
@@ -98,6 +98,17 @@ export class UserService {
     return true;
   }
 
+  async findByUnit(unitId: number) : Promise<UserDataForChat[]> {
+    const users = await this.userRepository.find({
+      where: {
+        unitId: unitId,
+        isConfirmed: true,
+      },
+      select: ['id', 'nickname'],
+    });
+    return users;
+  }
+
   async create(dto: CreateUserDto): Promise<UserRO> {
     const {username, email, phonenumber} = dto;
     const qb = getRepository(UserEntity)
@@ -118,6 +129,7 @@ export class UserService {
       try {
         const newUnit = await this.createNewUnit(dto.unitName);
         dto.unitId = newUnit.id;
+        dto.ownedUnitId = newUnit.id;
       } catch (err) {
         return {
           result: Result.ERROR,

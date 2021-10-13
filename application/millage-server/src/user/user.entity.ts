@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, OneToMany, ManyToMany, RelationId, BeforeUpdate} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, OneToMany, ManyToMany, BeforeUpdate} from 'typeorm';
 import {IsEmail} from 'class-validator';
 import * as argon2 from 'argon2';
 
@@ -88,7 +88,7 @@ export class UserEntity {
   @JoinTable({name: 'ownedUnit', joinColumn: {name: 'ownedUnitId', referencedColumnName: 'id'}})
   ownedUnit: UnitEntity[];
 
-  @RelationId((user: UserEntity) => user.ownedUnit)
+  @Column({nullable: true})
   ownedUnitId: number;
 
   @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)

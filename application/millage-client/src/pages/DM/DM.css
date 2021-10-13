@@ -52,6 +52,7 @@
 }
 
 #MessageContainer .title{
+  display: flex;
   height:55px;
   font-family: Inter;
   font-style: normal;
@@ -189,6 +190,14 @@
   padding-right:10px;
 }
 
+#MessageContainer .newMessageIcon{
+  display:flex;
+  flex-direction:row-reverse;
+  margin-top:8px;
+  width:100%;
+  padding-right:10px;
+}
+
 #MessageContainer .nomessage{
   margin-left:auto;
   margin-right: auto;
@@ -211,4 +220,26 @@
     width: fit-content;
     max-width:430px;
     text-align:center;
+}
+
+#DMUsersDialog .DMUserContainer{
+  width: 360px;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+#DMUsersDialog .DMUserContainer::-webkit-scrollbar {
+  display: none;
+}
+
+#DMUsersDialog .userButton{
+  width:100%;
+  height:30px;
+  margin: 2px;
+  display:block;
+}
+
+#DMUsersDialog button:hover{
+  background-color: rgba(0,0,0,0.2);
 }
