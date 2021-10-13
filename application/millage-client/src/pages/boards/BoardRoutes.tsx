@@ -21,7 +21,7 @@ function BoardRoutes() {
 
       {/* Content Wrapper */}
       <XLayout className='
-        mx-auto w-full flex-1 my-6
+        mx-auto w-full flex-1 my-8
         flex flex-row justify-between
       '>
 
