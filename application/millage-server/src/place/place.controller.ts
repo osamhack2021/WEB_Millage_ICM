@@ -1,9 +1,9 @@
-import {Get, Controller, Req, Param, Post, Body, Patch, ParseIntPipe} from '@nestjs/common';
+import {Get, Controller, Req, Param, Post, Delete, Body, Patch, ParseIntPipe} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PlaceService} from './place.service';
 import {PlaceRO, PlaceListRO} from './place.interface';
-import {Result} from '../common/common.interface';
+import {Result, DeleteRO} from '../common/common.interface';
 import {CreatePlaceDto, UpdatePlaceDto} from './dto';
 
 @ApiBearerAuth()
@@ -50,6 +50,20 @@ export class PlaceController {
       return {
         result: Result.SUCCESS,
         place: await this.placeService.update(placeId, dto),
+      };
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Delete('/place/:placeId')
+  async deletePlace(
+    @Param('placeId', ParseIntPipe) placeId: number,
+  ): Promise<DeleteRO> {
+    try {
+      return {
+        result: Result.SUCCESS,
+        deletedId: await this.placeService.delete(placeId),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
