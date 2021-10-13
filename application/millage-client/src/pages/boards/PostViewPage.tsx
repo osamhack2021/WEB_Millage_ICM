@@ -57,7 +57,7 @@ function PostViewPage() {
         }
 
         { data.postType === 'RECRUIT' && data.recruitStatus &&
-          <RecruitBox {...data.recruitStatus} />
+          <RecruitBox {...data.recruitStatus } postId={data.id} />
         }
 
         <div>

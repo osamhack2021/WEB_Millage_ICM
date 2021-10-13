@@ -5,4 +5,5 @@ export type RecruitStatus = {
     status: 'progress' | 'completed'
     totalMember: number;
     currentMember: UserData[];
+    isMember: boolean;
 };
