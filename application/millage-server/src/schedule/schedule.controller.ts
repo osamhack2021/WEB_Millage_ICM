@@ -13,6 +13,21 @@ import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
 
+  @Get('/recentMixed')
+  async getRecentScheduleMixed(@Req() req: Request) : Promise<SchedulesRO> {
+    try {
+      return {
+        result: Result.SUCCESS,
+        schedules: await this.scheduleService.getRecentScheduleMixed(+req.session.user.id, +req.session.user.unit.id),
+      };
+    } catch (err) {
+      return {
+        result: Result.ERROR,
+        message: err.message,
+      };
+    }
+  }
+
   @Get('/personal') // validation 필요
   async getUserSchedule(@Req() req: Request): Promise<SchedulesRO> {
     try {

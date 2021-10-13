@@ -1,7 +1,8 @@
 import {CREATE_BOARD_PATH, CREATE_POST_PATH} from '@constants';
 import {RootState} from '@modules';
-import {getRecruitAndPostListAsync} from '@modules/board/actions';
-import {PostPartial} from '@modules/board/types';
+import {getRecentScheduleAsync,
+  getRecruitAndPostListAsync} from '@modules/board/actions';
+import {PostPartial, Schedule} from '@modules/board/types';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
@@ -16,13 +17,14 @@ function SideBox() {
       (state: RootState) => state.Board.sideboxState.loading);
   useEffect(() => {
     dispatch(getRecruitAndPostListAsync.request());
+    dispatch(getRecentScheduleAsync.request());
   }, []);
 
   const renderRecruitAndPollList = () => {
     if (sideboxState.data && sideboxState.data.posts) {
       return sideboxState.data.posts.map((post: PostPartial) => {
         return (
-          <div className="post link">
+          <div className="post link" key={post.id}>
             <RouterLink style={{
               display: 'flex',
               width: '100%',
@@ -37,6 +39,26 @@ function SideBox() {
                 {post.currentCount}/{post.totalMember}
               </div>
             </RouterLink>
+          </div>
+        );
+      });
+    }
+  };
+
+  const renderSchedules = () => {
+    if (sideboxState.data && sideboxState.data.schedules) {
+      return sideboxState.data.schedules.map((schedule : Schedule) => {
+        const today = new Date();
+        const start = new Date(schedule.start);
+        const betweenTime = Math.floor((today.getTime() -
+        start.getTime()) / 1000 / 60);
+        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        return (
+          <div className="post" key = {schedule.id}>
+            <div className={
+              schedule.groupType =='person' ? 'green' : 'orange'}
+            ></div>
+            {`D-${betweenTimeDay} ${schedule.title}`}
           </div>
         );
       });
@@ -80,6 +102,11 @@ function SideBox() {
         <div className="head">
           <img src="/img/board/scheduleicon.png"/>
           <span className = "title">일정 알림</span>
+        </div>
+        <div>
+          {!loading ? renderSchedules() :
+            'loading...'
+          }
         </div>
       </div>
       <div className="box">

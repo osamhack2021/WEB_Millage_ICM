@@ -6,12 +6,14 @@ import {
   apiTogglePostHeart,
   apiToggleRecruit,
   apiToggleVote,
+  getRecentSchedules,
   getRecruitAndPollList,
 } from './apis';
 import {
   GetBoardByIdRes,
   GetBoardListRes,
   GetPostRes,
+  getRecentScheduleRes,
   getRecruitAndPollListRes,
   TogglePostHeartRes,
   ToggleRecruitRes,
@@ -21,6 +23,7 @@ import {
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
+  getRecentScheduleAsync,
   getRecruitAndPostListAsync,
   togglePostHeartAsync,
   toggleRecruitAsync,
@@ -28,7 +31,6 @@ import {
 } from './actions';
 import {RootState} from '@modules';
 import {UserData} from '@modules/User/types';
-
 function* getBoardListSaga(
     action: ReturnType<typeof getBoardListAsync.request>,
 ) {
@@ -133,6 +135,19 @@ function* getRecruitAndPostListSaga(
   }
 }
 
+function* getRecentScheduleSaga(
+    action: ReturnType<typeof getRecentScheduleAsync.request>,
+) {
+  try {
+    const response: getRecentScheduleRes = yield call(
+        getRecentSchedules,
+    );
+    yield put(getRecentScheduleAsync.success(response));
+  } catch (error: any) {
+    yield put(getRecentScheduleAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
@@ -142,6 +157,7 @@ export function* boardSagaListener() {
   yield takeLatest(toggleRecruitAsync.request, toggleRecruitSaga);
   yield takeLatest(getRecruitAndPostListAsync.request,
       getRecruitAndPostListSaga);
+  yield takeLatest(getRecentScheduleAsync.request, getRecentScheduleSaga);
 }
 
 export default boardSagaListener;

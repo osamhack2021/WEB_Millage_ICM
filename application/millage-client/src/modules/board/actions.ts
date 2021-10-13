@@ -7,6 +7,7 @@ import {
   GetBoardListRes,
   GetPostReq,
   GetPostSuccessPayload,
+  getRecentScheduleRes,
   getRecruitAndPollListRes,
   TogglePostHeartReq,
   TogglePostHeartRes,
@@ -110,3 +111,16 @@ export const getRecruitAndPostListAsync = createAsyncAction(
     GET_RECRUIT_AND_POST_LIST_SUCCESS,
     GET_RECRUIT_AND_POST_LIST_FAILURE,
 )<undefined, getRecruitAndPollListRes, AxiosError>();
+
+export const GET_RECENT_SCHEDULE_REQUEST =
+'board/GET_RECENT_SCHEDULE_REQUEST';
+export const GET_RECENT_SCHEDULE_SUCCESS =
+'board/GET_RECENT_SCHEDULE_SUCCESS';
+export const GET_RECENT_SCHEDULE_FAILURE =
+'board/GET_RECENT_SCHEDULE_FAILURE';
+
+export const getRecentScheduleAsync = createAsyncAction(
+    GET_RECENT_SCHEDULE_REQUEST,
+    GET_RECENT_SCHEDULE_SUCCESS,
+    GET_RECENT_SCHEDULE_FAILURE,
+)<undefined, getRecentScheduleRes, AxiosError>();

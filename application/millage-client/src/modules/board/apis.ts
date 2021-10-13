@@ -5,6 +5,7 @@ import {
   GetBoardListRes,
   GetPostReq,
   GetPostRes,
+  getRecentScheduleRes,
   getRecruitAndPollListRes,
   PostPartial,
   TogglePostHeartReq,
@@ -146,3 +147,16 @@ export async function getRecruitAndPollList(
     posts: posts.data.posts,
   };
 }
+
+export async function getRecentSchedules(
+): Promise<getRecentScheduleRes> {
+  const posts = await axios.get(
+      `${SERVER}/schedule/recentMixed`,
+      {withCredentials: true},
+  );
+  return {
+    result: 'success',
+    schedules: posts.data.schedules,
+  };
+}
+

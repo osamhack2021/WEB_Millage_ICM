@@ -7,6 +7,18 @@ export type PostPartial = {
     currentCount: number;
 };
 
+export type Schedule = {
+  id: number;
+  title: string;
+  content: string;
+  start: string;
+  end?: string;
+  groupType: string;
+  userId: number;
+  unitId: number;
+}
+
 export type SideBox = {
-    posts: PostPartial[],
+    posts?: PostPartial[],
+    schedules?: Schedule[],
 }

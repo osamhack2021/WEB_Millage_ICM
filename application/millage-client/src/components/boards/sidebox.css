@@ -47,3 +47,23 @@
 #BoardSideBox .post{
     display: flex;
 }
+
+#BoardSideBox .green{
+    display:flex;
+    width: 4px;
+    height: 4px;
+    background-color: #219653;
+    border-radius: 50%;
+    margin-top:10px;
+    margin-right:5px;
+}
+
+#BoardSideBox .orange{
+    display:flex;
+    width: 4px;
+    height: 4px;
+    background-color: #F2994A;
+    border-radius: 50%;
+    margin-top:10px;
+    margin-right:5px;
+}

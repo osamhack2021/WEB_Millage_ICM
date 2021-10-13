@@ -16,6 +16,9 @@ import {
   GET_RECRUIT_AND_POST_LIST_REQUEST,
   GET_RECRUIT_AND_POST_LIST_SUCCESS,
   GET_RECRUIT_AND_POST_LIST_FAILURE,
+  GET_RECENT_SCHEDULE_REQUEST,
+  GET_RECENT_SCHEDULE_SUCCESS,
+  GET_RECENT_SCHEDULE_FAILURE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -241,12 +244,39 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
     sideboxState: {
       loading: false,
       data: {
+        ...state.sideboxState.data,
         posts: action.payload.posts,
       },
       error: null,
     },
   }),
   [GET_RECRUIT_AND_POST_LIST_FAILURE]: (state, action) => ({
+    ...state,
+    sideboxState: {
+      loading: false,
+      data: null,
+      error: action.payload,
+    },
+  }),
+  [GET_RECENT_SCHEDULE_REQUEST]: (state) => ({
+    ...state,
+    sideboxState: {
+      ...state.sideboxState,
+      loading: true,
+    },
+  }),
+  [GET_RECENT_SCHEDULE_SUCCESS]: (state, action) => ({
+    ...state,
+    sideboxState: {
+      loading: false,
+      data: {
+        ...state.sideboxState.data,
+        schedules: action.payload.schedules,
+      },
+      error: null,
+    },
+  }),
+  [GET_RECENT_SCHEDULE_FAILURE]: (state, action) => ({
     ...state,
     sideboxState: {
       loading: false,
