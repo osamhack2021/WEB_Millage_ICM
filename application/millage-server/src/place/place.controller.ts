@@ -1,4 +1,4 @@
-import {Get, Controller, Req, Post, Body} from '@nestjs/common';
+import {Get, Controller, Req, Post, Body, Patch} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PlaceService} from './place.service';
@@ -35,6 +35,22 @@ export class PlaceController {
       return {
         result: Result.SUCCESS,
         place: await this.placeService.create(unitId, dto),
+      };
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Patch('/place')
+  async updatePlace(
+    @Req() req: Request,
+    @Body() dto: UpdatePlaceDto,
+  ): Promise<PlaceRO> {
+    try {
+      const unitId = req.session.user.unit.id;
+      return {
+        result: Result.SUCCESS,
+        place: await this.placeService.update(unitId, dto),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
