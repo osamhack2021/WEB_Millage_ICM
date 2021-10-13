@@ -88,7 +88,7 @@ export class UserEntity {
   @JoinTable({name: 'ownedUnit', joinColumn: {name: 'ownedUnitId', referencedColumnName: 'id'}})
   ownedUnit: UnitEntity[];
 
-  @RelationId((user: UserEntity) => user.ownedUnit)
+  @Column()
   ownedUnitId: number;
 
   @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)

@@ -118,6 +118,7 @@ export class UserService {
       try {
         const newUnit = await this.createNewUnit(dto.unitName);
         dto.unitId = newUnit.id;
+        dto.ownedUnitId = newUnit.id;
       } catch (err) {
         return {
           result: Result.ERROR,
