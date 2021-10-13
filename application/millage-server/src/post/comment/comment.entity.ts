@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany, CreateDateColumn, ManyToMany, AfterLoad} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
@@ -10,12 +10,7 @@ export class CommentEntity {
   @Column({type: 'text'})
   content: string;
 
-  @Column({
-    type: 'timestamp',
-    default: () => {
-      'CURRENT_TIMESTAMP';
-    },
-  })
+  @CreateDateColumn()
   createdAt: string;
 
   @ManyToOne(() => PostEntity, (post) => post.comments)
@@ -31,7 +26,7 @@ export class CommentEntity {
   @ManyToOne(() => UserEntity)
   @JoinTable({
     name: 'writer',
-    joinColumn: {name: 'userId', referencedColumnName: 'id'},
+    joinColumn: {name: 'writerId', referencedColumnName: 'id'},
   })
   writer: UserEntity;
 
@@ -47,4 +42,15 @@ export class CommentEntity {
   )
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
   parentCommentId?: number;
+
+  @ManyToMany(() => UserEntity)
+  @JoinTable({name: 'commentHeart'})
+  hearts: UserEntity[];
+
+  heartCount: number;
+
+  @AfterLoad()
+  countHearts() {
+    this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
+  }
 }
