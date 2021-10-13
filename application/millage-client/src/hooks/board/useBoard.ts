@@ -4,6 +4,7 @@ import {
   getBoardListAsync,
   getPostAsync,
   togglePostHeartAsync,
+  toggleRecruitAsync,
   toggleVoteAsync,
 } from '@modules/board/actions';
 import {
@@ -11,6 +12,7 @@ import {
   GetBoardListInput,
   GetPostReq,
   TogglePostHeartReq,
+  ToggleRecruitReq,
   ToggleVoteReq,
 } from '@modules/board/types';
 import {useCallback} from 'react';
@@ -52,6 +54,10 @@ function useBoard() {
   //   (toggleVoteReq: Omit<ToggleVoteReq, 'session'>) => {
   //     dispatch(toggleVoteAsync.request({...toggleVoteReq, session}));
   // }, [dispatch]);
+  const toggleRecruit = useCallback(
+      (toggleRecruitReq: ToggleRecruitReq) => {
+        dispatch(toggleRecruitAsync.request(toggleRecruitReq));
+      }, [dispatch]);
 
   return {
     curBoardState,
@@ -62,6 +68,7 @@ function useBoard() {
     getPost,
     togglePostHeart,
     toggleVote,
+    toggleRecruit,
   };
 }
 

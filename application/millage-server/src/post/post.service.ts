@@ -64,11 +64,16 @@ export class PostService {
             'recruitStatus', 'recruitStatus.currentMember',
           ]}
       );
-      if (post.postType === PostType.RECRUIT) {
-        const isMemeber = post.recruitStatus.currentMember.every(
-            (member) => member.id === userId
-        );
-        post.recruitStatus.isMember = isMemeber;
+      if (post.postType ===  PostType.RECRUIT) {
+        let isMember: boolean;
+        if ( JSON.stringify(post.recruitStatus.currentMember) === '[]' ) {
+          isMember = false;
+        } else {
+          isMember = post.recruitStatus.currentMember.every(
+            member => member.id === userId
+          );
+        }
+        post.recruitStatus.isMember = isMember;
       }
       return post;
     } catch (err) {
