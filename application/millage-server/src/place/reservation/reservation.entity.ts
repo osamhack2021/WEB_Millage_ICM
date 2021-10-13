@@ -16,21 +16,27 @@ export class ReservationEntity {
   @Column()
   end: Date;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({name: 'bookerId', referencedColumnName: 'id'})
   booker: UserEntity;
 
   @Column()
   bookerId: number;
 
-  @ManyToOne(() => UnitEntity)
+  @ManyToOne(() => UnitEntity, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
   unit: UnitEntity;
 
   @Column()
   unitId: number;
 
-  @ManyToOne(() => PlaceEntity)
+  @ManyToOne(() => PlaceEntity, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({name: 'placeId', referencedColumnName: 'id'})
   place: PlaceEntity;
 

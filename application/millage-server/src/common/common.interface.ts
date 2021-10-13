@@ -9,3 +9,7 @@ export interface ResultObject {
     result: Result;
     message?: string;
 }
+
+export interface DeleteRO extends ResultObject {
+    deletedId?: number;
+}

@@ -32,4 +32,12 @@ export class PlaceService {
     }
     return updateResult.generatedMaps[0] as PlaceEntity;
   }
+
+  async delete(placeId: number): Promise<number> {
+    const deleteResult = await this.placeRepository.delete(placeId);
+    if (deleteResult.affected === 0) {
+      throw new Error('No affected row');
+    }
+    return placeId;
+  }
 }
