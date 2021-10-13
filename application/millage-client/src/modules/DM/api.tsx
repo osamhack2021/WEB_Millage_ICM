@@ -15,7 +15,6 @@ export async function apiGetMessages(id: number) : Promise<DMState> {
   return messages.data;
 }
 
-
 export async function apiSetMessagesAsRead(id: number) : Promise<boolean> {
   await axios.post(`${SERVER}/message/read/${id}`,
       {withCredentials: true});
@@ -26,4 +25,10 @@ export async function deleteMessages(id: number): Promise<DMState> {
   const result = await axios.delete(`${SERVER}/message/${id}`,
       {withCredentials: true});
   return result.data;
+}
+
+export async function getUsersApi() : Promise<DMState> {
+  const users = await axios.get(`${SERVER}/user/list`,
+      {withCredentials: true});
+  return users.data;
 }
