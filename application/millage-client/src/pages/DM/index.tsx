@@ -5,7 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getMessageBoxListAsync,
   getMessagesAsync,
   setMessagesAsRead,
-  deleteMessagesAsync} from '@modules/DM/actions';
+  deleteMessagesAsync,
+  getUsersAsync} from '@modules/DM/actions';
 import {MessageBox} from '@modules/DM/types';
 import {updateUnreadAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
@@ -38,6 +39,7 @@ interface MessageData{
 function DM() {
   const dispatch = useDispatch();
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
+  const users = useSelector((state: any) => state.DM.users);
   const user = useSelector((state: any) => state.user);
   const session = user.session;
   const [sessionId, setSessionId] = useState(-1);
@@ -72,6 +74,10 @@ function DM() {
     clone[id].unread = 0;
     setLocalMessageBoxes(clone);
   };
+
+  const handleOpen = () => {
+    dispatch(getUsersAsync.request());
+  }
 
   const deleteMessage = () => {
     const c = confirm(`정말로 ${receiverName}님과의 대화를 삭제하시겠습니까?`);
@@ -161,6 +167,18 @@ function DM() {
     setLocalMessageBoxes(messageboxes);
     localMessageBoxRef.current = messageboxes;
   }, [messageboxes]);
+
+  const renderUsers = () => {
+    return users.map((u: any, idx: number) => {
+      return (
+        <div key={idx}>
+          <button>
+            {u.nickname}
+          </button>
+        </div>
+      );
+    });
+  }
 
   const renderMessageBoxes = () => {
     if (scrollbox.current) {
@@ -346,7 +364,7 @@ function DM() {
           <span>좌측에서 메시지 목록 또는 메시지 작성 아이콘을 클릭하여 메시지를 작성하세요.</span>
         </div>
       </div>
-      <Dialog id="DMUsersDialog" onClose={closeDialog} open={openDialog}>
+      <Dialog id="DMUsersDialog" onClose={closeDialog} open={openDialog} onOpen={handleOpen}>
         <IconButton
           aria-label="close"
           onClick={closeDialog}
@@ -363,6 +381,7 @@ function DM() {
           새로운 메시지
         </DialogTitle>
         <DialogContent>
+          {renderUsers()}
         </DialogContent>
       </Dialog>
     </div>
