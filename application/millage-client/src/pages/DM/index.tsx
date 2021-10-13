@@ -11,6 +11,11 @@ import {updateUnreadAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
 import Badge from '@mui/material/Badge';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 interface MessageInterface {
   message: string;
@@ -47,6 +52,7 @@ function DM() {
   const [anonymous, setAnonymous] = useState(false);
   const [localMessageBoxes, setLocalMessageBoxes]= useState<MessageBox[]>([]);
   const localMessageBoxRef = useRef<MessageBox[]>([]);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const activeMessageBox = useRef(-1);
   const scrollbox = useRef<HTMLDivElement>(null);
   const getMessage = (id: number, rId: number, name: string, time:string) => {
@@ -340,6 +346,25 @@ function DM() {
           <span>좌측에서 메시지 목록 또는 메시지 작성 아이콘을 클릭하여 메시지를 작성하세요.</span>
         </div>
       </div>
+      <Dialog id="DMUsersDialog" onClose={closeDialog} open={openDialog}>
+        <IconButton
+          aria-label="close"
+          onClick={closeDialog}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogTitle>
+          새로운 메시지
+        </DialogTitle>
+        <DialogContent>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
