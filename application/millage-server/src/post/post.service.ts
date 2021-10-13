@@ -70,7 +70,7 @@ export class PostService {
           isMember = false;
         } else {
           isMember = post.recruitStatus.currentMember.every(
-            member => member.id === userId
+              (member) => member.id === userId
           );
         }
         post.recruitStatus.isMember = isMember;

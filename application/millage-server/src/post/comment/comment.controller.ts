@@ -8,11 +8,11 @@ import {CommentRO} from './comment.interface';
 
 @ApiBearerAuth()
 @ApiTags('comment')
-@Controller({path: 'post'})
+@Controller()
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @Post('/:postId/comment/create')
+  @Post('/post/:postId/comment/create')
   async create(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -27,7 +27,7 @@ export class CommentController {
     }
   }
 
-  @Delete('/:postId/comment/:commentId/delete')
+  @Delete('/post/:postId/comment/:commentId/delete')
   async delete(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -44,7 +44,7 @@ export class CommentController {
     }
   }
 
-  @Patch('/:postId/comment/:commentId/update')
+  @Patch('/post/:postId/comment/:commentId/update')
   async update(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -56,6 +56,20 @@ export class CommentController {
       Object.assign(dto, {id: commentId, postId, writerId});
       const updatedComment = await this.commentService.update(dto);
       return {result: Result.SUCCESS, comment: updatedComment};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Post('/comment/:commentId/heart')
+  async toggleHeart(
+    @Param('commentId') commentId: ParseIntPipe,
+    @Req() req: Request
+  ): Promise<ResultObject> {
+    try {
+      const userId = req.session.user.id;
+      await this.commentService.toggleHeart(commentId, userId);
+      return {result: Result.SUCCESS};
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

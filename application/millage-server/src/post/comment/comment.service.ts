@@ -1,6 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {CommentEntity} from './comment.entity';
+import {UserEntity} from '../../user/user.entity';
 import {Repository} from 'typeorm';
 import {CreateCommentDto, UpdateCommentDto} from './dto';
 
@@ -9,6 +10,9 @@ export class CommentService {
   constructor(
     @InjectRepository(CommentEntity)
     private readonly commentRepository: Repository<CommentEntity>,
+
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
   async create(postId: number, userId: number, dto: CreateCommentDto): Promise<CommentEntity> {
@@ -54,8 +58,6 @@ export class CommentService {
 
   async update(dto: UpdateCommentDto): Promise<CommentEntity> {
     const comment = await this.commentRepository.findOne(dto.id);
-    console.log(dto);
-    console.log(comment);
     this.validateComment(dto.postId, dto.writerId, comment);
     if (comment.isDeleted) {
       throw new Error('This comment has been deleted');
@@ -65,5 +67,24 @@ export class CommentService {
       throw new Error('Unknown error');
     }
     return updateResult.generatedMaps[0] as CommentEntity;
+  }
+
+  async toggleHeart(commentId: number, userId: number): Promise<boolean> {
+    const comment = await this.commentRepository.findOne(
+        commentId, {relations: ['hearts']}
+    );
+    const isNotExist = comment.hearts.every(
+        (user: UserEntity) => user.id !== userId
+    );
+    if (isNotExist) {
+      const user = await this.userRepository.findOne(userId);
+      comment.hearts.push(user);
+    } else {
+      comment.hearts = comment.hearts.filter(
+          (user: UserEntity) => user.id === userId
+      );
+    }
+    await this.commentRepository.save(comment);
+    return true;
   }
 }
