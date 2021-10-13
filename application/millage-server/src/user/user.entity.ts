@@ -1,4 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable, OneToMany, ManyToMany, BeforeUpdate} from 'typeorm';
+import {
+  Entity, PrimaryGeneratedColumn, Column, BeforeInsert, ManyToOne, JoinTable,
+  OneToMany, ManyToMany, BeforeUpdate,
+} from 'typeorm';
 import {IsEmail} from 'class-validator';
 import * as argon2 from 'argon2';
 
@@ -9,6 +12,7 @@ import {PostEntity} from '../post/post.entity';
 import {PollEntity} from '../post/poll/poll.entity';
 import {ScheduleEntity} from '../schedule/schedule.entity';
 import {CommentEntity} from '../post/comment/comment.entity';
+import {ReservationEntity} from '../place/reservation/reservation.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -110,4 +114,9 @@ export class UserEntity {
 
   @OneToMany(() => ScheduleEntity, (schedule) => schedule.userId)
   schedules: ScheduleEntity[];
+
+  @OneToMany(() => ReservationEntity, (reservation) => reservation.booker, {
+    onDelete: 'CASCADE',
+  })
+  reservations: ReservationEntity[];
 }
