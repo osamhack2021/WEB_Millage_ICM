@@ -12,7 +12,7 @@ export class PlaceService {
     private readonly placeRepository: Repository<PlaceEntity>,
   ) {}
 
-  async getAllPlace(unitId: number): Promise<PlaceEntity[]> {
+  async getPlaceListByUnitId(unitId: number): Promise<PlaceEntity[]> {
     return await this.placeRepository.find({
       where: {unitId: unitId},
       relations: ['reservations'],
