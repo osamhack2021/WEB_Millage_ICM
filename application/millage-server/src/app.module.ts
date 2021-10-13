@@ -1,5 +1,8 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
+import {ConfigModule} from '@nestjs/config';
+import {MailerModule} from '@nestjs-modules/mailer';
+
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {EventsModule} from './events/events.module';
@@ -9,8 +12,7 @@ import {UnitModule} from './unit/unit.module';
 import {MessageModule} from './message/message.module';
 import {PostModule} from './post/post.module';
 import {ScheduleModule} from './schedule/schedule.module';
-import {ConfigModule} from '@nestjs/config';
-import {MailerModule} from '@nestjs-modules/mailer';
+import {PlaceModule} from './place/place.module';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import {MailerModule} from '@nestjs-modules/mailer';
     MessageModule,
     PostModule,
     ScheduleModule,
+    PlaceModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
