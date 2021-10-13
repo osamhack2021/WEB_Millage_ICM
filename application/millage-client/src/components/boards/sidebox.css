@@ -1,0 +1,34 @@
+#BoardSideBox .title{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height:30px;
+}
+
+#BoardSideBox .head{
+    height:30px;
+    line-height:30px;
+    display:flex;
+}
+
+#BoardSideBox .box{
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin-bottom:5px;
+    padding:5px;
+}
+#BoardSideBox .box img{
+    width:30px;
+    height:30px;
+    margin-right: 5px;
+    padding:5px;
+}
+#BoardSideBox .link{
+    cursor: pointer;
+}
+
+#BoardSideBox .link:hover{
+    background-color: rgba(0,0,0,0.1);
+}
