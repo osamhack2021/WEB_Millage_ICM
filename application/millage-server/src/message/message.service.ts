@@ -56,7 +56,7 @@ export class MessageService {
       select t.id, t.message, u.nickname as nickname, t.senderId, t.anonymous,t.createdAt, u.fullname as fullname
         from message t
           inner join ( select senderId, max(createdAt) as MaxDate 
-            from message where message != '' and receiverId = ${id} group by senderId ) tm
+            from message where receiverId = ${id} group by senderId ) tm
             on t.senderId = tm.senderId and t.createdAt = tm.MaxDate
             inner join user u on u.id = t.senderId order by t.createdAt DESC`);
 
@@ -64,7 +64,7 @@ export class MessageService {
       select t.id, t.message, u.nickname as nickname, t.receiverId as senderId, t.anonymous,t.createdAt, u.fullname as fullname
         from message t
           inner join ( select receiverId as senderId, max(createdAt) as MaxDate 
-            from message where message != '' and senderId = ${id} group by receiverId ) tm
+            from message where senderId = ${id} group by receiverId ) tm
             on t.receiverId = tm.senderId and t.createdAt = tm.MaxDate
             inner join user u on u.id = t.receiverId order by t.createdAt DESC`);
 
