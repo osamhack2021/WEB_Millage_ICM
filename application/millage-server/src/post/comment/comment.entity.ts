@@ -15,6 +15,7 @@ export class CommentEntity {
     default: () => {
       'CURRENT_TIMESTAMP';
     },
+    update: false,
   })
   createdAt: string;
 
