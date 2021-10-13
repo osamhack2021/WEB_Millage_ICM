@@ -10,6 +10,9 @@ export class ReservationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({type: 'text'})
+  title: string;
+
   @Column()
   start: Date;
 
