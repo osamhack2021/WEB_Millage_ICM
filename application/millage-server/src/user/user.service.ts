@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository, getRepository} from 'typeorm';
+import {Repository, getRepository, Not} from 'typeorm';
 import {MailerService} from '@nestjs-modules/mailer';
 import {validate} from 'class-validator';
 import * as argon2 from 'argon2';
@@ -11,7 +11,7 @@ import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 import {UserRoleEntity} from '../user_role/user_role.entity';
-import {UserRO} from './user.interface';
+import {UserDataForChat, UserRO} from './user.interface';
 import {Result, ResultObject} from '../common/common.interface';
 import {Role} from '../user_role/user_role.interface';
 
@@ -98,6 +98,18 @@ export class UserService {
     return true;
   }
 
+  async findByUnit(unitId: number, id: number) : Promise<UserDataForChat[]> {
+    const users = await this.userRepository.find({
+      where: {
+        unitId: unitId,
+        isConfirmed: true,
+        id: Not(id),
+      },
+      select: ['id', 'nickname'],
+    });
+    return users;
+  }
+
   async create(dto: CreateUserDto): Promise<UserRO> {
     const {username, email, phonenumber} = dto;
     const qb = getRepository(UserEntity)
@@ -118,6 +130,7 @@ export class UserService {
       try {
         const newUnit = await this.createNewUnit(dto.unitName);
         dto.unitId = newUnit.id;
+        dto.ownedUnitId = newUnit.id;
       } catch (err) {
         return {
           result: Result.ERROR,

@@ -11,6 +11,7 @@ import {
   getMessagesSagaListener,
   setMessagesAsReadSagaListener,
   deleteMessagesSagaListener,
+  getUsersSagaListener,
 } from './DM/sagas';
 import boardSaga from './board/sagas';
 import {
@@ -80,6 +81,7 @@ export function* rootSaga() {
     updateUserSagaListener(),
     deleteMessagesSagaListener(),
     updateUserRoleSagaListener(),
+    getUsersSagaListener(),
   ]);
 }
 

@@ -57,7 +57,7 @@ export class PostService {
 
   async get(id: number, userId: number): Promise<PostEntity> {
     try {
-      const post =  await this.postRepository.findOne(
+      const post = await this.postRepository.findOne(
           id, {relations: [
             'pollItems', 'pollItems.voters',
             'images', 'writer', 'board',

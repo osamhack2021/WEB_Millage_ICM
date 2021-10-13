@@ -5,12 +5,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getMessageBoxListAsync,
   getMessagesAsync,
   setMessagesAsRead,
-  deleteMessagesAsync} from '@modules/DM/actions';
-import {MessageBox} from '@modules/DM/types';
+  deleteMessagesAsync,
+  getUsersAsync} from '@modules/DM/actions';
+import {MessageBox, UserData} from '@modules/DM/types';
 import {updateUnreadAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
 import Badge from '@mui/material/Badge';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import IconButton from '@mui/material/IconButton';
 
 interface MessageInterface {
   message: string;
@@ -33,6 +40,8 @@ interface MessageData{
 function DM() {
   const dispatch = useDispatch();
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
+  const usersState = useSelector((state: any) => state.DM.users);
+  const [users, setUsers] = useState([]);
   const user = useSelector((state: any) => state.user);
   const session = user.session;
   const [sessionId, setSessionId] = useState(-1);
@@ -47,8 +56,30 @@ function DM() {
   const [anonymous, setAnonymous] = useState(false);
   const [localMessageBoxes, setLocalMessageBoxes]= useState<MessageBox[]>([]);
   const localMessageBoxRef = useRef<MessageBox[]>([]);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const activeMessageBox = useRef(-1);
   const scrollbox = useRef<HTMLDivElement>(null);
+  const closeDialog = () => {
+    setOpenDialog(false);
+  };
+
+  useEffect(() => {
+    setUsers(usersState);
+  }, [usersState]);
+
+  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    if (keyword === '') {
+      setUsers(usersState);
+    } else {
+      setUsers(usersState.filter((user: UserData) => {
+        return user.nickname.includes(keyword);
+      }));
+    }
+  }, [keyword]);
+
+
   const getMessage = (id: number, rId: number, name: string, time:string) => {
     receiverId.current = rId;
     setLastReceived(time);
@@ -66,6 +97,12 @@ function DM() {
     clone[id].unread = 0;
     setLocalMessageBoxes(clone);
   };
+
+  useEffect(() => {
+    if (openDialog == true) {
+      dispatch(getUsersAsync.request());
+    }
+  }, [openDialog]);
 
   const deleteMessage = () => {
     const c = confirm(`정말로 ${receiverName}님과의 대화를 삭제하시겠습니까?`);
@@ -126,7 +163,6 @@ function DM() {
         time: data.time,
         message: data.message,
       };
-      console.log(data);
       if (receiverId.current == -1 || data.senderId != receiverId.current) {
         dispatch(getMessageBoxListAsync.request());
       } else if (data.senderId == receiverId.current) {
@@ -155,6 +191,36 @@ function DM() {
     setLocalMessageBoxes(messageboxes);
     localMessageBoxRef.current = messageboxes;
   }, [messageboxes]);
+
+  const newMessageToUser = (id: number) => {
+    if (connectedSocket) {
+      const now = new Date();
+      connectedSocket.emit('msgToServer', {
+        message: '',
+        senderId: session.id,
+        receiverId: id,
+        anonymous: false,
+        time: now.toLocaleString().slice(0, -3),
+      });
+      setOpenDialog(false);
+      dispatch(getMessageBoxListAsync.request());
+    } else {
+      console.log('error');
+    }
+  };
+
+  const renderUsers = () => {
+    return users.map((u: any, idx: number) => {
+      return (
+        <button className="userButton"
+          onClick={() => {
+            newMessageToUser(u.id);
+          }}>
+          {u.nickname}
+        </button>
+      );
+    });
+  };
 
   const renderMessageBoxes = () => {
     if (scrollbox.current) {
@@ -288,7 +354,16 @@ function DM() {
     <div id="MessageContainer">
       <div id="messageboxes">
         <div className="title">
-          <span>메시지함</span>
+          <span style={{
+            width: '200px',
+          }}>메시지함</span>
+          <div className="newMessageIcon">
+            <button style={{cursor: 'pointer', width: '36px'}}
+              onClick={() => setOpenDialog(true)}
+            >
+              <EmailOutlinedIcon />
+            </button>
+          </div>
         </div>
         <div className="items">
           {renderMessageBoxes()}
@@ -340,6 +415,37 @@ function DM() {
           <span>좌측에서 메시지 목록 또는 메시지 작성 아이콘을 클릭하여 메시지를 작성하세요.</span>
         </div>
       </div>
+      <Dialog id="DMUsersDialog" onClose={closeDialog}
+        open={openDialog}>
+        <div className="DMUserContainer">
+          <IconButton
+            aria-label="close"
+            onClick={closeDialog}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <DialogTitle>
+            메시지 작성하기
+          </DialogTitle>
+          <DialogContent>
+            <div id = "SearchContainer">
+              <input type="text"
+                placeholder="사용자 검색"
+                value={keyword}
+                onChange={(e) => {
+                  setKeyword(e.target.value);
+                }}/>
+            </div>
+            {renderUsers()}
+          </DialogContent>
+        </div>
+      </Dialog>
     </div>
   );
 }

@@ -73,6 +73,12 @@ export default function Admin() {
       flex: 1,
     },
     {
+      field: 'nickname',
+      headerName: '닉네임',
+      editable: false,
+      flex: 1,
+    },
+    {
       field: 'username',
       headerName: '아이디',
       editable: false,
@@ -173,9 +179,9 @@ export default function Admin() {
     if (keyword === '') {
       setUsers(adminState.users);
     } else {
-      setUsers(adminState.users.filter((unit: any) => {
-        return unit.fullname.includes(keyword) ||
-          unit.username.includes(keyword);
+      setUsers(adminState.users.filter((user: any) => {
+        return user.fullname.includes(keyword) ||
+          user.username.includes(keyword);
       }));
     }
   }, [keyword]);

@@ -53,7 +53,7 @@ export class MessageService {
     const m :d = {};
     const output:MessageBoxData[] = [];
     const messageboxes = await this.messageRepository.query(`
-      select t.id, t.message, t.senderId, t.anonymous,t.createdAt, u.fullname as fullname
+      select t.id, t.message, u.nickname as nickname, t.senderId, t.anonymous,t.createdAt, u.fullname as fullname
         from message t
           inner join ( select senderId, max(createdAt) as MaxDate 
             from message where receiverId = ${id} group by senderId ) tm
@@ -61,7 +61,7 @@ export class MessageService {
             inner join user u on u.id = t.senderId order by t.createdAt DESC`);
 
     const sentOnlyMessageboxes = await this.messageRepository.query(`
-      select t.id, t.message, t.receiverId as senderId, t.anonymous,t.createdAt, u.fullname as fullname
+      select t.id, t.message, u.nickname as nickname, t.receiverId as senderId, t.anonymous,t.createdAt, u.fullname as fullname
         from message t
           inner join ( select receiverId as senderId, max(createdAt) as MaxDate 
             from message where senderId = ${id} group by receiverId ) tm
@@ -73,7 +73,7 @@ export class MessageService {
     `);
 
     await messageboxes.map((mb) => {
-      let name = mb.fullname;
+      let name = mb.nickname;
       if (mb.anonymous) {
         name = '익명';
       }
@@ -89,7 +89,7 @@ export class MessageService {
     });
 
     await sentOnlyMessageboxes.map((mb) => {
-      let name = mb.fullname;
+      let name = mb.nickname;
       if (mb.anonymous) {
         name = '익명';
       }
@@ -103,7 +103,7 @@ export class MessageService {
       if (!m[mb.senderId]) {
         m[mb.senderId] = data;
       } else if (m[mb.senderId].time < mb.createdAt) {
-        m[mb.senderId] =data;
+        m[mb.senderId] = data;
       }
       return data;
     });
@@ -176,7 +176,7 @@ export class MessageService {
     });
 
     const result : MessageData[] = await messages.map((m) => {
-      let name = m.sender.fullname;
+      let name = m.sender.nickname;
       if (m.anonymous) {
         name = '익명';
       }

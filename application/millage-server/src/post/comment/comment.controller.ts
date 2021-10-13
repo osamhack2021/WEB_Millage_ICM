@@ -1,4 +1,4 @@
-import {Get, Post, Body, Controller, Param, Delete, Patch, Req, ParseIntPipe} from '@nestjs/common';
+import {Post, Body, Controller, Param, Delete, Req, ParseIntPipe} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {CommentService} from './comment.service';

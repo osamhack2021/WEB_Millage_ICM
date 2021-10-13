@@ -2,12 +2,14 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {apiGetMessageBoxList,
   apiGetMessages,
   apiSetMessagesAsRead,
-  deleteMessages} from './api';
+  deleteMessages,
+  getUsersApi} from './api';
 import {DMState} from './types';
 import {getMessageBoxListAsync,
   getMessagesAsync,
   setMessagesAsRead,
-  deleteMessagesAsync} from './actions';
+  deleteMessagesAsync,
+  getUsersAsync} from './actions';
 import {updateUnreadAsync} from '@modules/User/actions';
 
 function* getMessageBoxListSaga(
@@ -79,4 +81,22 @@ function* deleteMessagesSaga(
 
 export function* deleteMessagesSagaListener() {
   yield takeLatest(deleteMessagesAsync.request, deleteMessagesSaga);
+}
+
+function* getUsersSaga(
+    action: ReturnType<typeof getUsersAsync.request>,
+) {
+  try {
+    const response : DMState = yield call(getUsersApi);
+    yield put(getUsersAsync.success(response));
+  } catch (error : any) {
+    yield put(getUsersAsync.failure({
+      result: 'fail',
+      message: error,
+    }));
+  }
+}
+
+export function* getUsersSagaListener() {
+  yield takeLatest(getUsersAsync.request, getUsersSaga);
 }

@@ -16,6 +16,8 @@ export class CreateUserDto {
 
   unitId: number;
 
+  ownedUnitId: number;
+
   readonly unitName: string;
 
   readonly roleId: number;
