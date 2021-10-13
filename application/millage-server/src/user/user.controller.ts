@@ -39,7 +39,7 @@ export class UserController {
         result: Result.SUCCESS,
         users: users,
       };
-    } catch (err: any) {
+    } catch (err) {
       return {
         result: Result.ERROR,
       };

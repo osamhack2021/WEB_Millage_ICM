@@ -16,6 +16,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import CloseIcon from '@mui/icons-material/Close';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import IconButton from '@mui/material/IconButton';
 
 interface MessageInterface {
@@ -57,6 +58,9 @@ function DM() {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const activeMessageBox = useRef(-1);
   const scrollbox = useRef<HTMLDivElement>(null);
+  const closeDialog = () => {
+    setOpenDialog(false);
+  };
   const getMessage = (id: number, rId: number, name: string, time:string) => {
     receiverId.current = rId;
     setLastReceived(time);
@@ -75,9 +79,11 @@ function DM() {
     setLocalMessageBoxes(clone);
   };
 
-  const handleOpen = () => {
-    dispatch(getUsersAsync.request());
-  };
+  useEffect(() => {
+    if (openDialog == true) {
+      dispatch(getUsersAsync.request());
+    }
+  }, [openDialog]);
 
   const deleteMessage = () => {
     const c = confirm(`정말로 ${receiverName}님과의 대화를 삭제하시겠습니까?`);
@@ -171,11 +177,9 @@ function DM() {
   const renderUsers = () => {
     return users.map((u: any, idx: number) => {
       return (
-        <div key={idx}>
-          <button>
-            {u.nickname}
-          </button>
-        </div>
+        <button className="userButton">
+          {u.nickname}
+        </button>
       );
     });
   };
@@ -312,7 +316,20 @@ function DM() {
     <div id="MessageContainer">
       <div id="messageboxes">
         <div className="title">
-          <span>메시지함</span>
+          <span style={{
+            width: '200px',
+          }}>메시지함</span>
+          <div className="newMessageIcon">
+            <button style={{cursor: 'pointer', width: '36px'}}
+              onClick={() => setOpenDialog(true)}
+            >
+              <img style = {{
+                width: '36px',
+                height: '36px',
+              }}
+              src="/img/dm/deleteicon.png"/>
+            </button>
+          </div>
         </div>
         <div className="items">
           {renderMessageBoxes()}
@@ -365,25 +382,27 @@ function DM() {
         </div>
       </div>
       <Dialog id="DMUsersDialog" onClose={closeDialog}
-        open={openDialog} onOpen={handleOpen}>
-        <IconButton
-          aria-label="close"
-          onClick={closeDialog}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogTitle>
-          새로운 메시지
-        </DialogTitle>
-        <DialogContent>
-          {renderUsers()}
-        </DialogContent>
+        open={openDialog}>
+        <div className="DMUserContainer">
+          <IconButton
+            aria-label="close"
+            onClick={closeDialog}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <EmailOutlinedIcon />
+          </IconButton>
+          <DialogTitle>
+            새로운 메시지
+          </DialogTitle>
+          <DialogContent>
+            {renderUsers()}
+          </DialogContent>
+        </div>
       </Dialog>
     </div>
   );
