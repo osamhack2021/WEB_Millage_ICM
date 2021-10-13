@@ -3,6 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 
 import {PlaceEntity} from './place.entity';
+import {CreatePlaceDto} from './dto';
 
 @Injectable()
 export class PlaceService {
@@ -16,6 +17,11 @@ export class PlaceService {
       where: {unitId: unitId},
       relations: ['reservations'],
     });
-    // reservations relation 필요
+  }
+
+  async create(unitId: number, dto: CreatePlaceDto): Promise<PlaceEntity> {
+    const newPlace = this.placeRepository.create(dto);
+    newPlace.unitId = unitId;
+    return await this.placeRepository.save(newPlace);
   }
 }
