@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 
 import {PlaceEntity} from './place.entity';
-import {CreatePlaceDto} from './dto';
+import {CreatePlaceDto, UpdatePlaceDto} from './dto';
 
 @Injectable()
 export class PlaceService {
@@ -23,5 +23,13 @@ export class PlaceService {
     const newPlace = this.placeRepository.create(dto);
     newPlace.unitId = unitId;
     return await this.placeRepository.save(newPlace);
+  }
+
+  async update(placeId: number, dto: UpdatePlaceDto): Promise<PlaceEntity> {
+    const updateResult = await this.placeRepository.update(placeId, dto);
+    if (updateResult.affected === 0) {
+      throw new Error('No affected row');
+    }
+    return updateResult.generatedMaps[0] as PlaceEntity;
   }
 }
