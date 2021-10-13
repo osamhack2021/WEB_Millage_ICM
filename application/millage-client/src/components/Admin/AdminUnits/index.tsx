@@ -52,6 +52,22 @@ export default function Admin() {
 
   const [keyword, setKeyword] = useState('');
 
+  useEffect(() => {
+    if (keyword === '') {
+      setUnits(adminState.units);
+    } else {
+      setUnits(adminState.units.filter((unit: UnitData) => {
+        if (unit.admins) {
+          for (let i = 0; i < unit.admins.length; i++) {
+            if (unit.admins[i].fullname.includes(keyword)) {
+              return true;
+            }
+          }
+        }
+        return unit.name.includes(keyword);
+      }));
+    }
+  }, [keyword]);
 
   const columns = useRef<GridColDef[]>([
     {
@@ -64,6 +80,21 @@ export default function Admin() {
       headerName: '이름',
       editable: false,
       flex: 1,
+    },
+    {
+      field: 'admins',
+      headerName: '관리자',
+      editable: false,
+      flex: 1,
+      valueGetter: (params: GridValueGetterParams) => {
+        if (params.row.admins.map) {
+          return params.row.admins.map((u : any) => {
+            return `${u.fullname} (${u.username})`;
+          });
+        } else {
+          return '';
+        }
+      },
     },
     {
       field: 'auth',
@@ -118,13 +149,13 @@ export default function Admin() {
     <>
       <div id = "SearchContainer">
         <input type="text"
-          placeholder="부대 이름을 검색하세요"
+          placeholder="부대 혹은 관리자 이름을 검색하세요"
           value={keyword}
           onChange={(e) => {
             setKeyword(e.target.value);
           }}/>
       </div>
-      <div id="ListContainer">
+      <div id="UnitListContainer">
         <DataGrid
           className="grid"
           rows={units}

@@ -7,7 +7,7 @@ import {getMessageBoxListAsync,
   setMessagesAsRead,
   deleteMessagesAsync,
   getUsersAsync} from '@modules/DM/actions';
-import {MessageBox} from '@modules/DM/types';
+import {MessageBox, UserData} from '@modules/DM/types';
 import {updateUnreadAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
@@ -40,7 +40,8 @@ interface MessageData{
 function DM() {
   const dispatch = useDispatch();
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
-  const users = useSelector((state: any) => state.DM.users);
+  const usersState = useSelector((state: any) => state.DM.users);
+  const [users, setUsers] = useState([]);
   const user = useSelector((state: any) => state.user);
   const session = user.session;
   const [sessionId, setSessionId] = useState(-1);
@@ -61,6 +62,24 @@ function DM() {
   const closeDialog = () => {
     setOpenDialog(false);
   };
+
+  useEffect(() => {
+    setUsers(usersState);
+  }, [usersState]);
+
+  const [keyword, setKeyword] = useState('');
+
+  useEffect(() => {
+    if (keyword === '') {
+      setUsers(usersState);
+    } else {
+      setUsers(usersState.filter((user: UserData) => {
+        return user.nickname.includes(keyword);
+      }));
+    }
+  }, [keyword]);
+
+
   const getMessage = (id: number, rId: number, name: string, time:string) => {
     receiverId.current = rId;
     setLastReceived(time);
@@ -144,7 +163,6 @@ function DM() {
         time: data.time,
         message: data.message,
       };
-      console.log(data);
       if (receiverId.current == -1 || data.senderId != receiverId.current) {
         dispatch(getMessageBoxListAsync.request());
       } else if (data.senderId == receiverId.current) {
@@ -174,10 +192,30 @@ function DM() {
     localMessageBoxRef.current = messageboxes;
   }, [messageboxes]);
 
+  const newMessageToUser = (id: number) => {
+    if (connectedSocket) {
+      const now = new Date();
+      connectedSocket.emit('msgToServer', {
+        message: '',
+        senderId: session.id,
+        receiverId: id,
+        anonymous: false,
+        time: now.toLocaleString().slice(0, -3),
+      });
+      setOpenDialog(false);
+      dispatch(getMessageBoxListAsync.request());
+    } else {
+      console.log('error');
+    }
+  };
+
   const renderUsers = () => {
     return users.map((u: any, idx: number) => {
       return (
-        <button className="userButton">
+        <button className="userButton"
+          onClick={() => {
+            newMessageToUser(u.id);
+          }}>
           {u.nickname}
         </button>
       );
@@ -323,11 +361,7 @@ function DM() {
             <button style={{cursor: 'pointer', width: '36px'}}
               onClick={() => setOpenDialog(true)}
             >
-              <img style = {{
-                width: '36px',
-                height: '36px',
-              }}
-              src="/img/dm/deleteicon.png"/>
+              <EmailOutlinedIcon />
             </button>
           </div>
         </div>
@@ -394,12 +428,20 @@ function DM() {
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            <EmailOutlinedIcon />
+            <CloseIcon />
           </IconButton>
           <DialogTitle>
-            새로운 메시지
+            메시지 작성하기
           </DialogTitle>
           <DialogContent>
+            <div id = "SearchContainer">
+              <input type="text"
+                placeholder="사용자 검색"
+                value={keyword}
+                onChange={(e) => {
+                  setKeyword(e.target.value);
+                }}/>
+            </div>
             {renderUsers()}
           </DialogContent>
         </div>

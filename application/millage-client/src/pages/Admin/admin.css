@@ -10,6 +10,14 @@
     width: 80%;
 }
 
+#AdminContainer #UnitListContainer{
+    height:500px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+    width: 60%;
+}
+
 #AdminContainer .select {
     display: block;
     margin-left:auto;

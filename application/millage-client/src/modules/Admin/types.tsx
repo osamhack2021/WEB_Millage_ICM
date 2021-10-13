@@ -7,7 +7,7 @@ export interface UnitData{
     id: number;
     name: string;
     isConfiremd: boolean;
-    admins?: [];
+    admins?: UserData[];
 }
 
 export interface AdminState {

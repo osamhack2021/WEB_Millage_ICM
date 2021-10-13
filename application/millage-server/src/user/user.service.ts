@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository, getRepository} from 'typeorm';
+import {Repository, getRepository, Not} from 'typeorm';
 import {MailerService} from '@nestjs-modules/mailer';
 import {validate} from 'class-validator';
 import * as argon2 from 'argon2';
@@ -98,11 +98,12 @@ export class UserService {
     return true;
   }
 
-  async findByUnit(unitId: number) : Promise<UserDataForChat[]> {
+  async findByUnit(unitId: number, id: number) : Promise<UserDataForChat[]> {
     const users = await this.userRepository.find({
       where: {
         unitId: unitId,
         isConfirmed: true,
+        id: Not(id),
       },
       select: ['id', 'nickname'],
     });

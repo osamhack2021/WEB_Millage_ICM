@@ -34,7 +34,8 @@ export class UserController {
   @Get('list')
   async getUsersList(@Req() req : Request) : Promise<UserRO> {
     try {
-      const users = await this.userService.findByUnit(req.session.user.unit.id);
+      const users = await this.userService.findByUnit(
+          req.session.user.unit.id, req.session.user.id);
       return {
         result: Result.SUCCESS,
         users: users,
