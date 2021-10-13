@@ -1,4 +1,4 @@
-import {Get, Post, Body, Controller, Param, Delete, Patch, Req} from '@nestjs/common';
+import {Get, Controller, Req} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PlaceService} from './place.service';
