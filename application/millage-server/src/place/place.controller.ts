@@ -76,6 +76,7 @@ export class PlaceController {
     }
   }
 
+  // RESERVATION FEATURES
   @Post('/reservation')
   async createReservation(
     @Req() req: Request,
@@ -87,6 +88,22 @@ export class PlaceController {
       return {
         result: Result.SUCCESS,
         reservation: await this.reservationService.create(dto, bookerId, unitId),
+      };
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Delete('/reservation/:reservationId')
+  async deleteReservation(
+    @Req() req: Request,
+    @Param('reservationId', ParseIntPipe) reservationId: number,
+  ): Promise<DeleteRO> {
+    try {
+      const bookerId = req.session.user.id;
+      return {
+        result: Result.SUCCESS,
+        deletedId: await this.reservationService.delete(reservationId, bookerId),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
