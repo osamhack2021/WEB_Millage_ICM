@@ -22,12 +22,14 @@ function SideBox() {
     if (sideboxState.data && sideboxState.data.posts) {
       return sideboxState.data.posts.map((post: PostPartial) => {
         return (
-          <div className="post">
+          <div className="post link">
             <RouterLink style={{
               display: 'flex',
               width: '100%',
               justifyContent: 'space-between',
-            }} to={`/board/post/${post.id}`}>
+            }}
+            to={`/board/post/${post.id}`}
+            >
               <div>
                 {post.title}
               </div>
