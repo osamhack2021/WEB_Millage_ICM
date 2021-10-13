@@ -19,6 +19,13 @@ export class PlaceService {
     });
   }
 
+  async getPlaceWithReservations(placeId: number): Promise<PlaceEntity> {
+    return await this.placeRepository.findOne(
+        placeId,
+        {relations: ['reservations']},
+    );
+  }
+
   async create(unitId: number, dto: CreatePlaceDto): Promise<PlaceEntity> {
     const newPlace = this.placeRepository.create(dto);
     newPlace.unitId = unitId;

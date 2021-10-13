@@ -31,6 +31,20 @@ export class PlaceController {
     }
   }
 
+  @Get('/place/:placeId')
+  async getPlaceById(
+    @Param('placeId', ParseIntPipe) placeId: number,
+  ): Promise<PlaceRO> {
+    try {
+      return {
+        result: Result.SUCCESS,
+        place: await this.placeService.getPlaceWithReservations(placeId),
+      };
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
   @Post('/place')
   async createPlace(
     @Req() req: Request,
