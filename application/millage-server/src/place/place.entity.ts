@@ -1,8 +1,8 @@
 import {UnitEntity} from '../unit/unit.entity';
 import {
-  Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne,
-  JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad,
+  Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn,
 } from 'typeorm';
+import {ReservationEntity} from './reservation/reservation.entity';
 
 @Entity('place')
 export class PlaceEntity {
@@ -15,9 +15,15 @@ export class PlaceEntity {
   @Column()
   seats: number;
 
-  @ManyToOne(() => UnitEntity, (unit) => unit.places)
+  @ManyToOne(() => UnitEntity)
+  @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
   unit: UnitEntity;
 
   @Column()
   unitId: number;
+
+  @OneToMany(() => ReservationEntity, (reservation) => reservation.place, {
+    onDelete: 'CASCADE',
+  })
+  reservations: ReservationEntity[];
 }
