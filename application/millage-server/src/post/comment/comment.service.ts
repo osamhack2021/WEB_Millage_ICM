@@ -19,20 +19,20 @@ export class CommentService {
     return savedComment;
   }
 
-  private validateComment(postId: number, userId: number, comment: CommentEntity): void {
+  private validateComment(postId: number, writerId: number, comment: CommentEntity): void {
     if (comment === undefined) {
       throw new Error(`Cannot find comment by id ${comment.id}`);
     }
     if (postId !== comment.postId) {
       throw new Error(`Not matched post id ${postId}`);
     }
-    if (comment.writerId !== userId) {
-      throw new Error(`Not matched writer id ${userId}`);
+    if (comment.writerId !== writerId) {
+      throw new Error(`Not matched writer id ${writerId}`);
     }
     return;
   }
 
-  async delete(postId: number, userId: number, commentId: number): Promise<boolean> {
+  async delete(postId: number, writerId: number, commentId: number): Promise<boolean> {
     let comment: CommentEntity = null;
     try {
       comment = await this.commentRepository.findOne(commentId, {relations: ['replies']});
@@ -40,7 +40,7 @@ export class CommentService {
       throw new Error(err.message);
     }
 
-    this.validateComment(postId, userId, comment);
+    this.validateComment(postId, writerId, comment);
 
     if (comment.replies.length !== 0) {
       comment.content = '삭제된 댓글입니다.';
@@ -54,7 +54,9 @@ export class CommentService {
 
   async update(dto: UpdateCommentDto): Promise<CommentEntity> {
     const comment = await this.commentRepository.findOne(dto.id);
-    this.validateComment(dto.postId, dto.userId, comment);
+    console.log(dto);
+    console.log(comment);
+    this.validateComment(dto.postId, dto.writerId, comment);
     if (comment.isDeleted) {
       throw new Error('This comment has been deleted');
     }

@@ -1,4 +1,4 @@
-import {Post, Body, Controller, Param, Delete, Req, ParseIntPipe} from '@nestjs/common';
+import {Post, Patch, Body, Controller, Param, Delete, Req, ParseIntPipe} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {CommentService} from './comment.service';
@@ -27,7 +27,7 @@ export class CommentController {
     }
   }
 
-  @Delete('/:postId/comment/delete/:commentId')
+  @Delete('/:postId/comment/:commentId/delete')
   async delete(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -44,7 +44,7 @@ export class CommentController {
     }
   }
 
-  @Patch('/:postId/comment/update/:commentId')
+  @Patch('/:postId/comment/:commentId/update')
   async update(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -52,8 +52,8 @@ export class CommentController {
     @Body() dto: UpdateCommentDto,
   ): Promise<CommentRO> {
     try {
-      const userId = req.session.user.id;
-      Object.assign(dto, {id: commentId, postId, writerId: userId});
+      const writerId = req.session.user.id;
+      Object.assign(dto, {id: commentId, postId, writerId});
       const updatedComment = await this.commentService.update(dto);
       return {result: Result.SUCCESS, comment: updatedComment};
     } catch (err) {

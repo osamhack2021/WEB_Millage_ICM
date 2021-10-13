@@ -31,7 +31,7 @@ export class CommentEntity {
   @ManyToOne(() => UserEntity)
   @JoinTable({
     name: 'writer',
-    joinColumn: {name: 'userId', referencedColumnName: 'id'},
+    joinColumn: {name: 'writerId', referencedColumnName: 'id'},
   })
   writer: UserEntity;
 
