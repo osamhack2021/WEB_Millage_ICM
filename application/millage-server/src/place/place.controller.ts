@@ -13,12 +13,12 @@ export class PlaceController {
   constructor(private readonly placeService: PlaceService) {}
 
   @Get('/place')
-  async getAllPlace(@Req() req: Request): Promise<PlaceListRO> {
+  async getPlaceListByUnitId(@Req() req: Request): Promise<PlaceListRO> {
     try {
       const unitId = req.session.user.unit.id;
       return {
         result: Result.SUCCESS,
-        placeList: await this.placeService.getAllPlace(unitId),
+        placeList: await this.placeService.getPlaceListByUnitId(unitId),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
