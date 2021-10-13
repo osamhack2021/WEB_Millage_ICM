@@ -6,42 +6,12 @@ import UnitReducer from './Unit/reducer';
 import UserReducer from './User/reducer';
 import AdminReducer from './Admin/reducer';
 import ScheduleReducer from './Schedule/reducer';
-import {
-  getMessageBoxListSagaListener,
-  getMessagesSagaListener,
-  setMessagesAsReadSagaListener,
-  deleteMessagesSagaListener,
-  getUsersSagaListener,
-} from './DM/sagas';
+import DMSagaListener from './DM/sagas';
 import boardSaga from './board/sagas';
-import {
-  getScheduleListSagaListener,
-  getUnitScheduleListSagaListener,
-  createScheduleSagaListener,
-  updateScheduleSagaListener,
-  deleteScheduleSagaListener,
-} from './Schedule/sagas';
-import {
-  checkSessionListener,
-  createUserSagaListener,
-  loginSagaListener,
-  updateUnreadListener,
-  logoutSagaListener,
-  validateUserSagaListener,
-  updateUserSagaListener,
-} from './User/sagas';
-import {
-  getUnitListSagaListener,
-} from './Unit/sagas';
-import {
-  getUserListSagaListener,
-  authUserSagaListener,
-  getAdminUnitListSagaListener,
-  authUnitSagaListener,
-  deleteUnitSagaListener,
-  deleteUserSagaListener,
-  updateUserRoleSagaListener,
-} from './Admin/sagas';
+import ScheduleSagaListener from './Schedule/sagas';
+import UserSagaListener from './User/sagas';
+import UnitSagaListener from './Unit/sagas';
+import AdminSagaListener from './Admin/sagas';
 
 const rootReducer = combineReducers({
   DM: DMReducer,
@@ -56,33 +26,12 @@ export default rootReducer;
 
 export function* rootSaga() {
   yield all([
-    getMessageBoxListSagaListener(),
-    getMessagesSagaListener(),
-    createUserSagaListener(),
-    loginSagaListener(),
-    checkSessionListener(),
+    UserSagaListener(),
     boardSaga(),
-    getUnitListSagaListener(),
-    getScheduleListSagaListener(),
-    getUnitScheduleListSagaListener(),
-    createScheduleSagaListener(),
-    updateScheduleSagaListener(),
-    deleteScheduleSagaListener(),
-    updateUnreadListener(),
-    setMessagesAsReadSagaListener(),
-    logoutSagaListener(),
-    getUserListSagaListener(),
-    validateUserSagaListener(),
-    authUserSagaListener(),
-    getAdminUnitListSagaListener(),
-    authUnitSagaListener(),
-    deleteUnitSagaListener(),
-    deleteUserSagaListener(),
-    updateUserSagaListener(),
-    deleteMessagesSagaListener(),
-    updateUserRoleSagaListener(),
-    getUsersSagaListener(),
-  ]);
+    UnitSagaListener(),
+    ScheduleSagaListener(),
+    AdminSagaListener(),
+    DMSagaListener(),
 }
 
 export type RootState = ReturnType<typeof rootReducer>

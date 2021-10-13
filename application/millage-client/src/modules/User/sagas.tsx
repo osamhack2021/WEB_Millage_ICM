@@ -45,10 +45,6 @@ function* createUserSaga(
   }
 }
 
-export function* createUserSagaListener() {
-  yield takeLatest(createUserAsync.request, createUserSaga);
-}
-
 function* loginUserSaga(
     action: ReturnType<typeof loginAsync.request>,
 ) {
@@ -63,10 +59,6 @@ function* loginUserSaga(
   } catch (error : any) {
     yield put(loginAsync.failure(error));
   }
-}
-
-export function* loginSagaListener() {
-  yield takeLatest(loginAsync.request, loginUserSaga);
 }
 
 function* checkSessionSaga(
@@ -84,11 +76,6 @@ function* checkSessionSaga(
   }
 }
 
-export function* checkSessionListener() {
-  yield takeLatest(checkSessionAsync.request, checkSessionSaga);
-}
-
-
 function* updateUnreadSaga(
     action: ReturnType<typeof updateUnreadAsync.request>,
 ) {
@@ -100,10 +87,6 @@ function* updateUnreadSaga(
   }
 }
 
-export function* updateUnreadListener() {
-  yield takeLatest(updateUnreadAsync.request, updateUnreadSaga);
-}
-
 function* logoutSaga(
     action: ReturnType<typeof logoutRequest>,
 ) {
@@ -112,10 +95,6 @@ function* logoutSaga(
   } catch (error : any) {
     console.log(error);
   }
-}
-
-export function* logoutSagaListener() {
-  yield takeLatest(logoutRequest, logoutSaga);
 }
 
 function* validateUserSaga(
@@ -135,10 +114,6 @@ function* validateUserSaga(
   }
 }
 
-export function* validateUserSagaListener() {
-  yield takeLatest(validateUserAsync.request, validateUserSaga);
-}
-
 
 function* updateUserSaga(
     action: ReturnType<typeof updateUserAsync.request>,
@@ -154,7 +129,13 @@ function* updateUserSaga(
   }
 }
 
-export function* updateUserSagaListener() {
+export default function* UserSagaListener() {
+  yield takeLatest(createUserAsync.request, createUserSaga);
   yield takeLatest(updateUserAsync.request, updateUserSaga);
+  yield takeLatest(loginAsync.request, loginUserSaga);
+  yield takeLatest(checkSessionAsync.request, checkSessionSaga);
+  yield takeLatest(updateUnreadAsync.request, updateUnreadSaga);
+  yield takeLatest(logoutRequest, logoutSaga);
+  yield takeLatest(validateUserAsync.request, validateUserSaga);
 }
 

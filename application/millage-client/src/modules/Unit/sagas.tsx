@@ -18,9 +18,7 @@ function* getUnitListSaga(
   }
 }
 
-export function* getUnitListSagaListener() {
+export default function* UnitSagaListener() {
   yield takeLatest(getUnitListAsync.request, getUnitListSaga);
 }
 
-
-export {getUnitListSagaListener as default};

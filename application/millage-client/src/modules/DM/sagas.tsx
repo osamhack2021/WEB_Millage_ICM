@@ -27,10 +27,6 @@ function* getMessageBoxListSaga(
   }
 }
 
-export function* getMessageBoxListSagaListener() {
-  yield takeLatest(getMessageBoxListAsync.request, getMessageBoxListSaga);
-}
-
 function* getMessagesSaga(
     action: ReturnType<typeof getMessagesAsync.request>,
 ) {
@@ -47,20 +43,12 @@ function* getMessagesSaga(
   }
 }
 
-export function* getMessagesSagaListener() {
-  yield takeLatest(getMessagesAsync.request, getMessagesSaga);
-}
-
 function* setMessagesAsReadSaga(
     action: ReturnType<typeof setMessagesAsRead>,
 ) {
   const param = action.payload;
   yield call(apiSetMessagesAsRead, param);
   yield put(updateUnreadAsync.request());
-}
-
-export function* setMessagesAsReadSagaListener() {
-  yield takeLatest(setMessagesAsRead, setMessagesAsReadSaga);
 }
 
 function* deleteMessagesSaga(
@@ -79,10 +67,6 @@ function* deleteMessagesSaga(
   }
 }
 
-export function* deleteMessagesSagaListener() {
-  yield takeLatest(deleteMessagesAsync.request, deleteMessagesSaga);
-}
-
 function* getUsersSaga(
     action: ReturnType<typeof getUsersAsync.request>,
 ) {
@@ -97,6 +81,10 @@ function* getUsersSaga(
   }
 }
 
-export function* getUsersSagaListener() {
+export default function* DMSagaListener() {
+  yield takeLatest(getMessageBoxListAsync.request, getMessageBoxListSaga);
   yield takeLatest(getUsersAsync.request, getUsersSaga);
+  yield takeLatest(setMessagesAsRead, setMessagesAsReadSaga);
+  yield takeLatest(deleteMessagesAsync.request, deleteMessagesSaga);
+  yield takeLatest(getMessagesAsync.request, getMessagesSaga);
 }
