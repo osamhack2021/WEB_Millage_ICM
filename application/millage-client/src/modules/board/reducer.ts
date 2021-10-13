@@ -13,6 +13,9 @@ import {
   TOGGLE_POST_HEART,
   TOGGLE_RECRUIT_SUCCESS,
   TOGGLE_VOTE,
+  GET_RECRUIT_AND_POST_LIST_REQUEST,
+  GET_RECRUIT_AND_POST_LIST_SUCCESS,
+  GET_RECRUIT_AND_POST_LIST_FAILURE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -27,6 +30,11 @@ const initialState: BoardState = {
     error: null,
   },
   postState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  sideboxState: {
     loading: false,
     data: null,
     error: null,
@@ -221,7 +229,31 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       },
     };
   },
-
+  [GET_RECRUIT_AND_POST_LIST_REQUEST]: (state) => ({
+    ...state,
+    sideboxState: {
+      ...state.sideboxState,
+      loading: true,
+    },
+  }),
+  [GET_RECRUIT_AND_POST_LIST_SUCCESS]: (state, action) => ({
+    ...state,
+    sideboxState: {
+      loading: false,
+      data: {
+        posts: action.payload.posts,
+      },
+      error: null,
+    },
+  }),
+  [GET_RECRUIT_AND_POST_LIST_FAILURE]: (state, action) => ({
+    ...state,
+    sideboxState: {
+      loading: false,
+      data: null,
+      error: action.payload,
+    },
+  }),
 });
 
 export default BoardReducer;

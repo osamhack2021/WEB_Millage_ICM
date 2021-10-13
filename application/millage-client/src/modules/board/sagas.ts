@@ -6,11 +6,13 @@ import {
   apiTogglePostHeart,
   apiToggleRecruit,
   apiToggleVote,
+  getRecruitAndPollList,
 } from './apis';
 import {
   GetBoardByIdRes,
   GetBoardListRes,
   GetPostRes,
+  getRecruitAndPollListRes,
   TogglePostHeartRes,
   ToggleRecruitRes,
   ToggleVoteRes,
@@ -19,6 +21,7 @@ import {
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
+  getRecruitAndPostListAsync,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
@@ -117,6 +120,19 @@ function* toggleRecruitSaga(
   }
 }
 
+function* getRecruitAndPostListSaga(
+    action: ReturnType<typeof getRecruitAndPostListAsync.request>,
+) {
+  try {
+    const response: getRecruitAndPollListRes = yield call(
+        getRecruitAndPollList,
+    );
+    yield put(getRecruitAndPostListAsync.success(response));
+  } catch (error: any) {
+    yield put(getRecruitAndPostListAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
@@ -124,6 +140,8 @@ export function* boardSagaListener() {
   yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);
   yield takeLatest(toggleVoteAsync.request, toggleVoteSaga);
   yield takeLatest(toggleRecruitAsync.request, toggleRecruitSaga);
+  yield takeLatest(getRecruitAndPostListAsync.request,
+      getRecruitAndPostListSaga);
 }
 
 export default boardSagaListener;

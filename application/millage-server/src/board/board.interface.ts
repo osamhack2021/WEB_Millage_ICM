@@ -8,6 +8,19 @@ export interface BoardListRO {
     boards?: BoardEntity[];
 }
 
+export interface PostData {
+    id: number;
+    title: string;
+    totalMember: number;
+    currentCount: number;
+}
+
+export interface PostRO {
+    result: string;
+    posts?: PostData[];
+    message?: string;
+}
+
 export interface BoardRO {
     result: string;
     message?: string;

@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Post, Req, Param, Query} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
-import {BoardListRO, BoardRO} from './board.interface';
+import {BoardListRO, BoardRO, PostRO} from './board.interface';
 import {BoardService} from './board.service';
 import {Request} from 'express';
 import {BoardEntity} from './board.entity';
@@ -12,6 +12,22 @@ import {Result} from '../common/common.interface';
 @Controller('board')
 export class BoardController {
   constructor(private readonly boardService: BoardService) { }
+
+  @Get('recruitAndPollList')
+  async getBoardRecruitAndPollList(@Req() req: Request) : Promise<PostRO> {
+    try {
+      const posts = await this.boardService.getRecruitAndPollList(+req.session.user.unit.id);
+      return {
+        result: 'success',
+        posts: posts,
+      };
+    } catch (err) {
+      return {
+        result: 'error',
+        message: err.message,
+      };
+    }
+  }
 
   @Get('list')
   async getBoardList(@Req() request: Request): Promise<BoardListRO> {

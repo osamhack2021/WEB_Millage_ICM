@@ -14,16 +14,19 @@
 
 #BoardSideBox .box{
     display: flex;
+    flex-direction: column;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     margin-bottom:5px;
-    padding:5px;
+    padding-top:5px;
+    padding-bottom:5px;
 }
 #BoardSideBox .box img{
     width:30px;
     height:30px;
     margin-right: 5px;
     padding:5px;
+    margin-left:5px;
 }
 #BoardSideBox .link{
     cursor: pointer;
@@ -31,4 +34,16 @@
 
 #BoardSideBox .link:hover{
     background-color: rgba(0,0,0,0.1);
+}
+
+#BoardSideBox .post{
+    display: flex;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+#BoardSideBox .post{
+    display: flex;
 }

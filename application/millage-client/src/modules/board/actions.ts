@@ -7,6 +7,7 @@ import {
   GetBoardListRes,
   GetPostReq,
   GetPostSuccessPayload,
+  getRecruitAndPollListRes,
   TogglePostHeartReq,
   TogglePostHeartRes,
   ToggleRecruitReq,
@@ -95,3 +96,17 @@ export const toggleRecruitAsync = createAsyncAction(
     TOGGLE_RECRUIT_SUCCESS,
     TOGGLE_RECRUIT_FAILURE,
 )<ToggleRecruitReq, ToggleRecruitRes, AxiosError>();
+
+
+export const GET_RECRUIT_AND_POST_LIST_REQUEST =
+'board/GET_RECRUIT_AND_POST_LIST_REQUEST';
+export const GET_RECRUIT_AND_POST_LIST_SUCCESS =
+'board/GET_RECRUIT_AND_POST_LIST_SUCCESS';
+export const GET_RECRUIT_AND_POST_LIST_FAILURE =
+'board/GET_RECRUIT_AND_POST_LIST_FAILURE';
+
+export const getRecruitAndPostListAsync = createAsyncAction(
+    GET_RECRUIT_AND_POST_LIST_REQUEST,
+    GET_RECRUIT_AND_POST_LIST_SUCCESS,
+    GET_RECRUIT_AND_POST_LIST_FAILURE,
+)<undefined, getRecruitAndPollListRes, AxiosError>();
