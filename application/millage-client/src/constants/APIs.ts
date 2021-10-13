@@ -4,6 +4,8 @@ export const SOCKET_SERVER  = '';
 // export const SERVER         = 'https://millage.ml/api';
 // export const SOCKET_SERVER  = 'https://millage.ml';
 
+// export const SERVER         = 'https://millage.loca.lt/api';
+// export const SOCKET_SERVER  = 'https://millage.loca.lt/';
 
 export const BOARD_API                      = `${SERVER}/board`;
 export const GET_BOARD_LIST_API             = `${BOARD_API}/list`;
