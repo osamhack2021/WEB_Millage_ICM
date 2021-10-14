@@ -1,4 +1,4 @@
-import {Get, Post, Body, Controller, Param, Delete, Patch, Req} from '@nestjs/common';
+import {Get, Post, Body, Controller, Param, Delete, Patch, Req, ParseIntPipe} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PostService} from './post.service';
@@ -52,13 +52,14 @@ export class PostController {
     }
   }
 
-  @Delete(':id')
+  @Delete(':postId')
+  @Roles(Role.ADMIN, Role.NORMAL_USER, Role.SUPER_ADMIN)
   async delete(
-    @Param() params: PostParams,
+    @Param('postId', ParseIntPipe) postId: number,
     @Req() req: Request): Promise<ResultObject> {
     try {
-      const writerId = req.session.user.id;
-      if (!(await this.postService.delete(params.id, writerId))) {
+      const userData = req.session.user;
+      if (!(await this.postService.delete(postId, userData))) {
         return {
           result: Result.FAIL,
           message: 'Nothing affected',

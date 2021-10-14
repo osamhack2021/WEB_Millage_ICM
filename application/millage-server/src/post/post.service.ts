@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {FindConditions, Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
 import {PostType} from './post.interface';
 import {CreatePostDto, UpdatePostDto} from './dto';
@@ -50,7 +50,7 @@ export class PostService {
   async create(dto: CreatePostDto, user: UserData): Promise<PostEntity> {
     const newPost: PostEntity = this.postRepository.create(dto);
     const targetBoard: BoardEntity = await this.boardRepository.findOne(dto.boardId);
-    if (user.role.name !== Role.SUPER_ADMIN || user.unit.id !== targetBoard.unitId) {
+    if (user.role.name !== Role.SUPER_ADMIN && user.unit.id !== targetBoard.unitId) {
       throw new Error('Different unit id');
     }
     const {pollList} = dto;
@@ -97,11 +97,28 @@ export class PostService {
     return pollItems.some((pollItem) => pollItem.voters.some((voter) => voter.id === userId));
   }
 
-  async delete(id: number, writerId: number): Promise<boolean> {
+  private async getDeleteFindCondition(
+      postId: number, userData: UserData): Promise<FindConditions<PostEntity>> {
+    if (userData.role.name === Role.NORMAL_USER) {
+      return {id: postId, writerId: userData.id};
+    }
+    if (userData.role.name === Role.SUPER_ADMIN) {
+      return {id: postId};
+    }
+    // ADMIN
+    const board = (await this.postRepository.findOne(postId, {relations: ['board']})).board;
+    if (board.unitId === userData.unit.id) {
+      return {id: postId};
+    }
+    throw new Error('Not authorized admin for this board');
+  }
+
+  async delete(postId: number, userData: UserData): Promise<boolean> {
     try {
-      const deleteResult = await this.postRepository.delete({id: id, writerId: writerId});
+      const findConditions = await this.getDeleteFindCondition(postId, userData);
+      const deleteResult = await this.postRepository.delete(findConditions);
       if (deleteResult.affected === 0) {
-        throw new Error(`No matched post with id ${id} writerId ${writerId}`);
+        throw new Error(`No matched post with id ${postId} writerId ${userData.id}`);
       }
       return true;
     } catch (err) {
