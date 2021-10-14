@@ -15,7 +15,7 @@ export class ImageService {
     files.forEach((file) => {
       const fileInfo = {
         url: file.filename,
-        originalname: file.originalname,
+        originalName: file.originalname,
         postId,
       };
       filenames.push(fileInfo);

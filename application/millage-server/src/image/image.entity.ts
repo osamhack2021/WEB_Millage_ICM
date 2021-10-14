@@ -12,7 +12,10 @@ export class ImageEntity {
   @Column({type: 'text'})
   originalName: string;
 
-  @ManyToOne(() => PostEntity)
+  @ManyToOne(
+      () => PostEntity,
+      (post: PostEntity) => post.images,
+      {onDelete: 'CASCADE'})
   @JoinColumn({name: 'postId', referencedColumnName: 'id'})
   postId: number;
 }

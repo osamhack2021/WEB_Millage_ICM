@@ -7,7 +7,7 @@ import {extname} from 'path';
 import {Result} from '../common/common.interface';
 import {ImageEntity} from './image.entity';
 import {UploadImagesDto} from './dto';
-import { diskStorage } from 'multer';
+import {diskStorage} from 'multer';
 
 const imageFileFilter = (
     req: any,
