@@ -23,6 +23,12 @@ import {
   UPDATE_USER_ROLE_REQUEST,
   UPDATE_USER_ROLE_SUCCESS,
   UPDATE_USER_ROLE_FAIL,
+  GET_BOARDLIST_REQUEST,
+  GET_BOARDLIST_SUCCESS,
+  GET_BOARDLIST_FAIL,
+  UPDATE_BOARD_REQUEST,
+  UPDATE_BOARD_SUCCESS,
+  UPDATE_BOARD_FAIL,
 } from './actions';
 
 const initialState: AdminState = {
@@ -31,6 +37,7 @@ const initialState: AdminState = {
   users: [],
   page: 'users',
   units: [],
+  boards: [],
 };
 
 const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
@@ -117,6 +124,28 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   [UPDATE_USER_ROLE_FAIL]: (state, action) => ({
     ...state,
     result: 'updateUserRoleFail',
+  }),
+  [GET_BOARDLIST_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [GET_BOARDLIST_SUCCESS]: (state, action) => ({
+    ...state,
+    boards: action.payload.boards,
+  }),
+  [GET_BOARDLIST_FAIL]: (state, action) => ({
+    ...state,
+  }),
+  [UPDATE_BOARD_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [UPDATE_BOARD_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'updateBoardSuccess',
+  }),
+  [UPDATE_BOARD_FAIL]: (state, action) => ({
+    ...state,
+    result: 'updateBoardFail',
   }),
 });
 

@@ -105,7 +105,7 @@ export default function UnitList() {
 
   useEffect(() => {
     dispatch(getUnitListAsync.request());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     setUnitList(units);

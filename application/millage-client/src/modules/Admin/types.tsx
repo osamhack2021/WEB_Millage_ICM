@@ -10,6 +10,36 @@ export interface UnitData{
     admins?: UserData[];
 }
 
+export interface BoardData{
+    id: number;
+    title: string;
+    description: string;
+    auth: boolean;
+    pollAllowed: boolean;
+    recruitAllowed: boolean;
+    imageAllowed: boolean;
+    createdAt: Date;
+}
+
+export interface BoardUpdateData{
+    id: number;
+    title: string;
+    description: string;
+    auth: boolean;
+    pollAllowed: boolean;
+    recruitAllowed: boolean;
+    imageAllowed: boolean;
+}
+
+export interface BoardInsertData{
+    title: string;
+    description: string;
+    auth: boolean;
+    pollAllowed: boolean;
+    recruitAllowed: boolean;
+    imageAllowed: boolean;
+}
+
 export interface AdminState {
     result: string;
     role?: string;
@@ -17,6 +47,7 @@ export interface AdminState {
     message?: string;
     page?: string;
     units?: UnitData[];
+    boards?: BoardData[];
 }
 
 

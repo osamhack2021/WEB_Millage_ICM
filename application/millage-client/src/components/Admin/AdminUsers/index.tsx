@@ -15,7 +15,7 @@ interface OptionType {
   label: string;
 };
 
-export default function Admin() {
+export default function AdminUsers() {
   const dispatch = useDispatch();
   const userState = useSelector((state: any) => state.user);
   const adminState = useSelector((state: any) => state.admin);

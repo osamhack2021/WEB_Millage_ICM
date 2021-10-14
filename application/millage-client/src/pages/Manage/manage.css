@@ -1,3 +1,4 @@
+
 #ManageContainer .navigation{
     display:flex;
     justify-content: center;
@@ -15,4 +16,27 @@
 
 #ManageContainer .navigation .enabled{
     background-color: rgba(0,0,0,0.1);
+}
+
+#ManageContainer .addButton {
+    height: 36px;
+    background: #10902C;
+    border-radius: 4px;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    margin-top: 47px;
+}
+
+#ManageContainer .addButton span{
+    color: white;
+}
+
+#ManageBoardsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
 }
