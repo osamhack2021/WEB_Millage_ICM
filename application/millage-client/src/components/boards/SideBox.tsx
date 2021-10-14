@@ -50,15 +50,39 @@ function SideBox() {
       return sideboxState.data.schedules.map((schedule : Schedule) => {
         const today = new Date();
         const start = new Date(schedule.start);
+        let end = null;
+        if (schedule.end) {
+          end = new Date(schedule.end);
+        }
         const betweenTime = Math.floor((today.getTime() -
         start.getTime()) / 1000 / 60);
         const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        let datetext = '';
+        if (start == today) {
+          datetext = 'D-Day';
+        } else {
+          datetext = `${start.getMonth()+1}/${start.getDate()}` +
+          `${end ? '~' + (end.getMonth()+1)+'/' : ''}`+
+          `${end ? end.getDate() : ''}`;
+        }
+        let titletext = schedule.title;
+        if (titletext.length > 9) {
+          titletext = titletext.substr(0, 9) + '...';
+        }
         return (
           <div className="post" key = {schedule.id}>
-            <div className={
-              schedule.groupType =='person' ? 'green' : 'orange'}
-            ></div>
-            {`D-${betweenTimeDay} ${schedule.title}`}
+            <div style={{display: 'flex'}}>
+              <div className={
+                schedule.groupType =='person' ? 'green' : 'orange'}
+              ></div>
+              {datetext}
+            </div>
+            <div style={{
+              flex: '0 0 55%',
+              overflowX: 'clip',
+            }}>
+              {titletext}
+            </div>
           </div>
         );
       });
