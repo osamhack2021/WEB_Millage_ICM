@@ -14,7 +14,10 @@ export class RecruitEntity {
   @Column()
   totalMember: number;
 
-  @OneToOne(() => PostEntity, (post) => post.recruitStatus)
+  @OneToOne(
+      () => PostEntity,
+      (post) => post.recruitStatus,
+      {onDelete: 'CASCADE'})
   @JoinColumn()
   post: PostEntity;
 

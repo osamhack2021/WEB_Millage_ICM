@@ -13,7 +13,11 @@ export class CommentEntity {
   @CreateDateColumn()
   createdAt: string;
 
-  @ManyToOne(() => PostEntity, (post) => post.comments)
+  @ManyToOne(
+      () => PostEntity,
+      (post) => post.comments,
+      {onDelete: 'CASCADE'}
+  )
   @JoinTable({name: 'post', joinColumn: {name: 'postId', referencedColumnName: 'id'}})
   post: PostEntity;
 
@@ -23,7 +27,10 @@ export class CommentEntity {
   @Column({nullable: false, default: false})
   isDeleted: boolean;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(
+      () => UserEntity,
+      {onDelete: 'CASCADE'}
+  )
   @JoinTable({
     name: 'writer',
     joinColumn: {name: 'writerId', referencedColumnName: 'id'},
@@ -39,6 +46,7 @@ export class CommentEntity {
   @ManyToOne(
       () => CommentEntity,
       (comment) => comment.replies,
+      {onDelete: 'CASCADE'},
   )
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
   parentCommentId?: number;

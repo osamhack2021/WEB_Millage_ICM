@@ -10,11 +10,19 @@ export class PollEntity {
   @Column({type: 'text', nullable: false})
   content: string;
 
-  @ManyToOne(() => PostEntity, (post) => post.pollItems)
+  @ManyToOne(
+      () => PostEntity,
+      (post) => post.pollItems,
+      {onDelete: 'CASCADE'},
+  )
   @JoinColumn({name: 'postId', referencedColumnName: 'id'})
   postId: number;
 
-  @ManyToMany(() => UserEntity, (user) => user.votes)
+  @ManyToMany(
+      () => UserEntity,
+      (user) => user.votes,
+      {onDelete: 'CASCADE'},
+  )
   @JoinTable({name: 'vote'})
   voters: UserEntity[];
 }

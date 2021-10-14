@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
@@ -55,6 +55,7 @@ export class PostService {
     }
     const {pollList} = dto;
     try {
+      newPost.writerId = user.id;
       const savedPost: PostEntity = await this.postRepository.save(newPost);
       if (savedPost.postType === PostType.POLL) {
         await this.createPoll(savedPost.id, pollList);
