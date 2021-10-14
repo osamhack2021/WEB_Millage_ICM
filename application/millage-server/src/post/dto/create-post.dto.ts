@@ -11,9 +11,9 @@ export class CreatePostDto {
   @IsNotEmpty()
   title: string;
 
-  content: string;
+  content?: string;
 
-  pollList: string[];
+  pollList?: string[];
 
-  rCount: number;
+  rCount?: number;
 }
