@@ -1,0 +1,18 @@
+#ManageContainer .navigation{
+    display:flex;
+    justify-content: center;
+}
+
+#ManageContainer .navigation a{
+    cursor:pointer;
+    width:100px;
+    font-family: Inter;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px;
+    text-align:center;
+}
+
+#ManageContainer .navigation .enabled{
+    background-color: rgba(0,0,0,0.1);
+}
