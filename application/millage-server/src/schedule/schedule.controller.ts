@@ -6,6 +6,7 @@ import {Result, ResultObject} from '../common/common.interface';
 import {SchedulesRO, ScheduleRO} from './schedule.interface';
 import {ScheduleService} from './schedule.service';
 import {CreateScheduleDto, UpdateScheduleDto} from './dto';
+import {UserData} from 'src/user/user.interface';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
@@ -69,12 +70,10 @@ export class ScheduleController {
     @Body() dto: CreateScheduleDto,
   ): Promise<ScheduleRO> {
     try {
-      const userId = req.session.user.id;
-      const unitId = req.session.user.unit.id;
-
+      const userData: UserData = req.session.user;
       return {
         result: Result.SUCCESS,
-        schedule: await this.scheduleService.create(userId, unitId, dto),
+        schedule: await this.scheduleService.create(dto, userData),
       };
     } catch (err) {
       return {

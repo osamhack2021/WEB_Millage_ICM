@@ -1,5 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
+import {UserData} from '../user/user.interface';
+import {Role} from '../user_role/user_role.interface';
 import {Repository} from 'typeorm';
 import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 
@@ -30,11 +32,13 @@ export class ScheduleService {
   }
 
   async create(
-      userId: number,
-      unitId: number,
-      dto: CreateScheduleDto
+      dto: CreateScheduleDto,
+      userData: UserData,
   ): Promise<ScheduleEntity> {
-    Object.assign(dto, {userId, unitId});
+    const groupType = userData.role.name === Role.NORMAL_USER ?
+      GroupType.PERSON : GroupType.UNIT;
+    Object.assign(dto,
+        {userId: userData.id, unitId: userData.unit.id, groupType});
     const newSchedule = this.scheduleRepository.create(dto);
     return this.scheduleRepository.save(newSchedule);
   }
