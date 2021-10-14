@@ -7,6 +7,7 @@ import {extname} from 'path';
 import {Result} from '../common/common.interface';
 import {ImageEntity} from './image.entity';
 import {UploadImagesDto} from './dto';
+import { diskStorage } from 'multer';
 
 const imageFileFilter = (
     req: any,
@@ -44,7 +45,7 @@ export class ImageController {
       'files',
       10,
       {
-        storage: ({destination: './upload', filename: editFileName}),
+        storage: diskStorage({destination: './upload', filename: editFileName}),
         fileFilter: imageFileFilter,
       }))
   @Post('uploadImages')
@@ -59,7 +60,7 @@ export class ImageController {
     } catch (err) {
       return {
         result: Result.ERROR,
-        message: err,
+        message: err.message,
       };
     }
     return {
