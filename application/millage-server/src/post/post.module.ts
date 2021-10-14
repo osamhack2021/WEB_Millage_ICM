@@ -8,6 +8,7 @@ import {RecruitEntity} from './recruit/recruit.entity';
 import {CommentEntity} from './comment/comment.entity';
 import {UserEntity} from '../user/user.entity';
 import {CommentModule} from './comment/comment.module';
+import {BoardEntity} from '../board/board.entity';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import {CommentModule} from './comment/comment.module';
           RecruitEntity,
           CommentEntity,
           UserEntity,
+          BoardEntity,
         ]),
     CommentModule,
   ],

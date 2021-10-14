@@ -1,5 +1,5 @@
 import {BoardEntity} from '../board/board.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad, CreateDateColumn} from 'typeorm';
 import {PostType} from './post.interface';
 import {UserEntity} from '../user/user.entity';
 import {PollEntity} from './poll/poll.entity';
@@ -21,13 +21,8 @@ export class PostEntity {
   @Column({type: 'text', nullable: true})
   content: string;
 
-  @Column({
-    type: 'timestamp',
-    default: () => {
-      'CURRENT_TIMESTAMP';
-    },
-  })
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
   @ManyToOne(() => UserEntity)
   @JoinTable({

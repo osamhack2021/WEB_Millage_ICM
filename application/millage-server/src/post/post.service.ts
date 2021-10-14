@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
@@ -7,6 +7,9 @@ import {CreatePostDto, UpdatePostDto} from './dto';
 import {PollEntity} from './poll/poll.entity';
 import {UserEntity} from '../user/user.entity';
 import {RecruitEntity} from './recruit/recruit.entity';
+import {BoardEntity} from '../board/board.entity';
+import {UserData} from '../user/user.interface';
+import {Role} from '../user_role/user_role.interface';
 
 @Injectable()
 export class PostService {
@@ -22,6 +25,9 @@ export class PostService {
 
         @InjectRepository(RecruitEntity)
         private readonly recruitRepository: Repository<RecruitEntity>,
+
+        @InjectRepository(BoardEntity)
+        private readonly boardRepository: Repository<BoardEntity>,
   ) {}
 
   private createPollItem(
@@ -41,8 +47,12 @@ export class PostService {
     return;
   }
 
-  async create(dto: CreatePostDto): Promise<PostEntity> {
+  async create(dto: CreatePostDto, user: UserData): Promise<PostEntity> {
     const newPost: PostEntity = this.postRepository.create(dto);
+    const targetBoard: BoardEntity = await this.boardRepository.findOne(dto.boardId);
+    if (user.role.name !== Role.SUPER_ADMIN || user.unit.id !== targetBoard.unitId) {
+      throw new Error('Different unit id');
+    }
     const {pollList} = dto;
     try {
       const savedPost: PostEntity = await this.postRepository.save(newPost);
