@@ -39,6 +39,7 @@ function Header() {
   const history = useHistory();
   const user = useSelector((state: any) => state.user);
   const userValidate = useSelector((state: any) => state.user.validate);
+  const newMessage = useSelector((state: any) => state.DM.newMessage);
   const [pageState, setPageState] = useState('board');
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -66,6 +67,23 @@ function Header() {
       }
     }
   }, [userValidate]);
+
+  useEffect(() => {
+    if (newMessage && newMessage.message && newMessage.message != '') {
+      console.log('message: ');
+      console.log(newMessage);
+      if (connectedSocket) {
+        const now = new Date();
+        connectedSocket.emit('msgToServer', {
+          message: newMessage.message,
+          senderId: user.session.id,
+          receiverId: newMessage.receiverId,
+          anonymous: newMessage.anonymous,
+          time: now.toLocaleString().slice(0, -3),
+        });
+      }
+    }
+  }, [newMessage]);
 
   const goMain = () => {
     setPageState('board');

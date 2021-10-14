@@ -19,6 +19,12 @@ export interface MessageData{
   time: string;
 }
 
+export interface SendMessageData{
+  receiverId: number;
+  anonymous: boolean;
+  message: string;
+}
+
 export interface UserData{
   id: number;
   nickname: string;
@@ -30,6 +36,7 @@ export interface DMState {
   messageboxes?: MessageBox[];
   messages?: MessageData[];
   users?: UserData[];
+  newMessage?: SendMessageData;
 };
 
 export type DMAction = ActionType<typeof actions>;

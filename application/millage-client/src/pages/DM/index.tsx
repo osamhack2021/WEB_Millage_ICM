@@ -18,6 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import CloseIcon from '@mui/icons-material/Close';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import IconButton from '@mui/material/IconButton';
+import NewMessage from '@components/DM/NewMessage';
 
 interface MessageInterface {
   message: string;
@@ -50,6 +51,7 @@ function DM() {
   let socket: Socket;
   const [connectedSocket, setSocket] = useState<Socket>();
   const receiverId = useRef(-1);
+  const newReceiverId = useRef(-1);
   const [lastReceived, setLastReceived] = useState('');
   const [receiverName, setReceiverName] = useState('');
   const [newMessages, setNewMessages] = useState<NewMessageInterface[]>([]);
@@ -61,6 +63,16 @@ function DM() {
   const scrollbox = useRef<HTMLDivElement>(null);
   const closeDialog = () => {
     setOpenDialog(false);
+  };
+
+  const [openDialog2, setOpenDialog2] = useState<boolean>(false);
+  const postMessage = () => {
+    setOpenDialog2(true);
+  };
+
+  const closeDialog2 = () => {
+    setOpenDialog2(false);
+    dispatch(getMessageBoxListAsync.request());
   };
 
   useEffect(() => {
@@ -193,20 +205,8 @@ function DM() {
   }, [messageboxes]);
 
   const newMessageToUser = (id: number) => {
-    if (connectedSocket) {
-      const now = new Date();
-      connectedSocket.emit('msgToServer', {
-        message: '',
-        senderId: session.id,
-        receiverId: id,
-        anonymous: false,
-        time: now.toLocaleString().slice(0, -3),
-      });
-      setOpenDialog(false);
-      dispatch(getMessageBoxListAsync.request());
-    } else {
-      console.log('error');
-    }
+    newReceiverId.current = id;
+    setOpenDialog2(true);
   };
 
   const renderUsers = () => {
@@ -453,6 +453,11 @@ function DM() {
           </DialogContent>
         </div>
       </Dialog>
+      <NewMessage
+        open={openDialog2}
+        closeHandler={closeDialog2}
+        receiverId={newReceiverId.current}
+      />
     </div>
   );
 }

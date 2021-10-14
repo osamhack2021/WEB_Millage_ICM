@@ -1,5 +1,5 @@
 import {createAction, createAsyncAction} from 'typesafe-actions';
-import {DMState} from './types';
+import {DMState, SendMessageData} from './types';
 
 export const GET_MESSAGEBOX_LIST =
   'DM/GET_MESSAGEBOX_LIST' as const;
@@ -67,3 +67,11 @@ export const getUsersAsync = createAsyncAction(
     GET_USERS_SUCCESS,
     GET_USERS_FAIL,
 )<undefined, DMState, DMState>();
+
+
+export const SEND_NEW_MESSAGE =
+  'DM/SEND_NEW_MESSAGE';
+
+export const sendNewMessage = createAction(
+    SEND_NEW_MESSAGE,
+)<SendMessageData>();

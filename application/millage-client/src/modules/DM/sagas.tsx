@@ -9,7 +9,8 @@ import {getMessageBoxListAsync,
   getMessagesAsync,
   setMessagesAsRead,
   deleteMessagesAsync,
-  getUsersAsync} from './actions';
+  getUsersAsync,
+  sendNewMessage} from './actions';
 import {updateUnreadAsync} from '@modules/User/actions';
 
 function* getMessageBoxListSaga(
