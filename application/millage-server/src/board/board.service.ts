@@ -38,6 +38,7 @@ export class BoardService {
     });
     return await Promise.all(boards.map(async (board) => {
       board.posts = await this.postRepository.find({
+        relations: ['writer', 'comments', 'recruitStatus', 'recruitStatus.currentMember'],
         where: {board},
         order: {createdAt: 'DESC'},
         take: POSTS_PER_BOARD_PREVIEW,
