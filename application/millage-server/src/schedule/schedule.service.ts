@@ -56,10 +56,15 @@ export class ScheduleService {
 
   async getRecentScheduleMixed(id: number, unitId: number): Promise<ScheduleEntity[]> {
     const schedules = await this.scheduleRepository.query(`
-    (select * from schedule where userIdId=${id} and groupType='person' and schedule.end > CURRENT_DATE)
+    (select * from schedule where userIdId=${id} and groupType='person' and
+      schedule.start >= CURRENT_DATE and
+      (schedule.end IS NULL or schedule.end > CURRENT_DATE)
+    )
     union
     (
-    select * from schedule where unitIdId=${unitId} and groupType='unit' and schedule.end > CURRENT_DATE
+    select * from schedule where unitIdId=${unitId} and groupType='unit' and
+      schedule.start >= CURRENT_DATE and
+      (schedule.end IS NULL or schedule.end > CURRENT_DATE)
     )
     order by start asc limit 5
     `);
