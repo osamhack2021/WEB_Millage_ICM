@@ -14,7 +14,7 @@ import {
   loginAsync,
   checkSessionAsync,
   updateUnreadAsync,
-  logoutRequest,
+  logoutAsync,
   validateUserAsync,
   updateUserAsync,
 } from './actions';
@@ -88,10 +88,13 @@ function* updateUnreadSaga(
 }
 
 function* logoutSaga(
-    action: ReturnType<typeof logoutRequest>,
+    action: ReturnType<typeof logoutAsync.request>,
 ) {
   try {
     yield call(logoutApi);
+    yield put(logoutAsync.success({
+      result: 'logout',
+    }));
   } catch (error : any) {
     console.log(error);
   }
@@ -135,7 +138,7 @@ export default function* UserSagaListener() {
   yield takeLatest(loginAsync.request, loginUserSaga);
   yield takeLatest(checkSessionAsync.request, checkSessionSaga);
   yield takeLatest(updateUnreadAsync.request, updateUnreadSaga);
-  yield takeLatest(logoutRequest, logoutSaga);
+  yield takeLatest(logoutAsync.request, logoutSaga);
   yield takeLatest(validateUserAsync.request, validateUserSaga);
 }
 

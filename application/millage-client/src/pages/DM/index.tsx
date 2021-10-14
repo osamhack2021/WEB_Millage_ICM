@@ -212,7 +212,7 @@ function DM() {
   const renderUsers = () => {
     return users.map((u: any, idx: number) => {
       return (
-        <button className="userButton"
+        <button key={idx} className="userButton"
           onClick={() => {
             newMessageToUser(u.id);
           }}>

@@ -23,6 +23,10 @@ function SideBox() {
   const renderRecruitAndPollList = () => {
     if (sideboxState.data && sideboxState.data.posts) {
       return sideboxState.data.posts.map((post: PostPartial) => {
+        let title = post.title;
+        if (title.length > 14) {
+          title = title.substr(0, 14) + '...';
+        }
         return (
           <div className="post link" key={post.id}>
             <RouterLink style={{
@@ -33,7 +37,7 @@ function SideBox() {
             to={`/board/post/${post.id}`}
             >
               <div>
-                {post.title}
+                {title}
               </div>
               <div>
                 {post.currentCount}/{post.totalMember}

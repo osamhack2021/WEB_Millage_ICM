@@ -6,11 +6,11 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
-import {Link as RouterLink, useHistory} from 'react-router-dom';
+import {Link as RouterLink, useHistory, useLocation} from 'react-router-dom';
 import './header.css';
 import {XLayout} from '@components/common';
 import {updateUnreadAsync,
-  logoutRequest,
+  logoutAsync,
   validateUserAsync,
   updateUserAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
@@ -37,10 +37,11 @@ import PersonOutlineOutlinedIcon from
 function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const user = useSelector((state: any) => state.user);
   const userValidate = useSelector((state: any) => state.user.validate);
   const newMessage = useSelector((state: any) => state.DM.newMessage);
-  const [pageState, setPageState] = useState('board');
+  const [pageState, setPageState] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const {register, getValues, handleSubmit} = useForm<UserUpdateData>();
@@ -69,9 +70,11 @@ function Header() {
   }, [userValidate]);
 
   useEffect(() => {
+    setPageState(location.pathname.substr(1));
+  }, []);
+
+  useEffect(() => {
     if (newMessage && newMessage.message && newMessage.message != '') {
-      console.log('message: ');
-      console.log(newMessage);
       if (connectedSocket) {
         const now = new Date();
         connectedSocket.emit('msgToServer', {
@@ -182,8 +185,7 @@ function Header() {
   };
 
   const goLogout = () => {
-    dispatch(logoutRequest());
-    window.location.replace('/');
+    dispatch(logoutAsync.request());
   };
 
   const closeDialog = () => {
@@ -199,8 +201,8 @@ function Header() {
   const adminHeaderLink = () => {
     if (user.session.role.name == 'ADMIN') {
       return (
-        <RouterLink className={pageState == 'users' ? 'enabled' : ''}
-          to='/users' onClick={()=>setPageState('users')}>사용자관리</RouterLink>
+        <RouterLink className={pageState == 'manage' ? 'enabled' : ''}
+          to='/manage' onClick={()=>setPageState('manage')}>부대관리</RouterLink>
       );
     }
   };
@@ -233,14 +235,14 @@ function Header() {
           </div>
         </div>
         <div className="navigation">
-          <RouterLink className={pageState == 'board' ? 'enabled' : ''}
-            to='/' onClick={()=>setPageState('board')}>게시판</RouterLink>
+          <RouterLink className={pageState == '' ? 'enabled' : ''}
+            to='/' onClick={()=>setPageState('')}>게시판</RouterLink>
           <RouterLink className={pageState == 'schedule' ? 'enabled' : ''}
             to='/schedule' onClick={()=>setPageState('schedule')}>
               캘린더
           </RouterLink>
           <RouterLink className={pageState == 'reserve' ? 'enabled' : ''}
-            to='/schedule' onClick={()=>setPageState('reserve')}>
+            to='/reserve' onClick={()=>setPageState('reserve')}>
               시설예약
           </RouterLink>
           <RouterLink className={pageState == 'globalboard' ? 'enabled' : ''}

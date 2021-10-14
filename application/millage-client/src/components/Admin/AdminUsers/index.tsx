@@ -120,7 +120,10 @@ export default function Admin() {
             >
               <MenuItem value={1}>일반사용자</MenuItem>
               <MenuItem value={2}>부대관리자</MenuItem>
-              <MenuItem value={3}>최고관리자</MenuItem>
+              {userState.session.role.name == 'SUPER_ADMIN' ?
+                <MenuItem value={3}>최고관리자</MenuItem> :
+                ''
+              }
             </Select>
           </>
         );
