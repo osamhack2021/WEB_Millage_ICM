@@ -5,6 +5,8 @@ import {PostService} from './post.service';
 import {PostRO, PostType} from './post.interface';
 import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto, VoteParams} from './dto';
 import {Result, ResultObject} from '../common/common.interface';
+import {Roles} from '../user_role/user_role.decorator';
+import {Role} from '../user_role/user_role.interface';
 
 @ApiBearerAuth()
 @ApiTags('post')
@@ -13,9 +15,14 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Post('create')
-  async register(@Body() postdata : CreatePostDto): Promise<PostRO> {
+  @Roles(Role.ADMIN, Role.NORMAL_USER, Role.SUPER_ADMIN)
+  async register(
+    @Body() postdata : CreatePostDto,
+    @Req() req: Request,
+  ): Promise<PostRO> {
     try {
-      const savedPost = await this.postService.create(postdata);
+      const user = req.session.user;
+      const savedPost = await this.postService.create(postdata, user);
       return {
         result: Result.SUCCESS,
         post: savedPost,

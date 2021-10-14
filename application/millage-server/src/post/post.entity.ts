@@ -1,5 +1,8 @@
 import {BoardEntity} from '../board/board.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad} from 'typeorm';
+import {
+  Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable,
+  OneToOne, ManyToMany, AfterLoad, CreateDateColumn,
+} from 'typeorm';
 import {PostType} from './post.interface';
 import {UserEntity} from '../user/user.entity';
 import {PollEntity} from './poll/poll.entity';
@@ -21,22 +24,20 @@ export class PostEntity {
   @Column({type: 'text', nullable: true})
   content: string;
 
-  @Column({
-    type: 'timestamp',
-    default: () => {
-      'CURRENT_TIMESTAMP';
-    },
-  })
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(
+      () => UserEntity,
+      {onDelete: 'CASCADE'}
+  )
   @JoinTable({
     name: 'writer',
     joinColumn: {name: 'writerId', referencedColumnName: 'id'},
   })
   writer: UserEntity;
 
-  @RelationId((post: PostEntity) => post.writer)
+  @Column({nullable: false})
   writerId: number;
 
   @ManyToOne(
@@ -56,7 +57,11 @@ export class PostEntity {
   )
   pollItems: PollEntity[];
 
-  @OneToMany(() => ImageEntity, (image) => image.postId)
+  @OneToMany(
+      () => ImageEntity,
+      (image) => image.postId,
+      {nullable: true}
+  )
   images: ImageEntity[];
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)
@@ -69,7 +74,7 @@ export class PostEntity {
   )
   recruitStatus: RecruitEntity;
 
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(() => UserEntity, {onDelete: 'CASCADE'})
   @JoinTable({name: 'heart'})
   hearts: UserEntity[];
 
