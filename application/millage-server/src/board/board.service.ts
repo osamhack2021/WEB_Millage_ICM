@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {PostEntity} from '../post/post.entity';
 import {FindManyOptions, Like, Repository} from 'typeorm';
 import {BoardEntity} from './board.entity';
-import {CreateBoardDto} from './dto';
+import {CreateBoardDto, UpdateBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
 
 const POSTS_PER_PAGE = 10;
@@ -51,6 +51,20 @@ export class BoardService {
     try {
       const savedBoard = await this.boardRepository.save(newBoard);
       return savedBoard;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
+  async update(dto: UpdateBoardDto, boardId: number, unitId: number): Promise<BoardEntity> {
+    try {
+      const updateResult = await this.boardRepository.update(
+          {id: boardId, unitId: unitId}, dto
+      );
+      if (updateResult.affected === 0) {
+        throw new Error('Cannot find the board');
+      }
+      return updateResult.generatedMaps[0] as BoardEntity;
     } catch (err) {
       throw new Error(err.message);
     }
