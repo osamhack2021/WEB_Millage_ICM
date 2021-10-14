@@ -13,6 +13,7 @@ import {MessageModule} from './message/message.module';
 import {PostModule} from './post/post.module';
 import {ScheduleModule} from './schedule/schedule.module';
 import {PlaceModule} from './place/place.module';
+import {ImageModule} from './image/image.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import {PlaceModule} from './place/place.module';
     PostModule,
     ScheduleModule,
     PlaceModule,
+    ImageModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
