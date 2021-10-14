@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {UserData} from 'src/user/user.interface';
-import {Role} from 'src/user_role/user_role.interface';
+import {UserData} from '../user/user.interface';
+import {Role} from '../user_role/user_role.interface';
 import {Repository} from 'typeorm';
 import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 
