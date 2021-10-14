@@ -19,11 +19,7 @@ const BoardItem: React.FC<Props> = ({id, title, posts}) => {
 
       { posts && JSON.stringify(posts) !== JSON.stringify([]) ?
         posts.map((post) => (
-          <PostItem
-            id={post.id}
-            title={post.title}
-            key={post.id}
-          />
+          <PostItem key={post.id} {...post} />
         )) :
         <NoPosts />
       }
