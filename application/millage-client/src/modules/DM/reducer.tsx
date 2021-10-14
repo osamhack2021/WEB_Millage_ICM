@@ -15,6 +15,7 @@ import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
+  SEND_NEW_MESSAGE,
 } from './actions';
 
 const initialState: DMState = {
@@ -23,6 +24,11 @@ const initialState: DMState = {
   messageboxes: [],
   messages: [],
   users: [],
+  newMessage: {
+    receiverId: -1,
+    anonymous: false,
+    message: '',
+  },
 };
 
 const DMReducer = createReducer<DMState, DMAction>(initialState, {
@@ -76,6 +82,10 @@ const DMReducer = createReducer<DMState, DMAction>(initialState, {
     ...state,
     result: action.payload.result,
     message: action.payload.message,
+  }),
+  [SEND_NEW_MESSAGE]: (state, action) => ({
+    ...state,
+    newMessage: action.payload,
   }),
 });
 

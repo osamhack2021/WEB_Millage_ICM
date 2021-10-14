@@ -1,0 +1,26 @@
+
+#NewMessageDialog .message{
+    border: 1px solid rgba(0,0,0,0.1);
+    width:300px;
+    height:100px;
+    padding:10px;
+    text-align:top;
+    resize: none;
+}
+
+#NewMessageDialog .sendButton{
+    color: white;
+    background-color: #10902C;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 10px;
+    padding:3px;
+}
+
+#NewMessageDialog .buttonContainer{
+    display:flex;
+    flex-direction: row-reverse;
+    margin-top:5px;
+}

@@ -32,6 +32,7 @@ export function* rootSaga() {
     ScheduleSagaListener(),
     AdminSagaListener(),
     DMSagaListener(),
+  ]);
 }
 
 export type RootState = ReturnType<typeof rootReducer>
