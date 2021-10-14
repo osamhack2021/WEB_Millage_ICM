@@ -4,8 +4,10 @@ import {
   authUserAsync,
   deleteUnitAsync,
   deleteUserAsync,
+  getBoardListAsync,
   getUnitlistAsync,
   getUserlistAsync,
+  updateBoardAsync,
   updateUserRoleAsync,
 } from './actions';
 import {
@@ -16,6 +18,8 @@ import {
   deleteUnitApi,
   deleteUserApi,
   updateUserRoleApi,
+  getBoardList,
+  updateBoardApi,
 } from './api';
 import {AdminState} from './types';
 
@@ -131,6 +135,37 @@ function* updateUserRoleSaga(
   }
 }
 
+function* getBoardListSaga(
+    action: ReturnType<typeof getBoardListAsync.request>,
+) {
+  try {
+    const response : AdminState = yield call(getBoardList);
+    if (response.result == 'success') {
+      yield put(getBoardListAsync.success(response));
+    } else {
+      yield put(getBoardListAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(getBoardListAsync.failure(error));
+  }
+}
+
+function* updateBoardSaga(
+    action: ReturnType<typeof updateBoardAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(updateBoardApi, param);
+    if (response.result == 'success') {
+      yield put(updateBoardAsync.success(response));
+    } else {
+      yield put(updateBoardAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(updateBoardAsync.failure(error));
+  }
+}
+
 export default function* AdminSagaListener() {
   yield takeLatest(getUserlistAsync.request, getUserListSaga);
   yield takeLatest(updateUserRoleAsync.request, updateUserRoleSaga);
@@ -139,4 +174,6 @@ export default function* AdminSagaListener() {
   yield takeLatest(authUnitAsync.request, authUnitSaga);
   yield takeLatest(getUnitlistAsync.request, getUnitListSaga);
   yield takeLatest(authUserAsync.request, authUserSaga);
+  yield takeLatest(getBoardListAsync.request, getBoardListSaga);
+  yield takeLatest(updateBoardAsync.request, updateBoardSaga);
 }

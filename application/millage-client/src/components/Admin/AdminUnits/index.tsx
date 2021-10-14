@@ -8,7 +8,7 @@ import {
 import Button from '@mui/material/Button';
 import {UnitData} from '@modules/Admin/types';
 
-export default function Admin() {
+export default function AdminUnits() {
   const dispatch = useDispatch();
   const adminState = useSelector((state: any) => state.admin);
   const authResult = useSelector((state: any) => state.admin.result);

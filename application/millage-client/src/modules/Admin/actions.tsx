@@ -1,5 +1,5 @@
 import {createAction, createAsyncAction} from 'typesafe-actions';
-import {AdminState} from './types';
+import {AdminState, BoardUpdateData} from './types';
 
 export const GET_USERLIST_REQUEST =
   'ADMIN/GET_USERLIST_REQUEST' as const;
@@ -117,3 +117,33 @@ export const updateUserRoleAsync = createAsyncAction(
     UPDATE_USER_ROLE_SUCCESS,
     UPDATE_USER_ROLE_FAIL,
 )<updateUserRoleInterface, AdminState, AdminState>();
+
+export const GET_BOARDLIST_REQUEST =
+  'ADMIN/GET_BOARDLIST_REQUEST';
+
+export const GET_BOARDLIST_SUCCESS =
+  'ADMIN/GET_BOARDLIST_SUCCESS';
+
+export const GET_BOARDLIST_FAIL=
+  'ADMIN/GET_BOARDLIST_FAIL';
+
+export const getBoardListAsync = createAsyncAction(
+    GET_BOARDLIST_REQUEST,
+    GET_BOARDLIST_SUCCESS,
+    GET_BOARDLIST_FAIL,
+)<undefined, AdminState, AdminState>();
+
+export const UPDATE_BOARD_REQUEST =
+  'ADMIN/UPDATE_BOARD_REQUEST';
+
+export const UPDATE_BOARD_SUCCESS =
+  'ADMIN/UPDATE_BOARD_SUCCESS';
+
+export const UPDATE_BOARD_FAIL=
+  'ADMIN/UPDATE_BOARD_FAIL';
+
+export const updateBoardAsync = createAsyncAction(
+    UPDATE_BOARD_REQUEST,
+    UPDATE_BOARD_SUCCESS,
+    UPDATE_BOARD_FAIL,
+)<BoardUpdateData, AdminState, AdminState>();

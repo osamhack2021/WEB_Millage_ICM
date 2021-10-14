@@ -245,8 +245,6 @@ function Header() {
             to='/reserve' onClick={()=>setPageState('reserve')}>
               시설예약
           </RouterLink>
-          <RouterLink className={pageState == 'globalboard' ? 'enabled' : ''}
-            to='/' onClick={()=>setPageState('globalboard')}>전군게시판</RouterLink>
           {adminHeaderLink()}
         </div>
         <div className="buttons">

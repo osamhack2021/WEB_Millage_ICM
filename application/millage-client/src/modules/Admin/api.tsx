@@ -1,7 +1,7 @@
 import {Role} from '@constants';
 import axios from 'axios';
 import {SERVER} from '@constants';
-import {AdminState} from './types';
+import {AdminState, BoardUpdateData} from './types';
 
 export async function getUserList(role: string): Promise<AdminState> {
   try {
@@ -83,6 +83,30 @@ export async function updateUserRoleApi(id: number,
     const result = await axios.patch(`${SERVER}/user/${id}`, {
       roleId: roleId,
     }, {withCredentials: true});
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+
+export async function getBoardList(): Promise<AdminState> {
+  try {
+    const boards = await axios.get(`${SERVER}/board/list/`,
+        {withCredentials: true});
+    return boards.data;
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+export async function updateBoardApi(data: BoardUpdateData):
+  Promise<AdminState> {
+  try {
+    const result = await axios.patch(`${SERVER}/board/${data.id}`,
+        data, {withCredentials: true});
     return {
       result: 'success',
     };

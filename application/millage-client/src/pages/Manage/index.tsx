@@ -1,6 +1,6 @@
 import AdminUsers from '@components/Admin/AdminUsers';
+import AdminBoards from '@components/Admin/AdminBoards';
 import {setPageStateAction} from '@modules/Admin/actions';
-import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {XLayout} from '@components/common';
 import './manage.css';
@@ -22,10 +22,6 @@ function Manage() {
           onClick={()=>setPageState('boards')}>
             게시판관리
         </a>
-        <a className={adminState.page == 'posts' ? 'enabled' : ''}
-          onClick={()=>setPageState('posts')}>
-            게시글관리?
-        </a>
         <a className={adminState.page == 'places' ? 'enabled' : ''}
           onClick={()=>setPageState('places')}>
             시설관리
@@ -33,6 +29,7 @@ function Manage() {
       </XLayout>
       <div id="AdminContainer">
         {adminState.page == 'users' ? <AdminUsers /> : ''}
+        {adminState.page == 'boards' ? <AdminBoards /> : ''}
       </div>
     </div>
   );
