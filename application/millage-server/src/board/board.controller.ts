@@ -1,4 +1,6 @@
-import {Body, Controller, Get, Post, Req, Param, Query} from '@nestjs/common';
+import {
+  Body, Controller, Get, Post, Req, Param, Query, Patch,
+} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {BoardListRO, BoardRO, PostRO} from './board.interface';
 import {BoardService} from './board.service';
@@ -80,6 +82,18 @@ export class BoardController {
     try {
       const savedBoard = await this.boardService.create(boardData);
       return {result: Result.SUCCESS, board: savedBoard};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Patch('/:board_id')
+  async update(@Body() dto: UpdateBoardDto): Promise<BoardRO> {
+    try {
+      return {
+        result: Result.SUCCESS,
+        board: await this.boardService.update(dto),
+      };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }
