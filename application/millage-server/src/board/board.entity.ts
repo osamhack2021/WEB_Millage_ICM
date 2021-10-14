@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, JoinColumn, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, JoinColumn, OneToMany, CreateDateColumn} from 'typeorm';
 
 import {UnitEntity} from '../unit/unit.entity';
 import {PostEntity} from '../post/post.entity';
@@ -15,15 +15,10 @@ export class BoardEntity {
   @Column({type: 'text'})
   description: string;
 
-  @Column({
-    type: 'timestamp',
-    default: () => {
-      'CURRENT_TIMESTAMP';
-    },
-  })
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column() // 권한 부여 관련 테이블 설계 필요
+  @Column({default: AuthType.ALL})
   auth: AuthType;
 
   @Column({type: 'boolean', default: false})

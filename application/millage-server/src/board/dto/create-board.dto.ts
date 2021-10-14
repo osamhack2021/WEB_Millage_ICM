@@ -1,4 +1,5 @@
 import {IsNotEmpty} from 'class-validator';
+import {AuthType} from '../board.interface';
 
 export class CreateBoardDto {
   @IsNotEmpty()
@@ -7,7 +8,7 @@ export class CreateBoardDto {
   readonly description: string;
 
   @IsNotEmpty()
-  readonly auth: number;
+  readonly auth: AuthType;
 
   readonly anonymous: boolean;
 
