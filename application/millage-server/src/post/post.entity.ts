@@ -37,7 +37,7 @@ export class PostEntity {
   })
   writer: UserEntity;
 
-  @Column()
+  @Column({nullable: false})
   writerId: number;
 
   @ManyToOne(
@@ -57,7 +57,11 @@ export class PostEntity {
   )
   pollItems: PollEntity[];
 
-  @OneToMany(() => ImageEntity, (image) => image.postId)
+  @OneToMany(
+      () => ImageEntity,
+      (image) => image.postId,
+      {nullable: true}
+  )
   images: ImageEntity[];
 
   @OneToMany(() => CommentEntity, (comment) => comment.post)

@@ -1,5 +1,7 @@
 import {UserEntity} from '../../user/user.entity';
-import {Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId} from 'typeorm';
+import {
+  Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn,
+} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {RecruitStatus} from './recruit.interface';
 
@@ -17,11 +19,11 @@ export class RecruitEntity {
   @OneToOne(
       () => PostEntity,
       (post) => post.recruitStatus,
-      {onDelete: 'CASCADE'})
-  @JoinColumn()
+      {onDelete: 'CASCADE', nullable: true})
+  @JoinColumn({name: 'postId', referencedColumnName: 'id'})
   post: PostEntity;
 
-  @RelationId((recruit: RecruitEntity) => recruit.post)
+  @Column()
   postId: number;
 
   @ManyToMany(() => UserEntity, (user) => user.appliedRecruits)
