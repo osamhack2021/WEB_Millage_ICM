@@ -53,9 +53,12 @@ export class PostController {
   }
 
   @Delete(':id')
-  async delete(@Param() params: PostParams): Promise<ResultObject> {
+  async delete(
+    @Param() params: PostParams,
+    @Req() req: Request): Promise<ResultObject> {
     try {
-      if (!(await this.postService.delete(params.id))) {
+      const writerId = req.session.user.id;
+      if (!(await this.postService.delete(params.id, writerId))) {
         return {
           result: Result.FAIL,
           message: 'Nothing affected',

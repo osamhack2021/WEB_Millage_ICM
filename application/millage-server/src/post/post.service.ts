@@ -97,10 +97,11 @@ export class PostService {
     return pollItems.some((pollItem) => pollItem.voters.some((voter) => voter.id === userId));
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: number, writerId: number): Promise<boolean> {
     try {
-      if (!(await this.postRepository.delete(id)).affected) {
-        return false;
+      const deleteResult = await this.postRepository.delete({id: id, writerId: writerId});
+      if (deleteResult.affected === 0) {
+        throw new Error(`No matched post with id ${id} writerId ${writerId}`);
       }
       return true;
     } catch (err) {
