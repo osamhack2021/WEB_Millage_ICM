@@ -4,6 +4,7 @@ import {Repository} from 'typeorm';
 import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 
 import {ScheduleEntity} from './schedule.entity';
+import {GroupType} from './schedule.interface';
 
 const RECENT_SCHEDULE_COUNT = 5;
 
@@ -16,7 +17,7 @@ export class ScheduleService {
 
   async getUserSchedule(userId: number, unitId: number): Promise<ScheduleEntity[]> {
     return this.scheduleRepository.find({
-      where: [{userId: userId}, {unitId: unitId}],
+      where: [{userId: userId}, {unitId: unitId, groupType: GroupType.UNIT}],
     });
   }
 
