@@ -12,7 +12,7 @@ function ImageBox() {
         style={{
           minWidth: '800px',
         }}
-        className='h-40 grid grid-cols-4 gap-6'
+        className='grid grid-cols-4 gap-6'
       >
         <ImageItem
           imgPath={Img1}
