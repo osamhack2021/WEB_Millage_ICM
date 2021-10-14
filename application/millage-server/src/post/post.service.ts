@@ -50,6 +50,7 @@ export class PostService {
   async create(dto: CreatePostDto, user: UserData): Promise<PostEntity> {
     const newPost: PostEntity = this.postRepository.create(dto);
     const targetBoard: BoardEntity = await this.boardRepository.findOne(dto.boardId);
+
     if (user.role.name !== Role.SUPER_ADMIN && user.unit.id !== targetBoard.unitId) {
       throw new Error('Different unit id');
     }

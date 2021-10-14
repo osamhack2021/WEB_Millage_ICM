@@ -34,15 +34,14 @@ export class BoardEntity {
   imageAllowed: boolean;
 
   @ManyToOne(() => UnitEntity)
-  @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
-  unitId: number;
-
-  @ManyToOne(() => UnitEntity)
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
   })
   unit: UnitEntity
+
+  @Column()
+  unitId: number;
 
   @OneToMany(() => PostEntity, (post) => post.board)
   posts: PostEntity[];
