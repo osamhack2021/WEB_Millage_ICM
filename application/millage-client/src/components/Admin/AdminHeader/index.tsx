@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import '../../Header/header.css';
 import {XLayout} from '@components/common';
-import {updateUnreadAsync, logoutRequest} from '@modules/User/actions';
+import {updateUnreadAsync, logoutAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_SERVER} from '@constants';
 import {setPageStateAction} from '@modules/Admin/actions';
@@ -38,8 +38,7 @@ function Header() {
   };
 
   const goLogout = () => {
-    dispatch(logoutRequest());
-    window.location.replace('/');
+    dispatch(logoutAsync.request());
   };
 
   const goToDM = () => {

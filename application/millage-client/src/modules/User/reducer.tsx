@@ -13,13 +13,14 @@ import {
   UPDATE_UNREAD_REQUEST,
   UPDATE_UNREAD_SUCCESS,
   UPDATE_UNREAD_FAIL,
-  LOGOUT,
+  LOGOUT_REQUEST,
   VALIDATE_USER_REQUEST,
   VALIDATE_USER_SUCCESS,
   VALIDATE_USER_FAIL,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
+  LOGOUT_SUCCESS,
 } from './actions';
 
 const initialState: UserState = {
@@ -96,9 +97,13 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
     ...state,
     result: action.payload.result,
   }),
-  [LOGOUT]: (state, action) => (
-    initialState
-  ),
+  [LOGOUT_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [LOGOUT_SUCCESS]: (state, action) => ({
+    ...initialState,
+    result: 'logout',
+  }),
   [VALIDATE_USER_REQUEST]: (state, action) => ({
     ...state,
   }),

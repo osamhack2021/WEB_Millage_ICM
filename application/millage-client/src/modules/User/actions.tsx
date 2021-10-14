@@ -57,10 +57,18 @@ export const VALIDATE_USER_SUCCESS =
 export const VALIDATE_USER_FAIL =
 'USER/VALIDATE_USER_FAIL' as const;
 
-export const LOGOUT =
-'USER/LOGOUT' as const;
+export const LOGOUT_REQUEST =
+'USER/LOGOUT_REQUEST' as const;
+export const LOGOUT_SUCCESS =
+'USER/LOGOUT_SUCCESS' as const;
+export const LOGOUT_FAIL =
+'USER/LOGOUT_FAIL' as const;
 
-export const logoutRequest = createAction(LOGOUT)<undefined>();
+export const logoutAsync = createAsyncAction(
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAIL,
+)<undefined, UserState>();
 
 export const createUserAsync = createAsyncAction(
     CREATE_USER_REQUEST,
