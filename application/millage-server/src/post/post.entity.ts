@@ -41,7 +41,8 @@ export class PostEntity {
 
   @ManyToOne(
       () => BoardEntity,
-      (board: BoardEntity) => board.posts
+      (board: BoardEntity) => board.posts,
+      {onDelete: 'CASCADE'},
   )
   board: BoardEntity;
 

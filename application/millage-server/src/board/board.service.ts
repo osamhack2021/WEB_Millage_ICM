@@ -57,17 +57,23 @@ export class BoardService {
   }
 
   async update(dto: UpdateBoardDto, boardId: number, unitId: number): Promise<BoardEntity> {
-    try {
-      const updateResult = await this.boardRepository.update(
-          {id: boardId, unitId: unitId}, dto
-      );
-      if (updateResult.affected === 0) {
-        throw new Error('Cannot find the board');
-      }
-      return updateResult.generatedMaps[0] as BoardEntity;
-    } catch (err) {
-      throw new Error(err.message);
+    const updateResult = await this.boardRepository.update(
+        {id: boardId, unitId: unitId}, dto
+    );
+    if (updateResult.affected === 0) {
+      throw new Error('Cannot find the board');
     }
+    return updateResult.generatedMaps[0] as BoardEntity;
+  }
+
+  async delete(boardId: number, unitId: number): Promise<number> {
+    const deleteResult = await this.boardRepository.delete(
+        {id: boardId, unitId: unitId},
+    );
+    if (deleteResult.affected === 0) {
+      throw new Error('Cannot find the board');
+    }
+    return boardId;
   }
 
   private async getPaginationObject(
