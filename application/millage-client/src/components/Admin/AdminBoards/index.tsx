@@ -86,11 +86,13 @@ export default function AdminBoards() {
       field: 'title',
       headerName: '게시판 명',
       editable: true,
+      minWidth: 100,
       flex: 1,
     },
     {
       field: 'description',
       headerName: '설명',
+      minWidth: 150,
       editable: true,
       flex: 1,
     },
@@ -98,6 +100,7 @@ export default function AdminBoards() {
       field: 'pollAllowed',
       headerName: '설문 가능',
       headerAlign: 'center',
+      minWidth: 100,
       flex: 1,
       editable: true,
       renderCell: (params: GridValueGetterParams) => {
@@ -122,6 +125,7 @@ export default function AdminBoards() {
       field: 'recruitAllowed',
       headerName: '모집 가능',
       headerAlign: 'center',
+      minWidth: 100,
       flex: 1,
       editable: true,
       renderCell: (params: GridValueGetterParams) => {
@@ -146,6 +150,7 @@ export default function AdminBoards() {
       field: 'imageAllowed',
       headerName: '이미지 가능',
       headerAlign: 'center',
+      minWidth: 100,
       flex: 1,
       editable: true,
       renderCell: (params: GridValueGetterParams) => {
@@ -169,6 +174,7 @@ export default function AdminBoards() {
     {
       field: 'auth',
       headerName: '글쓰기 권한',
+      minWidth: 100,
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => {
         return `${params.row.auth}`;
