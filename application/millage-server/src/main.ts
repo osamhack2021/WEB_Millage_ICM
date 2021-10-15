@@ -4,7 +4,7 @@ import {AppModule} from './app.module';
 import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {join} from 'path';
 import * as session from 'express-session';
-import * as MySQLStore  from 'express-mysql-session';
+import * as MySQLStore from 'express-mysql-session';
 import {SECRET} from './config';
 import {UserData} from './user/user.interface';
 import * as ormconfig from '../../ormconfig.json';

@@ -8,7 +8,6 @@ import {PollEntity} from './poll/poll.entity';
 import {UserEntity} from '../user/user.entity';
 import {RecruitEntity} from './recruit/recruit.entity';
 import {BoardEntity} from '../board/board.entity';
-import {CommentEntity} from './comment/comment.entity';
 import {UserData} from '../user/user.interface';
 import {Role} from '../user_role/user_role.interface';
 
