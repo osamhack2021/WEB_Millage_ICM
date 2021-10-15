@@ -1,15 +1,18 @@
 import {RootState} from '@modules';
 import {
+  createBoardAsync,
   createPostAsync,
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
   initCreatePostStateAction,
+  initiateCreateBoardStateAction,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
 } from '@modules/board/actions';
 import {
+  CreateBoardReq,
   CreatePostReq,
   GetBoardByIdReq,
   GetBoardListInput,
@@ -28,6 +31,9 @@ function useBoard() {
   const curBoardState = useSelector(
       (state: RootState) => state.Board.curBoardState,
   );
+  const createBoardState = useSelector(
+      (state: RootState) => state.Board.createBoardState,
+  );
   const postState = useSelector(
       (state: RootState) => state.Board.postState,
   );
@@ -45,6 +51,12 @@ function useBoard() {
       (getBoardByIdReq: GetBoardByIdReq) => {
         dispatch(getBoardByIdAsync.request(getBoardByIdReq));
       }, [dispatch]);
+  const createBoard = useCallback((createBoardReq: CreateBoardReq) => {
+    dispatch(createBoardAsync.request(createBoardReq));
+  }, [dispatch]);
+  const initCreateBoardState = useCallback(() => {
+    dispatch(initiateCreateBoardStateAction());
+  }, [dispatch]);
   const getPost = useCallback((getPostReq: GetPostReq) => {
     dispatch(getPostAsync.request(getPostReq));
   }, [dispatch]);
@@ -74,10 +86,13 @@ function useBoard() {
   return {
     curBoardState,
     boardListState,
+    createBoardState,
     postState,
     createPostState,
     getBoardList,
     getBoardById,
+    createBoard,
+    initCreateBoardState,
     getPost,
     createPost,
     initCreatePostState,

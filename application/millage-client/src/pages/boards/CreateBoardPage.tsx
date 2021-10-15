@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormControlLabel, Radio, RadioGroup} from '@mui/material';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {FALSE, TRUE} from '@constants';
+import {BOARD_PATH, FALSE, TRUE} from '@constants';
 import {AuthType, CreateBoardReq} from '@modules/board/types';
 import {useUser} from '@hooks/user';
+import {useBoard} from '@hooks/board';
+import {useHistory} from 'react-router';
 
 type Inputs = Pick<CreateBoardReq, 'title' | 'description'>
 
@@ -16,9 +18,17 @@ function CreateBoardPage() {
   const [pollAllowed, setPollAllowed] = useState<BooleanString>(TRUE);
   const [recruitAllowed, setRecruitAllowed] = useState<BooleanString>(TRUE);
   const {session} = useUser();
+  const {
+    createBoardState: {loading, data},
+    createBoard,
+    initCreateBoardState,
+  } = useBoard();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const CreateBoardInput: CreateBoardReq = {
+    if (loading) {
+      return;
+    }
+    const createBoardReq: CreateBoardReq = {
       ...data,
       auth,
       anonymous: anonymous === TRUE,
@@ -26,8 +36,19 @@ function CreateBoardPage() {
       recruitAllowed: recruitAllowed === TRUE,
       unitId: session?.unit.id || 0,
     };
-    console.log(CreateBoardInput);
+    console.log(createBoardReq);
+    createBoard(createBoardReq);
   };
+
+  const history = useHistory();
+  if (data) {
+    history.push(`${BOARD_PATH}/${data.id}`);
+  }
+  useEffect(() => {
+    return () => {
+      initCreateBoardState();
+    };
+  }, []);
 
   return (
     <div
@@ -139,7 +160,7 @@ function CreateBoardPage() {
         </RadioGroup> */}
 
         <button className='bg-gray-500 text-white self-center px-40 py-5' >
-          게시판 생성
+          {loading ? 'loading' : '게시판 생성'}
         </button>
       </form>
 
