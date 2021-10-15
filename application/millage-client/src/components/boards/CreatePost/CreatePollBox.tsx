@@ -12,7 +12,8 @@ let newPollID = 1;
 const CreatePollBox: React.FC<Props> = ({
   pollList, setPollList,
 }) => {
-  const onAddPoll = () => {
+  const onAddPoll = (e: React.MouseEvent) => {
+    e.preventDefault();
     setPollList((pollList) => [
       ...pollList,
       {
