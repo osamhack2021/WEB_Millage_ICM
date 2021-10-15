@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Route, Switch, useHistory} from 'react-router-dom';
 import Header from '@components/Header';
 import {checkSessionAsync} from '@modules/User/actions';
-import CreateBoardPage from '@pages/boards/CreateBoard';
+import CreateBoardPage from '@pages/boards/CreateBoardPage';
 import CreatePostPage from '@pages/boards/CreatePostPage';
 import Schedule from '@pages/Schedule';
 import Intro from '@pages/Intro';
