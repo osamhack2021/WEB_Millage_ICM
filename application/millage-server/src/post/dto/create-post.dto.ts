@@ -15,5 +15,5 @@ export class CreatePostDto {
 
   pollList?: string[];
 
-  rCount?: number;
+  totalMember?: number;
 }

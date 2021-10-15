@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {FindConditions, Repository} from 'typeorm';
+import {Repository} from 'typeorm';
 import {PostEntity} from './post.entity';
 import {PostType} from './post.interface';
 import {CreatePostDto, UpdatePostDto} from './dto';
@@ -58,6 +58,19 @@ export class PostService {
     try {
       newPost.writerId = user.id;
       const savedPost: PostEntity = await this.postRepository.save(newPost);
+      switch (savedPost.postType) {
+        case PostType.POLL: {
+          await this.createPoll(savedPost.id, pollList);
+          break;
+        }
+        case PostType.RECRUIT: {
+          const newRecruit = this.recruitRepository.create({
+            totalMember: dto.totalMember,
+            postId: savedPost.id,
+          });
+          await this.recruitRepository.save(newRecruit);
+        }
+      }
       if (savedPost.postType === PostType.POLL) {
         await this.createPoll(savedPost.id, pollList);
       }
@@ -69,12 +82,12 @@ export class PostService {
 
   async get(id: number, userData: UserData): Promise<PostEntity> {
     const post = await this.postRepository.findOne(
-        id, 
+        id,
         {
           relations: [
-          'pollItems', 'pollItems.voters', 'comments',
-          'images', 'writer', 'board', 'hearts',
-          'recruitStatus', 'recruitStatus.currentMember',
+            'pollItems', 'pollItems.voters', 'comments',
+            'images', 'writer', 'board', 'hearts',
+            'recruitStatus', 'recruitStatus.currentMember',
           ],
         }
     );
@@ -101,49 +114,48 @@ export class PostService {
     return pollItems.some((pollItem) => pollItem.voters.some((voter) => voter.id === userId));
   }
 
-  private async getDeleteFindCondition(
-      postId: number, userData: UserData): Promise<FindConditions<PostEntity>> {
-    if (userData.role.name === Role.NORMAL_USER) {
-      return {id: postId, writerId: userData.id};
+  private async getPostToChange(postId: number, userData: UserData): Promise<PostEntity> {
+    const post = await this.postRepository.findOne(postId, {relations: ['board']});
+    switch (userData.role.name) {
+      case Role.SUPER_ADMIN: {
+        return post;
+      }
+      case Role.ADMIN: {
+        if (post.board.unitId === userData.unit.id) {
+          return post;
+        }
+        return null;
+      }
+      case Role.NORMAL_USER: {
+        if (post.writerId === userData.id) {
+          return post;
+        }
+      }
     }
-    if (userData.role.name === Role.SUPER_ADMIN) {
-      return {id: postId};
-    }
-    // ADMIN
-    const board = (await this.postRepository.findOne(postId, {relations: ['board']})).board;
-    if (board.unitId === userData.unit.id) {
-      return {id: postId};
-    }
-    throw new Error('Not authorized admin for this board');
+    return null;
   }
 
-  async delete(postId: number, userData: UserData): Promise<boolean> {
-    try {
-      const findConditions = await this.getDeleteFindCondition(postId, userData);
-      const deleteResult = await this.postRepository.delete(findConditions);
-      if (deleteResult.affected === 0) {
-        throw new Error(`No matched post with id ${postId} writerId ${userData.id}`);
-      }
-      return true;
-    } catch (err) {
-      throw new Error(err.message);
+  async delete(postId: number, userData: UserData): Promise<number> {
+    if (!this.getPostToChange(postId, userData)) {
+      throw new Error(`Not authorized user`);
     }
+    const deleteResult = await this.postRepository.delete(postId);
+    if (deleteResult.affected === 0) {
+      throw new Error(`Unknown error occured`);
+    }
+    return postId;
   }
 
-  async update(id: number, postdata: UpdatePostDto): Promise<boolean> {
-    const previousPost = await this.postRepository.findOne(id);
-    if (previousPost === undefined) {
-      throw new Error(`Cannot find post by id ${id}`);
+  async update(
+      postId: number, postdata: UpdatePostDto, userData: UserData
+  ): Promise<PostEntity> {
+    const postToUpdate = await this.getPostToChange(postId, userData);
+    if (postToUpdate === undefined) {
+      throw new Error(`Not authorized or no post with id ${postId}`);
     }
-    try {
-      const changes = this.postRepository.create(postdata);
-      if (!(await this.postRepository.update(id, changes)).affected) {
-        return false;
-      }
-      return true;
-    } catch (err) {
-      throw new Error(err.message);
-    }
+    Object.assign(postToUpdate, postdata);
+    const updateResult = await this.postRepository.save(postToUpdate);
+    return updateResult;
   }
 
   async toggleHeart(postId: number, userId: number): Promise<boolean> {
