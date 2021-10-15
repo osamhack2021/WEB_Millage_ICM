@@ -12,6 +12,7 @@ export type BoardState = {
     curBoardState: AsyncState<Board>;
     postState: AsyncState<Post>;
     sideboxState: AsyncState<SideBox>;
+    createPostState: AsyncState<Post>;
 };
 
 export type BoardAction = ActionType<typeof Actions>;

@@ -1,4 +1,6 @@
 import {
+  CreatePostReq,
+  CreatePostRes,
   GetBoardByIdReq,
   GetBoardByIdRes,
   GetBoardListInput,
@@ -7,7 +9,6 @@ import {
   GetPostRes,
   getRecentScheduleRes,
   getRecruitAndPollListRes,
-  PostPartial,
   TogglePostHeartReq,
   TogglePostHeartRes,
   ToggleRecruitReq,
@@ -17,6 +18,7 @@ import {
 } from './types';
 import axios from 'axios';
 import {
+  CREATE_POST_API,
   GET_BOARD_API,
   GET_BOARD_LIST_API,
   GET_BOARD_LIST_WITH_POSTS_API,
@@ -77,6 +79,24 @@ export async function apiGetPost(
   try {
     const {data} = await axios.get<GetPostRes>(
         `${GET_POST_API}/${postId}`,
+        {withCredentials: true},
+    );
+    return data;
+  } catch (error: any) {
+    return {result: 'error', message: error};
+  }
+}
+
+/*
+ * Create Post API
+ */
+export async function apiCreatePost(
+    createPostReq: CreatePostReq,
+): Promise<CreatePostRes> {
+  try {
+    const {data} = await axios.post<CreatePostRes>(
+        CREATE_POST_API,
+        createPostReq,
         {withCredentials: true},
     );
     return data;

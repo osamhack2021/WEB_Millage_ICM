@@ -1,6 +1,8 @@
 import {createAsyncAction} from 'typesafe-actions';
 import {AxiosError} from 'axios';
 import {
+  CreatePostReq,
+  CreatePostRes,
   GetBoardByIdReq,
   GetBoardByIdRes,
   GetBoardListInput,
@@ -57,6 +59,20 @@ export const getPostAsync = createAsyncAction(
     GET_POST_SUCCESS,
     GET_POST_FAILURE,
 )<GetPostReq, GetPostSuccessPayload, AxiosError>();
+
+
+/**
+ * Create Post API Actions
+ */
+export const CREATE_POST = 'board/CREATE_POST';
+export const CREATE_POST_SUCCESS = 'board/CREATE_POST_SUCCESS';
+export const CREATE_POST_FAILURE = 'board/CREATE_POST_FAILURE';
+
+export const createPostAsync = createAsyncAction(
+    CREATE_POST,
+    CREATE_POST_SUCCESS,
+    CREATE_POST_FAILURE,
+)<CreatePostReq, CreatePostRes, AxiosError>();
 
 
 /**
