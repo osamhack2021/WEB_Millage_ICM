@@ -10,15 +10,18 @@ import {Link as RouterLink, useHistory} from 'react-router-dom';
 import '../../Header/header.css';
 import {XLayout} from '@components/common';
 import {updateUnreadAsync, logoutAsync} from '@modules/User/actions';
-import {io, Socket} from 'socket.io-client';
-import {SOCKET_SERVER} from '@constants';
 import {setPageStateAction} from '@modules/Admin/actions';
-
+import Paper from '@mui/material/Paper';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state: any) => state.user);
   const pageState = useSelector((state: any) => state.admin.page);
+  const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const goMain = () => {
@@ -41,13 +44,9 @@ function Header() {
     dispatch(logoutAsync.request());
   };
 
-  const goToDM = () => {
-    setPageState('');
-    history.push('/dm');
-  };
-
   useEffect(()=> {
     dispatch(updateUnreadAsync.request());
+    setPageState('users');
   }, []);
 
   return (
@@ -73,11 +72,6 @@ function Header() {
           </RouterLink>
         </div>
         <div className="buttons">
-          <IconButton onClick={goToDM}>
-            <Badge badgeContent={user.unread} max={10} color="primary">
-              <SendIcon />
-            </Badge>
-          </IconButton>
           <IconButton onClick={handleClick}>
             <PersonIcon />
           </IconButton>
@@ -95,6 +89,41 @@ function Header() {
           </Menu>
         </div>
       </XLayout>
+      <div id="BottomNavigationContainer">
+        <Paper sx={{position: 'fixed', width: '100%',
+          bottom: 0, left: 0, right: 0}} elevation={3}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              label="사용자관리" icon={<EventNoteOutlinedIcon />}
+              className={pageState == 'users' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('users');
+              }}
+            />
+            {/* <BottomNavigationAction
+              label="메시지" icon={<SendIcon />}
+              className={pageState == 'dm' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('dm');
+                history.push('/dm');
+              }}
+            /> */}
+            <BottomNavigationAction
+              label="부대관리" icon={<ListAltIcon />}
+              className={pageState == 'units' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('units');
+              }}
+            />
+          </BottomNavigation>
+        </Paper>
+      </div>
     </header>
   );
 }

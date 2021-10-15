@@ -17,33 +17,6 @@
     margin: 5px;
 }
 
-#MessageContainer #messages{
-    position: relative;
-    width: 600px;
-    height:100%;
-    border: 1px solid rgba(0,0,0,0.2);
-    margin: 5px;
-}
-
-#MessageContainer #messages input{
-  width: 552px;
-  height: 30px;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  box-sizing: border-box;
-  border-radius: 15px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 13px;
-  letter-spacing: -0.02em;
-  text-indent:20px;
-  color: rgba(0, 0, 0, 0.4);
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
 #MessageContainer button{
   width: 100%;
   height:60px;
@@ -83,20 +56,6 @@
 
 #MessageContainer .hide{
   display: none;
-}
-
-#MessageContainer .messageBoxDetail{
-  display:flex;
-  flex-direction: column;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: -0.02em;
-  text-align:left;
-  padding-top:15px;
-  line-height:15px;
-  text-indent:10px;
 }
 
 #MessageContainer .usericon{
@@ -157,17 +116,6 @@
   display:flex;
   justify-content: center;
   align-items:center;
-}
-
-#MessageContainer .messagesContainer {
-  overflow-y: auto;
-  height:500px;
-  -ms-overflow-style: none;
-  scrollbar-width: none; 
-}
-
-#MessageContainer .messagesContainer::-webkit-scrollbar {
-  display: none;
 }
 
 #MessageContainer .items {
@@ -260,30 +208,192 @@
   background-color: rgba(0,0,0,0.2);
 }
 
-#DMUsersDialog #SearchContainer{
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-top:10px;
-  padding-bottom:10px;
+
+#DMUsersDialog #UsersContainer::-webkit-scrollbar {
+  display: none;
+}
+#MessageContainer .messagesContainer {
+  overflow-y: auto;
+  height:500px;
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
 }
 
-#DMUsersDialog .dialogTitle{
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  color: #000000;
-  text-align:center;
+#MessageContainer .messagesContainer::-webkit-scrollbar {
+  display: none;
 }
 
-#DMUsersDialog #SearchContainer input{
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
-  width:300px;
-  border: 1px solid rgba(0,0,0,0.5);
-  text-indent:10px;
-  height:30px;
-  border-radius:15px;
+@media only screen and (min-width: 641px) {
+  #MessageContainer .messageBoxDetail{
+    display:flex;
+    flex-direction: column;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: -0.02em;
+    text-align:left;
+    padding-top:15px;
+    line-height:15px;
+    text-indent:10px;
+    width:fit-content;
+  }
+  #MessageContainer #messages input{
+    width: 552px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    border-radius: 15px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: -0.02em;
+    text-indent:20px;
+    color: rgba(0, 0, 0, 0.4);
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  #MessageContainer #messages{
+    position: relative;
+    width: 600px;
+    height:100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 5px;
+}
+  #DMUsersDialog #SearchContainer{
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  
+  #DMUsersDialog #UsersContainer{
+    max-height: 400px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    width:100%;
+  }
+
+  #DMUsersDialog .dialogTitle{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    color: #000000;
+    text-align:center;
+    width:100%;
+  }
+
+  #DMUsersDialog #SearchContainer input{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    padding-right:10px;
+    width:80%;
+    border: 1px solid rgba(0,0,0,0.5);
+    text-indent:10px;
+    height:30px;
+    border-radius:15px;
+  }
+  #MessageContainer .backButton{
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  #MessageContainer .messageBoxDetail{
+    display:flex;
+    flex-direction: column;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: -0.02em;
+    text-align:left;
+    padding-top:15px;
+    line-height:15px;
+    text-indent:10px;
+    width:fit-content;
+  }
+  #MessageContainer .backButton{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+  }
+  #MessageContainer .backButton button{
+    display: block;
+    margin-left:5px;
+  }
+
+  #MessageContainer #messages input{
+    width: 320px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    border-radius: 15px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: -0.02em;
+    text-indent:20px;
+    color: rgba(0, 0, 0, 0.4);
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  #MessageContainer #messages{
+    position: relative;
+    width: 350px;
+    height:100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 5px;
+  }
+  #MessageContainer .hiddenmobile {
+    display: none;
+  }
+  #DMUsersDialog #SearchContainer{
+    width: 80%;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  
+  #DMUsersDialog .dialogTitle{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    color: #000000;
+    text-align:center;
+    width:80%;
+  }
+
+  #DMUsersDialog #UsersContainer{
+    max-height: 400px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    width:80%;
+  }
+
+  #DMUsersDialog #SearchContainer input{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width:80%;
+    border: 1px solid rgba(0,0,0,0.5);
+    text-indent:10px;
+    height:30px;
+    border-radius:15px;
+  }
 }

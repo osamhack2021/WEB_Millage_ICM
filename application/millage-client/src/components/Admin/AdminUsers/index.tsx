@@ -70,24 +70,27 @@ export default function AdminUsers() {
       field: 'fullname',
       headerName: '이름',
       editable: false,
-      flex: 1,
+      minWidth: 70,
     },
     {
       field: 'nickname',
       headerName: '닉네임',
       editable: false,
+      minWidth: 100,
       flex: 1,
     },
     {
       field: 'username',
       headerName: '아이디',
       editable: false,
+      minWidth: 100,
       flex: 1,
     },
     {
       field: 'email',
       headerName: '이메일',
       editable: false,
+      minWidth: 200,
       flex: 1,
     },
     {
@@ -97,6 +100,7 @@ export default function AdminUsers() {
       valueGetter: (params: GridValueGetterParams) => {
         return params.row.unit ? `${params.row.unit.name}` : '';
       },
+      minWidth: 100,
       flex: 1,
     },
     {
@@ -104,6 +108,7 @@ export default function AdminUsers() {
       headerName: '권한',
       editable: false,
       headerAlign: 'center',
+      minWidth: 110,
       valueGetter: (params: GridValueGetterParams) => {
         return `${params.row.role.name}`;
       },

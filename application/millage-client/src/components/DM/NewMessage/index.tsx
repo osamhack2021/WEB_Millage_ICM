@@ -50,7 +50,7 @@ const NewMessage :React.FC<Props> = ({closeHandler, open, receiverId}) => {
         쪽지 보내기
       </DialogTitle>
       <DialogContent>
-        <div>
+        <div className="messageContainer">
           <textarea
             className="message"
             placeholder="내용을 입력해주세요"

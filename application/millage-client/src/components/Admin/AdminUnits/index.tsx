@@ -79,11 +79,13 @@ export default function AdminUnits() {
       field: 'name',
       headerName: '이름',
       editable: false,
+      minWidth: 150,
       flex: 1,
     },
     {
       field: 'admins',
       headerName: '관리자',
+      minWidth: 150,
       editable: false,
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => {
@@ -155,7 +157,7 @@ export default function AdminUnits() {
             setKeyword(e.target.value);
           }}/>
       </div>
-      <div id="UnitListContainer">
+      <div id="ListContainer">
         <DataGrid
           className="grid"
           rows={units}

@@ -19,7 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import IconButton from '@mui/material/IconButton';
 import NewMessage from '@components/DM/NewMessage';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 interface MessageInterface {
   message: string;
 }
@@ -41,6 +41,8 @@ interface MessageData{
 function DM() {
   const dispatch = useDispatch();
   const messageboxes = useSelector((state: any) => state.DM.messageboxes);
+  const [messageBoxStyle, setMessageBoxStyle] = useState('');
+  const [messageStyle, setMessageStyle] = useState('hiddenmobile');
   const usersState = useSelector((state: any) => state.DM.users);
   const [users, setUsers] = useState([]);
   const user = useSelector((state: any) => state.user);
@@ -81,6 +83,11 @@ function DM() {
 
   const [keyword, setKeyword] = useState('');
 
+  const backToMessageBox = () => {
+    setMessageStyle('hiddenmobile');
+    setMessageBoxStyle('');
+  };
+
   useEffect(() => {
     if (keyword === '') {
       setUsers(usersState);
@@ -108,6 +115,8 @@ function DM() {
     const clone = JSON.parse(JSON.stringify(localMessageBoxes));
     clone[id].unread = 0;
     setLocalMessageBoxes(clone);
+    setMessageStyle('');
+    setMessageBoxStyle('hiddenmobile');
   };
 
   useEffect(() => {
@@ -359,7 +368,7 @@ function DM() {
 
   return (
     <div id="MessageContainer">
-      <div id="messageboxes">
+      <div id="messageboxes" className={messageBoxStyle}>
         <div className="title">
           <span style={{
             width: '200px',
@@ -372,21 +381,29 @@ function DM() {
             </button>
           </div>
         </div>
-        <div className="items">
+        <div>
           {renderMessageBoxes()}
         </div>
       </div>
-      <div id="messages">
+      <div id="messages" className={messageStyle}>
         <div className={receiverId.current == -1 ? 'hidden' : ''}>
           <div className="messageTitle">
-            <div className="iconContainer">
-              <img className="smallerIcon" src="/img/dm/usericon.png" />
+            <div className="backButton">
+              <button onClick={()=>backToMessageBox()}>
+                <ArrowBackIcon />
+              </button>
+            </div>
+            <div className="iconContainer" style={{
+              marginLeft: '10px',
+            }}>
+              <img src="/img/dm/usericon.png" />
             </div>
             <div className="messageBoxDetail" style={{
               paddingTop: '12.5px',
               width: '70px'}}>
               <div style= {{
                 fontWeight: 'bold',
+                width: '100px',
               }}>{receiverName}</div>
               <div style = {{
                 color: 'rgba(0, 0, 0, 0.5)',
@@ -449,7 +466,9 @@ function DM() {
                   setKeyword(e.target.value);
                 }}/>
             </div>
-            {renderUsers()}
+            <div id="UsersContainer">
+              {renderUsers()}
+            </div>
           </DialogContent>
         </div>
       </Dialog>

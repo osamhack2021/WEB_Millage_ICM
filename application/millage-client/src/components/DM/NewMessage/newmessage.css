@@ -1,7 +1,6 @@
 
 #NewMessageDialog .message{
     border: 1px solid rgba(0,0,0,0.1);
-    width:300px;
     height:100px;
     padding:10px;
     text-align:top;
@@ -17,6 +16,14 @@
     font-size: 13px;
     border-radius: 10px;
     padding:3px;
+}
+
+#NewMessageDialog .messageContainer{
+    width: 250px;
+}
+
+#NewMessageDialog .messageContainer textarea{
+    width: 250px;
 }
 
 #NewMessageDialog .buttonContainer{
