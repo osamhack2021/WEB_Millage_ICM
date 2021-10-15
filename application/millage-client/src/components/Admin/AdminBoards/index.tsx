@@ -3,7 +3,9 @@ import {DataGrid, GridColDef, GridValueGetterParams} from '@mui/x-data-grid';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getBoardListAsync,
-  updateBoardAsync} from '@modules/Admin/actions';
+  updateBoardAsync,
+  deleteBoardAsync,
+} from '@modules/Admin/actions';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -40,10 +42,14 @@ export default function AdminBoards() {
       alert('정상적으로 수정되었습니다');
     } else if (authResult === 'updateBoardFail') {
       alert('수정에 실패하였습니다.');
-    } else if (authResult === 'deleteUserSuccess') {
-      alert('유저를 삭제하였습니다.');
-    } else if (authResult === 'deleteUserFail') {
-      alert('삭제에 실패하였습니다.');
+    } else if (authResult === 'insertBoardSuccess') {
+      alert('정상적으로 게시판을 추가하였습니다.');
+    } else if (authResult === 'insertBoardFail') {
+      alert('게시판 추가에 실패하였습니다.');
+    } else if (authResult === 'deleteBoardSuccess') {
+      alert('게시판을 삭제하였습니다.');
+    } else if (authResult === 'deleteBoardFail') {
+      alert('게시판을 삭제에 실패하였습니다.');
     }
   }, [authResult]);
 
@@ -59,6 +65,12 @@ export default function AdminBoards() {
     };
     if (confirm('정말 이대로 수정하시겠습니까?')) {
       dispatch(updateBoardAsync.request(board));
+    }
+  };
+
+  const deleteBoard = (id: number) => {
+    if (confirm('정말 해당 게시판을 삭제하시겠습니까?')) {
+      dispatch(deleteBoardAsync.request(id));
     }
   };
 
@@ -212,7 +224,7 @@ export default function AdminBoards() {
             className="actionButton"
             onClick={
               (event) => {
-                // deleteBoard(params.row.id);
+                deleteBoard(+params.row.id);
               }
             }
           >

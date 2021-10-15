@@ -1,7 +1,7 @@
 import {Role} from '@constants';
 import axios from 'axios';
 import {SERVER} from '@constants';
-import {AdminState, BoardUpdateData} from './types';
+import {AdminState, BoardInsertData, BoardUpdateData} from './types';
 
 export async function getUserList(role: string): Promise<AdminState> {
   try {
@@ -91,7 +91,6 @@ export async function updateUserRoleApi(id: number,
   }
 }
 
-
 export async function getBoardList(): Promise<AdminState> {
   try {
     const boards = await axios.get(`${SERVER}/board/list/`,
@@ -107,6 +106,33 @@ export async function updateBoardApi(data: BoardUpdateData):
   try {
     const result = await axios.patch(`${SERVER}/board/${data.id}`,
         data, {withCredentials: true});
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+export async function insertBoardApi(data: BoardInsertData):
+  Promise<AdminState> {
+  try {
+    const result = await axios.post(`${SERVER}/board/create`,
+        data, {withCredentials: true});
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+
+export async function deleteBoardApi(id: number):
+  Promise<AdminState> {
+  try {
+    const result = await axios.delete(`${SERVER}/board/${id}`,
+        {withCredentials: true});
     return {
       result: 'success',
     };

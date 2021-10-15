@@ -38,6 +38,7 @@ export interface BoardInsertData{
     pollAllowed: boolean;
     recruitAllowed: boolean;
     imageAllowed: boolean;
+    unitId?: number;
 }
 
 export interface AdminState {
@@ -49,7 +50,6 @@ export interface AdminState {
     units?: UnitData[];
     boards?: BoardData[];
 }
-
 
 export type AdminAction = ActionType<typeof actions>;
 

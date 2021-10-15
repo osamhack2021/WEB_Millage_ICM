@@ -29,6 +29,12 @@ import {
   UPDATE_BOARD_REQUEST,
   UPDATE_BOARD_SUCCESS,
   UPDATE_BOARD_FAIL,
+  INSERT_BOARD_REQUEST,
+  INSERT_BOARD_SUCCESS,
+  INSERT_BOARD_FAIL,
+  DELETE_BOARD_REQUEST,
+  DELETE_BOARD_SUCCESS,
+  DELETE_BOARD_FAIL,
 } from './actions';
 
 const initialState: AdminState = {
@@ -146,6 +152,30 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   [UPDATE_BOARD_FAIL]: (state, action) => ({
     ...state,
     result: 'updateBoardFail',
+  }),
+  [INSERT_BOARD_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [INSERT_BOARD_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'insertBoardSuccess',
+  }),
+  [INSERT_BOARD_FAIL]: (state, action) => ({
+    ...state,
+    result: 'insertBoardFail',
+  }),
+  [DELETE_BOARD_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [DELETE_BOARD_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'deleteBoardSuccess',
+  }),
+  [DELETE_BOARD_FAIL]: (state, action) => ({
+    ...state,
+    result: 'deleteBoardFail',
   }),
 });
 
