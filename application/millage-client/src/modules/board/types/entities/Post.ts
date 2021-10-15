@@ -1,5 +1,6 @@
 import {NORMAL, POLL, RECRUIT} from '@constants';
 import {UserData} from '@modules/User/types';
+import {Comment} from './Comment';
 import {Poll, PollInputs, RecruitStatus, Board} from './';
 
 /* Types of Post */
