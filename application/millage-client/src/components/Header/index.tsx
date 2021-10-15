@@ -89,7 +89,7 @@ function Header() {
   }, [newMessage]);
 
   const goMain = () => {
-    setPageState('board');
+    setPageState('');
     history.push('/');
   };
 
@@ -194,7 +194,7 @@ function Header() {
   };
 
   const goToDM = () => {
-    setPageState('');
+    setPageState('dm');
     history.push('/dm');
   };
 
@@ -263,7 +263,8 @@ function Header() {
           {adminHeaderLink()}
         </div>
         <div className="buttons">
-          <IconButton onClick={goToDM}>
+          <IconButton className={pageState == 'dm' ? 'enabled2' : ''}
+            onClick={goToDM}>
             <Badge badgeContent={user.unread} variant="dot">
               <SendIcon />
             </Badge>
