@@ -118,9 +118,7 @@ header .MuiBadge-dot{
   header .navigation{
     display:none;
   }
-  header .buttons{
-    display:none;
-  }
+ 
   header .millage{
     font-family: Inter;
     font-style: normal;

@@ -207,6 +207,21 @@ function Header() {
     }
   };
 
+  const AdminManageLink = () => {
+    if (user.session.role.name == 'ADMIN') {
+      return (
+        <BottomNavigationAction
+          label="부대관리" icon={<ListAltIcon />}
+          className={pageState == 'manage' ? 'enabled' : ''}
+          onClick={()=> {
+            setPageState('manage');
+            history.push('/manage');
+          }}
+        />
+      );
+    }
+  };
+
   useEffect(()=> {
     dispatch(updateUnreadAsync.request());
     socket = io(SOCKET_SERVER, {transports: ['websocket'],
@@ -282,20 +297,20 @@ function Header() {
           >
             <BottomNavigationAction
               label="게시판" icon={<EventNoteOutlinedIcon />}
-              className={pageState == 'board' ? 'enabled' : ''}
+              className={pageState == '' ? 'enabled' : ''}
               onClick={()=> {
-                setPageState('board');
+                setPageState('');
                 history.push('/');
               }}
             />
-            <BottomNavigationAction
+            {/* <BottomNavigationAction
               label="메시지" icon={<SendIcon />}
               className={pageState == 'dm' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('dm');
                 history.push('/dm');
               }}
-            />
+            /> */}
             <BottomNavigationAction
               label="켈린더" icon={<ListAltIcon />}
               className={pageState == 'schedule' ? 'enabled' : ''}
@@ -304,16 +319,15 @@ function Header() {
                 history.push('/schedule');
               }}
             />
-            <BottomNavigationAction label="전군게시판"
-              icon={<EventNoteOutlinedIcon />} />
             <BottomNavigationAction
-              label="마이페이지" icon={<ListAltIcon />}
-              className={pageState == 'my' ? 'enabled' : ''}
+              label="시설예약" icon={<ListAltIcon />}
+              className={pageState == 'reserve' ? 'enabled' : ''}
               onClick={()=> {
-                setPageState('my');
-                setOpenDialog(true);
+                setPageState('reserve');
+                history.push('/reserve');
               }}
             />
+            {AdminManageLink()}
           </BottomNavigation>
         </Paper>
       </div>

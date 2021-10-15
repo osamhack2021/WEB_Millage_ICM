@@ -1,3 +1,7 @@
+#ManageContainer {
+    width: 100vw;
+    
+}
 
 #ManageContainer .navigation{
     display:flex;
