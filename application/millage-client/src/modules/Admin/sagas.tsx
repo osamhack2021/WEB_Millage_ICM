@@ -2,11 +2,13 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
   authUnitAsync,
   authUserAsync,
+  deleteBoardAsync,
   deleteUnitAsync,
   deleteUserAsync,
   getBoardListAsync,
   getUnitlistAsync,
   getUserlistAsync,
+  insertBoardAsync,
   updateBoardAsync,
   updateUserRoleAsync,
 } from './actions';
@@ -20,6 +22,8 @@ import {
   updateUserRoleApi,
   getBoardList,
   updateBoardApi,
+  insertBoardApi,
+  deleteBoardApi,
 } from './api';
 import {AdminState} from './types';
 
@@ -166,6 +170,40 @@ function* updateBoardSaga(
   }
 }
 
+function* insertBoardSaga(
+    action: ReturnType<typeof insertBoardAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(insertBoardApi, param);
+    if (response.result == 'success') {
+      yield put(getBoardListAsync.request());
+      yield put(insertBoardAsync.success(response));
+    } else {
+      yield put(insertBoardAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(insertBoardAsync.failure(error));
+  }
+}
+
+function* deleteBoardSaga(
+    action: ReturnType<typeof deleteBoardAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(deleteBoardApi, param);
+    if (response.result == 'success') {
+      yield put(getBoardListAsync.request());
+      yield put(deleteBoardAsync.success(response));
+    } else {
+      yield put(deleteBoardAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(deleteBoardAsync.failure(error));
+  }
+}
+
 export default function* AdminSagaListener() {
   yield takeLatest(getUserlistAsync.request, getUserListSaga);
   yield takeLatest(updateUserRoleAsync.request, updateUserRoleSaga);
@@ -176,4 +214,6 @@ export default function* AdminSagaListener() {
   yield takeLatest(authUserAsync.request, authUserSaga);
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(updateBoardAsync.request, updateBoardSaga);
+  yield takeLatest(insertBoardAsync.request, insertBoardSaga);
+  yield takeLatest(deleteBoardAsync.request, deleteBoardSaga);
 }

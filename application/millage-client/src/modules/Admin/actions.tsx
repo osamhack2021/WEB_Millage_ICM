@@ -1,5 +1,5 @@
 import {createAction, createAsyncAction} from 'typesafe-actions';
-import {AdminState, BoardUpdateData} from './types';
+import {AdminState, BoardInsertData, BoardUpdateData} from './types';
 
 export const GET_USERLIST_REQUEST =
   'ADMIN/GET_USERLIST_REQUEST' as const;
@@ -147,3 +147,33 @@ export const updateBoardAsync = createAsyncAction(
     UPDATE_BOARD_SUCCESS,
     UPDATE_BOARD_FAIL,
 )<BoardUpdateData, AdminState, AdminState>();
+
+export const INSERT_BOARD_REQUEST =
+  'ADMIN/INSERT_BOARD_REQUEST';
+
+export const INSERT_BOARD_SUCCESS =
+  'ADMIN/INSERT_BOARD_SUCCESS';
+
+export const INSERT_BOARD_FAIL=
+  'ADMIN/INSERT_BOARD_FAIL';
+
+export const insertBoardAsync = createAsyncAction(
+    INSERT_BOARD_REQUEST,
+    INSERT_BOARD_SUCCESS,
+    INSERT_BOARD_FAIL,
+)<BoardInsertData, AdminState, AdminState>();
+
+export const DELETE_BOARD_REQUEST =
+  'ADMIN/DELETE_BOARD_REQUEST';
+
+export const DELETE_BOARD_SUCCESS =
+  'ADMIN/DELETE_BOARD_SUCCESS';
+
+export const DELETE_BOARD_FAIL=
+  'ADMIN/DELETE_BOARD_FAIL';
+
+export const deleteBoardAsync = createAsyncAction(
+    DELETE_BOARD_REQUEST,
+    DELETE_BOARD_SUCCESS,
+    DELETE_BOARD_FAIL,
+)<number, AdminState, AdminState>();

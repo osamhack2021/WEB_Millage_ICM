@@ -4,7 +4,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Button from '@mui/material/Button';
 import './addboard.css';
 import Container from '@mui/material/Container';
@@ -14,6 +14,8 @@ import Grid from '@mui/material/Grid';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {BoardInsertData} from '@modules/Admin/types';
 import Switch from '@mui/material/Switch';
+import {RootState} from '@modules';
+import {insertBoardAsync} from '@modules/Admin/actions';
 type Props = {
   open: boolean;
   closeHandler: () => void;
@@ -30,21 +32,22 @@ const initialDialogState : BoardInsertData = {
 
 const AddBoard :React.FC<Props> = ({closeHandler, open}) => {
   const dispatch = useDispatch();
+  const session = useSelector((state: RootState) => state.user.session);
   const [auth, setAuth] = useState<string>('관리자만');
   const [imageAllowed, setImageAllowed] = useState<string>('불가능');
   const [pollAllowed, setPollAllowed] = useState<string>('불가능');
   const [recruitAllowed, setRecruitAllowed] = useState<string>('불가능');
   const {register, getValues, handleSubmit} = useForm<BoardInsertData>();
-  useEffect(() => {
-    if (open == true) {
-      register;
-    }
-  }, [open]);
 
   const onSubmit: SubmitHandler<BoardInsertData> = (data, e) => {
     if (e) {
       e.preventDefault();
     }
+    dispatch(insertBoardAsync.request({
+      ...data,
+      unitId: session ? session.unit.id : 0,
+    }));
+    closeHandler();
   };
 
   return (
