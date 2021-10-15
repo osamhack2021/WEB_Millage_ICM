@@ -1,7 +1,13 @@
-import {OmitType} from '@nestjs/swagger';
-import {CreatePostDto} from '.';
+import {PostType} from '../post.interface';
 
-export class UpdatePostDto extends OmitType(
-    CreatePostDto,
-    ['boardId'] as const
-) {}
+export class UpdatePostDto {
+    postType?: PostType;
+
+    title?: string;
+
+    content?: string;
+
+    pollItems?: string[];
+
+    totalMember?: number;
+}

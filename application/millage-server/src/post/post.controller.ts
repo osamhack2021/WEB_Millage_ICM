@@ -3,8 +3,8 @@ import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {PostService} from './post.service';
 import {PostRO, PostType} from './post.interface';
-import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto, VoteParams} from './dto';
-import {Result, ResultObject} from '../common/common.interface';
+import {CreatePostDto, GetPostParams, UpdatePostDto, VoteParams} from './dto';
+import {DeleteRO, Result, ResultObject} from '../common/common.interface';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
 import {UserData} from '../user/user.interface';
@@ -59,16 +59,14 @@ export class PostController {
   @Roles(Role.ADMIN, Role.NORMAL_USER, Role.SUPER_ADMIN)
   async delete(
     @Param('postId', ParseIntPipe) postId: number,
-    @Req() req: Request): Promise<ResultObject> {
+    @Req() req: Request): Promise<DeleteRO> {
     try {
       const userData = req.session.user;
-      if (!(await this.postService.delete(postId, userData))) {
-        return {
-          result: Result.FAIL,
-          message: 'Nothing affected',
-        };
-      }
-      return {result: Result.SUCCESS};
+      const deletedId = await this.postService.delete(postId, userData);
+      return {
+        result: Result.FAIL,
+        deletedId,
+      };
     } catch (err) {
       return {
         result: Result.ERROR,
@@ -77,13 +75,15 @@ export class PostController {
     }
   }
 
-  @Patch(':id')
+  @Patch(':postId')
   async update(
-    @Param() params: PostParams,
-    @Body() postdata: UpdatePostDto
+    @Param('postId', ParseIntPipe) postId: number,
+    @Body() postdata: UpdatePostDto,
+    @Req() req: Request,
   ): Promise<ResultObject> {
     try {
-      if (await this.postService.update(params.id, postdata)) {
+      const userData: UserData = req.session.user;
+      if (await this.postService.update(postId, postdata, userData)) {
         return {result: Result.SUCCESS};
       }
       return {result: Result.FAIL, message: 'Nothing changed'};
