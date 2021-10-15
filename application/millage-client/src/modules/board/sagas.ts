@@ -1,5 +1,6 @@
 import {call, put, takeLatest, select} from 'redux-saga/effects';
 import {
+  apiCreateBoard,
   apiCreatePost,
   apiGetBoardById,
   apiGetBoardList,
@@ -11,6 +12,7 @@ import {
   getRecruitAndPollList,
 } from './apis';
 import {
+  CreateBoardRes,
   CreatePostRes,
   GetBoardByIdRes,
   GetBoardListRes,
@@ -22,6 +24,7 @@ import {
   ToggleVoteRes,
 } from './types';
 import {
+  createBoardAsync,
   createPostAsync,
   getBoardByIdAsync,
   getBoardListAsync,
@@ -37,7 +40,6 @@ import {UserData} from '@modules/User/types';
 function* getBoardListSaga(
     action: ReturnType<typeof getBoardListAsync.request>,
 ) {
-  // user state에서 community_id 가져와야 함.
   try {
     const response: GetBoardListRes = yield call(
         apiGetBoardList,
@@ -60,6 +62,20 @@ function* getBoardByIdSaga(
     yield put(getBoardByIdAsync.success(response));
   } catch (error: any) {
     yield put(getBoardByIdAsync.failure(error));
+  }
+}
+
+function* createBoardSaga(
+    action: ReturnType<typeof createBoardAsync.request>,
+) {
+  try {
+    const response: CreateBoardRes = yield call(
+        apiCreateBoard,
+        action.payload,
+    );
+    yield put(createBoardAsync.success(response));
+  } catch (error: any) {
+    yield put(createBoardAsync.failure(error));
   }
 }
 
@@ -168,6 +184,7 @@ function* getRecentScheduleSaga(
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
+  yield takeLatest(createBoardAsync.request, createBoardSaga);
   yield takeLatest(getPostAsync.request, getPostSaga);
   yield takeLatest(createPostAsync.request, createPostSaga);
   yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);

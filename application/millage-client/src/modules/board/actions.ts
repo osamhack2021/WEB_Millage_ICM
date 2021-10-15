@@ -1,6 +1,8 @@
 import {createAction, createAsyncAction} from 'typesafe-actions';
 import {AxiosError} from 'axios';
 import {
+  CreateBoardReq,
+  CreateBoardRes,
   CreatePostReq,
   CreatePostRes,
   GetBoardByIdReq,
@@ -46,6 +48,22 @@ export const getBoardByIdAsync = createAsyncAction(
     GET_BOARD_BY_ID_FAILURE,
 )<GetBoardByIdReq, GetBoardByIdRes, AxiosError>();
 
+/**
+ * Create Board API Actions
+ */
+export const CREATE_BOARD = 'board/CREATE_BOARD';
+export const CREATE_BOARD_SUCCESS = 'board/CREATE_BOARD_SUCCESS';
+export const CREATE_BOARD_FAILURE = 'board/CREATE_BOARD_FAILURE';
+export const INIT_CREATE_BOARD_STATE = 'board/INIT_CREATE_BOARD_STATE';
+
+export const createBoardAsync = createAsyncAction(
+    CREATE_BOARD,
+    CREATE_BOARD_SUCCESS,
+    CREATE_BOARD_FAILURE,
+)<CreateBoardReq, CreateBoardRes, AxiosError>();
+export const initiateCreateBoardStateAction = createAction(
+    INIT_CREATE_BOARD_STATE,
+)();
 
 /**
  * GET Post API Actions

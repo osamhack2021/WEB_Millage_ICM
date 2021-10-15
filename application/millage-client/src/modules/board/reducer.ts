@@ -23,6 +23,10 @@ import {
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
   INIT_CREATE_POST_STATE,
+  CREATE_BOARD,
+  CREATE_BOARD_SUCCESS,
+  CREATE_BOARD_FAILURE,
+  INIT_CREATE_BOARD_STATE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -47,6 +51,11 @@ const initialState: BoardState = {
     error: null,
   },
   createPostState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  createBoardState: {
     loading: false,
     data: null,
     error: null,
@@ -111,6 +120,37 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       loading: false,
       data: null,
       error: action.payload,
+    },
+  }),
+  [CREATE_BOARD]: (state) => ({
+    ...state,
+    createBoardState: {
+      ...state.createBoardState,
+      loading: true,
+    },
+  }),
+  [CREATE_BOARD_SUCCESS]: (state, action) => ({
+    ...state,
+    createBoardState: {
+      loading: false,
+      data: action.payload.board,
+      error: null,
+    },
+  }),
+  [CREATE_BOARD_FAILURE]: (state, action) => ({
+    ...state,
+    createBoardState: {
+      loading: false,
+      data: null,
+      error: action.payload,
+    },
+  }),
+  [INIT_CREATE_BOARD_STATE]: (state) => ({
+    ...state,
+    createBoardState: {
+      loading: false,
+      data: null,
+      error: null,
     },
   }),
 
