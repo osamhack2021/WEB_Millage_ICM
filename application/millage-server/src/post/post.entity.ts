@@ -78,8 +78,6 @@ export class PostEntity {
   @JoinTable({name: 'heart'})
   hearts: UserEntity[];
 
-  heartUserIds: number[];
-
   heartCount: number;
 
   isVoter?: boolean;
@@ -87,10 +85,5 @@ export class PostEntity {
   @AfterLoad()
   countHearts() {
     this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
-  }
-
-  @AfterLoad()
-  setHeartUserIds() {
-    this.heartUserIds = this.hearts != undefined  ? this.hearts.map((user: UserEntity) => user.id) : [];
   }
 }
