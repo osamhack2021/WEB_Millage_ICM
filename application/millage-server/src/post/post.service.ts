@@ -82,39 +82,44 @@ export class PostService {
   }
 
   async get(id: number, userData: UserData): Promise<PostEntity> {
-    const post = await this.postRepository.findOne(
-        id,
-        {
-          relations: [
-            'pollItems', 'pollItems.voters', 'comments', 'comments.hearts',
-            'images', 'writer', 'board', 'hearts',
-            'recruitStatus', 'recruitStatus.currentMember',
-          ],
-        }
-    );
+    const post = await this.postRepository.createQueryBuilder('post')
+        .where('post.id= :id', {id: id})
+        .select([
+          'post.id', 'post.title', 'post.postType', 'post.content',
+          'post.createdAt',
+          'writer.id', 'writer.fullname', 'writer.nickname',
+          'board',
+          'pollItems',
+          'voters.id', 'voters.fullname', 'voters.nickname',
+          'images.id', 'images.url', 'images.originalName',
+          'comments.id', 'comments.content', 'comments.createdAt',
+          'comments.isDeleted', 'comments.parentCommentId',
+          'commentHearts.id',
+          'recruitStatus',
+          'currentMember.id', 'currentMember.fullname', 'currentMember.nickname',
+          'hearts.id',
+        ])
+        .leftJoin('post.writer', 'writer')
+        .leftJoin('post.board', 'board')
+        .leftJoin('post.pollItems', 'pollItems')
+        .leftJoin('pollItems.voters', 'voters')
+        .leftJoin('post.comments', 'comments')
+        .leftJoin('post.images', 'images')
+        .leftJoin('comments.hearts', 'commentHearts')
+        .leftJoin('post.recruitStatus', 'recruitStatus')
+        .leftJoin('recruitStatus.currentMember', 'currentMember')
+        .leftJoin('post.hearts', 'hearts')
+        .getOne();
+    console.log(post);
     if (post.board.unitId !== userData.unit.id) {
       throw new Error('Not authorized user');
     }
-    if (post.postType === PostType.RECRUIT) {
-      let isMember: boolean;
-      if ( JSON.stringify(post.recruitStatus.currentMember) === '[]' ) {
-        isMember = false;
-      } else {
-        isMember = post.recruitStatus.currentMember.every(
-            (member) => member.id === userData.id
-        );
-      }
-      post.recruitStatus.isMember = isMember;
+    // isMember
+    if (post.recruitStatus &&
+        post.recruitStatus.currentMember.some(
+            (user: UserEntity) => user.id === userData.id)) {
+      post.recruitStatus.isMember = true;
     }
-    post.comments.map((comment: CommentEntity) => {
-      if (comment.hearts.some((user: UserEntity) => user.id === userData.id)) {
-        comment.liked = true;
-      } else {
-        comment.liked = false;
-      }
-      delete comment['hearts'];
-    });
-    delete post['hearts'];
     return post;
   }
 

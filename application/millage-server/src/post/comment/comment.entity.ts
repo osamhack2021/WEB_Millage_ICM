@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany, CreateDateColumn, ManyToMany, AfterLoad} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany, CreateDateColumn, ManyToMany, AfterLoad, EventSubscriber, EntitySubscriberInterface} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
@@ -64,4 +64,14 @@ export class CommentEntity {
   countHearts() {
     this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
   }
+}
+
+@EventSubscriber()
+export class CommentSubscriber
+implements EntitySubscriberInterface<CommentEntity> {
+  listenTo() {
+    return CommentEntity;
+  }
+
+  af
 }
