@@ -1,5 +1,6 @@
 import {call, put, takeLatest, select} from 'redux-saga/effects';
 import {
+  apiCreatePost,
   apiGetBoardById,
   apiGetBoardList,
   apiGetPost,
@@ -10,6 +11,7 @@ import {
   getRecruitAndPollList,
 } from './apis';
 import {
+  CreatePostRes,
   GetBoardByIdRes,
   GetBoardListRes,
   GetPostRes,
@@ -20,6 +22,7 @@ import {
   ToggleVoteRes,
 } from './types';
 import {
+  createPostAsync,
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
@@ -77,6 +80,20 @@ function* getPostSaga(
     }));
   } catch (error: any) {
     yield put(getPostAsync.failure(error));
+  }
+}
+
+function* createPostSaga(
+    action: ReturnType<typeof createPostAsync.request>,
+) {
+  try {
+    const response: CreatePostRes = yield call(
+        apiCreatePost,
+        action.payload,
+    );
+    yield put(createPostAsync.success(response));
+  } catch (error: any) {
+    yield put(createPostAsync.failure(error));
   }
 }
 
@@ -152,6 +169,7 @@ export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
   yield takeLatest(getPostAsync.request, getPostSaga);
+  yield takeLatest(createPostAsync.request, createPostSaga);
   yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);
   yield takeLatest(toggleVoteAsync.request, toggleVoteSaga);
   yield takeLatest(toggleRecruitAsync.request, toggleRecruitSaga);

@@ -31,6 +31,18 @@ export type GetPostRes = CommonResponse & {
 export type GetPostSuccessPayload =
     GetPostRes & Required<Pick<UserState, 'session'>>
 
+export type CreatePostReq = Pick<
+    Post, 'postType' | 'title' | 'content'
+> & {
+    boardId: number;
+    pollList?: string[];
+    rCount?: number;
+}
+
+export type CreatePostRes = CommonResponse & {
+    post?: Post;
+}
+
 export type TogglePostHeartReq = {
     postId: number;
 }

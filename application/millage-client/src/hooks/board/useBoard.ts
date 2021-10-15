@@ -1,13 +1,16 @@
 import {RootState} from '@modules';
 import {
+  createPostAsync,
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
+  initCreatePostStateAction,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
 } from '@modules/board/actions';
 import {
+  CreatePostReq,
   GetBoardByIdReq,
   GetBoardListInput,
   GetPostReq,
@@ -28,6 +31,9 @@ function useBoard() {
   const postState = useSelector(
       (state: RootState) => state.Board.postState,
   );
+  const createPostState = useSelector(
+      (state: RootState) => state.Board.createPostState,
+  );
 
   const dispatch = useDispatch();
   const getBoardList = useCallback((
@@ -41,6 +47,12 @@ function useBoard() {
       }, [dispatch]);
   const getPost = useCallback((getPostReq: GetPostReq) => {
     dispatch(getPostAsync.request(getPostReq));
+  }, [dispatch]);
+  const createPost = useCallback((createPostReq: CreatePostReq) => {
+    dispatch(createPostAsync.request(createPostReq));
+  }, [dispatch]);
+  const initCreatePostState = useCallback(() => {
+    dispatch(initCreatePostStateAction());
   }, [dispatch]);
   const togglePostHeart = useCallback(
       (togglePostHeartReq: TogglePostHeartReq) => {
@@ -63,9 +75,12 @@ function useBoard() {
     curBoardState,
     boardListState,
     postState,
+    createPostState,
     getBoardList,
     getBoardById,
     getPost,
+    createPost,
+    initCreatePostState,
     togglePostHeart,
     toggleVote,
     toggleRecruit,

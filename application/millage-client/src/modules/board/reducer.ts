@@ -19,6 +19,10 @@ import {
   GET_RECENT_SCHEDULE_REQUEST,
   GET_RECENT_SCHEDULE_SUCCESS,
   GET_RECENT_SCHEDULE_FAILURE,
+  CREATE_POST,
+  CREATE_POST_SUCCESS,
+  CREATE_POST_FAILURE,
+  INIT_CREATE_POST_STATE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -38,6 +42,11 @@ const initialState: BoardState = {
     error: null,
   },
   sideboxState: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  createPostState: {
     loading: false,
     data: null,
     error: null,
@@ -150,6 +159,38 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       loading: false,
       data: null,
       error: action.payload.message,
+    },
+  }),
+
+  [CREATE_POST]: (state) => ({
+    ...state,
+    createPostState: {
+      ...state.createPostState,
+      loading: true,
+    },
+  }),
+  [CREATE_POST_SUCCESS]: (state, action) => ({
+    ...state,
+    createPostState: {
+      ...state.createPostState,
+      loading: false,
+      data: action.payload.post,
+    },
+  }),
+  [CREATE_POST_FAILURE]: (state) => ({
+    ...state,
+    createPostState: {
+      ...state.createPostState,
+      loading: false,
+      data: null,
+    },
+  }),
+  [INIT_CREATE_POST_STATE]: (state) => ({
+    ...state,
+    createPostState: {
+      loading: false,
+      data: null,
+      error: null,
     },
   }),
 
