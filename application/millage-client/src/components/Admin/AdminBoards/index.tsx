@@ -255,7 +255,9 @@ export default function AdminBoards() {
         justifyContent: 'space-between',
         width: '78%',
       }}>
-        <div></div>
+        <div style={{
+          width: '64px',
+        }}></div>
         <div id = "SearchContainer">
           <input type="text"
             placeholder="게시판 이름 / 설명으로 검색하세요"

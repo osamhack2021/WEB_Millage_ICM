@@ -1,5 +1,6 @@
 #AdminContainer{
-    width: 100%;
+    width: 100vw;
+    height: 610px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,13 +41,14 @@
 
 #AdminContainer #SearchContainer{
     padding-top:50px;
+    width:50%;
 }
 
 #AdminContainer #SearchContainer input{
     display:block;
     margin-left:auto;
     margin-right:auto;
-    width:500px;
+    width: 100%;
     border: 1px solid rgba(0,0,0,0.5);
     text-indent:10px;
     height:30px;
