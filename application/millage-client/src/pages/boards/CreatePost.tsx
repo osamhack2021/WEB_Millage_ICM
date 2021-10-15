@@ -9,10 +9,11 @@ import {
   Select,
   TextareaAutosize,
 } from '@mui/material';
-import {NORMAL, POLL, RECRUIT} from '@constants';
+import {NORMAL, POLL, POST_PATH, RECRUIT} from '@constants';
 import {CreatePostReq, PollInputs, PostType} from '@modules/board/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {CreatePollBox} from '@components/boards/CreatePost';
+import {useHistory} from 'react-router';
 
 // let newPollID = 1;
 
@@ -39,7 +40,6 @@ function CreatePostPage() {
     selectedBoardID,
     setSelectedBoardID,
   ] = useState<number>(curBoard?.id || 0);
-
   const selectedBoard = boardList?.find((b) => b.id === selectedBoardID);
 
   const [postType, setPostType] = useState<PostType>(NORMAL);
@@ -54,6 +54,9 @@ function CreatePostPage() {
     defaultValues: {rCount: 0},
   });
   const onSubmit: SubmitHandler<CreatePostReq> = (data) => {
+    if (createPostState.loading) {
+      return;
+    }
     if (!selectedBoard) {
       window.alert('게시판을 선택해주세요.');
       return;
@@ -80,8 +83,20 @@ function CreatePostPage() {
     } else if (postType === RECRUIT) {
       createPostReq.rCount = data.rCount;
     }
-    console.log(createPostReq);
+
+    createPost(createPostReq);
   };
+
+  const history = useHistory();
+  if (createPostState.data) {
+    history.push(`${POST_PATH}/${createPostState.data.id}`);
+  }
+  // Unmount될 때 CreatePostState를 초기화 해야함
+  // useEffect(() => {
+  //   return () => {
+
+  //   }
+  // }, [])
 
   return (
     loading ?
@@ -157,7 +172,9 @@ function CreatePostPage() {
       >
         <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>
         <input
-          {...register('title')}
+          {...register('title', {
+            required: '제목을 입력해주세요',
+          })}
           type='text'
           className='focus:outline-none border-b border-gray-500 py-2 w-full'
         />
@@ -199,7 +216,9 @@ function CreatePostPage() {
             px-40 py-5 mt-6 focus:outline-none
           '
         >
-          게시글 생성
+          {createPostState.loading ?
+          'loading...' :
+          '게시글 생성'}
         </button>
       </form>
 
