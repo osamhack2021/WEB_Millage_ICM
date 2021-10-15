@@ -7,6 +7,7 @@ import {CreatePostDto, PostParams, GetPostParams, UpdatePostDto, VoteParams} fro
 import {Result, ResultObject} from '../common/common.interface';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
+import {UserData} from '../user/user.interface';
 
 @ApiBearerAuth()
 @ApiTags('post')
@@ -36,9 +37,11 @@ export class PostController {
   }
 
   @Get(':id')
+  @Roles(Role.ADMIN, Role.NORMAL_USER, Role.SUPER_ADMIN)
   async get(@Param() params: GetPostParams, @Req() req: Request): Promise<PostRO> {
     try {
-      const selectedPost = await this.postService.get(params.id, req.session.user.id);
+      const userData: UserData = req.session.user;
+      const selectedPost = await this.postService.get(params.id, userData);
       const postRO: PostRO = {result: Result.SUCCESS, post: selectedPost};
       if (selectedPost.postType === PostType.POLL) {
         postRO.post.isVoter = await this.postService.isVoter(params.id, req.session.user.id);
