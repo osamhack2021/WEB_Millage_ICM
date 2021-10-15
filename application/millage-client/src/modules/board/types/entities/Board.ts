@@ -8,7 +8,7 @@ export type Board = {
     title: string;
     description: string;
     createdAt: string;
-    auth: number;
+    auth: AuthType;
     anonymous: boolean;
     pollAllowed: boolean;
     recruitAllowed: boolean;
@@ -16,4 +16,9 @@ export type Board = {
     unit: UnitObject;
     posts?: Post[];
     paginationObject: PaginationResults<Post>;
+};
+
+export enum AuthType {
+    ALL = 0,
+    ADMIN = 1,
 };

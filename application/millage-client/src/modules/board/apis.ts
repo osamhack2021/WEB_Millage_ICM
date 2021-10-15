@@ -1,4 +1,6 @@
 import {
+  CreateBoardReq,
+  CreateBoardRes,
   CreatePostReq,
   CreatePostRes,
   GetBoardByIdReq,
@@ -18,6 +20,7 @@ import {
 } from './types';
 import axios from 'axios';
 import {
+  CREATE_BOARD_API,
   CREATE_POST_API,
   GET_BOARD_API,
   GET_BOARD_LIST_API,
@@ -70,6 +73,26 @@ export async function apiGetBoardById(
     return data;
   } catch (error: any) {
     return {result: 'fail', message: error};
+  }
+}
+
+/**
+ * Create Board API
+ * @param createBoardReq
+ * @returns
+ */
+export async function apiCreateBoard(
+    createBoardReq: CreateBoardReq,
+): Promise<CreateBoardRes> {
+  try {
+    const {data} = await axios.post<CreateBoardRes>(
+        CREATE_BOARD_API,
+        createBoardReq,
+        {withCredentials: true},
+    );
+    return data;
+  } catch (error: any) {
+    return {result: 'error', message: error};
   }
 }
 

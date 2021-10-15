@@ -1,48 +1,54 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormControlLabel, Radio, RadioGroup} from '@mui/material';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {FALSE, TRUE} from '@constants';
+import {BOARD_PATH, FALSE, TRUE} from '@constants';
+import {AuthType, CreateBoardReq} from '@modules/board/types';
+import {useUser} from '@hooks/user';
+import {useBoard} from '@hooks/board';
+import {useHistory} from 'react-router';
 
-type Inputs = {
-  title: string;
-  description: string;
-}
+type Inputs = Pick<CreateBoardReq, 'title' | 'description'>
 
-enum UserRole {     // eslint-disable-line
-  Admin = 'Admin',  // eslint-disable-line
-  All = 'All'       // eslint-disable-line
-}
-
-type Authority = UserRole.Admin | UserRole.All;
 type BooleanString = typeof TRUE | typeof FALSE
-
-type CreateBoardInput = Inputs & {
-  authority: Authority;
-  isPublicWriter: boolean;
-  allowPoll: boolean;
-  allowRecruit: boolean;
-  allowImage: boolean;
-}
 
 function CreateBoardPage() {
   const {register, handleSubmit} = useForm<Inputs>();
-  const [authority, setAuthority] = useState<Authority>(UserRole.Admin);
-  const [isPublicWriter, setIsPublicWriter] = useState<BooleanString>(TRUE);
-  const [allowPoll, setAllowPoll] = useState<BooleanString>(TRUE);
-  const [allowRecruit, setAllowRecruit] = useState<BooleanString>(TRUE);
-  const [allowImage, setAllowImage] = useState<BooleanString>(TRUE);
+  const [auth, setAuth] = useState<AuthType>(AuthType.ALL);
+  const [anonymous, setAnonymous] = useState<BooleanString>(TRUE);
+  const [pollAllowed, setPollAllowed] = useState<BooleanString>(TRUE);
+  const [recruitAllowed, setRecruitAllowed] = useState<BooleanString>(TRUE);
+  const {session} = useUser();
+  const {
+    createBoardState: {loading, data},
+    createBoard,
+    initCreateBoardState,
+  } = useBoard();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const CreateBoardInput: CreateBoardInput = {
+    if (loading) {
+      return;
+    }
+    const createBoardReq: CreateBoardReq = {
       ...data,
-      authority,
-      isPublicWriter: isPublicWriter === TRUE,
-      allowPoll: allowPoll === TRUE,
-      allowRecruit: allowRecruit === TRUE,
-      allowImage: allowImage === TRUE,
+      auth,
+      anonymous: anonymous === TRUE,
+      pollAllowed: pollAllowed === TRUE,
+      recruitAllowed: recruitAllowed === TRUE,
+      unitId: session?.unit.id || 0,
     };
-    console.log(CreateBoardInput);
+    console.log(createBoardReq);
+    createBoard(createBoardReq);
   };
+
+  const history = useHistory();
+  if (data) {
+    history.push(`${BOARD_PATH}/${data.id}`);
+  }
+  useEffect(() => {
+    return () => {
+      initCreateBoardState();
+    };
+  }, []);
 
   return (
     <div
@@ -72,19 +78,18 @@ function CreateBoardPage() {
         <h3 className='text-xl mt-4 mb-2' > 게시글 작성 권한 </h3>
         <RadioGroup
           row
-          value={authority}
+          value={auth}
           onChange={(e, v) => {
-            if ( v !== UserRole.Admin && v !== UserRole.All ) return;
-            setAuthority(v);
+            setAuth(+v);
           }}
         >
           <FormControlLabel
-            value={UserRole.Admin}
+            value={AuthType.ADMIN}
             control={<Radio />}
             label="관리자 전용"
           />
           <FormControlLabel
-            value={UserRole.All}
+            value={AuthType.ALL}
             control={<Radio />}
             label="모든 유저 허용"
           />
@@ -93,10 +98,10 @@ function CreateBoardPage() {
         <h3 className='text-xl mt-4 mb-2' > 작성자 공개 여부 </h3>
         <RadioGroup
           row
-          value={isPublicWriter}
+          value={anonymous}
           onChange={(e, v) => {
             if (v !== TRUE && v !== FALSE) return;
-            setIsPublicWriter(v);
+            setAnonymous(v);
           }}
         >
           <FormControlLabel value={TRUE} control={<Radio />} label="공개" />
@@ -106,10 +111,10 @@ function CreateBoardPage() {
         <h3 className='text-xl mt-4 mb-2' > 설문 게시글 허용 </h3>
         <RadioGroup
           row
-          value={allowPoll}
+          value={pollAllowed}
           onChange={(e, v) => {
             if (v !== TRUE && v !== FALSE) return;
-            setAllowPoll(v);
+            setPollAllowed(v);
           }}
         >
           <FormControlLabel
@@ -123,10 +128,10 @@ function CreateBoardPage() {
         <h3 className='text-xl mt-4 mb-2' > 모집 게시글 허용 </h3>
         <RadioGroup
           row
-          value={allowRecruit}
+          value={recruitAllowed}
           onChange={(e, v) => {
             if (v !== TRUE && v !== FALSE) return;
-            setAllowRecruit(v);
+            setRecruitAllowed(v);
           }}
         >
           <FormControlLabel
@@ -137,7 +142,7 @@ function CreateBoardPage() {
           />
         </RadioGroup>
 
-        <h3 className='text-xl mt-6 mb-2' > 게시글 이미지 업로드 허용 </h3>
+        {/* <h3 className='text-xl mt-6 mb-2' > 게시글 이미지 업로드 허용 </h3>
         <RadioGroup
           row
           value={allowImage}
@@ -152,10 +157,10 @@ function CreateBoardPage() {
           <FormControlLabel
             value={FALSE} control={<Radio />} label="비허용"
           />
-        </RadioGroup>
+        </RadioGroup> */}
 
         <button className='bg-gray-500 text-white self-center px-40 py-5' >
-          게시판 생성
+          {loading ? 'loading' : '게시판 생성'}
         </button>
       </form>
 
