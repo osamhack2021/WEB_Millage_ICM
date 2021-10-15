@@ -46,15 +46,18 @@ export class CommentEntity {
   @ManyToOne(
       () => CommentEntity,
       (comment) => comment.replies,
-      {onDelete: 'CASCADE'},
+      {onDelete: 'CASCADE', nullable: true},
   )
   @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
+  parentComment: CommentEntity;
+
+  @Column({nullable: true})
   parentCommentId?: number;
 
   @ManyToMany(() => UserEntity)
   @JoinTable({name: 'commentHeart'})
   hearts: UserEntity[];
-
+  liked?: boolean;
   heartCount: number;
 
   @AfterLoad()
