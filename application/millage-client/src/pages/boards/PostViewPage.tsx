@@ -31,15 +31,15 @@ function PostViewPage() {
    */
 
   const renderComments = () => {
-    return postState.data?.comments.map(async (comment : Comment) => {
+    return postState.data?.comments.map((comment : Comment) => {
       return (
         <CommentBox
           key={comment.id}
           userId={comment.writer ? comment.writer.id : -1}
           content={comment.content}
           createdAt={comment.createdAt}
-          heartUserIds={comment.heartUserIds}
-          replies={comment.replies}
+          heartCount={comment.heartCount}
+          liked={comment.liked}
           nickname={comment.writer ? comment.writer.nickname : ''}
         />
       );
