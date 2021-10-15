@@ -8,6 +8,7 @@ import {PollEntity} from './poll/poll.entity';
 import {UserEntity} from '../user/user.entity';
 import {RecruitEntity} from './recruit/recruit.entity';
 import {BoardEntity} from '../board/board.entity';
+import {CommentEntity} from './comment/comment.entity';
 import {UserData} from '../user/user.interface';
 import {Role} from '../user_role/user_role.interface';
 
@@ -85,7 +86,7 @@ export class PostService {
         id,
         {
           relations: [
-            'pollItems', 'pollItems.voters', 'comments',
+            'pollItems', 'pollItems.voters', 'comments', 'comments.hearts',
             'images', 'writer', 'board', 'hearts',
             'recruitStatus', 'recruitStatus.currentMember',
           ],
@@ -105,6 +106,14 @@ export class PostService {
       }
       post.recruitStatus.isMember = isMember;
     }
+    post.comments.map((comment: CommentEntity) => {
+      if (comment.hearts.some((user: UserEntity) => user.id === userData.id)) {
+        comment.liked = true;
+      } else {
+        comment.liked = false;
+      }
+      delete comment['hearts'];
+    });
     delete post['hearts'];
     return post;
   }

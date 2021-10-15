@@ -33,7 +33,10 @@ export class BoardEntity {
   @Column({type: 'boolean', default: false})
   imageAllowed: boolean;
 
-  @ManyToOne(() => UnitEntity)
+  @ManyToOne(
+      () => UnitEntity,
+      {onDelete: 'CASCADE'},
+  )
   @JoinTable({
     name: 'unit',
     joinColumn: {name: 'unitId', referencedColumnName: 'id'},
