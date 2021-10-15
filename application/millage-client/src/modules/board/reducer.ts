@@ -22,6 +22,7 @@ import {
   CREATE_POST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAILURE,
+  INIT_CREATE_POST_STATE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -182,6 +183,14 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       ...state.createPostState,
       loading: false,
       data: null,
+    },
+  }),
+  [INIT_CREATE_POST_STATE]: (state) => ({
+    ...state,
+    createPostState: {
+      loading: false,
+      data: null,
+      error: null,
     },
   }),
 

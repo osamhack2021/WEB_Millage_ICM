@@ -4,6 +4,7 @@ import {
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
+  initCreatePostStateAction,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
@@ -50,6 +51,9 @@ function useBoard() {
   const createPost = useCallback((createPostReq: CreatePostReq) => {
     dispatch(createPostAsync.request(createPostReq));
   }, [dispatch]);
+  const initCreatePostState = useCallback(() => {
+    dispatch(initCreatePostStateAction());
+  }, [dispatch]);
   const togglePostHeart = useCallback(
       (togglePostHeartReq: TogglePostHeartReq) => {
         dispatch(togglePostHeartAsync.request(togglePostHeartReq));
@@ -76,6 +80,7 @@ function useBoard() {
     getBoardById,
     getPost,
     createPost,
+    initCreatePostState,
     togglePostHeart,
     toggleVote,
     toggleRecruit,

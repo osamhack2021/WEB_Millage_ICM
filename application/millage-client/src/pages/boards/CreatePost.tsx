@@ -15,7 +15,6 @@ import {SubmitHandler, useForm} from 'react-hook-form';
 import {CreatePollBox} from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
 
-// let newPollID = 1;
 
 function CreatePostPage() {
   const {
@@ -24,6 +23,7 @@ function CreatePostPage() {
     createPostState,
     getBoardList,
     createPost,
+    initCreatePostState,
   } = useBoard();
 
   const {data: curBoard} = curBoardState;
@@ -91,12 +91,11 @@ function CreatePostPage() {
   if (createPostState.data) {
     history.push(`${POST_PATH}/${createPostState.data.id}`);
   }
-  // Unmount될 때 CreatePostState를 초기화 해야함
-  // useEffect(() => {
-  //   return () => {
-
-  //   }
-  // }, [])
+  useEffect(() => {
+    return () => {
+      initCreatePostState();
+    };
+  }, []);
 
   return (
     loading ?

@@ -1,4 +1,4 @@
-import {createAsyncAction} from 'typesafe-actions';
+import {createAction, createAsyncAction} from 'typesafe-actions';
 import {AxiosError} from 'axios';
 import {
   CreatePostReq,
@@ -67,13 +67,16 @@ export const getPostAsync = createAsyncAction(
 export const CREATE_POST = 'board/CREATE_POST';
 export const CREATE_POST_SUCCESS = 'board/CREATE_POST_SUCCESS';
 export const CREATE_POST_FAILURE = 'board/CREATE_POST_FAILURE';
+export const INIT_CREATE_POST_STATE = 'board/INIT_CREATE_POST_STATE';
 
 export const createPostAsync = createAsyncAction(
     CREATE_POST,
     CREATE_POST_SUCCESS,
     CREATE_POST_FAILURE,
 )<CreatePostReq, CreatePostRes, AxiosError>();
-
+export const initCreatePostStateAction = createAction(
+    INIT_CREATE_POST_STATE
+)();
 
 /**
  * POST Toggle Post Heart API Actions
