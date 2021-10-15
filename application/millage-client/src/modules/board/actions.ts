@@ -75,7 +75,7 @@ export const createPostAsync = createAsyncAction(
     CREATE_POST_FAILURE,
 )<CreatePostReq, CreatePostRes, AxiosError>();
 export const initCreatePostStateAction = createAction(
-    INIT_CREATE_POST_STATE
+    INIT_CREATE_POST_STATE,
 )();
 
 /**
