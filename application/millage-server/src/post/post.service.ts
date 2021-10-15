@@ -101,6 +101,18 @@ export class PostService {
     return pollItems.some((pollItem) => pollItem.voters.some((voter) => voter.id === userId));
   }
 
+  private async checkValidity(postId: number, userData: UserData): Promise<boolean> {
+    if (userData.role.name === Role.SUPER_ADMIN) {
+      return true;
+    }
+    const post = await this.postRepository.findOne(postId, {relations: ['board']});
+    if (userData.role.name === Role.ADMIN ||
+        post.board.unitId === userData.unit.id) {
+        return true;
+    }
+    return post.writerId === userData.id;
+  }
+
   private async getDeleteFindCondition(
       postId: number, userData: UserData): Promise<FindConditions<PostEntity>> {
     if (userData.role.name === Role.NORMAL_USER) {
@@ -117,17 +129,15 @@ export class PostService {
     throw new Error('Not authorized admin for this board');
   }
 
-  async delete(postId: number, userData: UserData): Promise<boolean> {
-    try {
-      const findConditions = await this.getDeleteFindCondition(postId, userData);
-      const deleteResult = await this.postRepository.delete(findConditions);
-      if (deleteResult.affected === 0) {
-        throw new Error(`No matched post with id ${postId} writerId ${userData.id}`);
-      }
-      return true;
-    } catch (err) {
-      throw new Error(err.message);
+  async delete(postId: number, userData: UserData): Promise<number> {
+    if (!this.checkValidity(postId, userData)) {
+      throw new Error(`Not authorized user`);
     }
+    const deleteResult = await this.postRepository.delete(postId);
+    if (deleteResult.affected === 0) {
+      throw new Error(`Unknown error occured`);
+    }
+    return postId;
   }
 
   async update(id: number, postdata: UpdatePostDto): Promise<boolean> {
