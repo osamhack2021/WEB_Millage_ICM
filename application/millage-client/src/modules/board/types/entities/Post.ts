@@ -1,7 +1,7 @@
 import {NORMAL, POLL, RECRUIT} from '@constants';
 import {UserData} from '@modules/User/types';
 import {Comment} from './Comment';
-import {Poll, PollInputs, RecruitStatus, Board} from './';
+import {Poll, RecruitStatus, Board} from './';
 
 /* Types of Post */
 export type PostType =
@@ -25,15 +25,4 @@ export type Post = {
     isVoter?: boolean;
     images?: string[];
     recruitStatus?: RecruitStatus;
-};
-
-export type PostInputs = Pick<Post,
-    | 'postType'
-> & Partial<Pick<Post,
-    | 'title'
-    | 'content'
-    | 'images'
->> & {
-    pollInputs?: PollInputs[];
-    recruitTotal?: number;
 };
