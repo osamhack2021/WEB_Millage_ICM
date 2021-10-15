@@ -4,7 +4,7 @@ import {Route, Switch, useHistory} from 'react-router-dom';
 import Header from '@components/Header';
 import {checkSessionAsync} from '@modules/User/actions';
 import CreateBoardPage from '@pages/boards/CreateBoard';
-import CreatePostPage from '@pages/boards/CreatePost';
+import CreatePostPage from '@pages/boards/CreatePostPage';
 import Schedule from '@pages/Schedule';
 import Intro from '@pages/Intro';
 import DM from '@pages/DM';
