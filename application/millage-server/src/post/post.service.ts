@@ -67,30 +67,33 @@ export class PostService {
     }
   }
 
-  async get(id: number, userId: number): Promise<PostEntity> {
-    try {
-      const post = await this.postRepository.findOne(
-          id, {relations: [
-            'pollItems', 'pollItems.voters',
-            'images', 'writer', 'board',
-            'recruitStatus', 'recruitStatus.currentMember',
-          ]}
-      );
-      if (post.postType === PostType.RECRUIT) {
-        let isMember: boolean;
-        if ( JSON.stringify(post.recruitStatus.currentMember) === '[]' ) {
-          isMember = false;
-        } else {
-          isMember = post.recruitStatus.currentMember.every(
-              (member) => member.id === userId
-          );
+  async get(id: number, userData: UserData): Promise<PostEntity> {
+    const post = await this.postRepository.findOne(
+        id, 
+        {
+          relations: [
+          'pollItems', 'pollItems.voters', 'comments',
+          'images', 'writer', 'board', 'hearts',
+          'recruitStatus', 'recruitStatus.currentMember',
+          ],
         }
-        post.recruitStatus.isMember = isMember;
-      }
-      return post;
-    } catch (err) {
-      throw new Error(err.message);
+    );
+    if (post.board.unitId !== userData.unit.id) {
+      throw new Error('Not authorized user');
     }
+    if (post.postType === PostType.RECRUIT) {
+      let isMember: boolean;
+      if ( JSON.stringify(post.recruitStatus.currentMember) === '[]' ) {
+        isMember = false;
+      } else {
+        isMember = post.recruitStatus.currentMember.every(
+            (member) => member.id === userData.id
+        );
+      }
+      post.recruitStatus.isMember = isMember;
+    }
+    delete post['hearts'];
+    return post;
   }
 
   async isVoter(id: number, userId: number): Promise<boolean> {

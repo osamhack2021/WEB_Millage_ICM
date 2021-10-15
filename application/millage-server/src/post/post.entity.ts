@@ -1,5 +1,8 @@
 import {BoardEntity} from '../board/board.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinTable, OneToOne, RelationId, ManyToMany, AfterLoad, CreateDateColumn} from 'typeorm';
+import {
+  Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne,
+  JoinTable, OneToOne, ManyToMany, AfterLoad, CreateDateColumn,
+} from 'typeorm';
 import {PostType} from './post.interface';
 import {UserEntity} from '../user/user.entity';
 import {PollEntity} from './poll/poll.entity';
@@ -75,6 +78,8 @@ export class PostEntity {
   @JoinTable({name: 'heart'})
   hearts: UserEntity[];
 
+  heartUserIds: number[];
+
   heartCount: number;
 
   isVoter?: boolean;
@@ -82,5 +87,10 @@ export class PostEntity {
   @AfterLoad()
   countHearts() {
     this.heartCount = this.hearts === undefined ? 0 : this.hearts.length;
+  }
+
+  @AfterLoad()
+  setHeartUserIds() {
+    this.heartUserIds = this.hearts.map((user: UserEntity) => user.id);
   }
 }
