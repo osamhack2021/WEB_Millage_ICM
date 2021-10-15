@@ -7,11 +7,13 @@
             "@modules": ["./modules/index.ts"],
             "@hooks": ["./hooks/index.ts"],
             "@constants": ["./constants/index.ts"],
+            "@images": ["./images/index.ts"],
             "@pages/*": ["./pages/*"],
             "@components/*": ["./components/*"],
             "@modules/*": ["./modules/*"],
             "@hooks/*": ["./hooks/*"],
-            "@utils/*": ["./utils/*"]
+            "@utils/*": ["./utils/*"],
+            "@images/*": ["./images/*"]
         }
     }
 }
