@@ -91,6 +91,6 @@ export class PostEntity {
 
   @AfterLoad()
   setHeartUserIds() {
-    this.heartUserIds = this.hearts.map((user: UserEntity) => user.id);
+    this.heartUserIds = this.hearts != undefined  ? this.hearts.map((user: UserEntity) => user.id) : [];
   }
 }

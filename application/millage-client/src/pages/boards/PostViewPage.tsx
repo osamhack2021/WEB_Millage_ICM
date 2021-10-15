@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards';
+import {default as CommentBox} from '@components/boards/PostView/Comment';
+import {Comment} from '@modules/board/types/';
 import {PollListBox, RecruitBox, PostTopBox} from '@components/boards/PostView';
 
 type Params = {
@@ -27,6 +29,21 @@ function PostViewPage() {
   /**
    * title, content, createdAt, id, images, pollItems, postType,
    */
+
+  const renderComments = () => {
+    return postState.data?.comments.map((comment : Comment) => {
+      return (
+        <CommentBox
+          userId={comment.writer ? comment.writer.id : -1}
+          content={comment.content}
+          createdAt={comment.createdAt}
+          heartUserIds={comment.heartUserIds}
+          replies={comment.replies}
+          nickname={comment.writer ? comment.writer.nickname : ''}
+        />
+      );
+    });
+  };
 
   return (
     <div>
@@ -64,7 +81,7 @@ function PostViewPage() {
         </div>
 
         <div>
-          댓글 컴포넌트
+          {renderComments()}
         </div>
 
       </div> :
