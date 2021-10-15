@@ -9,17 +9,17 @@ type Props = {
   nickname: string;
   content: string;
   createdAt: Date;
-  heartUserIds: number[];
-  replies?: Comment[];
+  heartCount: number;
+  liked: boolean;
 };
 
 const CommentBox:React.FC<Props> = ({
-  heartUserIds,
+  heartCount,
   userId,
   nickname,
   content,
   createdAt,
-  replies,
+  liked,
 }) => {
   return (
     <div id="CommentContainer" className="w-full mb-4">
@@ -39,7 +39,7 @@ const CommentBox:React.FC<Props> = ({
         <span>{content}</span>
       </div>
       <div>
-        <span>{createdAt}좋아요 {heartUserIds}</span>
+        <span>{createdAt}좋아요 {heartCount}</span>
       </div>
     </div>
   );

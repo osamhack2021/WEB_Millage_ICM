@@ -71,10 +71,9 @@ async function bootstrap() {
   };
 
   app.use(errorHandler);
-  // await app.listen(3000, async () => {
-    // console.log('Server running on http://localhost:3000');
-  await app.listen(4000, async () => {
-    console.log('Server running on http://localhost:4000');
+  const port = process.env.NODE_ENV == 'production' ? 3000 : 4000;
+  await app.listen(port, async () => {
+    console.log(`Server running on http://localhost:${port}`);
   });
 }
 bootstrap();
