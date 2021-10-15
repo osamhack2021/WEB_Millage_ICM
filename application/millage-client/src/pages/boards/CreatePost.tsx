@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
 import {
   FormControl,
@@ -10,17 +10,19 @@ import {
   TextareaAutosize,
 } from '@mui/material';
 import {NORMAL, POLL, RECRUIT} from '@constants';
-import {PollInputs, PostInputs, PostType} from '@modules/board/types';
-import {CancelOutlined} from '@mui/icons-material';
+import {CreatePostReq, PollInputs, PostType} from '@modules/board/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
+import {CreatePollBox} from '@components/boards/CreatePost';
 
-let newPollID = 1;
+// let newPollID = 1;
 
 function CreatePostPage() {
   const {
     curBoardState,
     boardListState,
+    createPostState,
     getBoardList,
+    createPost,
   } = useBoard();
 
   const {data: curBoard} = curBoardState;
@@ -43,63 +45,15 @@ function CreatePostPage() {
   const [postType, setPostType] = useState<PostType>(NORMAL);
 
   // submit 전에 content가 ''인 poll 제거하는 로직 필요
-  const [pollInputs, setPollList] = useState<PollInputs[]>([{
-    index: newPollID,
+  const [pollList, setPollList] = useState<PollInputs[]>([{
+    index: 1,
     content: '',
   }]);
 
-  // Poll 입력 이벤트 헨들러
-  const onPollInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // Target Poll Update
-    const targetPollIdx = pollInputs.findIndex((p) =>
-      p.index === +e.target.id);
-    const updatedPollList: PollInputs[] = [
-      ...pollInputs.slice(0, targetPollIdx),
-      {
-        index: +e.target.id,
-        content: e.target.value,
-      },
-      ...pollInputs.slice(targetPollIdx + 1),
-    ];
-
-    // 마지막 Poll이면 새로운 Poll 생성
-    const isLastInput = !(pollInputs.find((p) =>
-      p.index === (+e.target.id) + 1));
-    if (isLastInput) {
-      newPollID++;
-      setPollList([
-        ...updatedPollList,
-        {
-          content: '',
-          index: newPollID,
-        },
-      ]);
-    } else {
-      setPollList([...updatedPollList]);
-    }
-  };
-
-  // Poll 삭제 이벤트 핸들러
-  const onPollDelete = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
-    const inputId =
-      e.currentTarget.parentElement?.parentElement?.lastElementChild?.id;
-    if (!inputId || pollInputs.length === 1) {
-      return;
-    }
-    const targetPollIdx = pollInputs.findIndex((p) => p.index === +inputId);
-    if (targetPollIdx === undefined) {
-      return;
-    }
-    setPollList([
-      ...pollInputs.slice(0, targetPollIdx),
-      ...pollInputs.slice(targetPollIdx + 1),
-    ]);
-  };
-
-  const {register, handleSubmit} = useForm<PostInputs>({
-    defaultValues: {recruitTotal: 0},
+  const {register, handleSubmit} = useForm<CreatePostReq>({
+    defaultValues: {rCount: 0},
   });
-  const onSubmit: SubmitHandler<PostInputs> = (data) => {
+  const onSubmit: SubmitHandler<CreatePostReq> = (data) => {
     if (!selectedBoard) {
       window.alert('게시판을 선택해주세요.');
       return;
@@ -113,17 +67,20 @@ function CreatePostPage() {
       return;
     }
 
-    const dataWillSend: PostInputs = {
+    const createPostReq: CreatePostReq = {
+      boardId: selectedBoardID,
       postType,
       title: data.title,
       content: data.content,
     };
     if (postType === POLL) {
-      dataWillSend.pollInputs = pollInputs.filter((p) => p.content !== '');
+      createPostReq.pollList = pollList
+          .filter((p) => p.content !== '')
+          .map((p) => p.content);
     } else if (postType === RECRUIT) {
-      dataWillSend.recruitTotal = data.recruitTotal;
+      createPostReq.rCount = data.rCount;
     }
-    console.log(dataWillSend);
+    console.log(createPostReq);
   };
 
   return (
@@ -218,43 +175,17 @@ function CreatePostPage() {
 
         {/* 설문 기능 */}
         { selectedBoard?.pollAllowed && postType === POLL &&
-          <div className='w-full'>
-            <h3 className='text-xl mt-4 mb-2' >설문지 만들기</h3>
-            <div className='w-full'>
-              { pollInputs.map((p) => (
-                <div
-                  key={p.index}
-                  className='relative ring-1 ring-gray-500'
-                >
-                  <div
-                    className='
-                      absolute right-4 top-0 bottom-0 flex items-center
-                    '
-                  >
-                    <CancelOutlined
-                      className='cursor-pointer text-red-400'
-                      fontSize='small'
-                      onClick={onPollDelete}
-                    />
-                  </div>
-                  <input
-                    id={p.index.toString()}
-                    value={p.content}
-                    onChange={onPollInputChange}
-                    className='w-full focus:outline-none p-4'
-                    type='text'
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          <CreatePollBox
+            pollList={pollList}
+            setPollList={setPollList}
+          />
         }
 
         { selectedBoard?.recruitAllowed && postType === RECRUIT &&
           <div className='flex my-6 items-center' >
             <h3 className='text-xl mr-4' >모집 인원</h3>
             <input
-              {...register('recruitTotal')}
+              {...register('rCount')}
               className='p-2 ring-1 ring-gray-500 focus:outline-none'
               type='number'
               min={0}
