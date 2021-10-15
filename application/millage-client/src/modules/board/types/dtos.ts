@@ -20,6 +20,17 @@ export type GetBoardByIdRes = CommonResponse & {
     board?: Board;
 };
 
+export type CreateBoardReq = Pick<Board,
+    'title' | 'description' | 'auth' | 'anonymous' |
+    'pollAllowed' |'recruitAllowed'
+> & {
+    unitId: number;
+}
+
+export type CreateBoardRes = CommonResponse & {
+    board?: Board;
+}
+
 export type GetPostReq = {
     postId: number;
 }
