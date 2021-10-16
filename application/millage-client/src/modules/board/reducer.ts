@@ -27,6 +27,9 @@ import {
   CREATE_BOARD_SUCCESS,
   CREATE_BOARD_FAILURE,
   INIT_CREATE_BOARD_STATE,
+  INSERT_REPLY_FAILURE,
+  INSERT_REPLY_REQUEST,
+  INSERT_REPLY_SUCCESS,
 } from './actions';
 
 const initialState: BoardState = {
@@ -49,6 +52,9 @@ const initialState: BoardState = {
     loading: false,
     data: null,
     error: null,
+  },
+  replyState: {
+    result: '',
   },
   createPostState: {
     loading: false,
@@ -363,6 +369,35 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       loading: false,
       data: null,
       error: action.payload,
+    },
+  }),
+  [INSERT_REPLY_REQUEST]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: '',
+    },
+  }),
+  [INSERT_REPLY_SUCCESS]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: 'success',
+    },
+    postState: {
+      ...state.postState,
+      data: state.postState.data && {
+        ...state.postState.data,
+        comments: [
+          ...state.postState.data.comments,
+          action.payload.comment,
+        ],
+      },
+    },
+  }),
+  [INSERT_REPLY_FAILURE]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: 'error',
+      message: action.payload.message,
     },
   }),
 });

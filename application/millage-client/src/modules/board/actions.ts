@@ -13,6 +13,8 @@ import {
   GetPostSuccessPayload,
   getRecentScheduleRes,
   getRecruitAndPollListRes,
+  insertReplyReq,
+  insertReplyRes,
   TogglePostHeartReq,
   TogglePostHeartRes,
   ToggleRecruitReq,
@@ -20,6 +22,7 @@ import {
   ToggleVoteReq,
   ToggleVoteRes,
 } from './types';
+import {CommonResponse} from '@utils/commonTypes';
 
 /**
  * GET Board List API Actions
@@ -161,3 +164,17 @@ export const getRecentScheduleAsync = createAsyncAction(
     GET_RECENT_SCHEDULE_SUCCESS,
     GET_RECENT_SCHEDULE_FAILURE,
 )<undefined, getRecentScheduleRes, AxiosError>();
+
+
+export const INSERT_REPLY_REQUEST =
+'board/INSERT_REPLY_REQUEST';
+export const INSERT_REPLY_SUCCESS =
+'board/INSERT_REPLY_SUCCESS';
+export const INSERT_REPLY_FAILURE =
+'board/INSERT_REPLY_FAILURE';
+
+export const insertReplyAsync = createAsyncAction(
+    INSERT_REPLY_REQUEST,
+    INSERT_REPLY_SUCCESS,
+    INSERT_REPLY_FAILURE,
+)<insertReplyReq, insertReplyRes, AxiosError>();

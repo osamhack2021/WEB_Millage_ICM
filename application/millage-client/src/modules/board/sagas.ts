@@ -10,6 +10,7 @@ import {
   apiToggleVote,
   getRecentSchedules,
   getRecruitAndPollList,
+  insertReplyApi,
 } from './apis';
 import {
   CreateBoardRes,
@@ -19,6 +20,7 @@ import {
   GetPostRes,
   getRecentScheduleRes,
   getRecruitAndPollListRes,
+  insertReplyRes,
   TogglePostHeartRes,
   ToggleRecruitRes,
   ToggleVoteRes,
@@ -31,12 +33,14 @@ import {
   getPostAsync,
   getRecentScheduleAsync,
   getRecruitAndPostListAsync,
+  insertReplyAsync,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
 } from './actions';
 import {RootState} from '@modules';
 import {UserData} from '@modules/User/types';
+import {CommonResponse} from '@utils/commonTypes';
 function* getBoardListSaga(
     action: ReturnType<typeof getBoardListAsync.request>,
 ) {
@@ -181,6 +185,21 @@ function* getRecentScheduleSaga(
   }
 }
 
+function* insertReplySaga(
+    action: ReturnType<typeof insertReplyAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response: insertReplyRes = yield call(
+        insertReplyApi,
+        param,
+    );
+    yield put(insertReplyAsync.success(response));
+  } catch (error: any) {
+    yield put(insertReplyAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
@@ -193,6 +212,7 @@ export function* boardSagaListener() {
   yield takeLatest(getRecruitAndPostListAsync.request,
       getRecruitAndPostListSaga);
   yield takeLatest(getRecentScheduleAsync.request, getRecentScheduleSaga);
+  yield takeLatest(insertReplyAsync.request, insertReplySaga);
 }
 
 export default boardSagaListener;

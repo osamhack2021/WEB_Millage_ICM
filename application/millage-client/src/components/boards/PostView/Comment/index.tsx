@@ -11,33 +11,55 @@ import {
   ReplyIcon,
   ReplyButton,
 } from '@images';
+import {insertReplyAsync} from '@modules/board/actions';
+import {useBoard} from '@hooks/board';
 
 type Props = {
-  userId: number;
+  postId: number;
   nickname: string;
   content: string;
   createdAt: Date;
   heartCount: number;
   liked: boolean;
   reply: boolean;
+  parentCommentId?: number;
 };
 
 const CommentBox:React.FC<Props> = ({
   heartCount,
-  userId,
+  postId,
   nickname,
   content,
   createdAt,
   liked,
   reply,
+  parentCommentId,
 }) => {
+  const dispatch = useDispatch();
   const dateObject = new Date(createdAt);
   const createdAtText =
     `${dateObject.getUTCFullYear()}`+
     `/${dateObject.getUTCMonth()+1}/${dateObject.getUTCDate()}`;
 
   const [replyOpen, setReplyOpen] = useState(false);
+  const [replyText, setReplyText] = useState('');
 
+  const {replyState} = useBoard();
+
+  useEffect(() => {
+    if (replyState.result == 'success') {
+      setReplyText('');
+      setReplyOpen(false);
+    }
+  }, [replyState]);
+
+  const addReply = () => {
+    dispatch(insertReplyAsync.request({
+      content: replyText,
+      parentCommentId: parentCommentId,
+      postId: postId,
+    }));
+  };
 
   return (
     <div>
@@ -52,14 +74,17 @@ const CommentBox:React.FC<Props> = ({
               ''
             }
             <img className="smallericon" src={UserIcon} />
-            <span>{nickname}</span>
+            <span style={{
+              marginLeft: '10px',
+            }}>{nickname}</span>
           </div>
           <div>
             <button style={{
               marginRight: '-1px',
             }}
             onClick={()=>setReplyOpen(true)}
-            ><img src={CommentIcon}/></button>
+            ><img className={reply?'hidden':''}
+                src={CommentIcon}/></button>
             <button><img src={ReportIcon}/></button>
           </div>
         </div>
@@ -83,17 +108,24 @@ const CommentBox:React.FC<Props> = ({
             {heartCount}</span>
         </div>
       </div>
-      <div className="CommentInputContainer w-full" style={!replyOpen?
-      {
-        display: 'none',
-      }:{
-        display: 'flex',
-      }}>
+      <div className="CommentInputContainer w-full flex"
+        style={!replyOpen? {
+          display: 'none',
+        }:{
+          display: 'flex',
+        }}
+      >
         <input type="text"
           className="text"
           placeholder="댓글을 입력하세요."
+          value={replyText}
+          onChange={(e) => {
+            setReplyText(e.target.value);
+          }}
         />
-        <button><img src={ReplyButton}/></button>
+        <button
+          onClick={()=> addReply()}
+        ><img src={ReplyButton}/></button>
       </div>
     </div>
   );
