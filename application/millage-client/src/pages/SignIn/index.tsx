@@ -7,6 +7,8 @@ import {loginAsync} from '@modules/User/actions';
 import './signin.css';
 import 'typeface-roboto';
 import 'typeface-inter';
+import LoginLogo from '@images/login/loginlogo.svg';
+
 
 export default function SignIn() {
   const history = useHistory();
@@ -35,7 +37,7 @@ export default function SignIn() {
     <div id="SignInContainer">
       <div id="SignInWrap">
         <div className="logo">
-          <img src='img/loginlogo.png'/>
+          <img src={LoginLogo}/>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input className="block" placeholder="아이디"
