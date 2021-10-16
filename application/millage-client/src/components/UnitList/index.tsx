@@ -48,6 +48,7 @@ export default function UnitList() {
   const [unitId, setUnitId] = useState(-1);
   const [unitList, setUnitList] = useState<UnitObject[]>([]);
   const unit = useSelector((state: any) => state.unit);
+  const userState = useSelector((state: any) => state.user);
   const units = unit.units;
 
   const goRegisterUser = () => {
@@ -104,8 +105,10 @@ export default function UnitList() {
   };
 
   useEffect(() => {
-    dispatch(getUnitListAsync.request());
-  }, []);
+    if (userState.result == 'sessionFail') {
+      dispatch(getUnitListAsync.request());
+    }
+  }, [userState.result]);
 
   useEffect(() => {
     setUnitList(units);

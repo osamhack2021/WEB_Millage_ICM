@@ -232,7 +232,6 @@ function Header() {
   };
 
   useEffect(()=> {
-    dispatch(updateUnreadAsync.request());
     socket = io(SOCKET_SERVER, {transports: ['websocket'],
       withCredentials: true});
     socket.on('updateUnreadHeader', () => {
@@ -243,6 +242,12 @@ function Header() {
     setNewEmail(user.session.email);
     setNewPhone(user.session.phonenumber);
   }, []);
+
+  useEffect(() => {
+    if (user.session) {
+      dispatch(updateUnreadAsync.request());
+    }
+  }, [user.session]);
 
   return (
     <header className="header">

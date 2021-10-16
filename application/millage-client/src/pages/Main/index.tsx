@@ -36,6 +36,10 @@ const Main = () => {
   useEffect(() => {
     if (user.result == 'logout') {
       window.location.href = '/';
+    } else if (user.result == 'sessionFail') {
+      if (location.pathname != '/') {
+        history.push('/');
+      }
     }
   }, [user.result]);
 
@@ -66,9 +70,6 @@ const Main = () => {
       </>
     );
   } else {
-    if (location.pathname != '/') {
-      history.push('/');
-    }
     return (
       <Intro />
     );

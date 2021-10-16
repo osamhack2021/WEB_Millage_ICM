@@ -84,7 +84,7 @@ const UserReducer = createReducer<UserState, UserAction>(initialState, {
   }),
   [CHECK_SESSION_FAIL]: (state, action) => ({
     ...state,
-    result: action.payload.result,
+    result: 'sessionFail',
   }),
   [UPDATE_UNREAD_REQUEST]: (state, action) => ({
     ...state,
