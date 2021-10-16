@@ -5,7 +5,14 @@ type Props = StyleOverWriteProps;
 
 const InputContainer: React.FC<Props> = ({className, children}) => {
   return (
-    <div className={`flex items-center w-full ${className}`}>
+    <div
+      className={`${className}
+        flex flex-col items-start sm:flex-row sm:items-center w-full
+      `}
+      // style={{
+      //   minWidth: '480px',
+      // }}
+    >
       {children}
     </div>
   );
