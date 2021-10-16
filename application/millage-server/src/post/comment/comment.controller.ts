@@ -2,7 +2,7 @@ import {Post, Patch, Body, Controller, Param, Delete, Req, ParseIntPipe} from '@
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 import {CommentService} from './comment.service';
-import {CreateCommentDto, UpdateCommentDto} from './dto';
+import {CreateCommentDto, DeleteCommentDTO, UpdateCommentDto} from './dto';
 import {Result, ResultObject} from '../../common/common.interface';
 import {CommentRO} from './comment.interface';
 
@@ -27,18 +27,22 @@ export class CommentController {
     }
   }
 
-  @Delete('/post/:postId/comment/:commentId')
+  @Delete('/comment/:commentId')
   async delete(
     @Req() req: Request,
-    @Param('postId', ParseIntPipe) postId: number,
     @Param('commentId', ParseIntPipe) commentId: number,
-  ): Promise<ResultObject> {
+  ): Promise<DeleteCommentDTO> {
     try {
       const userId = req.session.user.id;
-      if (await this.commentService.delete(postId, userId, commentId)) {
-        return {result: Result.SUCCESS};
-      }
-      return {result: Result.FAIL, message: '작성자 id가 맞지 않습니다.'};
+      const role = req.session.user.role.name;
+      const comment = await this.commentService.delete(userId, commentId, role);
+      
+      return {
+        result: Result.SUCCESS,
+        comment: comment ? comment: undefined,
+        id: commentId,
+      };
+      
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }

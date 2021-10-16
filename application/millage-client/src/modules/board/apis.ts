@@ -3,6 +3,7 @@ import {
   CreateBoardRes,
   CreatePostReq,
   CreatePostRes,
+  deleteReplyRes,
   GetBoardByIdReq,
   GetBoardByIdRes,
   GetBoardListInput,
@@ -220,4 +221,26 @@ export async function insertReplyApi(
       {withCredentials: true},
   );
   return data;
+}
+
+export async function deleteReplyApi(
+    param: number,
+): Promise<deleteReplyRes> {
+  const {data} = await axios.delete(
+      `${SERVER}/comment/${param}`,
+      {withCredentials: true},
+  );
+  return data;
+}
+
+export async function likeReplyApi(
+    param: number,
+): Promise<CommonResponse> {
+  const {data} = await axios.post(
+      `${SERVER}/comment/${param}/heart/`,
+      {withCredentials: true},
+  );
+  return {
+    ...data,
+  };
 }

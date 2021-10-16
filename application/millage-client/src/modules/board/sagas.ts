@@ -8,13 +8,16 @@ import {
   apiTogglePostHeart,
   apiToggleRecruit,
   apiToggleVote,
+  deleteReplyApi,
   getRecentSchedules,
   getRecruitAndPollList,
   insertReplyApi,
+  likeReplyApi,
 } from './apis';
 import {
   CreateBoardRes,
   CreatePostRes,
+  deleteReplyRes,
   GetBoardByIdRes,
   GetBoardListRes,
   GetPostRes,
@@ -28,12 +31,14 @@ import {
 import {
   createBoardAsync,
   createPostAsync,
+  deleteReplyAsync,
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
   getRecentScheduleAsync,
   getRecruitAndPostListAsync,
   insertReplyAsync,
+  likeReplyAsync,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
@@ -200,6 +205,36 @@ function* insertReplySaga(
   }
 }
 
+function* deleteReplySaga(
+    action: ReturnType<typeof deleteReplyAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response: deleteReplyRes = yield call(
+        deleteReplyApi,
+        param,
+    );
+    yield put(deleteReplyAsync.success(response));
+  } catch (error: any) {
+    yield put(deleteReplyAsync.failure(error));
+  }
+}
+
+function* likeReplySaga(
+    action: ReturnType<typeof likeReplyAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response: CommonResponse = yield call(
+        likeReplyApi,
+        param,
+    );
+    yield put(likeReplyAsync.success(response));
+  } catch (error: any) {
+    yield put(likeReplyAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
@@ -213,6 +248,8 @@ export function* boardSagaListener() {
       getRecruitAndPostListSaga);
   yield takeLatest(getRecentScheduleAsync.request, getRecentScheduleSaga);
   yield takeLatest(insertReplyAsync.request, insertReplySaga);
+  yield takeLatest(deleteReplyAsync.request, deleteReplySaga);
+  yield takeLatest(likeReplyAsync.request, likeReplySaga);
 }
 
 export default boardSagaListener;

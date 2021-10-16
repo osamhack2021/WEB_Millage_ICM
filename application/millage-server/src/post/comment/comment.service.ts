@@ -4,6 +4,7 @@ import {CommentEntity} from './comment.entity';
 import {UserEntity} from '../../user/user.entity';
 import {Repository} from 'typeorm';
 import {CreateCommentDto, UpdateCommentDto} from './dto';
+import { Role } from 'src/user_role/user_role.interface';
 
 @Injectable()
 export class CommentService {
@@ -26,42 +27,44 @@ export class CommentService {
     return savedComment;
   }
 
-  private validateComment(postId: number, writerId: number, comment: CommentEntity): void {
+  private validateComment(writerId: number, comment: CommentEntity, role: Role): void {
     if (comment === undefined) {
       throw new Error(`Cannot find comment by id ${comment.id}`);
     }
-    if (postId !== comment.postId) {
-      throw new Error(`Not matched post id ${postId}`);
-    }
-    if (comment.writerId !== writerId) {
+    if (comment.writerId !== writerId && role != 'ADMIN' && role != 'SUPER_ADMIN') {
       throw new Error(`Not matched writer id ${writerId}`);
     }
     return;
   }
 
-  async delete(postId: number, writerId: number, commentId: number): Promise<boolean> {
+  async delete(writerId: number, commentId: number, role: Role): Promise<CommentEntity> {
     let comment: CommentEntity = null;
     try {
-      comment = await this.commentRepository.findOne(commentId, {relations: ['replies']});
+      comment = await this.commentRepository.findOne(commentId);
     } catch (err) {
       throw new Error(err.message);
     }
-
-    this.validateComment(postId, writerId, comment);
-
-    if (comment.replies.length !== 0) {
+    this.validateComment(writerId, comment, role);
+    const replies = await this.commentRepository.findOne({
+      where: {
+        parentCommentId: commentId
+      }
+    });
+    if (replies) {
       comment.content = '삭제된 댓글입니다.';
       comment.isDeleted = true;
+      comment.writer = await this.userRepository.findOne(
+        comment.writerId, {select: ['id', 'fullname', 'nickname']});
       await this.commentRepository.save(comment);
-      return true;
+      return comment;
     }
     await this.commentRepository.delete(commentId);
-    return true;
+    return null;
   }
 
   async update(dto: UpdateCommentDto): Promise<CommentEntity> {
     const comment = await this.commentRepository.findOne(dto.id);
-    this.validateComment(dto.postId, dto.writerId, comment);
+    // this.validateComment(dto.postId, dto.writerId, comment);
     if (comment.isDeleted) {
       throw new Error('This comment has been deleted');
     }

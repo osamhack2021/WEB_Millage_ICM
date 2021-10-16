@@ -1,5 +1,5 @@
 import {createReducer} from 'typesafe-actions';
-import {BoardAction, BoardState} from './types';
+import {BoardAction, BoardState, Comment} from './types';
 import {
   GET_BOARD_BY_ID,
   GET_BOARD_BY_ID_FAILURE,
@@ -30,6 +30,13 @@ import {
   INSERT_REPLY_FAILURE,
   INSERT_REPLY_REQUEST,
   INSERT_REPLY_SUCCESS,
+  DELETE_REPLY_FAILURE,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_SUCCESS,
+  LIKE_REPLY_FAILURE,
+  LIKE_REPLY_REQUEST,
+  LIKE_REPLY_SUCCESS,
+
 } from './actions';
 
 const initialState: BoardState = {
@@ -380,7 +387,7 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
   [INSERT_REPLY_SUCCESS]: (state, action) => ({
     ...state,
     replyState: {
-      result: 'success',
+      result: 'insertReplySuccess',
     },
     postState: {
       ...state.postState,
@@ -397,6 +404,67 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
     ...state,
     replyState: {
       result: 'error',
+      message: action.payload.message,
+    },
+  }),
+  [DELETE_REPLY_REQUEST]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: '',
+    },
+  }),
+  [DELETE_REPLY_SUCCESS]: (state, action) => {
+    let comments: Comment[] = [];
+    if (state.postState.data) {
+      comments = [...state.postState.data.comments];
+      comments = comments.filter((comment : Comment) => {
+        return comment.id != action.payload.id;
+      });
+    }
+    if (action.payload.comment) {
+      comments = [
+        ...comments,
+        action.payload.comment,
+      ];
+    }
+
+    return ({
+      ...state,
+      replyState: {
+        result: 'deleteReplySuccess',
+      },
+      postState: {
+        ...state.postState,
+        data: state.postState.data && {
+          ...state.postState.data,
+          comments: comments,
+        },
+      },
+    });
+  },
+  [DELETE_REPLY_FAILURE]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: 'deleteReplyFail',
+      message: action.payload.message,
+    },
+  }),
+  [LIKE_REPLY_REQUEST]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: '',
+    },
+  }),
+  [LIKE_REPLY_SUCCESS]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: 'likeReplySuccess',
+    },
+  }),
+  [LIKE_REPLY_FAILURE]: (state, action) => ({
+    ...state,
+    replyState: {
+      result: 'likeReplyFail',
       message: action.payload.message,
     },
   }),
