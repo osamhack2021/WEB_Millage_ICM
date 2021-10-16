@@ -5,6 +5,8 @@ import {FindManyOptions, Like, Repository} from 'typeorm';
 import {BoardEntity} from './board.entity';
 import {CreateBoardDto, UpdateBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
+import {UserData} from '../user/user.interface';
+import {UserEntity} from '../user/user.entity';
 
 const POSTS_PER_PAGE = 10;
 const POSTS_PER_BOARD_PREVIEW = 4;
@@ -17,6 +19,9 @@ export class BoardService {
 
         @InjectRepository(PostEntity)
         private readonly postRepository: Repository<PostEntity>,
+
+        @InjectRepository(UserEntity)
+        private readonly userRepository: Repository<UserEntity>,
   ) {}
 
 
@@ -119,5 +124,24 @@ export class BoardService {
     `);
 
     return posts;
+  }
+
+  async toggleStar(boardId: number, userData: UserData): Promise<boolean> {
+    const user = await this.userRepository.findOne(
+        userData.id, {relations: ['staredBoards']});
+    let isAlreadyStared = false;
+    for (const [idx, board] of user.staredBoards.entries()) {
+      if (board.id === boardId) {
+        isAlreadyStared = true;
+        user.staredBoards.splice(idx, 1);
+        break;
+      }
+    }
+    if (!isAlreadyStared) {
+      const board = await this.boardRepository.findOne(boardId);
+      user.staredBoards.push(board);
+    }
+    await this.userRepository.save(user);
+    return true;
   }
 }

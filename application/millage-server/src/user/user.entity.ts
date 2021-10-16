@@ -13,6 +13,7 @@ import {PollEntity} from '../post/poll/poll.entity';
 import {ScheduleEntity} from '../schedule/schedule.entity';
 import {CommentEntity} from '../post/comment/comment.entity';
 import {ReservationEntity} from '../place/reservation/reservation.entity';
+import {BoardEntity} from '../board/board.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -121,4 +122,8 @@ export class UserEntity {
     onDelete: 'CASCADE',
   })
   reservations: ReservationEntity[];
+
+  @ManyToMany(() => BoardEntity, (board: BoardEntity) => board.staringUsers)
+  @JoinTable({name: 'staredBoards'})
+  staredBoards: BoardEntity[];
 }
