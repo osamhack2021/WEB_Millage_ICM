@@ -9,6 +9,7 @@ import {
   SelectPostTypeBox,
   PostTitleBox,
   ContentBox,
+  RecruitInputBox,
 } from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
 
@@ -134,16 +135,9 @@ function CreatePostPage() {
           />
         }
 
+        {/* 모집 기능 */}
         { selectedBoard?.recruitAllowed && postType === RECRUIT &&
-          <div className='flex my-6 items-center' >
-            <h3 className='text-xl mr-4' >모집 인원</h3>
-            <input
-              {...register('rCount')}
-              className='p-2 ring-1 ring-gray-500 focus:outline-none'
-              type='number'
-              min={0}
-            />
-          </div>
+          <RecruitInputBox register={register} />
         }
 
         <button
