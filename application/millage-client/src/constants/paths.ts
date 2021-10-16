@@ -9,6 +9,7 @@ export const REGISTER_FINISH_PATH = '/register/finish';
 
 export const SCHEDULE_PATH = '/schedule';
 export const RESERVATION_PATH = '/reservation';
+export const RESERVATION_VIEW_PATH = '/reservation/:placeId';
 export const DM_PATH = '/dm';
 export const MANAGE_PATH ='/manage';
 export const CREATE_POST_PATH = '/create';
