@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
 import type {Schedule} from '@modules/Schedule/types';
-import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import Calendar from 'react-calendar';
 import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
 import DateTimePicker from 'react-datetime-picker';
@@ -23,13 +22,6 @@ import {
   Checkbox,
 } from '@mui/material';
 
-interface IFormInput {
-  scheduleTitle: string;
-  scheduleContent: string;
-  scheduleDateRange: [Date, Date?];
-  scheduleDate: Date;
-}
-
 interface Props {
   handleClose: () => void
 }
@@ -38,8 +30,12 @@ const steps = ['변경하고 싶은 날짜 선택', '변경하고 싶은 일정 
 
 const EditModal: React.FC<Props> = ({handleClose}) => {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
   const [checked, setChecked] = React.useState(false);
+  const [date, setDate] = React.useState(new Date());
+  const [dateTimeRange, setDateTimeRange] = React.useState<[Date, Date]>([
+    new Date(), new Date(),
+  ]);
   const [selectedSchedule, setSelectedSchedule] = React.useState<Schedule>({
     id: '',
     groupId: 'person',
@@ -47,7 +43,6 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     content: '',
     start: new Date(),
   });
-  const {control, handleSubmit} = useForm<IFormInput>();
   const [
     scheduleList,
     _createSchedule,
@@ -55,21 +50,21 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     _deleteSchedule,
   ] = useSchedule();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const handleSubmit = () => {
     if (checked) {
       updateSchedule({
         id: selectedSchedule.id,
-        title: data.scheduleTitle,
-        content: data.scheduleTitle,
-        start: data.scheduleDate,
+        title: selectedSchedule.title,
+        content: selectedSchedule.content,
+        start: date,
       });
     } else {
       updateSchedule({
         id: selectedSchedule.id,
-        title: data.scheduleTitle,
-        content: data.scheduleTitle,
-        start: data.scheduleDateRange[0],
-        end: data.scheduleDateRange[1],
+        title: selectedSchedule.title,
+        content: selectedSchedule.content,
+        start: dateTimeRange[0],
+        end: dateTimeRange[1],
       });
     }
     handleClose();
@@ -78,14 +73,40 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
   const handleBack = () => {
     setActiveStep((prevStep) => prevStep - 1);
   };
-  const handleDate = (val: Date) => {
+  const handleSelectedDate = (val: Date) => {
     setSelectedDate(val);
     setActiveStep(1);
   };
   const handleItemClick = (e: Schedule) => {
     setChecked(e.end === undefined);
     setSelectedSchedule(e);
+    if (e.end) setDateTimeRange([e.start, e.end]);
+    else setDate(e.start);
     setActiveStep(2);
+  };
+
+  const handleTitle = (e: string) => {
+    setSelectedSchedule((prevE) => ({
+      ...prevE,
+      title: e,
+    }));
+  };
+  const handleContent = (e: string) => {
+    setSelectedSchedule((prevE) => ({
+      ...prevE,
+      content: e,
+    }));
+  };
+  const handleDate = (e: Date | null) => {
+    if (e instanceof Date) setDate(e);
+  };
+  const handleDateTimeRange = (e: [Date?, Date?] | null) => {
+    if (Array.isArray(e)) {
+      setDateTimeRange([
+        e[0] ?? new Date(),
+        e[1] ?? new Date(),
+      ]);
+    }
   };
 
   const compareDate = (a: Date, b: Date) => (
@@ -104,7 +125,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
       <DialogTitle>일정 편집하기</DialogTitle>
       <DialogContent>
         <Stepper activeStep={activeStep}>
@@ -124,8 +145,9 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
           <div style={{width: 'fit-content', margin: '1em auto'}}>
             <Calendar
               value={selectedDate}
-              onChange={handleDate}
-              locale='en-US'
+              onChange={handleSelectedDate}
+              locale='ko'
+              calendarType='US'
             />
           </div>
         ) : activeStep === 1 ? (
@@ -133,10 +155,10 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
             <List>
               {scheduleList.filter(({groupId, start, end}) => {
                 if (groupId === 'unit') return false;
-                if (!end) {
-                  return compareDate(start, selectedDate);
-                } else {
+                if (end) {
                   return compareDateRange(start, end, selectedDate);
+                } else {
+                  return compareDate(start, selectedDate);
                 }
               }).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
@@ -149,34 +171,22 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
           </Box>
         ) : (
           <React.Fragment>
-            <Controller
-              name='scheduleTitle'
-              control={control}
-              defaultValue={selectedSchedule?.title}
-              render={({field}) => (
-                <TextField
-                  label='제목'
-                  autoFocus
-                  required
-                  fullWidth
-                  margin='dense'
-                  {...field}
-                />
-              )}
+            <TextField
+              value={selectedSchedule.title}
+              onChange={(e) => handleTitle(e.target.value)}
+              label='제목'
+              autoFocus
+              required
+              fullWidth
+              margin='dense'
             />
-            <Controller
-              name='scheduleContent'
-              control={control}
-              defaultValue={selectedSchedule?.content}
-              render={({field}) => (
-                <TextField
-                  label='내용'
-                  required
-                  fullWidth
-                  margin='dense'
-                  {...field}
-                />
-              )}
+            <TextField
+              value={selectedSchedule.content}
+              onChange={(e) => handleContent(e.target.value)}
+              label='내용'
+              required
+              fullWidth
+              margin='dense'
             />
             <FormGroup>
               <FormControlLabel
@@ -190,55 +200,31 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
               />
             </FormGroup>
             {!checked ? (
-              <Controller
-                name='scheduleDateRange'
-                control={control}
-                defaultValue={[selectedSchedule.start, selectedSchedule.end]}
-                render={({field: {onChange, value}}) => {
-                  const handleDate = (e: [Date?, Date?] | null) => {
-                    if (Array.isArray(e)) onChange(e);
-                  };
-                  return (
-                    <div style={{minHeight: 375}}>
-                      <label>기간: </label>
-                      <DateTimeRangePicker
-                        value={value}
-                        onChange={handleDate}
-                        locale='ko'
-                        calendarType='US'
-                        format='y. MM. dd H:mm'
-                        disableClock
-                        formatDay={(locale, date) => date.getDate().toString()}
-                      />
-                    </div>
-                  );
-                }}
-              />
+              <div style={{minHeight: 375}}>
+                <label>기간: </label>
+                <DateTimeRangePicker
+                  value={dateTimeRange}
+                  onChange={handleDateTimeRange}
+                  locale='ko'
+                  calendarType='US'
+                  format='y. MM. dd H:mm'
+                  disableClock
+                  formatDay={(locale, date) => date.getDate().toString()}
+                />
+              </div>
             ) : (
-              <Controller
-                name='scheduleDate'
-                control={control}
-                defaultValue={selectedSchedule.start}
-                render={({field: {onChange, value}}) => {
-                  const handleDate = (e: Date | null) => {
-                    if (e instanceof Date) onChange(e);
-                  };
-                  return (
-                    <div style={{minHeight: 375}}>
-                      <label>일자: </label>
-                      <DateTimePicker
-                        value={value}
-                        onChange={handleDate}
-                        locale='ko'
-                        calendarType='US'
-                        format='y. MM. dd H:mm'
-                        disableClock
-                        formatDay={(locale, date) => date.getDate().toString()}
-                      />
-                    </div>
-                  );
-                }}
-              />
+              <div style={{minHeight: 375}}>
+                <label>일자: </label>
+                <DateTimePicker
+                  value={date}
+                  onChange={handleDate}
+                  locale='ko'
+                  calendarType='US'
+                  format='y. MM. dd H:mm'
+                  disableClock
+                  formatDay={(locale, date) => date.getDate().toString()}
+                />
+              </div>
             )}
           </React.Fragment>
         )}
@@ -247,7 +233,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
         {activeStep === steps.length ? (
           <React.Fragment>
             <Button onClick={handleClose}>닫기</Button>
-            <Button type='submit'>변경</Button>
+            <Button onClick={handleSubmit}>변경</Button>
           </React.Fragment>
         ) : (
           <React.Fragment>
@@ -256,7 +242,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
           </React.Fragment>
         )}
       </DialogActions>
-    </form>
+    </div>
   );
 };
 
