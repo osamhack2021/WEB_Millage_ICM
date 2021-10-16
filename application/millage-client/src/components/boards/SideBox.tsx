@@ -91,7 +91,7 @@ function SideBox() {
           <div className="post" key = {schedule.id}>
             <div style={{display: 'flex'}}>
               <div className={
-                schedule.groupType =='person' ? 'green' : 'orange'}
+                schedule.groupType =='person' ? 'orange' : 'green'}
               ></div>
               {datetext}
             </div>
