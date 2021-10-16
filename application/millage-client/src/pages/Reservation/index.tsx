@@ -1,11 +1,20 @@
 import * as React from 'react';
-import ReservationCalendar from '@components/ReservationCalendar';
+import {Route, Switch} from 'react-router-dom';
+import {default as Calendar} from '@components/ReservationCalendar';
+import {default as Header} from '@components/ReservationHeader';
+import {
+  RESERVATION_PATH,
+  RESERVATION_VIEW_PATH,
+} from '@constants';
 import './reservation.css';
 
 const Reservation: React.FC = () => {
   return (
     <div id="reservation-container">
-      <ReservationCalendar />
+      <Switch>
+        <Route exact path={RESERVATION_PATH} component={Header} />
+        <Route exact path={RESERVATION_VIEW_PATH} component={Calendar} />
+      </Switch>
     </div>
   );
 };
