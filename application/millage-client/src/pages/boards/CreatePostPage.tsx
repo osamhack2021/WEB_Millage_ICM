@@ -141,7 +141,7 @@ function CreatePostPage() {
           <RecruitInputBox register={register} />
         }
 
-        <FilledButton>
+        <FilledButton className='w-72 mt-8 text-lg' >
           {createPostState.loading ?
             'loading...' :
             '게시글 생성하기'}

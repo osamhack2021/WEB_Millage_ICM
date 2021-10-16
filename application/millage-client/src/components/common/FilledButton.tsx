@@ -1,16 +1,21 @@
 import { StyleOverWriteProps } from '@utils/commonTypes';
 import React from 'react';
 
-type Props = StyleOverWriteProps;
+type Props = StyleOverWriteProps & {
+  onClick?: React.MouseEventHandler;
+};
 
-const Button: React.FC<Props> = ({children, className}) => {
+const Button: React.FC<Props> = ({
+  children, className, onClick,
+}) => {
   return(
     <button
+      onClick={onClick}
       className={`
         ${className}
         bg-green hover:bg-green-dark transition duration-500
-        text-lg text-white font-bold self-center
-        w-72 py-2 mt-8 focus:outline-none
+        text-white font-bold self-center
+        py-2 focus:outline-none
         flex items-center justify-center
       `}
     >
