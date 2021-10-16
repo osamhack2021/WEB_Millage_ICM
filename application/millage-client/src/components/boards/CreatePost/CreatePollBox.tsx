@@ -1,6 +1,7 @@
 import React from 'react';
-import {CancelOutlined} from '@mui/icons-material';
+import {Add, CancelOutlined} from '@mui/icons-material';
 import {PollInputs} from '@modules/board/types';
+import {InputContainer, InputTitle} from './InputComponents';
 
 type Props = {
   pollList: PollInputs[],
@@ -59,39 +60,63 @@ const CreatePollBox: React.FC<Props> = ({
   };
 
   return (
-    <div className='w-full'>
-      <div className='flex items-center justify-between'>
-        <h3 className='text-xl mt-4 mb-2' >설문지 만들기</h3>
-        <button onClick={onAddPoll} >항목 추가</button>
-      </div>
-      <div className='w-full'>
-        { pollList.map((p) => (
-          <div
-            key={p.index}
-            className='relative ring-1 ring-gray-500'
+    <InputContainer className='mt-6'>
+      <InputTitle>설문 조사</InputTitle>
+      <div className='max-w-md w-full flex flex-col'>
+        <div className='flex items-start justify-between mb-3'>
+          <h3 className='text-lg' >설문조사 선택 항목</h3>
+          <button 
+            onClick={onAddPoll} 
+            className='
+              px-2 py-1 focus:outline-none flex items-center text-base group
+              border border-gray-300 hover:border-green-light transition duration-500
+            '  
           >
-            <div
+            <Add
               className='
-                absolute right-4 top-0 bottom-0 flex items-center
+                text-gray-500 mr-1
+                group-hover:text-green-light
               '
+              style={{
+                transition: 'color 500ms',
+              }}
+              fontSize='small'
+            />
+            항목 추가
+          </button>
+        </div>
+        
+        <div className='w-full'>
+          { pollList.map((p) => (
+            <div
+              key={p.index}
+              className='relative mb-2'
             >
-              <CancelOutlined
-                className='cursor-pointer text-red-400'
-                fontSize='small'
-                onClick={onDeletePoll}
+              <div
+                className='absolute right-4 top-0 bottom-0 flex items-center'
+              >
+                <CancelOutlined
+                  className='cursor-pointer text-red-400'
+                  fontSize='small'
+                  onClick={onDeletePoll}
+                />
+              </div>
+              <input
+                id={p.index.toString()}
+                value={p.content}
+                onChange={onChangePoll}
+                className='
+                  w-full focus:outline-none py-2 px-4
+                  ring-1 ring-gray-300 focus:ring-green-light
+                  transition duration-500
+                '
+                type='text'
               />
             </div>
-            <input
-              id={p.index.toString()}
-              value={p.content}
-              onChange={onChangePoll}
-              className='w-full focus:outline-none p-4'
-              type='text'
-            />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </InputContainer>
   );
 };
 
