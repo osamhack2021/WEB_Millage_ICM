@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
 import {
-  FormControl,
-  FormControlLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
   TextareaAutosize,
 } from '@mui/material';
 import {NORMAL, POLL, POST_PATH, RECRUIT} from '@constants';
 import {CreatePostReq, PollInputs, PostType} from '@modules/board/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {CreatePollBox, SelectBoardBox} from '@components/boards/CreatePost';
+import {
+  CreatePollBox,
+  SelectBoardBox,
+  SelectPostTypeBox,
+} from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
 
 
@@ -107,35 +105,13 @@ function CreatePostPage() {
       />
 
       {/* 게시글 타입 선택 */}
-      { (selectedBoard?.pollAllowed || selectedBoard?.recruitAllowed) &&
-        <RadioGroup
-          row
-          value={postType}
-          onChange={(e, v) => {
-            if ( v !== NORMAL && v !== POLL && v !== RECRUIT ) return;
-            setPostType(v);
-          }}
-        >
-          <FormControlLabel
-            value={NORMAL}
-            control={<Radio />}
-            label="일반 게시글"
-          />
-          { selectedBoard?.pollAllowed &&
-            <FormControlLabel
-              value={POLL}
-              control={<Radio />}
-              label="설문 게시글"
-            />
-          }
-          { selectedBoard?.recruitAllowed &&
-            <FormControlLabel
-              value={RECRUIT}
-              control={<Radio />}
-              label="모집 게시글"
-            />
-          }
-        </RadioGroup>
+      { selectedBoard &&
+        (selectedBoard.pollAllowed || selectedBoard.recruitAllowed) &&
+        <SelectPostTypeBox
+          postType={postType}
+          setPostType={setPostType}
+          selectedBoard={selectedBoard}
+        />
       }
 
       <form
