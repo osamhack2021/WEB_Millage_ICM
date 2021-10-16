@@ -1,12 +1,10 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
 import FullCalendar, {
-  CalendarApi,
   CustomButtonInput,
 } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import moment from 'moment';
 import Dialog from './Dialog';
 import './Calendar.css';
 
@@ -15,19 +13,10 @@ const Calendar: React.FC = () => {
   const [isShow, setIsShow] = React.useState(true);
   const [visible, setVisible] = React.useState(false);
   const [state, setState] = React.useState<'add' | 'edit' | 'delete'>('add');
-  const [calendarApi, setCalendarApi] = React.useState<CalendarApi>();
-  const [calendarDate, setCalendarDate] = React.useState<Date>(new Date());
   const [scheduleList] = useSchedule();
 
   const handleOpen = () => setVisible(true);
   const handleClose = () => setVisible(false);
-
-  React.useEffect(() => {
-    setCalendarApi(calendarRef.current?.getApi());
-  }, []);
-  React.useEffect(() => {
-    setCalendarDate(calendarApi?.getDate() ?? new Date());
-  }, [calendarApi]);
 
   const addEvents: CustomButtonInput = {
     text: '추가',
@@ -64,6 +53,7 @@ const Calendar: React.FC = () => {
         plugins={[dayGridPlugin, timeGridPlugin]}
         locale='ko'
         timeZone='ko'
+        allDaySlot={false}
         nowIndicator
         aspectRatio={0.8}
         dayCellContent={({date}) => date.getDate()}

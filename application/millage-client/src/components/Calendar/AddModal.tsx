@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
-import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
 import DateTimePicker from 'react-datetime-picker';
 import {
@@ -14,73 +13,74 @@ import {
   Checkbox,
 } from '@mui/material';
 
-interface IFormInput {
-  scheduleTitle: string;
-  scheduleContent: string;
-  scheduleDateRange: [Date, Date];
-  scheduleDate: Date;
-}
-
 interface Props {
   handleClose: () => void
 }
 
 const AddModal: React.FC<Props> = ({handleClose}) => {
   const [checked, setChecked] = React.useState(false);
-  const {control, handleSubmit} = useForm<IFormInput>();
+  const [title, setTitle] = React.useState('');
+  const [content, setContent] = React.useState('');
+  const [date, setDate] = React.useState(new Date());
+  const [dateTimeRange, setDateTimeRange] = React.useState<[Date, Date]>([
+    new Date(), new Date(),
+  ]);
   const [
     _scheduleList,
     createSchedule,
   ] = useSchedule();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const handleDate = (e: Date | null) => {
+    if (e instanceof Date) setDate(e);
+  };
+
+  const handleDateTimeRange = (e: [Date?, Date?] | null) => {
+    if (Array.isArray(e)) {
+      setDateTimeRange([
+        e[0] ?? new Date(),
+        e[1] ?? new Date(),
+      ]);
+    }
+  };
+
+  const handleSubmit = () => {
     if (checked) {
       createSchedule({
-        title: data.scheduleTitle,
-        content: data.scheduleTitle,
-        start: data.scheduleDate,
+        title,
+        content,
+        start: date,
       });
     } else {
       createSchedule({
-        title: data.scheduleTitle,
-        content: data.scheduleTitle,
-        start: data.scheduleDateRange[0],
-        end: data.scheduleDateRange[1],
+        title,
+        content,
+        start: dateTimeRange[0],
+        end: dateTimeRange[1],
       });
     }
     handleClose();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
       <DialogTitle>일정 추가하기</DialogTitle>
       <DialogContent style={{overflowX: 'hidden'}}>
-        <Controller
-          name='scheduleTitle'
-          control={control}
-          render={({field}) => (
-            <TextField
-              label='제목'
-              autoFocus
-              required
-              fullWidth
-              margin='dense'
-              {...field}
-            />
-          )}
+        <TextField
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          label='제목'
+          autoFocus
+          required
+          fullWidth
+          margin='dense'
         />
-        <Controller
-          name='scheduleContent'
-          control={control}
-          render={({field}) => (
-            <TextField
-              label='내용'
-              required
-              fullWidth
-              margin='dense'
-              {...field}
-            />
-          )}
+        <TextField
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          label='내용'
+          required
+          fullWidth
+          margin='dense'
         />
         <FormGroup>
           <FormControlLabel
@@ -94,60 +94,38 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
           />
         </FormGroup>
         {!checked ? (
-          <Controller
-            name='scheduleDateRange'
-            control={control}
-            render={({field: {onChange, value}}) => {
-              const handleDate = (e: [Date?, Date?] | null) => {
-                if (Array.isArray(e)) onChange(e);
-              };
-              return (
-                <div style={{minHeight: 375}}>
-                  <label>기간: </label>
-                  <DateTimeRangePicker
-                    value={value}
-                    onChange={handleDate}
-                    locale='ko'
-                    calendarType='US'
-                    format='y. MM. dd H:mm'
-                    disableClock
-                    formatDay={(locale, date) => date.getDate().toString()}
-                  />
-                </div>
-              );
-            }}
-          />
+          <div style={{minHeight: 375}}>
+            <label>기간: </label>
+            <DateTimeRangePicker
+              value={dateTimeRange}
+              onChange={handleDateTimeRange}
+              locale='ko'
+              calendarType='US'
+              format='y. MM. dd H:mm'
+              disableClock
+              formatDay={(locale, date) => date.getDate().toString()}
+            />
+          </div>
         ) : (
-          <Controller
-            name='scheduleDate'
-            control={control}
-            render={({field: {onChange, value}}) => {
-              const handleDate = (e: Date | null) => {
-                console.log(e);
-              };
-              return (
-                <div style={{minHeight: 375}}>
-                  <label>일자: </label>
-                  <DateTimePicker
-                    value={value}
-                    onChange={handleDate}
-                    locale='ko'
-                    calendarType='US'
-                    format='y. MM. dd H:mm'
-                    disableClock
-                    formatDay={(locale, date) => date.getDate().toString()}
-                  />
-                </div>
-              );
-            }}
-          />
+          <div style={{minHeight: 375}}>
+            <label>일자: </label>
+            <DateTimePicker
+              value={date}
+              onChange={handleDate}
+              locale='ko'
+              calendarType='US'
+              format='y. MM. dd H:mm'
+              disableClock
+              formatDay={(locale, date) => date.getDate().toString()}
+            />
+          </div>
         )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>닫기</Button>
-        <Button type='submit'>추가</Button>
+        <Button onClick={handleSubmit}>추가</Button>
       </DialogActions>
-    </form>
+    </div>
   );
 };
 
