@@ -26,7 +26,7 @@ export class BoardService {
 
 
   async getBoardList(id: number, userId: number) : Promise<BoardEntity[]> {
-    let list = await this.boardRepository.find({
+    const list = await this.boardRepository.find({
       where: {
         unitId: id,
       },
@@ -34,8 +34,8 @@ export class BoardService {
 
 
     const user = await this.userRepository.findOne(
-      userId, {relations: ['starredBoards']});
-    
+        userId, {relations: ['starredBoards']});
+
     const ids = [];
     for (const [idx, board] of user.starredBoards.entries()) {
       ids.push(board.id);
@@ -61,15 +61,15 @@ export class BoardService {
         take: POSTS_PER_BOARD_PREVIEW,
       });
 
-        
+
       const user = await this.userRepository.findOne(
-        userId, {relations: ['starredBoards']});
-      
+          userId, {relations: ['starredBoards']});
+
       const ids = [];
       for (const [idx, board] of user.starredBoards.entries()) {
         ids.push(board.id);
       }
-      
+
       board.isStarred = ids.includes(board.id);
 
       return board;

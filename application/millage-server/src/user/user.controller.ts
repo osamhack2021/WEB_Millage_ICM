@@ -18,7 +18,7 @@ import {MessageService} from '../message/message.service';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly messageService: MessageService,  
+    private readonly messageService: MessageService,
   ) {}
 
   @Get('session')
@@ -30,7 +30,7 @@ export class UserController {
         session: {
           ...request.session.user,
           unread: unread,
-        }
+        },
       };
     } else {
       return {

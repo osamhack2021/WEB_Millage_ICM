@@ -36,13 +36,12 @@ export class CommentController {
       const userId = req.session.user.id;
       const role = req.session.user.role.name;
       const comment = await this.commentService.delete(userId, commentId, role);
-      
+
       return {
         result: Result.SUCCESS,
         comment: comment ? comment: undefined,
         id: commentId,
       };
-      
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }
