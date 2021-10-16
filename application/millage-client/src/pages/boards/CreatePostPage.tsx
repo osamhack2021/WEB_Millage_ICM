@@ -142,13 +142,15 @@ function CreatePostPage() {
 
         <button
           className='
-            bg-gray-500 text-white self-center
-            px-40 py-5 mt-6 focus:outline-none
+            bg-green hover:bg-green-dark transition duration-500
+            text-lg text-white font-bold self-center
+            w-72 py-2 mt-8 focus:outline-none
+            flex items-center justify-center
           '
         >
           {createPostState.loading ?
           'loading...' :
-          '게시글 생성'}
+          '게시글 생성하기'}
         </button>
       </form>
 
