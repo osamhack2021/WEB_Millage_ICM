@@ -20,7 +20,7 @@ const ContentBox: React.FC<Props> = ({register}) => {
         maxRows={10}
         className='
             focus:outline-none border border-gray-300 resize-none p-2 w-full
-            focus:border-green-light transition duration-500
+            focus:border-green-light transition duration-500 flex-1
           '
       />
     </InputContainer>

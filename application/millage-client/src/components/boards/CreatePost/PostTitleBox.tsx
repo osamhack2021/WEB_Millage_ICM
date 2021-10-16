@@ -19,7 +19,7 @@ const PostTitleBox: React.FC<Props> = ({register}) => {
         type='text'
         className='
           focus:outline-none border-b border-gray-300 p-2 w-full
-          focus:border-green-light transition duration-500
+          focus:border-green-light transition duration-500 flex-1
         '
       />
     </InputContainer>
