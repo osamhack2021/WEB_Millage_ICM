@@ -109,7 +109,7 @@ export class PostService {
         .leftJoin('recruitStatus.currentMember', 'currentMember')
         .leftJoin('post.hearts', 'hearts')
         .getOne();
-    console.log(post);
+
     if (post.board.unitId !== userData.unit.id) {
       throw new Error('Not authorized user');
     }
