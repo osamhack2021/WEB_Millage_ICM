@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
-import {
-  TextareaAutosize,
-} from '@mui/material';
 import {NORMAL, POLL, POST_PATH, RECRUIT} from '@constants';
 import {CreatePostReq, PollInputs, PostType} from '@modules/board/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
@@ -11,6 +8,7 @@ import {
   SelectBoardBox,
   SelectPostTypeBox,
   PostTitleBox,
+  ContentBox,
 } from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
 
@@ -122,13 +120,8 @@ function CreatePostPage() {
         {/* 게시글 제목 */}
         <PostTitleBox register={register} />
 
-        <h3 className='text-xl mt-4 mb-2' >내용</h3>
-        <TextareaAutosize
-          {...register('content')}
-          placeholder="내용을 입력하세요."
-          minRows={3}
-          className='focus:outline-none border border-gray-500 resize-none p-4'
-        />
+        {/* 게시글 내용 */}
+        <ContentBox register={register} />
 
         {/* <h3 className='text-xl mt-4 mb-2' >이미지 업로드</h3> */}
         {/* react-dropzone 사용하기 */}
