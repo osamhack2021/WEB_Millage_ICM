@@ -46,7 +46,7 @@ function CreatePostPage() {
   }]);
 
   const {register, handleSubmit} = useForm<CreatePostReq>({
-    defaultValues: {rCount: 0},
+    defaultValues: {totalMember: 0},
   });
   const onSubmit: SubmitHandler<CreatePostReq> = (data) => {
     if (createPostState.loading) {
@@ -76,7 +76,7 @@ function CreatePostPage() {
           .filter((p) => p.content !== '')
           .map((p) => p.content);
     } else if (postType === RECRUIT) {
-      createPostReq.rCount = data.rCount;
+      createPostReq.totalMember = data.totalMember;
     }
 
     createPost(createPostReq);
