@@ -10,6 +10,7 @@ import {CreateBoardDto, BoardIdParam, UpdateBoardDto} from './dto';
 import {DeleteRO, Result} from '../common/common.interface';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
+import { UserData } from 'src/user/user.interface';
 
 @ApiBearerAuth()
 @ApiTags('board')
@@ -143,6 +144,22 @@ export class BoardController {
         result: Result.ERROR,
         message: err.message,
       };
+    }
+  }
+
+  @Post('star/:boardId')
+  async toggleStar(
+    @Param('boardId', ParseIntPipe) boardId: number,
+    @Req() req: Request,
+  ): Promise<BoardRO> {
+    try {
+      const userData: UserData = req.session.user;
+      return {
+        result: Result.SUCCESS,
+        board: await this.boardService.toggleStar(boardId, userData);
+      };
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
     }
   }
 }

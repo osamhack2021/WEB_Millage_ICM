@@ -1,11 +1,12 @@
 import {
   Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable,
-  OneToMany, CreateDateColumn,
+  OneToMany, CreateDateColumn, ManyToMany,
 } from 'typeorm';
 
 import {UnitEntity} from '../unit/unit.entity';
 import {PostEntity} from '../post/post.entity';
 import {PaginationObject, AuthType} from './board.interface';
+import {UserEntity} from '../user/user.entity';
 
 @Entity('board')
 export class BoardEntity {
@@ -52,5 +53,10 @@ export class BoardEntity {
   @OneToMany(() => PostEntity, (post) => post.board)
   posts: PostEntity[];
 
+  @ManyToMany(() => UserEntity, (user: UserEntity) => user.staredBoards)
+  staringUsers: UserEntity[];
+
   paginationObject: PaginationObject<PostEntity>;
+
+  isStared: boolean;
 }
