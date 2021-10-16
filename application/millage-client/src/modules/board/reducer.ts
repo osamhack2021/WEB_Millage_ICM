@@ -1,5 +1,5 @@
 import {createReducer} from 'typesafe-actions';
-import {BoardAction, BoardState, Comment} from './types';
+import {Board, BoardAction, BoardState, Comment} from './types';
 import {
   GET_BOARD_BY_ID,
   GET_BOARD_BY_ID_FAILURE,
@@ -36,7 +36,9 @@ import {
   LIKE_REPLY_FAILURE,
   LIKE_REPLY_REQUEST,
   LIKE_REPLY_SUCCESS,
-
+  TOGGLE_BOARD_STAR_REQUEST,
+  TOGGLE_BOARD_STAR_SUCCESS,
+  TOGGLE_BOARD_STAR_FAILURE,
 } from './actions';
 
 const initialState: BoardState = {
@@ -72,6 +74,10 @@ const initialState: BoardState = {
     loading: false,
     data: null,
     error: null,
+  },
+  starBoardState: {
+    loading: false,
+    error: false,
   },
 };
 
@@ -468,6 +474,45 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
       message: action.payload.message,
     },
   }),
+  [TOGGLE_BOARD_STAR_REQUEST]: (state, action) => ({
+    ...state,
+    starBoardState: {
+      loading: true,
+    },
+  }),
+  [TOGGLE_BOARD_STAR_SUCCESS]: (state, action) => {
+    let list :Board[] = [];
+    if (state.boardListState.data) {
+      list = [...state.boardListState.data];
+    }
+
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].id == action.payload.id) {
+        list[i].isStarred = !list[i].isStarred;
+        break;
+      }
+    }
+
+
+    return ({
+      ...state,
+      starBoardState: {
+        loading: false,
+      },
+      boardListState: {
+        ...state.boardListState,
+        data: list,
+      },
+    });
+  },
+  [TOGGLE_BOARD_STAR_FAILURE]: (state, action) => ({
+    ...state,
+    starBoardState: {
+      loading: false,
+      error: true,
+    },
+  }),
+
 });
 
 export default BoardReducer;

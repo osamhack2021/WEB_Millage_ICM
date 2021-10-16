@@ -70,7 +70,7 @@ export class UnitService {
     const newPlace = this.placeRepository.create(
         getSamplePlace(savedUnit.id, savedUnit.name));
     await this.placeRepository.save(newPlace);
-    
+
     return savedUnit;
   }
 }

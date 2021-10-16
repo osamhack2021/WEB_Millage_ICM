@@ -11,6 +11,7 @@ export interface UserData {
   phonenumber: string;
   unit: UnitEntity;
   role: UserRoleEntity;
+  unread?: number;
 }
 
 export interface UserDataForChat {

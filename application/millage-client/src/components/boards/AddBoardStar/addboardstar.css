@@ -1,0 +1,120 @@
+#AddBoardDialog .AddBoardContainer{
+    width: 360px;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    max-height: 600px;
+  }
+  
+  #AddBoardDialog .AddBoardContainer::-webkit-scrollbar {
+    display: none;
+  }
+  
+  #AddBoardDialog .boardButton{
+    height:50px;
+    margin: 2px;
+    display:flex;
+    line-height:50px;
+    text-align:left;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+  }
+  
+  #AddBoardDialog .boardButton img{
+    display: block;
+    padding-right:10px;
+    cursor:pointer;
+  }
+  
+  
+  #AddBoardDialog #BoardsContainer::-webkit-scrollbar {
+    display: none;
+  }
+
+  #AddBoardDialog .loading{
+    background-color: rgba(0,0,0,0.2);
+  }
+
+@media only screen and (min-width: 641px) {
+    #AddBoardDialog #SearchContainer{
+      width: 100%;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      padding-top:10px;
+      padding-bottom:10px;
+    }
+    
+    #AddBoardDialog #BoardsContainer{
+      max-height: 400px;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none; 
+      width:100%;
+    }
+  
+    #AddBoardDialog .dialogTitle{
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      color: #000000;
+      text-align:center;
+      width:100%;
+    }
+  
+    #AddBoardDialog #SearchContainer input{
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+      padding-right:10px;
+      width:80%;
+      border: 1px solid rgba(0,0,0,0.5);
+      text-indent:10px;
+      height:30px;
+      border-radius:15px;
+    }
+  }
+  
+  @media only screen and (max-width: 640px) {
+    #AddBoardDialog #SearchContainer{
+      width: 80%;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      padding-top:10px;
+      padding-bottom:10px;
+    }
+    
+    #AddBoardDialog .dialogTitle{
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      color: #000000;
+      text-align:center;
+      width:80%;
+    }
+  
+    #AddBoardDialog #BoardsContainer{
+      max-height: 400px;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none; 
+      width:80%;
+    }
+  
+    #AddBoardDialog #SearchContainer input{
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+      width:80%;
+      border: 1px solid rgba(0,0,0,0.5);
+      text-indent:10px;
+      height:30px;
+      border-radius:15px;
+    }
+  }

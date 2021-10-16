@@ -4,7 +4,7 @@ import {CommentEntity} from './comment.entity';
 import {UserEntity} from '../../user/user.entity';
 import {Repository} from 'typeorm';
 import {CreateCommentDto, UpdateCommentDto} from './dto';
-import { Role } from 'src/user_role/user_role.interface';
+import {Role} from 'src/user_role/user_role.interface';
 
 @Injectable()
 export class CommentService {
@@ -47,14 +47,14 @@ export class CommentService {
     this.validateComment(writerId, comment, role);
     const replies = await this.commentRepository.findOne({
       where: {
-        parentCommentId: commentId
-      }
+        parentCommentId: commentId,
+      },
     });
     if (replies) {
       comment.content = '삭제된 댓글입니다.';
       comment.isDeleted = true;
       comment.writer = await this.userRepository.findOne(
-        comment.writerId, {select: ['id', 'fullname', 'nickname']});
+          comment.writerId, {select: ['id', 'fullname', 'nickname']});
       await this.commentRepository.save(comment);
       return comment;
     }

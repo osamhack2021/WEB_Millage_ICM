@@ -14,6 +14,7 @@ import {
   DMIcon,
   CommentDeleteIcon,
   LikeBlackFilled,
+  LikeColorFilled,
 } from '@images';
 import {
   deleteReplyAsync,
@@ -57,6 +58,7 @@ const CommentBox:React.FC<Props> = ({
   const [replyText, setReplyText] = useState('');
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [heart, setHeart] = useState(liked);
+  const [heartCntLocal, setheartCntLocal] = useState(heartCount);
   const session = useSelector((state: RootState) => state.user.session);
   const closeDialog = () => {
     setOpenDialog(false);
@@ -114,6 +116,11 @@ const CommentBox:React.FC<Props> = ({
               onClick={() => {
                 dispatch(likeReplyAsync.request(id));
                 setHeart(!heart);
+                if (heart) {
+                  setheartCntLocal(heartCntLocal - 1);
+                } else {
+                  setheartCntLocal(heartCntLocal + 1);
+                }
               }}
             ><img src={heart ? LikeBlackFilled: LikeComment}/></button>
             <button className={
@@ -146,9 +153,18 @@ const CommentBox:React.FC<Props> = ({
           <span className="heart flex items-center">
             <div
               className='h-4 w-4 mr-1 bg-cover'
-              style={{backgroundImage: `url(${Like})`}}
+              style={{backgroundImage: `url(${heart ? LikeColorFilled :Like})`}}
+              onClick={() =>{
+                dispatch(likeReplyAsync.request(id));
+                setHeart(!heart);
+                if (heart) {
+                  setheartCntLocal(heartCntLocal - 1);
+                } else {
+                  setheartCntLocal(heartCntLocal + 1);
+                }
+              }}
             />
-            {heartCount}</span>
+            {heartCntLocal}</span>
         </div> :
         ''
         }

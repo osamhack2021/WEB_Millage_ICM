@@ -124,6 +124,6 @@ export class UserEntity {
   reservations: ReservationEntity[];
 
   @ManyToMany(() => BoardEntity, (board: BoardEntity) => board.staringUsers)
-  @JoinTable({name: 'staredBoards'})
-  staredBoards: BoardEntity[];
+  @JoinTable({name: 'starredBoards'})
+  starredBoards: BoardEntity[];
 }

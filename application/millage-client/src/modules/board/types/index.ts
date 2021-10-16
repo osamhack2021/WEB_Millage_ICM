@@ -19,6 +19,10 @@ export type BoardState = {
       result: string;
       message?: string;
     };
+    starBoardState: {
+      loading: boolean;
+      error?: boolean;
+    }
 };
 
 export type BoardAction = ActionType<typeof Actions>;

@@ -43,7 +43,7 @@ export class BoardController {
           result: 'fail',
         };
       } else {
-        const list : BoardEntity[] = await this.boardService.getBoardList(request.session.user.unit.id);
+        const list : BoardEntity[] = await this.boardService.getBoardList(request.session.user.unit.id, request.session.user.id);
         return {
           result: 'success',
           boards: list,
@@ -66,7 +66,7 @@ export class BoardController {
           message: 'Failed to get right session info',
         };
       } else {
-        const boardListWithPosts : BoardEntity[] = await this.boardService.getBoardListWithPosts(session.user.unit.id);
+        const boardListWithPosts : BoardEntity[] = await this.boardService.getBoardListWithPosts(session.user.unit.id, session.user.id);
         return {
           result: Result.SUCCESS,
           boards: boardListWithPosts,
@@ -153,8 +153,7 @@ export class BoardController {
     @Req() req: Request,
   ): Promise<BoardRO> {
     try {
-      const userData: UserData = req.session.user;
-      await this.boardService.toggleStar(boardId, userData);
+      await this.boardService.toggleStar(boardId, req.session.user.id);
       return {result: Result.SUCCESS};
     } catch (err) {
       return {result: Result.ERROR, message: err.message};

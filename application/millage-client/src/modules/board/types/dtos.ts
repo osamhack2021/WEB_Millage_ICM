@@ -101,4 +101,8 @@ export type insertReplyRes = CommonResponse & {
 export type deleteReplyRes = CommonResponse & {
     id: number;
     comment?: Comment;
-}
+};
+
+export type toggleBoardStarRes = CommonResponse & {
+    id: number;
+};

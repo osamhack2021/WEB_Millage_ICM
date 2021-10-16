@@ -20,7 +20,7 @@ export class ReservationEntity {
   description: string;
 
   @Column({
-    default: 1
+    default: 1,
   })
   total: number;
 

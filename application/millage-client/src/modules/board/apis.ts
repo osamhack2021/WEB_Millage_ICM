@@ -238,9 +238,21 @@ export async function likeReplyApi(
 ): Promise<CommonResponse> {
   const {data} = await axios.post(
       `${SERVER}/comment/${param}/heart/`,
+      {},
       {withCredentials: true},
   );
   return {
     ...data,
   };
+}
+
+export async function toggleBoardStarApi(
+    param: number,
+): Promise<CommonResponse> {
+  const {data} = await axios.post(
+      `${SERVER}/board/star/${param}`,
+      {},
+      {withCredentials: true},
+  );
+  return data;
 }

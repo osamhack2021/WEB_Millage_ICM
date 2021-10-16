@@ -45,7 +45,6 @@ function Header() {
   };
 
   useEffect(()=> {
-    dispatch(updateUnreadAsync.request());
     setPageState('users');
   }, []);
 

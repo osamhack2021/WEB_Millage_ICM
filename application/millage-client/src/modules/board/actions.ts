@@ -16,6 +16,7 @@ import {
   getRecruitAndPollListRes,
   insertReplyReq,
   insertReplyRes,
+  toggleBoardStarRes,
   TogglePostHeartReq,
   TogglePostHeartRes,
   ToggleRecruitReq,
@@ -206,3 +207,17 @@ export const likeReplyAsync = createAsyncAction(
     LIKE_REPLY_SUCCESS,
     LIKE_REPLY_FAILURE,
 )<number, CommonResponse, AxiosError>();
+
+
+export const TOGGLE_BOARD_STAR_REQUEST =
+'board/TOGGLE_BOARD_STAR_REQUEST';
+export const TOGGLE_BOARD_STAR_SUCCESS =
+'board/TOGGLE_BOARD_STAR_SUCCESS';
+export const TOGGLE_BOARD_STAR_FAILURE =
+'board/TOGGLE_BOARD_STAR_FAILURE';
+
+export const toggleBoardStarAsync = createAsyncAction(
+    TOGGLE_BOARD_STAR_REQUEST,
+    TOGGLE_BOARD_STAR_SUCCESS,
+    TOGGLE_BOARD_STAR_FAILURE,
+)<number, toggleBoardStarRes, AxiosError>();
