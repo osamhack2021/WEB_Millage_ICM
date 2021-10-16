@@ -3,11 +3,12 @@ import * as actions from './actions';
 
 export interface Schedule {
   id: string;
-  groupId: string;
+  groupId: groupType;
   title: string;
   content: string;
   start: Date;
   end?: Date;
+  color?: string;
 }
 
 export type ScheduleList = Array<Schedule>

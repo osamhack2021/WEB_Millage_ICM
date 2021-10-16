@@ -35,20 +35,6 @@ interface Props {
 }
 
 const steps = ['변경하고 싶은 날짜 선택', '변경하고 싶은 일정 선택'];
-const compareDate = (a: Date, b: Date) => (
-  a.getFullYear() === b.getFullYear() &&
-  a.getMonth() === b.getMonth() &&
-  a.getDate() === b.getDate()
-);
-const compareDateRange = (start: Date, end: Date, date: Date) => {
-  const startDate = new Date(
-      start.getFullYear(), start.getMonth(), start.getDate(),
-  );
-  const endDate = new Date(
-      end.getFullYear(), end.getMonth(), end.getDate() + 1,
-  );
-  return startDate <= date && date < endDate;
-};
 
 const EditModal: React.FC<Props> = ({handleClose}) => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -100,6 +86,21 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     setChecked(e.end === undefined);
     setSelectedSchedule(e);
     setActiveStep(2);
+  };
+
+  const compareDate = (a: Date, b: Date) => (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+  const compareDateRange = (start: Date, end: Date, date: Date) => {
+    const startDate = new Date(
+        start.getFullYear(), start.getMonth(), start.getDate(),
+    );
+    const endDate = new Date(
+        end.getFullYear(), end.getMonth(), end.getDate() + 1,
+    );
+    return startDate <= date && date < endDate;
   };
 
   return (
@@ -193,7 +194,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                 name='scheduleDateRange'
                 control={control}
                 defaultValue={[selectedSchedule.start, selectedSchedule.end]}
-                render={({field: {onChange, value, ...props}}) => {
+                render={({field: {onChange, value}}) => {
                   const handleDate = (e: [Date?, Date?] | null) => {
                     if (Array.isArray(e)) onChange(e);
                   };
@@ -203,10 +204,11 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                       <DateTimeRangePicker
                         value={value}
                         onChange={handleDate}
-                        locale='en-US'
+                        locale='ko'
+                        calendarType='US'
                         format='y. MM. dd H:mm'
                         disableClock
-                        {...props}
+                        formatDay={(locale, date) => date.getDate().toString()}
                       />
                     </div>
                   );
@@ -217,9 +219,9 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                 name='scheduleDate'
                 control={control}
                 defaultValue={selectedSchedule.start}
-                render={({field: {onChange, value, ...props}}) => {
+                render={({field: {onChange, value}}) => {
                   const handleDate = (e: Date | null) => {
-                    if (Array.isArray(e)) onChange(e);
+                    if (e instanceof Date) onChange(e);
                   };
                   return (
                     <div style={{minHeight: 375}}>
@@ -227,10 +229,11 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                       <DateTimePicker
                         value={value}
                         onChange={handleDate}
-                        locale='en-US'
+                        locale='ko'
+                        calendarType='US'
                         format='y. MM. dd H:mm'
                         disableClock
-                        {...props}
+                        formatDay={(locale, date) => date.getDate().toString()}
                       />
                     </div>
                   );

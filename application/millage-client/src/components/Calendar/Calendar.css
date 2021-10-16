@@ -18,12 +18,6 @@
   font-weight: bold;
 }
 
-@media (max-width:641px) {
-  .fc .fc-toolbar-title {
-    font-size: 1.1em;
-  }
-}
-
 .calendar-wrapper {
   height: 100%;
   width: 100%;
@@ -44,6 +38,25 @@
 
 .fc .fc-time-grid-day-header {
   font-size: 0.75em;
+}
+
+.fc .fc-col-header-cell {
+  text-align: left;
+  border: none;
+}
+
+.fc .fc-scrollgrid {
+  border: none;
+}
+
+.fc-scrollgrid-section-header>td {
+  border: none;
+}
+
+.fc-scrollgrid-section-body>td {
+  border-top-width: 1px !important;
+  border-left-width: 1px !important;
+  border-radius: 0.2em;
 }
 
 @media (min-width:642px)  { 
