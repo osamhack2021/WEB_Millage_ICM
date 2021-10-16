@@ -34,6 +34,13 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import PersonOutlineOutlinedIcon from
   '@mui/icons-material/PersonOutlineOutlined';
 
+import {
+  BoardIcon,
+  CalendarIcon,
+  ManageIcon,
+  ReservationIcon,
+} from '@images';
+
 function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -211,7 +218,9 @@ function Header() {
     if (user.session.role.name == 'ADMIN') {
       return (
         <BottomNavigationAction
-          label="부대관리" icon={<ListAltIcon />}
+          label="부대관리" icon={
+            <img src={ManageIcon}></img>
+          }
           className={pageState == 'manage' ? 'enabled' : ''}
           onClick={()=> {
             setPageState('manage');
@@ -297,7 +306,8 @@ function Header() {
             }}
           >
             <BottomNavigationAction
-              label="게시판" icon={<EventNoteOutlinedIcon />}
+              label="게시판" icon={
+                <img src={BoardIcon} />}
               className={pageState == '' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('');
@@ -313,7 +323,8 @@ function Header() {
               }}
             /> */}
             <BottomNavigationAction
-              label="켈린더" icon={<ListAltIcon />}
+              label="켈린더" icon={
+                <img src={CalendarIcon} />}
               className={pageState == 'schedule' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('schedule');
@@ -321,7 +332,9 @@ function Header() {
               }}
             />
             <BottomNavigationAction
-              label="시설예약" icon={<ListAltIcon />}
+              label="시설예약" icon={
+                <img src={ReservationIcon} />
+              }
               className={pageState == 'reserve' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('reserve');

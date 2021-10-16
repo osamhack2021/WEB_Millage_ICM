@@ -13,6 +13,11 @@ header .MuiBadge-dot{
     background-color:#E16913;
 }
 
+header svg{
+  width: 100%;
+  height: 100%;
+}
+
 @media only screen and (min-width: 641px) {
     header .logo{
         display: flex;
