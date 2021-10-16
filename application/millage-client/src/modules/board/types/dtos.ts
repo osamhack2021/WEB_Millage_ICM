@@ -47,7 +47,7 @@ export type CreatePostReq = Pick<
 > & {
     boardId: number;
     pollList?: string[];
-    rCount?: number;
+    totalMember?: number;
 }
 
 export type CreatePostRes = CommonResponse & {
