@@ -43,10 +43,9 @@
     padding-top:5px;
     padding-bottom:5px;
     justify-content:space-between;
-}
-
-#BoardSideBox .post{
-    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #BoardSideBox .green{
@@ -67,4 +66,10 @@
     border-radius: 50%;
     margin-top:10px;
     margin-right:5px;
+}
+
+#BoardSideBox .truncate{
+    white-space: 'nowrap';
+    overflow: 'hidden';
+    text-overflow: 'ellipsis';
 }
