@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, JoinTable, OneToMany, CreateDateColumn, ManyToMany, AfterLoad, EventSubscriber, EntitySubscriberInterface} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, OneToMany, CreateDateColumn, ManyToMany, AfterLoad, EventSubscriber, EntitySubscriberInterface} from 'typeorm';
 import {PostEntity} from '../post.entity';
 import {UserEntity} from '../../user/user.entity';
 
@@ -48,7 +48,6 @@ export class CommentEntity {
       (comment) => comment.replies,
       {onDelete: 'CASCADE', nullable: true},
   )
-  @JoinColumn({name: 'parentCommentId', referencedColumnName: 'id'})
   parentComment: CommentEntity;
 
   @Column({nullable: true})
@@ -72,6 +71,4 @@ implements EntitySubscriberInterface<CommentEntity> {
   listenTo() {
     return CommentEntity;
   }
-
-  af
 }

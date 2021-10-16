@@ -5,6 +5,7 @@ import {
   CreateBoardRes,
   CreatePostReq,
   CreatePostRes,
+  deleteReplyRes,
   GetBoardByIdReq,
   GetBoardByIdRes,
   GetBoardListInput,
@@ -178,3 +179,30 @@ export const insertReplyAsync = createAsyncAction(
     INSERT_REPLY_SUCCESS,
     INSERT_REPLY_FAILURE,
 )<insertReplyReq, insertReplyRes, AxiosError>();
+
+export const DELETE_REPLY_REQUEST =
+'board/DELETE_REPLY_REQUEST';
+export const DELETE_REPLY_SUCCESS =
+'board/DELETE_REPLY_SUCCESS';
+export const DELETE_REPLY_FAILURE =
+'board/DELETE_REPLY_FAILURE';
+
+export const deleteReplyAsync = createAsyncAction(
+    DELETE_REPLY_REQUEST,
+    DELETE_REPLY_SUCCESS,
+    DELETE_REPLY_FAILURE,
+)<number, deleteReplyRes, AxiosError>();
+
+
+export const LIKE_REPLY_REQUEST =
+'board/LIKE_REPLY_REQUEST';
+export const LIKE_REPLY_SUCCESS =
+'board/LIKE_REPLY_SUCCESS';
+export const LIKE_REPLY_FAILURE =
+'board/LIKE_REPLY_FAILURE';
+
+export const likeReplyAsync = createAsyncAction(
+    LIKE_REPLY_REQUEST,
+    LIKE_REPLY_SUCCESS,
+    LIKE_REPLY_FAILURE,
+)<number, CommonResponse, AxiosError>();

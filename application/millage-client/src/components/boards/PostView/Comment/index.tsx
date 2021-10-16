@@ -10,9 +10,17 @@ import {
   ReportIcon,
   ReplyIcon,
   ReplyButton,
+  LikeComment,
+  DMIcon,
+  CommentDeleteIcon,
+  LikeBlackFilled,
 } from '@images';
-import {insertReplyAsync} from '@modules/board/actions';
+import {
+  deleteReplyAsync,
+  insertReplyAsync,
+  likeReplyAsync} from '@modules/board/actions';
 import {useBoard} from '@hooks/board';
+import {NewMessage} from '@components/DM';
 
 type Props = {
   postId: number;
@@ -23,6 +31,8 @@ type Props = {
   liked: boolean;
   reply: boolean;
   parentCommentId?: number;
+  userId: number;
+  id: number;
 };
 
 const CommentBox:React.FC<Props> = ({
@@ -33,7 +43,9 @@ const CommentBox:React.FC<Props> = ({
   createdAt,
   liked,
   reply,
+  userId,
   parentCommentId,
+  id,
 }) => {
   const dispatch = useDispatch();
   const dateObject = new Date(createdAt);
@@ -43,16 +55,20 @@ const CommentBox:React.FC<Props> = ({
 
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyText, setReplyText] = useState('');
-
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [heart, setHeart] = useState(liked);
+  const session = useSelector((state: RootState) => state.user.session);
+  const closeDialog = () => {
+    setOpenDialog(false);
+  };
   const {replyState} = useBoard();
 
   useEffect(() => {
-    if (replyState.result == 'success') {
+    if (replyState.result == 'insertReplySuccess') {
       setReplyText('');
       setReplyOpen(false);
     }
-  }, [replyState]);
-
+  }, [replyState.result]);
   const addReply = () => {
     dispatch(insertReplyAsync.request({
       content: replyText,
@@ -82,10 +98,36 @@ const CommentBox:React.FC<Props> = ({
             <button style={{
               marginRight: '-1px',
             }}
+            className={reply || userId == -1 ?
+              'hidden':''}
             onClick={()=>setReplyOpen(true)}
-            ><img className={reply?'hidden':''}
-                src={CommentIcon}/></button>
-            <button><img src={ReportIcon}/></button>
+            ><img src={CommentIcon}/></button>
+            <button className={userId == -1 ||
+              userId == session?.id?'hidden':''}
+            onClick={() => {
+              setOpenDialog(true);
+            }}><img src={DMIcon}/></button>
+            <button
+              className={
+              userId != -1 &&
+                userId != session?.id ?'':'hidden'}
+              onClick={() => {
+                dispatch(likeReplyAsync.request(id));
+                setHeart(!heart);
+              }}
+            ><img src={heart ? LikeBlackFilled: LikeComment}/></button>
+            <button className={
+              userId == session?.id ||
+              session?.role.name == 'ADMIN' ||
+              session?.role.name =='SUPER_ADMIN'?'':'hidden'}
+            onClick={() => {
+              if (confirm('정말로 삭제하시겠습니까?')) {
+                dispatch(deleteReplyAsync.request(id));
+              }
+            }}
+            >
+              <img src={CommentDeleteIcon}/>
+            </button>
           </div>
         </div>
         <div className="content" style={
@@ -94,6 +136,7 @@ const CommentBox:React.FC<Props> = ({
           }:{}}>
           <span>{content}</span>
         </div>
+        {userId != -1 ?
         <div className="footer flex items-center"
           style={
           reply?{
@@ -106,7 +149,9 @@ const CommentBox:React.FC<Props> = ({
               style={{backgroundImage: `url(${Like})`}}
             />
             {heartCount}</span>
-        </div>
+        </div> :
+        ''
+        }
       </div>
       <div className="CommentInputContainer w-full flex"
         style={!replyOpen? {
@@ -127,6 +172,11 @@ const CommentBox:React.FC<Props> = ({
           onClick={()=> addReply()}
         ><img src={ReplyButton}/></button>
       </div>
+      <NewMessage
+        open={openDialog}
+        closeHandler={closeDialog}
+        receiverId={userId}
+      />
     </div>
   );
 };

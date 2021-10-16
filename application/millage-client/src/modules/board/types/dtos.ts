@@ -98,4 +98,7 @@ export type insertReplyRes = CommonResponse & {
     comment: Comment;
 };
 
-
+export type deleteReplyRes = CommonResponse & {
+    id: number;
+    comment?: Comment;
+}

@@ -37,11 +37,17 @@ function PostViewPage() {
     getPost({postId: +postId});
   }, []);
 
+
   useEffect(() => {
-    if (replyState.result == 'success') {
+    console.log(replyState.result);
+    if (replyState.result == 'insertReplySuccess') {
       setReplyText('');
+    } else if (replyState.result == 'deleteReplySuccess') {
+      alert('댓글을 삭제하였습니다.');
+    } else if (replyState.result == 'deleteReplyFail') {
+      alert('댓글 삭제에 실패하였습니다.');
     }
-  }, [replyState]);
+  }, [replyState.result]);
 
   console.log(curBoardState);
   console.log(data);
@@ -77,10 +83,11 @@ function PostViewPage() {
         });
       }
     }
-    return finalComments?.map((comment:any) => {
+    return finalComments?.map((comment:Comment) => {
       return (
         <CommentBox
           key={comment.id}
+          id={comment.id}
           postId={+postId}
           content={comment.content}
           createdAt={comment.createdAt}
@@ -89,6 +96,8 @@ function PostViewPage() {
           nickname={comment.writer ? comment.writer.nickname : ''}
           reply={comment.parentCommentId != null}
           parentCommentId={comment.id}
+          userId={comment.isDeleted? -1 :
+            (comment.writer ? comment.writer.id : -1)}
         />
       );
     });
