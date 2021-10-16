@@ -11,7 +11,7 @@ import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 import {UserRoleEntity} from '../user_role/user_role.entity';
-import {UserDataForChat, UserRO} from './user.interface';
+import {UserData, UserDataForChat, UserRO} from './user.interface';
 import {Result, ResultObject} from '../common/common.interface';
 import {Role} from '../user_role/user_role.interface';
 
@@ -44,7 +44,7 @@ export class UserService {
       };
     }
 
-    qb = await getRepository(UserEntity)
+    qb = getRepository(UserEntity)
         .createQueryBuilder('user')
         .where('user.email = :email', {email});
     user = await qb.getOne();
@@ -55,7 +55,7 @@ export class UserService {
       };
     }
 
-    qb = await getRepository(UserEntity)
+    qb = getRepository(UserEntity)
         .createQueryBuilder('user')
         .where('user.nickname = :nickname', {nickname});
     user = await qb.getOne();
@@ -85,14 +85,13 @@ export class UserService {
     return await this.unitRepository.save(newUnit);
   }
 
-  async sendUserConfirmedMail(email: string, unitId: number): Promise<boolean> {
-    const unit = await this.unitRepository.findOne(unitId);
+  async sendUserConfirmedMail(email: string, unitName: string): Promise<boolean> {
     const htmlStream = fs.readFileSync(
         path.join(__dirname, '/mailTemplate/userConfirmed.html')
     );
     await this.mailerService.sendMail({
       to: email,
-      subject: `[Millage 승인 완료] ${unit.name} 커뮤니티를 이용하실 수 있습니다.`,
+      subject: `[Millage 승인 완료] ${unitName} 커뮤니티를 이용하실 수 있습니다.`,
       html: htmlStream, // template 필요
     });
     return true;
@@ -194,25 +193,37 @@ export class UserService {
     } else return null;
   }
 
-  async update(id: number, dto: UpdateUserDto): Promise<boolean> {
-    const previousUser = await this.userRepository.findOne(id);
-    if (previousUser === undefined) {
-      throw new Error(`Cannot find user by id ${id}`);
-    }
-    try {
-      const updateResult = await this.userRepository.update(id, dto);
-      if (updateResult.affected === 0) {
-        return false;
+  private checkAuthroity(
+      userId: number, userData: UserData, userToUpdate: UserEntity
+  ): boolean {
+    switch (userData.role.name) {
+      case Role.NORMAL_USER: {
+        if (userData.id !== userId) {
+          return false;
+        }
       }
-      if (dto.isConfirmed === true) {
-        // userRepositoy.create 안쓰니까 오류남. 근데 create 쓰니까 업데이트가 오류남.
-        // const confirmedUser = updateResult.generatedMaps[0] as UserEntity;
-        // await this.sendUserConfirmedMail(confirmedUser.email, confirmedUser.unitId);
+      case Role.ADMIN: {
+        if (userData.unit.id !== userToUpdate.unitId) {
+          return false;
+        }
       }
-      return true;
-    } catch (err) {
-      throw new Error(err.message);
     }
+    return true;
+  }
+
+  async update(
+      userId: number, dto: UpdateUserDto, userData: UserData
+  ): Promise<UserEntity> {
+    const userToUpdate = await this.userRepository.findOne(userId, {relations: ['unit']});
+    if (!this.checkAuthroity(userId, userData, userToUpdate)) {
+      throw new Error('Not authorized user');
+    }
+    Object.assign(userToUpdate, dto);
+    const updatedUser = await this.userRepository.save(userToUpdate);
+    if (dto.isConfirmed === true) {
+      await this.sendUserConfirmedMail(updatedUser.email, updatedUser.unit.name);
+    }
+    return updatedUser;
   }
 
   async delete(id: number): Promise<boolean> {
