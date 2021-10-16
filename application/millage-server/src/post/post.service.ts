@@ -71,9 +71,6 @@ export class PostService {
           await this.recruitRepository.save(newRecruit);
         }
       }
-      if (savedPost.postType === PostType.POLL) {
-        await this.createPoll(savedPost.id, pollList);
-      }
       return savedPost;
     } catch (err) {
       throw new Error(err.message);
