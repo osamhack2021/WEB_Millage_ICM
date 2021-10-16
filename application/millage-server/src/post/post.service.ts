@@ -94,6 +94,7 @@ export class PostService {
           'comments.id', 'comments.content', 'comments.createdAt',
           'comments.isDeleted', 'comments.parentCommentId',
           'commentHearts.id',
+          'commentWriters.id', 'commentWriters.fullname', 'commentWriters.nickname',
           'recruitStatus',
           'currentMember.id', 'currentMember.fullname', 'currentMember.nickname',
           'hearts.id',
@@ -105,6 +106,7 @@ export class PostService {
         .leftJoin('post.comments', 'comments')
         .leftJoin('post.images', 'images')
         .leftJoin('comments.hearts', 'commentHearts')
+        .leftJoin('comments.writer', 'commentWriters')
         .leftJoin('post.recruitStatus', 'recruitStatus')
         .leftJoin('recruitStatus.currentMember', 'currentMember')
         .leftJoin('post.hearts', 'hearts')
