@@ -14,11 +14,15 @@ import {
   StarIcon,
   ScheduleIcon,
 } from '@images';
+import {useBoard} from '@hooks/board';
 function SideBox() {
   const dispatch = useDispatch();
+
+
   const user = useSelector((state: any) => state.user);
-  const sideboxState = useSelector(
-      (state: RootState) => state.Board.sideboxState);
+  const {
+    sideboxState,
+  } = useBoard();
   const loading = useSelector(
       (state: RootState) => state.Board.sideboxState.loading);
   useEffect(() => {
@@ -55,10 +59,10 @@ function SideBox() {
     if (sideboxState.data && sideboxState.data.schedules) {
       return sideboxState.data.schedules.map((schedule : Schedule) => {
         const today = new Date();
-        const start = new Date(schedule.start);
+        const start = new Date(schedule.start.slice(0, -1));
         let end = null;
         if (schedule.end) {
-          end = new Date(schedule.end);
+          end = new Date(schedule.end.slice(0, -1));
         }
         const betweenTime = Math.floor((today.getTime() -
         start.getTime()) / 1000 / 60);

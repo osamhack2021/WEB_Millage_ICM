@@ -7,16 +7,19 @@ import {
   getPostAsync,
   initCreatePostStateAction,
   initiateCreateBoardStateAction,
+  insertReplyAsync,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
 } from '@modules/board/actions';
+import {insertReplyApi} from '@modules/board/apis';
 import {
   CreateBoardReq,
   CreatePostReq,
   GetBoardByIdReq,
   GetBoardListInput,
   GetPostReq,
+  insertReplyReq,
   TogglePostHeartReq,
   ToggleRecruitReq,
   ToggleVoteReq,
@@ -39,6 +42,13 @@ function useBoard() {
   );
   const createPostState = useSelector(
       (state: RootState) => state.Board.createPostState,
+  );
+  const replyState = useSelector(
+      (state: RootState) => state.Board.replyState,
+  );
+
+  const sideboxState = useSelector(
+      (state: RootState) => state.Board.sideboxState,
   );
 
   const dispatch = useDispatch();
@@ -83,12 +93,19 @@ function useBoard() {
         dispatch(toggleRecruitAsync.request(toggleRecruitReq));
       }, [dispatch]);
 
+  const insertReply = useCallback(
+      (data: insertReplyReq) => {
+        dispatch(insertReplyAsync.request(data));
+      }, [dispatch]);
+
   return {
     curBoardState,
     boardListState,
     createBoardState,
     postState,
     createPostState,
+    replyState,
+    sideboxState,
     getBoardList,
     getBoardById,
     createBoard,
@@ -99,6 +116,8 @@ function useBoard() {
     togglePostHeart,
     toggleVote,
     toggleRecruit,
+    insertReply,
+
   };
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards';
@@ -26,13 +26,22 @@ function PostViewPage() {
     getPost,
     curBoardState,
     togglePostHeart,
+    insertReply,
+    replyState,
   } = useBoard();
   const {postId} = useParams<Params>();
   const {loading, data} = postState;
+  const [replyText, setReplyText] = useState('');
 
   useEffect(() => {
     getPost({postId: +postId});
   }, []);
+
+  useEffect(() => {
+    if (replyState.result == 'success') {
+      setReplyText('');
+    }
+  }, [replyState]);
 
   console.log(curBoardState);
   console.log(data);
@@ -72,13 +81,14 @@ function PostViewPage() {
       return (
         <CommentBox
           key={comment.id}
-          userId={comment.writer ? comment.writer.id : -1}
+          postId={+postId}
           content={comment.content}
           createdAt={comment.createdAt}
           heartCount={comment.heartCount}
           liked={comment.liked}
           nickname={comment.writer ? comment.writer.nickname : ''}
           reply={comment.parentCommentId != null}
+          parentCommentId={comment.id}
         />
       );
     });
@@ -123,8 +133,19 @@ function PostViewPage() {
             <input type="text"
               className="text"
               placeholder="댓글을 입력하세요."
+              value={replyText}
+              onChange={(e) => {
+                setReplyText(e.target.value);
+              }}
             />
-            <button><img src={ReplyButton}/></button>
+            <button
+              onClick={()=> insertReply(
+                  {
+                    content: replyText,
+                    postId: +postId,
+                  },
+              )}
+            ><img src={ReplyButton}/></button>
           </div>
           {renderComments()}
         </div>

@@ -2,6 +2,7 @@ import * as Actions from '../actions';
 import {AsyncState} from '@utils/reducerUtils';
 import {ActionType} from 'typesafe-actions';
 import {Board, Post, SideBox} from './entities';
+import {CommonResponse} from '@utils/commonTypes';
 
 export * from './dtos';
 export * from './entities';
@@ -14,6 +15,10 @@ export type BoardState = {
     sideboxState: AsyncState<SideBox>;
     createPostState: AsyncState<Post>;
     createBoardState: AsyncState<Board>;
+    replyState: {
+      result: string;
+      message?: string;
+    };
 };
 
 export type BoardAction = ActionType<typeof Actions>;

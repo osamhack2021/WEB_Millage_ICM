@@ -11,6 +11,8 @@ import {
   GetPostRes,
   getRecentScheduleRes,
   getRecruitAndPollListRes,
+  insertReplyReq,
+  insertReplyRes,
   TogglePostHeartReq,
   TogglePostHeartRes,
   ToggleRecruitReq,
@@ -31,6 +33,7 @@ import {
   TOGGLE_RECRUIT_API,
   TOGGLE_VOTE_API,
 } from '@constants';
+import {CommonResponse} from '@utils/commonTypes';
 
 /**
  * 커뮤니티의 모든 게시판의 List를 요청하는 API\
@@ -203,3 +206,18 @@ export async function getRecentSchedules(
   };
 }
 
+
+export async function insertReplyApi(
+    param: insertReplyReq,
+): Promise<insertReplyRes> {
+  const {data} = await axios.post(
+      `${SERVER}/post/${param.postId}/comment/`+
+      `${param.commentId?param.commentId:''}`,
+      {
+        content: param.content,
+        parentCommentId: param.parentCommentId,
+      },
+      {withCredentials: true},
+  );
+  return data;
+}

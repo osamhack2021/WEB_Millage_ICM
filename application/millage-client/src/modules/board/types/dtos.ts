@@ -1,6 +1,6 @@
 import {UserState} from '@modules/User/types';
 import {CommonResponse} from '@utils/commonTypes';
-import {Board, Post, PostPartial, Schedule} from './entities';
+import {Board, Post, PostPartial, Schedule, Comment} from './entities';
 
 export type GetBoardListInput = {
     withPosts?: boolean;
@@ -86,3 +86,16 @@ export type getRecruitAndPollListRes = CommonResponse & {
 export type getRecentScheduleRes = CommonResponse & {
     schedules: Schedule[],
 };
+
+export type insertReplyReq = {
+    commentId?: number;
+    content: string;
+    postId: number;
+    parentCommentId?: number;
+};
+
+export type insertReplyRes = CommonResponse & {
+    comment: Comment;
+};
+
+
