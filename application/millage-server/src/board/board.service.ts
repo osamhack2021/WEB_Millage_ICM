@@ -6,7 +6,7 @@ import {BoardEntity} from './board.entity';
 import {CreateBoardDto, UpdateBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
 import {UserData} from '../user/user.interface';
-import {UserEntity} from 'src/user/user.entity';
+import {UserEntity} from '../user/user.entity';
 
 const POSTS_PER_PAGE = 10;
 const POSTS_PER_BOARD_PREVIEW = 4;
@@ -126,10 +126,22 @@ export class BoardService {
     return posts;
   }
 
-  async toggleStar(boardId: number, userData: UserData): Promise<BoardEntity> {
+  async toggleStar(boardId: number, userData: UserData): Promise<boolean> {
     const user = await this.userRepository.findOne(
         userData.id, {relations: ['staredBoards']});
-    const staredBoard = user.staredBoards.filter(
-        (board: BoardEntity) => board.id === boardId);
+    let isAlreadyStared = false;
+    for (const [idx, board] of user.staredBoards.entries()) {
+      if (board.id === boardId) {
+        isAlreadyStared = true;
+        user.staredBoards.splice(idx, 1);
+        break;
+      }
+    }
+    if (!isAlreadyStared) {
+      const board = await this.boardRepository.findOne(boardId);
+      user.staredBoards.push(board);
+    }
+    await this.userRepository.save(user);
+    return true;
   }
 }
