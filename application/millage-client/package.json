@@ -1,6 +1,7 @@
 {
   "name": "millage-client",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",
