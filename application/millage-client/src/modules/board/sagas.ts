@@ -13,6 +13,7 @@ import {
   getRecruitAndPollList,
   insertReplyApi,
   likeReplyApi,
+  toggleBoardStarApi,
 } from './apis';
 import {
   CreateBoardRes,
@@ -39,6 +40,7 @@ import {
   getRecruitAndPostListAsync,
   insertReplyAsync,
   likeReplyAsync,
+  toggleBoardStarAsync,
   togglePostHeartAsync,
   toggleRecruitAsync,
   toggleVoteAsync,
@@ -235,6 +237,24 @@ function* likeReplySaga(
   }
 }
 
+function* toggleBoardStarSaga(
+    action: ReturnType<typeof toggleBoardStarAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response: CommonResponse = yield call(
+        toggleBoardStarApi,
+        param,
+    );
+    yield put(toggleBoardStarAsync.success({
+      ...response,
+      id: param,
+    }));
+  } catch (error: any) {
+    yield put(toggleBoardStarAsync.failure(error));
+  }
+}
+
 export function* boardSagaListener() {
   yield takeLatest(getBoardListAsync.request, getBoardListSaga);
   yield takeLatest(getBoardByIdAsync.request, getBoardByIdSaga);
@@ -250,6 +270,7 @@ export function* boardSagaListener() {
   yield takeLatest(insertReplyAsync.request, insertReplySaga);
   yield takeLatest(deleteReplyAsync.request, deleteReplySaga);
   yield takeLatest(likeReplyAsync.request, likeReplySaga);
+  yield takeLatest(toggleBoardStarAsync.request, toggleBoardStarSaga);
 }
 
 export default boardSagaListener;

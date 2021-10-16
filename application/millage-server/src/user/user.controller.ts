@@ -10,19 +10,27 @@ import {
 import {Result, ResultObject} from '../common/common.interface';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
+import {MessageService} from '../message/message.service';
 
 @ApiBearerAuth()
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly messageService: MessageService,  
+  ) {}
 
   @Get('session')
   async getSession(@Req() request : Request) : Promise<UserRO> {
     if (request.session && request.session.user) {
+      const unread = await this.messageService.getUnreadMessageCount(request.session.user.id);
       return {
         result: Result.SUCCESS,
-        session: request.session.user,
+        session: {
+          ...request.session.user,
+          unread: unread,
+        }
       };
     } else {
       return {

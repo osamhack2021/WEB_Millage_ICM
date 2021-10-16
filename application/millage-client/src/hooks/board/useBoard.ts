@@ -51,6 +51,10 @@ function useBoard() {
       (state: RootState) => state.Board.sideboxState,
   );
 
+  const starBoardState = useSelector(
+      (state: RootState) => state.Board.starBoardState,
+  );
+
   const dispatch = useDispatch();
   const getBoardList = useCallback((
       getBoardListInput?: GetBoardListInput,
@@ -106,6 +110,7 @@ function useBoard() {
     createPostState,
     replyState,
     sideboxState,
+    starBoardState,
     getBoardList,
     getBoardById,
     createBoard,
@@ -117,7 +122,6 @@ function useBoard() {
     toggleVote,
     toggleRecruit,
     insertReply,
-
   };
 }
 

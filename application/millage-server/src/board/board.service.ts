@@ -25,17 +25,29 @@ export class BoardService {
   ) {}
 
 
-  async getBoardList(id: number) : Promise<BoardEntity[]> {
-    const list = await this.boardRepository.find({
+  async getBoardList(id: number, userId: number) : Promise<BoardEntity[]> {
+    let list = await this.boardRepository.find({
       where: {
         unitId: id,
       },
     });
 
+
+    const user = await this.userRepository.findOne(
+      userId, {relations: ['starredBoards']});
+    
+    const ids = [];
+    for (const [idx, board] of user.starredBoards.entries()) {
+      ids.push(board.id);
+    }
+    list.forEach((board) => {
+      board.isStarred = ids.includes(board.id);
+    });
+
     return list;
   }
 
-  async getBoardListWithPosts(unitId: number): Promise<BoardEntity[]> {
+  async getBoardListWithPosts(unitId: number, userId: number): Promise<BoardEntity[]> {
     const boards = await this.boardRepository.find({
       where: {
         unitId: unitId,
@@ -48,6 +60,18 @@ export class BoardService {
         order: {createdAt: 'ASC'},
         take: POSTS_PER_BOARD_PREVIEW,
       });
+
+        
+      const user = await this.userRepository.findOne(
+        userId, {relations: ['starredBoards']});
+      
+      const ids = [];
+      for (const [idx, board] of user.starredBoards.entries()) {
+        ids.push(board.id);
+      }
+      
+      board.isStarred = ids.includes(board.id);
+
       return board;
     }));
   }
@@ -126,20 +150,20 @@ export class BoardService {
     return posts;
   }
 
-  async toggleStar(boardId: number, userData: UserData): Promise<boolean> {
+  async toggleStar(boardId: number, userId: number): Promise<boolean> {
     const user = await this.userRepository.findOne(
-        userData.id, {relations: ['staredBoards']});
-    let isAlreadyStared = false;
-    for (const [idx, board] of user.staredBoards.entries()) {
+        userId, {relations: ['starredBoards']});
+    let isAlreadyStarred = false;
+    for (const [idx, board] of user.starredBoards.entries()) {
       if (board.id === boardId) {
-        isAlreadyStared = true;
-        user.staredBoards.splice(idx, 1);
+        isAlreadyStarred = true;
+        user.starredBoards.splice(idx, 1);
         break;
       }
     }
-    if (!isAlreadyStared) {
+    if (!isAlreadyStarred) {
       const board = await this.boardRepository.findOne(boardId);
-      user.staredBoards.push(board);
+      user.starredBoards.push(board);
     }
     await this.userRepository.save(user);
     return true;

@@ -243,12 +243,6 @@ function Header() {
     setNewPhone(user.session.phonenumber);
   }, []);
 
-  useEffect(() => {
-    if (user.session) {
-      dispatch(updateUnreadAsync.request());
-    }
-  }, [user.session]);
-
   return (
     <header className="header">
       <XLayout className='h-full flex justify-between items-center'>

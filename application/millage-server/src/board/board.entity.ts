@@ -53,10 +53,10 @@ export class BoardEntity {
   @OneToMany(() => PostEntity, (post) => post.board)
   posts: PostEntity[];
 
-  @ManyToMany(() => UserEntity, (user: UserEntity) => user.staredBoards)
+  @ManyToMany(() => UserEntity, (user: UserEntity) => user.starredBoards)
   staringUsers: UserEntity[];
 
   paginationObject: PaginationObject<PostEntity>;
 
-  isStared: boolean;
+  isStarred: boolean;
 }

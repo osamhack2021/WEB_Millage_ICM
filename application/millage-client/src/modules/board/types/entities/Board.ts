@@ -16,6 +16,7 @@ export type Board = {
     unit: UnitObject;
     posts?: Post[];
     paginationObject: PaginationResults<Post>;
+    isStarred?: boolean;
 };
 
 export enum AuthType {
