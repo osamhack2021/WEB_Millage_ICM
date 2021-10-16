@@ -1,7 +1,7 @@
 import React from 'react';
-import { CreatePostReq } from '@modules/board/types';
-import { UseFormRegister } from 'react-hook-form';
-import { InputContainer, InputTitle } from './InputComponents';
+import {CreatePostReq} from '@modules/board/types';
+import {UseFormRegister} from 'react-hook-form';
+import {InputContainer, InputTitle} from './InputComponents';
 
 type Props = {
   register: UseFormRegister<CreatePostReq>
@@ -9,11 +9,14 @@ type Props = {
 
 const RecruitInputBox: React.FC<Props> = ({register}) => {
   return (
-    <InputContainer className='my-6' >
+    <InputContainer className='my-6 sm:items-center' >
       <InputTitle>모집 인원</InputTitle>
       <input
         {...register('rCount')}
-        className='p-2 ring-1 ring-gray-500 focus:outline-none'
+        className='
+          p-2 ring-1 ring-gray-300 focus:outline-none
+          focus:ring-green-light transition duration-500
+        '
         type='number'
         min={0}
       />
