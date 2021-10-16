@@ -1,7 +1,7 @@
 import React from 'react';
-import {ClassNameProps} from '@utils/commonTypes';
+import {StyleOverWriteProps} from '@utils/commonTypes';
 
-type Props = ClassNameProps;
+type Props = StyleOverWriteProps;
 
 /**
  * Page 가로 Layout 컴포넌트\
