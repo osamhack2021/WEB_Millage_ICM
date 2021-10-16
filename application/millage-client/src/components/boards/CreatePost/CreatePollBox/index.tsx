@@ -1,6 +1,8 @@
 import React from 'react';
-import {CancelOutlined} from '@mui/icons-material';
 import {PollInputs} from '@modules/board/types';
+import {InputContainer, InputTitle} from '../InputComponents';
+import PollBoxHeader from './PollBoxHeader';
+import PollInputItem from './PollInputItem';
 
 type Props = {
   pollList: PollInputs[],
@@ -59,39 +61,23 @@ const CreatePollBox: React.FC<Props> = ({
   };
 
   return (
-    <div className='w-full'>
-      <div className='flex items-center justify-between'>
-        <h3 className='text-xl mt-4 mb-2' >설문지 만들기</h3>
-        <button onClick={onAddPoll} >항목 추가</button>
-      </div>
-      <div className='w-full'>
-        { pollList.map((p) => (
-          <div
-            key={p.index}
-            className='relative ring-1 ring-gray-500'
-          >
-            <div
-              className='
-                absolute right-4 top-0 bottom-0 flex items-center
-              '
-            >
-              <CancelOutlined
-                className='cursor-pointer text-red-400'
-                fontSize='small'
-                onClick={onDeletePoll}
-              />
-            </div>
-            <input
-              id={p.index.toString()}
-              value={p.content}
-              onChange={onChangePoll}
-              className='w-full focus:outline-none p-4'
-              type='text'
+    <InputContainer className='mt-6'>
+      <InputTitle>설문 조사</InputTitle>
+      <div className='max-w-md w-full flex flex-col'>
+        <PollBoxHeader onAddPoll={onAddPoll} />
+
+        <div className='w-full'>
+          { pollList.map((p) => (
+            <PollInputItem
+              key={p.index}
+              onDeletePoll={onDeletePoll}
+              onChangePoll={onChangePoll}
+              {...p}
             />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </InputContainer>
   );
 };
 

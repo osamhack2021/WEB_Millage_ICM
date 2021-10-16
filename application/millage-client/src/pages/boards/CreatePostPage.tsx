@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
-import {
-  FormControl,
-  FormControlLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  TextareaAutosize,
-} from '@mui/material';
 import {NORMAL, POLL, POST_PATH, RECRUIT} from '@constants';
 import {CreatePostReq, PollInputs, PostType} from '@modules/board/types';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import {CreatePollBox} from '@components/boards/CreatePost';
+import {
+  CreatePollBox,
+  SelectBoardBox,
+  SelectPostTypeBox,
+  PostTitleBox,
+  ContentBox,
+  RecruitInputBox,
+} from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
 
 
@@ -26,21 +24,18 @@ function CreatePostPage() {
     initCreatePostState,
   } = useBoard();
 
-  const {data: curBoard} = curBoardState;
-  const {
-    loading,
-    data: boardList,
-  } = boardListState;
-
   useEffect(() => {
     getBoardList();
   }, []);
 
+  const {data: curBoard} = curBoardState;
+  const {data: boardList} = boardListState;
+
   const [
-    selectedBoardID,
-    setSelectedBoardID,
+    selectedBoardId,
+    setBoardID,
   ] = useState<number>(curBoard?.id || 0);
-  const selectedBoard = boardList?.find((b) => b.id === selectedBoardID);
+  const selectedBoard = boardList?.find((b) => b.id === selectedBoardId);
 
   const [postType, setPostType] = useState<PostType>(NORMAL);
 
@@ -71,7 +66,7 @@ function CreatePostPage() {
     }
 
     const createPostReq: CreatePostReq = {
-      boardId: selectedBoardID,
+      boardId: selectedBoardId,
       postType,
       title: data.title,
       content: data.content,
@@ -98,93 +93,36 @@ function CreatePostPage() {
   }, []);
 
   return (
-    loading ?
-
-    <div>
-      loading...
-    </div> :
-
     <div
-      className='max-w-screen-xl py-4 px-4 mx-auto flex flex-col items-center
-      lg:px-8 lg:py-8'
-      style={{minHeight: '90vh'}}
+      className='flex flex-col items-center ring-1 ring-gray-300 py-8 px-6'
     >
-      <h1 className='text-2xl' > 게시글 생성하기 </h1>
+      <h1 className='text-2xl' > 게시글 만들기 </h1>
 
-      <div className='flex mt-6 w-9/12 justify-between' >
-        <div className='flex' >
-          <h3 className='text-xl mt-4 mb-2 mr-4' >게시판 선택</h3>
-          <FormControl className='' style={{minWidth: '10rem'}}>
-            <Select
-              value={selectedBoardID}
-              onChange={(e) => setSelectedBoardID((e.target.value as number))}
-              renderValue={(selected) => {
-                if (selected === 0) {
-                  return <em>선택해주세요</em>;
-                }
+      {/* 게시판 선택 */}
+      <SelectBoardBox
+        selectedBoardId={selectedBoardId}
+        setBoardId={setBoardID}
+      />
 
-                return boardList?.find((b) => b.id === selected)?.title;
-              }}
-            >
-              {boardList?.map( (b) =>
-                <MenuItem key={b.id} value={b.id}>{b.title}</MenuItem>,
-              )}
-            </Select>
-          </FormControl>
-        </div>
-
-        { (selectedBoard?.pollAllowed || selectedBoard?.recruitAllowed) &&
-          <RadioGroup
-            row
-            value={postType}
-            onChange={(e, v) => {
-              if ( v !== NORMAL && v !== POLL && v !== RECRUIT ) return;
-              setPostType(v);
-            }}
-          >
-            <FormControlLabel
-              value={NORMAL}
-              control={<Radio />}
-              label="일반 게시글"
-            />
-            { selectedBoard?.pollAllowed &&
-              <FormControlLabel
-                value={POLL}
-                control={<Radio />}
-                label="설문 게시글"
-              />
-            }
-            { selectedBoard?.recruitAllowed &&
-              <FormControlLabel
-                value={RECRUIT}
-                control={<Radio />}
-                label="모집 게시글"
-              />
-            }
-          </RadioGroup>
-        }
-      </div>
+      {/* 게시글 타입 선택 */}
+      { selectedBoard &&
+        (selectedBoard.pollAllowed || selectedBoard.recruitAllowed) &&
+        <SelectPostTypeBox
+          postType={postType}
+          setPostType={setPostType}
+          selectedBoard={selectedBoard}
+        />
+      }
 
       <form
-        className='mt-8 w-3/4 flex flex-col'
+        className='flex flex-col w-full'
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>
-        <input
-          {...register('title', {
-            required: '제목을 입력해주세요',
-          })}
-          type='text'
-          className='focus:outline-none border-b border-gray-500 py-2 w-full'
-        />
+        {/* 게시글 제목 */}
+        <PostTitleBox register={register} />
 
-        <h3 className='text-xl mt-4 mb-2' >내용</h3>
-        <TextareaAutosize
-          {...register('content')}
-          placeholder="내용을 입력하세요."
-          minRows={3}
-          className='focus:outline-none border border-gray-500 resize-none p-4'
-        />
+        {/* 게시글 내용 */}
+        <ContentBox register={register} />
 
         {/* <h3 className='text-xl mt-4 mb-2' >이미지 업로드</h3> */}
         {/* react-dropzone 사용하기 */}
@@ -197,27 +135,22 @@ function CreatePostPage() {
           />
         }
 
+        {/* 모집 기능 */}
         { selectedBoard?.recruitAllowed && postType === RECRUIT &&
-          <div className='flex my-6 items-center' >
-            <h3 className='text-xl mr-4' >모집 인원</h3>
-            <input
-              {...register('rCount')}
-              className='p-2 ring-1 ring-gray-500 focus:outline-none'
-              type='number'
-              min={0}
-            />
-          </div>
+          <RecruitInputBox register={register} />
         }
 
         <button
           className='
-            bg-gray-500 text-white self-center
-            px-40 py-5 mt-6 focus:outline-none
+            bg-green hover:bg-green-dark transition duration-500
+            text-lg text-white font-bold self-center
+            w-72 py-2 mt-8 focus:outline-none
+            flex items-center justify-center
           '
         >
           {createPostState.loading ?
           'loading...' :
-          '게시글 생성'}
+          '게시글 생성하기'}
         </button>
       </form>
 
