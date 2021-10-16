@@ -15,6 +15,11 @@ export class PlaceEntity {
   @Column()
   seats: number;
 
+  @Column({
+    nullable: true,
+  })
+  description: string;
+
   @ManyToOne(() => UnitEntity)
   @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
   unit: UnitEntity;

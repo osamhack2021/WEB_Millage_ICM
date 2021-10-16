@@ -37,7 +37,13 @@ const AddBoard :React.FC<Props> = ({closeHandler, open}) => {
   const [imageAllowed, setImageAllowed] = useState<string>('불가능');
   const [pollAllowed, setPollAllowed] = useState<string>('불가능');
   const [recruitAllowed, setRecruitAllowed] = useState<string>('불가능');
-  const {register, getValues, handleSubmit} = useForm<BoardInsertData>();
+  const {register, getValues, handleSubmit, reset} = useForm<BoardInsertData>();
+
+  useEffect(() => {
+    if (open == true) {
+      reset(initialDialogState);
+    }
+  }, [open]);
 
   const onSubmit: SubmitHandler<BoardInsertData> = (data, e) => {
     if (e) {

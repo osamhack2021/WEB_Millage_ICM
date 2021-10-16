@@ -3,13 +3,17 @@ import {
   authUnitAsync,
   authUserAsync,
   deleteBoardAsync,
+  deletePlaceAsync,
   deleteUnitAsync,
   deleteUserAsync,
   getBoardListAsync,
+  getPlaceListAsync,
   getUnitlistAsync,
   getUserlistAsync,
   insertBoardAsync,
+  insertPlaceAsync,
   updateBoardAsync,
+  updatePlaceAsync,
   updateUserRoleAsync,
 } from './actions';
 import {
@@ -24,6 +28,10 @@ import {
   updateBoardApi,
   insertBoardApi,
   deleteBoardApi,
+  deletePlaceApi,
+  getPlaceList,
+  insertPlaceApi,
+  updatePlaceApi,
 } from './api';
 import {AdminState} from './types';
 
@@ -204,6 +212,72 @@ function* deleteBoardSaga(
   }
 }
 
+
+function* getPlaceListSaga(
+    action: ReturnType<typeof getPlaceListAsync.request>,
+) {
+  try {
+    const response : AdminState = yield call(getPlaceList);
+    if (response.result == 'success') {
+      yield put(getPlaceListAsync.success(response));
+    } else {
+      yield put(getPlaceListAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(getPlaceListAsync.failure(error));
+  }
+}
+
+function* updatePlaceSaga(
+    action: ReturnType<typeof updatePlaceAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(updatePlaceApi, param);
+    if (response.result == 'success') {
+      yield put(updatePlaceAsync.success(response));
+    } else {
+      yield put(updatePlaceAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(updatePlaceAsync.failure(error));
+  }
+}
+
+function* insertPlaceSaga(
+    action: ReturnType<typeof insertPlaceAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(insertPlaceApi, param);
+    if (response.result == 'success') {
+      yield put(getPlaceListAsync.request());
+      yield put(insertPlaceAsync.success(response));
+    } else {
+      yield put(insertPlaceAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(insertPlaceAsync.failure(error));
+  }
+}
+
+function* deletePlaceSaga(
+    action: ReturnType<typeof deletePlaceAsync.request>,
+) {
+  try {
+    const param = action.payload;
+    const response : AdminState = yield call(deletePlaceApi, param);
+    if (response.result == 'success') {
+      yield put(getPlaceListAsync.request());
+      yield put(deletePlaceAsync.success(response));
+    } else {
+      yield put(deletePlaceAsync.failure(response));
+    }
+  } catch (error : any) {
+    yield put(deletePlaceAsync.failure(error));
+  }
+}
+
 export default function* AdminSagaListener() {
   yield takeLatest(getUserlistAsync.request, getUserListSaga);
   yield takeLatest(updateUserRoleAsync.request, updateUserRoleSaga);
@@ -216,4 +290,8 @@ export default function* AdminSagaListener() {
   yield takeLatest(updateBoardAsync.request, updateBoardSaga);
   yield takeLatest(insertBoardAsync.request, insertBoardSaga);
   yield takeLatest(deleteBoardAsync.request, deleteBoardSaga);
+  yield takeLatest(getPlaceListAsync.request, getPlaceListSaga);
+  yield takeLatest(updatePlaceAsync.request, updatePlaceSaga);
+  yield takeLatest(insertPlaceAsync.request, insertPlaceSaga);
+  yield takeLatest(deletePlaceAsync.request, deletePlaceSaga);
 }

@@ -21,6 +21,15 @@ export interface BoardData{
     createdAt: Date;
 }
 
+export interface PlaceData{
+    id: number;
+    name: string;
+    description: string;
+    seats: boolean;
+    unitId: number;
+}
+
+
 export interface BoardUpdateData{
     id: number;
     title: string;
@@ -41,6 +50,20 @@ export interface BoardInsertData{
     unitId?: number;
 }
 
+
+export interface PlaceUpdateData{
+    id: number;
+    name: string;
+    description: string;
+    seats: number;
+}
+
+export interface PlaceInsertData{
+    name: string;
+    description: string;
+    seats: number;
+}
+
 export interface AdminState {
     result: string;
     role?: string;
@@ -49,6 +72,7 @@ export interface AdminState {
     page?: string;
     units?: UnitData[];
     boards?: BoardData[];
+    places?: PlaceData[];
 }
 
 export type AdminAction = ActionType<typeof actions>;

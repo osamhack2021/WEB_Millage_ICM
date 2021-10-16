@@ -1,5 +1,11 @@
 import {createAction, createAsyncAction} from 'typesafe-actions';
-import {AdminState, BoardInsertData, BoardUpdateData} from './types';
+import {
+  AdminState,
+  BoardInsertData,
+  BoardUpdateData,
+  PlaceInsertData,
+  PlaceUpdateData,
+} from './types';
 
 export const GET_USERLIST_REQUEST =
   'ADMIN/GET_USERLIST_REQUEST' as const;
@@ -176,4 +182,64 @@ export const deleteBoardAsync = createAsyncAction(
     DELETE_BOARD_REQUEST,
     DELETE_BOARD_SUCCESS,
     DELETE_BOARD_FAIL,
+)<number, AdminState, AdminState>();
+
+export const GET_PLACELIST_REQUEST =
+  'ADMIN/GET_PLACELIST_REQUEST';
+
+export const GET_PLACELIST_SUCCESS =
+  'ADMIN/GET_PLACELIST_SUCCESS';
+
+export const GET_PLACELIST_FAIL=
+  'ADMIN/GET_PLACELIST_FAIL';
+
+export const getPlaceListAsync = createAsyncAction(
+    GET_PLACELIST_REQUEST,
+    GET_PLACELIST_SUCCESS,
+    GET_PLACELIST_FAIL,
+)<undefined, AdminState, AdminState>();
+
+export const UPDATE_PLACE_REQUEST =
+  'ADMIN/UPDATE_PLACE_REQUEST';
+
+export const UPDATE_PLACE_SUCCESS =
+  'ADMIN/UPDATE_PLACE_SUCCESS';
+
+export const UPDATE_PLACE_FAIL=
+  'ADMIN/UPDATE_PLACE_FAIL';
+
+export const updatePlaceAsync = createAsyncAction(
+    UPDATE_PLACE_REQUEST,
+    UPDATE_PLACE_SUCCESS,
+    UPDATE_PLACE_FAIL,
+)<PlaceUpdateData, AdminState, AdminState>();
+
+export const INSERT_PLACE_REQUEST =
+  'ADMIN/INSERT_PLACE_REQUEST';
+
+export const INSERT_PLACE_SUCCESS =
+  'ADMIN/INSERT_PLACE_SUCCESS';
+
+export const INSERT_PLACE_FAIL=
+  'ADMIN/INSERT_PLACE_FAIL';
+
+export const insertPlaceAsync = createAsyncAction(
+    INSERT_PLACE_REQUEST,
+    INSERT_PLACE_SUCCESS,
+    INSERT_PLACE_FAIL,
+)<PlaceInsertData, AdminState, AdminState>();
+
+export const DELETE_PLACE_REQUEST =
+  'ADMIN/DELETE_PLACE_REQUEST';
+
+export const DELETE_PLACE_SUCCESS =
+  'ADMIN/DELETE_PLACE_SUCCESS';
+
+export const DELETE_PLACE_FAIL=
+  'ADMIN/DELETE_PLACE_FAIL';
+
+export const deletePlaceAsync = createAsyncAction(
+    DELETE_PLACE_REQUEST,
+    DELETE_PLACE_SUCCESS,
+    DELETE_PLACE_FAIL,
 )<number, AdminState, AdminState>();

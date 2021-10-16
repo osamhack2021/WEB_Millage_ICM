@@ -1,5 +1,6 @@
 import AdminUsers from '@components/Admin/AdminUsers';
 import AdminBoards from '@components/Admin/AdminBoards';
+import AdminPlaces from '@components/Admin/AdminPlaces';
 import {setPageStateAction} from '@modules/Admin/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {XLayout} from '@components/common';
@@ -30,6 +31,7 @@ function Manage() {
       <div id="AdminContainer">
         {adminState.page == 'users' ? <AdminUsers /> : ''}
         {adminState.page == 'boards' ? <AdminBoards /> : ''}
+        {adminState.page == 'places' ? <AdminPlaces /> : ''}
       </div>
     </div>
   );

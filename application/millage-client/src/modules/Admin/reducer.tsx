@@ -35,6 +35,18 @@ import {
   DELETE_BOARD_REQUEST,
   DELETE_BOARD_SUCCESS,
   DELETE_BOARD_FAIL,
+  DELETE_PLACE_FAIL,
+  DELETE_PLACE_REQUEST,
+  DELETE_PLACE_SUCCESS,
+  GET_PLACELIST_FAIL,
+  GET_PLACELIST_REQUEST,
+  GET_PLACELIST_SUCCESS,
+  INSERT_PLACE_FAIL,
+  INSERT_PLACE_REQUEST,
+  INSERT_PLACE_SUCCESS,
+  UPDATE_PLACE_FAIL,
+  UPDATE_PLACE_REQUEST,
+  UPDATE_PLACE_SUCCESS,
 } from './actions';
 
 const initialState: AdminState = {
@@ -44,6 +56,7 @@ const initialState: AdminState = {
   page: 'users',
   units: [],
   boards: [],
+  places: [],
 };
 
 const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
@@ -70,6 +83,7 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   [SET_PAGE_STATE]: (state, action) => ({
     ...state,
     page: action.payload,
+    result: '',
   }),
   [AUTH_USER_REQUEST]: (state, action) => ({
     ...state,
@@ -176,6 +190,52 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   [DELETE_BOARD_FAIL]: (state, action) => ({
     ...state,
     result: 'deleteBoardFail',
+  }),
+  [GET_PLACELIST_REQUEST]: (state, action) => ({
+    ...state,
+  }),
+  [GET_PLACELIST_SUCCESS]: (state, action) => ({
+    ...state,
+    places: action.payload.places,
+  }),
+  [GET_PLACELIST_FAIL]: (state, action) => ({
+    ...state,
+  }),
+  [UPDATE_PLACE_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [UPDATE_PLACE_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'updatePlaceSuccess',
+  }),
+  [UPDATE_PLACE_FAIL]: (state, action) => ({
+    ...state,
+    result: 'updatePlaceFail',
+  }),
+  [INSERT_PLACE_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [INSERT_PLACE_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'insertPlaceSuccess',
+  }),
+  [INSERT_PLACE_FAIL]: (state, action) => ({
+    ...state,
+    result: 'insertPlaceFail',
+  }),
+  [DELETE_PLACE_REQUEST]: (state, action) => ({
+    ...state,
+    result: '',
+  }),
+  [DELETE_PLACE_SUCCESS]: (state, action) => ({
+    ...state,
+    result: 'deletePlaceSuccess',
+  }),
+  [DELETE_PLACE_FAIL]: (state, action) => ({
+    ...state,
+    result: 'deletePlaceFail',
   }),
 });
 
