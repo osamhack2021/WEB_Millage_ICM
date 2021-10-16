@@ -212,14 +212,20 @@ export class PostService {
     return recruit;
   }
 
-  async vote(postId: number, userId: number, pollId: number): Promise<boolean> {
-    const targetPost = await this.postRepository.findOne(
-        postId, {relations: ['pollItems', 'pollItems.voters']}
-    );
-    const targetPollItem: PollEntity = targetPost.pollItems.filter((poll) => poll.id === pollId)[0];
+  async vote(postId: number, userId: number, pollId: number): Promise<PollEntity[]> {
+    const pollItems = await this.pollRepository.createQueryBuilder('pollItem')
+        .where('pollItem.postId= :id', {id: postId})
+        .select([
+          'pollItem',
+          'voters.id', 'voters.fullname', 'voters.nickname',
+        ])
+        .leftJoin('pollItem.voters', 'voters')
+        .getMany();
+
+    const targetPollItem: PollEntity = pollItems.filter((poll) => poll.id === pollId)[0];
 
     let pollUserExists: PollEntity = null;
-    for (const pollItem of targetPost.pollItems) {
+    for (const pollItem of pollItems) {
       if (pollItem.voters.some((voter) => voter.id == userId)) {
         pollUserExists = pollItem;
         break;
@@ -227,18 +233,20 @@ export class PostService {
     }
 
     if (pollUserExists && pollUserExists.id === pollId) { // canceling
-      targetPollItem.voters = targetPollItem.voters.filter((voter) => voter.id === userId);
+      targetPollItem.voters = targetPollItem.voters.filter((voter) => voter.id !== userId);
+      console.log(targetPollItem.voters);
       await this.pollRepository.save(targetPollItem);
-      return true;
+      return pollItems;
     }
 
-    const user: UserEntity = await this.userRepository.findOne(userId);
+    const user: UserEntity = await this.userRepository.findOne(
+        userId, {select: ['id', 'fullname', 'nickname']});
     if (pollUserExists) { // changing choice
-      pollUserExists.voters = pollUserExists.voters.filter((voter) => voter.id === userId);
+      pollUserExists.voters = pollUserExists.voters.filter((voter) => voter.id !== userId);
       await this.pollRepository.save(pollUserExists);
     }
     targetPollItem.voters.push(user);
     await this.pollRepository.save(targetPollItem);
-    return true;
+    return pollItems;
   }
 }
