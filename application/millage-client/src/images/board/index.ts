@@ -14,3 +14,6 @@ export {default as LikeBlackFilled} from './Like_Black_Filled.svg';
 export {default as NormalPost} from './Normal_Post.svg';
 export {default as PollPost} from './Poll_Post.svg';
 export {default as RecruitPost} from './Recruit_Post.svg';
+export {default as DMIcon} from './DMIcon.svg';
+export {default as LikeComment} from './Like_Comment.svg';
+export {default as CommentDeleteIcon} from './CommentDeleteIcon.svg';

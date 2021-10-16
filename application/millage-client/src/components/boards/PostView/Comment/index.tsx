@@ -10,9 +10,13 @@ import {
   ReportIcon,
   ReplyIcon,
   ReplyButton,
+  LikeComment,
+  DMIcon,
+  CommentDeleteIcon,
 } from '@images';
 import {insertReplyAsync} from '@modules/board/actions';
 import {useBoard} from '@hooks/board';
+import {NewMessage} from '@components/DM';
 
 type Props = {
   postId: number;
@@ -23,6 +27,7 @@ type Props = {
   liked: boolean;
   reply: boolean;
   parentCommentId?: number;
+  userId: number;
 };
 
 const CommentBox:React.FC<Props> = ({
@@ -33,6 +38,7 @@ const CommentBox:React.FC<Props> = ({
   createdAt,
   liked,
   reply,
+  userId,
   parentCommentId,
 }) => {
   const dispatch = useDispatch();
@@ -43,7 +49,11 @@ const CommentBox:React.FC<Props> = ({
 
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyText, setReplyText] = useState('');
-
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const session = useSelector((state: RootState) => state.user.session);
+  const closeDialog = () => {
+    setOpenDialog(false);
+  };
   const {replyState} = useBoard();
 
   useEffect(() => {
@@ -82,10 +92,26 @@ const CommentBox:React.FC<Props> = ({
             <button style={{
               marginRight: '-1px',
             }}
+            className={reply || userId == -1 ?
+              'hidden':''}
             onClick={()=>setReplyOpen(true)}
-            ><img className={reply?'hidden':''}
-                src={CommentIcon}/></button>
-            <button><img src={ReportIcon}/></button>
+            ><img src={CommentIcon}/></button>
+            <button className={userId == -1 ||
+              userId == session?.id?'hidden':''}
+            onClick={() => {
+              setOpenDialog(true);
+            }}><img src={DMIcon}/></button>
+            <button
+              className={
+              userId != -1 &&
+                userId != session?.id ?'':'hidden'}
+            ><img src={LikeComment}/></button>
+            <button className={
+              userId == session?.id ||
+              session?.role.name == 'ADMIN' ||
+              session?.role.name =='SUPER_ADMIN'?'':'hidden'}>
+              <img src={CommentDeleteIcon}/>
+            </button>
           </div>
         </div>
         <div className="content" style={
@@ -127,6 +153,11 @@ const CommentBox:React.FC<Props> = ({
           onClick={()=> addReply()}
         ><img src={ReplyButton}/></button>
       </div>
+      <NewMessage
+        open={openDialog}
+        closeHandler={closeDialog}
+        receiverId={userId}
+      />
     </div>
   );
 };

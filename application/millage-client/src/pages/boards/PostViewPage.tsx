@@ -77,7 +77,7 @@ function PostViewPage() {
         });
       }
     }
-    return finalComments?.map((comment:any) => {
+    return finalComments?.map((comment:Comment) => {
       return (
         <CommentBox
           key={comment.id}
@@ -89,6 +89,8 @@ function PostViewPage() {
           nickname={comment.writer ? comment.writer.nickname : ''}
           reply={comment.parentCommentId != null}
           parentCommentId={comment.id}
+          userId={comment.isDeleted? -1 :
+            (comment.writer ? comment.writer.id : -1)}
         />
       );
     });
