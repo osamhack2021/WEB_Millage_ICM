@@ -1,7 +1,7 @@
-import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch, Delete} from '@nestjs/common';
+import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch, Delete, ParseIntPipe} from '@nestjs/common';
 import {Request} from 'express';
 import {UserService} from './user.service';
-import {UserRO} from './user.interface';
+import {UserData, UserRO} from './user.interface';
 import {CreateUserDto, LoginUserDto, UpdateUserDto, UserParams} from './dto';
 import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
@@ -127,13 +127,16 @@ export class UserController {
     }
   }
 
-  @Patch(':id')
+  @Patch(':userId')
+  @Roles(Role.ADMIN, Role.NORMAL_USER, Role.SUPER_ADMIN)
   async update(
-    @Param() params: UserParams,
+    @Param('userId', ParseIntPipe) userId: number,
     @Body() dto: UpdateUserDto,
+    @Req() req: Request,
   ): Promise<ResultObject> {
     try {
-      if (await this.userService.update(params.id, dto)) {
+      const userData: UserData = req.session.user;
+      if (await this.userService.update(userId, dto, userData)) {
         return {result: Result.SUCCESS};
       }
       return {result: Result.FAIL, message: 'Nothing changed'};
@@ -142,12 +145,12 @@ export class UserController {
     }
   }
 
-  @Delete(':id')
+  @Delete(':userId')
   async delete(
-    @Param() params: UserParams,
+    @Param('userId', ParseIntPipe) userId: number,
   ): Promise<ResultObject> {
     try {
-      if (await this.userService.delete(params.id)) {
+      if (await this.userService.delete(userId)) {
         return {result: Result.SUCCESS};
       }
     } catch (err) {
