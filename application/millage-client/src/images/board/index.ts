@@ -17,3 +17,7 @@ export {default as RecruitPost} from './Recruit_Post.svg';
 export {default as DMIcon} from './DMIcon.svg';
 export {default as LikeComment} from './Like_Comment.svg';
 export {default as CommentDeleteIcon} from './CommentDeleteIcon.svg';
+export {default as CreatePostIcon} from './CreatePostIcon.svg';
+export {default as NextButton} from './NextButton.svg';
+export {default as PrevButton} from './PrevButton.svg';
+export {default as SearchIcon} from './SearchIcon.svg';
