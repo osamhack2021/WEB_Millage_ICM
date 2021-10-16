@@ -20,6 +20,11 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import IconButton from '@mui/material/IconButton';
 import NewMessage from '@components/DM/NewMessage';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {
+  NewDMIcon,
+  UserIcon,
+  DeleteIcon,
+} from '@images';
 interface MessageInterface {
   message: string;
 }
@@ -225,7 +230,7 @@ function DM() {
           onClick={() => {
             newMessageToUser(u.id);
           }}>
-          <img src="/img/dm/usericon.png" />
+          <img src={UserIcon} />
           {u.nickname}
         </button>
       );
@@ -255,7 +260,7 @@ function DM() {
                 horizontal: 'left',
               }}
             >
-              <img src="/img/dm/usericon.png" />
+              <img src={UserIcon} />
             </Badge>
             <div className="messageBoxDetail">
               <div style= {{
@@ -293,7 +298,7 @@ function DM() {
         return (
           <div key={m.id} className="message">
             <div className="iconContainer ">
-              <img className="smallerIcon" src="/img/dm/usericon.png" />
+              <img className="smallerIcon" src={UserIcon} />
             </div>
             <div className="messageDetailContainer">
               <span className="others">{m.message}</span>
@@ -321,7 +326,7 @@ function DM() {
         return (
           <div key={m.id} className="message">
             <div className="iconContainer ">
-              <img className="smallerIcon" src="/img/dm/usericon.png" />
+              <img className="smallerIcon" src={UserIcon} />
             </div>
             <div className="messageDetailContainer">
               <span className="others">{m.message}</span>
@@ -377,7 +382,7 @@ function DM() {
             <button style={{cursor: 'pointer', width: '36px'}}
               onClick={() => setOpenDialog(true)}
             >
-              <img src="/img/dm/newicon.png" />
+              <img src={NewDMIcon}/>
             </button>
           </div>
         </div>
@@ -396,7 +401,7 @@ function DM() {
             <div className="iconContainer" style={{
               marginLeft: '10px',
             }}>
-              <img src="/img/dm/usericon.png" />
+              <img src={UserIcon} />
             </div>
             <div className="messageBoxDetail" style={{
               paddingTop: '12.5px',
@@ -419,7 +424,7 @@ function DM() {
                   width: '36px',
                   height: '36px',
                 }}
-                src="/img/dm/deleteicon.png"/>
+                src={DeleteIcon}/>
               </button>
             </div>
           </div>

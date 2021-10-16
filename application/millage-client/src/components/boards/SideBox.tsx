@@ -7,7 +7,13 @@ import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import './sidebox.css';
-
+import {
+  CreateBoardIcon,
+  PostIcon,
+  RecruitIcon,
+  StarIcon,
+  ScheduleIcon,
+} from '@images';
 function SideBox() {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user);
@@ -98,7 +104,7 @@ function SideBox() {
       <div className="box link">
         <div className="head">
           <RouterLink to={CREATE_BOARD_PATH} className="head">
-            <img src="/img/board/boardicon.png"/>
+            <img src={CreateBoardIcon}/>
             <span className = "title">게시판 생성하기</span>
           </RouterLink>
         </div>
@@ -115,20 +121,20 @@ function SideBox() {
       <div className="box link">
         <div className="head">
           <RouterLink to={CREATE_POST_PATH} className="head">
-            <img src="/img/board/posticon.png"/>
+            <img src={PostIcon} />
             <span className = "title">게시글 작성하기</span>
           </RouterLink>
         </div>
       </div>
       <div className="box">
         <div className="head">
-          <img src="/img/board/staricon.png"/>
+          <img src={StarIcon} />
           <span className = "title">게시판 즐겨찾기</span>
         </div>
       </div>
       <div className="box">
         <div className="head">
-          <img src="/img/board/scheduleicon.png"/>
+          <img src={ScheduleIcon}/>
           <span className = "title">일정 알림</span>
         </div>
         <div>
@@ -139,7 +145,7 @@ function SideBox() {
       </div>
       <div className="box">
         <div className="head">
-          <img src="/img/board/recruiticon.png"/>
+          <img src={RecruitIcon}/>
           <span className = "title">최근 모집 게시글</span>
         </div>
         <div>
