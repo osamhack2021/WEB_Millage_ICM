@@ -1,7 +1,7 @@
 import {useBoard} from '@hooks/board';
 import {FormControl, MenuItem, Select} from '@mui/material';
 import React from 'react';
-import {InputContainer, InputTitle} from '.';
+import {InputContainer, InputTitle} from './InputComponents';
 
 
 type Props = {

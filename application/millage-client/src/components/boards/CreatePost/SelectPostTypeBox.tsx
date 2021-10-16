@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormControlLabel, Radio, RadioGroup} from '@mui/material';
-import {InputContainer, InputTitle} from '.';
+import {InputContainer, InputTitle} from './InputComponents';
 import {Board, PostType} from '@modules/board/types';
 import {NORMAL, POLL, RECRUIT} from '@constants';
 
