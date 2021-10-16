@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import Header from '@components/Header';
 import {checkSessionAsync} from '@modules/User/actions';
 import CreateBoardPage from '@pages/boards/CreateBoardPage';
@@ -26,6 +26,8 @@ import Manage from '@pages/Manage';
 
 const Main = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
   const user = useSelector((state: any) => state.user);
   useEffect(()=>{
     dispatch(checkSessionAsync.request());
@@ -34,6 +36,10 @@ const Main = () => {
   useEffect(() => {
     if (user.result == 'logout') {
       window.location.href = '/';
+    } else if (user.result == 'sessionFail') {
+      if (location.pathname != '/') {
+        history.push('/');
+      }
     }
   }, [user.result]);
 
