@@ -62,7 +62,9 @@ export class UserEntity {
 
   @BeforeUpdate()
   async hashPassword2() {
-    this.password = await argon2.hash(this.password);
+    if (this.password) {
+      this.password = await argon2.hash(this.password);
+    }
   }
 
   @ManyToOne(() => UnitEntity, {

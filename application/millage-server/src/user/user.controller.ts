@@ -2,7 +2,7 @@ import {Get, Post, Body, Req, Controller, Param, UsePipes, Patch, Delete, ParseI
 import {Request} from 'express';
 import {UserService} from './user.service';
 import {UserData, UserRO} from './user.interface';
-import {CreateUserDto, LoginUserDto, UpdateUserDto, UserParams} from './dto';
+import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
 import {ValidationPipe} from '../shared/pipes/validation.pipe';
 import {
   ApiBearerAuth, ApiTags,
@@ -141,6 +141,7 @@ export class UserController {
       }
       return {result: Result.FAIL, message: 'Nothing changed'};
     } catch (err) {
+      console.log(err);
       return {result: Result.ERROR, message: err.message};
     }
   }
