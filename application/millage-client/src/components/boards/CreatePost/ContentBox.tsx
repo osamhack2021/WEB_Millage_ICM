@@ -11,13 +11,22 @@ type Props = {
 
 const ContentBox: React.FC<Props> = ({register}) => {
   return(
-    <InputContainer className='mt-6'>
+    <InputContainer 
+      className='mt-6'
+      style={{
+        alignItems: 'start',
+      }}
+    >
       <InputTitle>내용</InputTitle>
       <TextareaAutosize
           {...register('content')}
           placeholder="내용을 입력하세요."
-          minRows={3}
-          className='focus:outline-none border border-gray-500 resize-none p-4'
+          minRows={7}
+          maxRows={10}
+          className='
+            focus:outline-none border border-gray-300 resize-none p-2 w-full
+            focus:border-green-light transition duration-500
+          '
         />
     </InputContainer>
   );
