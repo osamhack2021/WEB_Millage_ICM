@@ -156,7 +156,7 @@ export class BoardController {
       const userData: UserData = req.session.user;
       return {
         result: Result.SUCCESS,
-        board: await this.boardService.toggleStar(boardId, userData);
+        board: await this.boardService.toggleStar(boardId, userData),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
