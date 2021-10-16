@@ -14,7 +14,7 @@ const SelectBoardBox: React.FC<Props> = ({selectedBoardId, setBoardId}) => {
     boardListState: {loading, data},
   } = useBoard();
   return (
-    <InputContainer className='mt-6' >
+    <InputContainer className='mt-6 sm:items-center' >
       <InputTitle>게시판 선택</InputTitle>
       { loading || !data ?
         <div>loading</div> :
@@ -22,6 +22,7 @@ const SelectBoardBox: React.FC<Props> = ({selectedBoardId, setBoardId}) => {
         <div className='w-40 h-10'>
           <FormControl className='w-full h-full' >
             <Select
+              color='success'
               className='h-full'
               value={selectedBoardId}
               onChange={(e) => setBoardId((e.target.value as number))}

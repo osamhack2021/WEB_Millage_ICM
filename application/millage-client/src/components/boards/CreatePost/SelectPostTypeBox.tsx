@@ -14,7 +14,7 @@ const SelectPostTypeBox: React.FC<Props> = ({
   postType, setPostType, selectedBoard,
 }) => {
   return (
-    <InputContainer className='mt-6' >
+    <InputContainer className='mt-6 sm:items-center' >
       <InputTitle>게시판 종류</InputTitle>
 
       <RadioGroup

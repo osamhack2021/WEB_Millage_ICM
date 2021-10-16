@@ -1,7 +1,7 @@
-import { CreatePostReq } from '@modules/board/types';
+import {CreatePostReq} from '@modules/board/types';
 import React from 'react';
-import { UseFormRegister } from 'react-hook-form';
-import { InputContainer, InputTitle } from './InputComponents';
+import {UseFormRegister} from 'react-hook-form';
+import {InputContainer, InputTitle} from './InputComponents';
 
 
 type Props = {
@@ -9,8 +9,8 @@ type Props = {
 }
 
 const PostTitleBox: React.FC<Props> = ({register}) => {
-  return(
-    <InputContainer className='mt-6'>
+  return (
+    <InputContainer className='mt-6 sm:items-center'>
       <InputTitle>제목</InputTitle>
       <input
         {...register('title', {

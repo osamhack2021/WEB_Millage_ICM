@@ -7,7 +7,7 @@ const InputContainer: React.FC<Props> = ({className, children}) => {
   return (
     <div
       className={`${className}
-        flex flex-col items-start sm:flex-row sm:items-center w-full
+        flex flex-col items-start sm:flex-row w-full
       `}
       // style={{
       //   minWidth: '480px',
