@@ -20,6 +20,7 @@ export class CommentService {
     newComment.postId = postId;
     newComment.writerId = userId;
     const savedComment = await this.commentRepository.save(newComment);
+    savedComment.heartCount = 0;
     savedComment.writer = await this.userRepository.findOne(
         userId, {select: ['id', 'fullname', 'nickname']});
     return savedComment;
