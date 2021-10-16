@@ -12,7 +12,7 @@ import {CommentRO} from './comment.interface';
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @Post('/post/:postId/comment/create')
+  @Post('/post/:postId/comment')
   async create(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -27,7 +27,7 @@ export class CommentController {
     }
   }
 
-  @Delete('/post/:postId/comment/:commentId/delete')
+  @Delete('/post/:postId/comment/:commentId')
   async delete(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
@@ -44,7 +44,7 @@ export class CommentController {
     }
   }
 
-  @Patch('/post/:postId/comment/:commentId/update')
+  @Patch('/post/:postId/comment/:commentId')
   async update(
     @Req() req: Request,
     @Param('postId', ParseIntPipe) postId: number,
