@@ -10,7 +10,7 @@ import * as path from 'path';
 import {UserEntity} from './user.entity';
 import {UnitEntity} from '../unit/unit.entity';
 import {CreateUserDto, LoginUserDto, UpdateUserDto} from './dto';
-import {UserRoleEntity} from '../user_role/user_role.entity';
+import {UnitService} from '../unit/unit.service';
 import {UserData, UserDataForChat, UserRO} from './user.interface';
 import {Result, ResultObject} from '../common/common.interface';
 import {Role} from '../user_role/user_role.interface';
@@ -25,15 +25,14 @@ export class UserService {
     @InjectRepository(UnitEntity)
     private readonly unitRepository: Repository<UnitEntity>,
 
-    @InjectRepository(UserRoleEntity)
-    private readonly userRoleRepository: Repository<UserRoleEntity>,
-
     private readonly mailerService: MailerService,
+
+    private readonly unitService: UnitService,
   ) {}
 
   async validateUser(dto: CreateUserDto): Promise<ResultObject> {
     const {username, email, nickname} = dto;
-    let qb = await getRepository(UserEntity)
+    let qb = getRepository(UserEntity)
         .createQueryBuilder('user')
         .where('user.username = :username', {username});
     let user = await qb.getOne();
@@ -80,11 +79,6 @@ export class UserService {
     };
   }
 
-  private async createNewUnit(name: string): Promise<UnitEntity> {
-    const newUnit = this.unitRepository.create({name: name});
-    return await this.unitRepository.save(newUnit);
-  }
-
   async sendUserConfirmedMail(email: string, unitName: string): Promise<boolean> {
     const htmlStream = fs.readFileSync(
         path.join(__dirname, '/mailTemplate/userConfirmed.html')
@@ -127,7 +121,7 @@ export class UserService {
 
     if (dto.unitId === -1) {
       try {
-        const newUnit = await this.createNewUnit(dto.unitName);
+        const newUnit = await this.unitService.create(dto.unitName);
         dto.unitId = newUnit.id;
         dto.ownedUnitId = newUnit.id;
       } catch (err) {

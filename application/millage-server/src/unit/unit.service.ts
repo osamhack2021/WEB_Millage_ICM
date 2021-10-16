@@ -2,13 +2,22 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
 import {UnitEntity} from './unit.entity';
+import {BoardEntity} from '../board/board.entity';
 import {UnitDTO, UnitInfo} from './unit.interface';
+import {createBasicBoards, getSamplePlace} from './unit.template';
+import {PlaceEntity} from '../place/place.entity';
 
 @Injectable()
 export class UnitService {
   constructor(
     @InjectRepository(UnitEntity)
     private readonly unitRepository: Repository<UnitEntity>,
+
+    @InjectRepository(BoardEntity)
+    private readonly boardRepository: Repository<BoardEntity>,
+
+    @InjectRepository(PlaceEntity)
+    private readonly placeRepository: Repository<PlaceEntity>,
   ) {}
 
 
@@ -48,5 +57,20 @@ export class UnitService {
     } catch (err) {
       throw new Error(err.message);
     }
+  }
+
+  async create(unitName: string): Promise<UnitEntity> {
+    const newUnit = this.unitRepository.create({name: unitName});
+    const savedUnit: UnitEntity = await this.unitRepository.save(newUnit);
+
+    const newBoards = createBasicBoards(savedUnit.id, savedUnit.name);
+    const newBoardEntities = this.boardRepository.create(newBoards);
+    await this.boardRepository.save(newBoardEntities);
+
+    const newPlace = this.placeRepository.create(
+        getSamplePlace(savedUnit.id, savedUnit.name));
+    await this.placeRepository.save(newPlace);
+    
+    return savedUnit;
   }
 }
