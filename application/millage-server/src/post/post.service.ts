@@ -231,14 +231,16 @@ export class PostService {
     }
 
     if (pollUserExists && pollUserExists.id === pollId) { // canceling
-      targetPollItem.voters = targetPollItem.voters.filter((voter) => voter.id === userId);
+      targetPollItem.voters = targetPollItem.voters.filter((voter) => voter.id !== userId);
+      console.log(targetPollItem.voters);
       await this.pollRepository.save(targetPollItem);
       return pollItems;
     }
 
-    const user: UserEntity = await this.userRepository.findOne(userId);
+    const user: UserEntity = await this.userRepository.findOne(
+        userId, {select: ['id', 'fullname', 'nickname']});
     if (pollUserExists) { // changing choice
-      pollUserExists.voters = pollUserExists.voters.filter((voter) => voter.id === userId);
+      pollUserExists.voters = pollUserExists.voters.filter((voter) => voter.id !== userId);
       await this.pollRepository.save(pollUserExists);
     }
     targetPollItem.voters.push(user);
