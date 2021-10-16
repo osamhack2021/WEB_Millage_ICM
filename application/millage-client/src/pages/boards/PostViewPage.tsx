@@ -5,10 +5,20 @@ import {BoardTitle} from '@components/boards';
 import {default as CommentBox} from '@components/boards/PostView/Comment';
 import {Comment} from '@modules/board/types/';
 import {PollListBox, RecruitBox, PostTopBox} from '@components/boards/PostView';
-
+import {
+  ReplyButton,
+} from '@images';
 type Params = {
   postId: string;
 }
+
+type customComment = Comment & {
+  replies?: Comment[];
+};
+
+type commentData = {
+  [key: number]: customComment;
+};
 
 function PostViewPage() {
   const {
@@ -31,7 +41,34 @@ function PostViewPage() {
    */
 
   const renderComments = () => {
-    return postState.data?.comments.map((comment : Comment) => {
+    const commentMap : commentData = {};
+    const parentComments = postState.data?.comments.filter((comment) => {
+      return comment.parentCommentId == null;
+    });
+
+    parentComments?.forEach((comment : Comment) => {
+      commentMap[comment.id] = comment;
+      commentMap[comment.id].replies = [];
+    });
+
+    for (const key in commentMap) {
+      if (commentMap.hasOwnProperty(key)) {
+        commentMap[key].replies = postState.data?.comments.filter((comment) => {
+          return comment.parentCommentId != null &&
+            comment.parentCommentId == commentMap[key].id;
+        });
+      }
+    }
+    const finalComments = [];
+    for (const key in commentMap) {
+      if (commentMap.hasOwnProperty(key)) {
+        finalComments.push(commentMap[key]);
+        commentMap[key].replies?.forEach((comment: Comment) => {
+          finalComments.push(comment);
+        });
+      }
+    }
+    return finalComments?.map((comment:any) => {
       return (
         <CommentBox
           key={comment.id}
@@ -41,6 +78,7 @@ function PostViewPage() {
           heartCount={comment.heartCount}
           liked={comment.liked}
           nickname={comment.writer ? comment.writer.nickname : ''}
+          reply={comment.parentCommentId != null}
         />
       );
     });
@@ -80,8 +118,14 @@ function PostViewPage() {
           </button>
           PostBottom (좋아요, 댓글수, 좋아요 / 취소 기능)
         </div>
-
         <div>
+          <div className="CommentInputContainer w-full flex">
+            <input type="text"
+              className="text"
+              placeholder="댓글을 입력하세요."
+            />
+            <button><img src={ReplyButton}/></button>
+          </div>
           {renderComments()}
         </div>
 

@@ -1,8 +1,82 @@
-#CommentContainer{
-    border: 1px solid rgba(0,0,0,0.2);
+.CommentContainer{
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 1px;
+    margin-top:-1px;
+    padding-left: 20px;
+    padding-right:20px;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 
-#CommentContainer .smallericon{
+.CommentContainer .name{
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: .252733;
+}
+
+.CommentContainer .smallericon{
     width:30px;
     height:30px;
+}
+
+.CommentContainer .content{
+    display:block;
+    margin-top:10px;
+    margin-bottom:10px;
+    font-family: Dotum;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    margin-left:10px;
+}
+
+.CommentContainer .footer{
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-left:10px;
+}
+
+.CommentContainer .heart{
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    color: #FF5757;
+    margin-left:10px;
+    cursor:pointer;
+}
+
+.CommentInputContainer {
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 1px;
+    margin-top:-1px;
+    padding-right:10px;
+    background: rgba(143, 143, 143, 0.05);
+}
+
+
+.CommentInputContainer .text {
+    text-indent: 10px;
+    flex: 1 1 90%;
+    height:40px;
+    background:transparent;
+}
+
+.CommentInputContainer .text:focus{
+    border: none;
+    outline-offset: 0px;
+    outline: none;
+}
+
+.CommentInputContainer button{
+    border:none;
 }
