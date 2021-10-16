@@ -117,9 +117,9 @@ const CommentBox:React.FC<Props> = ({
                 dispatch(likeReplyAsync.request(id));
                 setHeart(!heart);
                 if (heart) {
-                  setheartCntLocal(heartCntLocal + 1);
-                } else {
                   setheartCntLocal(heartCntLocal - 1);
+                } else {
+                  setheartCntLocal(heartCntLocal + 1);
                 }
               }}
             ><img src={heart ? LikeBlackFilled: LikeComment}/></button>
@@ -158,9 +158,9 @@ const CommentBox:React.FC<Props> = ({
                 dispatch(likeReplyAsync.request(id));
                 setHeart(!heart);
                 if (heart) {
-                  setheartCntLocal(heartCntLocal + 1);
-                } else {
                   setheartCntLocal(heartCntLocal - 1);
+                } else {
+                  setheartCntLocal(heartCntLocal + 1);
                 }
               }}
             />
