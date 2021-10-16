@@ -40,7 +40,7 @@ export class BoardService {
       board.posts = await this.postRepository.find({
         relations: ['writer', 'comments', 'recruitStatus', 'recruitStatus.currentMember'],
         where: {board},
-        order: {createdAt: 'DESC'},
+        order: {createdAt: 'ASC'},
         take: POSTS_PER_BOARD_PREVIEW,
       });
       return board;
