@@ -13,6 +13,17 @@ export class ReservationEntity {
   @Column({type: 'text'})
   title: string;
 
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  description: string;
+
+  @Column({
+    default: 1
+  })
+  total: number;
+
   @Column()
   start: Date;
 
