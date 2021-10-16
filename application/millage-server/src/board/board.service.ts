@@ -5,7 +5,6 @@ import {FindManyOptions, Like, Repository} from 'typeorm';
 import {BoardEntity} from './board.entity';
 import {CreateBoardDto, UpdateBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
-import {UserData} from '../user/user.interface';
 import {UserEntity} from '../user/user.entity';
 
 const POSTS_PER_PAGE = 10;
@@ -37,7 +36,7 @@ export class BoardService {
         userId, {relations: ['starredBoards']});
 
     const ids = [];
-    for (const [idx, board] of user.starredBoards.entries()) {
+    for (const board of user.starredBoards.values()) {
       ids.push(board.id);
     }
     list.forEach((board) => {
@@ -66,7 +65,7 @@ export class BoardService {
           userId, {relations: ['starredBoards']});
 
       const ids = [];
-      for (const [idx, board] of user.starredBoards.entries()) {
+      for (const board of user.starredBoards.values()) {
         ids.push(board.id);
       }
 

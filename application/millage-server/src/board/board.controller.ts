@@ -10,7 +10,6 @@ import {CreateBoardDto, BoardIdParam, UpdateBoardDto} from './dto';
 import {DeleteRO, Result} from '../common/common.interface';
 import {Roles} from '../user_role/user_role.decorator';
 import {Role} from '../user_role/user_role.interface';
-import {UserData} from '../user/user.interface';
 
 @ApiBearerAuth()
 @ApiTags('board')
