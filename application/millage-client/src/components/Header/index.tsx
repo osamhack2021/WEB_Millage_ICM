@@ -78,6 +78,7 @@ function Header() {
 
   useEffect(() => {
     setPageState(location.pathname.substr(1));
+    console.log(pageState);
   }, []);
 
   useEffect(() => {
@@ -258,14 +259,16 @@ function Header() {
           </div>
         </div>
         <div className="navigation">
-          <RouterLink className={pageState == '' ? 'enabled' : ''}
-            to='/' onClick={()=>setPageState('')}>게시판</RouterLink>
+          <RouterLink className={pageState == '' ||
+          pageState.substr(0, 5) == 'board' ? 'enabled' : ''}
+          to='/' onClick={()=>setPageState('')}>게시판</RouterLink>
           <RouterLink className={pageState == 'schedule' ? 'enabled' : ''}
             to='/schedule' onClick={()=>setPageState('schedule')}>
               캘린더
           </RouterLink>
-          <RouterLink className={pageState == 'reservation' ? 'enabled' : ''}
-            to={RESERVATION_PATH} onClick={()=>setPageState('reservation')}>
+          <RouterLink className={pageState == 'reservation' ||
+          pageState.substr(0, 5) == 'reser' ? 'enabled' : ''}
+          to={RESERVATION_PATH} onClick={()=>setPageState('reservation')}>
               시설예약
           </RouterLink>
           {adminHeaderLink()}
@@ -307,7 +310,8 @@ function Header() {
             <BottomNavigationAction
               label="게시판" icon={
                 <img src={BoardIcon} />}
-              className={pageState == '' ? 'enabled' : ''}
+              className={pageState == '' ||
+              pageState.substr(0, 5) == 'board' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('');
                 history.push('/');
@@ -334,10 +338,11 @@ function Header() {
               label="시설예약" icon={
                 <img src={ReservationIcon} />
               }
-              className={pageState == 'reserve' ? 'enabled' : ''}
+              className={pageState == 'reservation' ||
+              pageState.substr(0, 5) == 'reser' ? 'enabled' : ''}
               onClick={()=> {
-                setPageState('reserve');
-                history.push('/reserve');
+                setPageState('reservation');
+                history.push(RESERVATION_PATH);
               }}
             />
             {AdminManageLink()}

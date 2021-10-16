@@ -91,7 +91,7 @@ function SideBox() {
           <div className="post" key = {schedule.id}>
             <div style={{display: 'flex'}}>
               <div className={
-                schedule.groupType =='person' ? 'green' : 'orange'}
+                schedule.groupType =='person' ? 'orange' : 'green'}
               ></div>
               {datetext}
             </div>
@@ -127,7 +127,11 @@ function SideBox() {
       return board.isStarred;
     }))?.map((board) => {
       return (
-        <RouterLink className="link" to={`${BOARD_PATH}/${board.id}`}>
+        <RouterLink
+          className="link"
+          to={`${BOARD_PATH}/${board.id}`}
+          key={board.id}
+        >
           <span className = "title" style={{
             marginLeft: '10px',
           }}>{board.title}</span>
