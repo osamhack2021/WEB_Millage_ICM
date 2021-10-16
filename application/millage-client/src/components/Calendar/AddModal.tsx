@@ -97,8 +97,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
           <Controller
             name='scheduleDateRange'
             control={control}
-            defaultValue={[new Date(), new Date()]}
-            render={({field: {onChange, value, ...props}}) => {
+            render={({field: {onChange, value}}) => {
               const handleDate = (e: [Date?, Date?] | null) => {
                 if (Array.isArray(e)) onChange(e);
               };
@@ -108,10 +107,11 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
                   <DateTimeRangePicker
                     value={value}
                     onChange={handleDate}
-                    locale='en-US'
+                    locale='ko'
+                    calendarType='US'
                     format='y. MM. dd H:mm'
                     disableClock
-                    {...props}
+                    formatDay={(locale, date) => date.getDate().toString()}
                   />
                 </div>
               );
@@ -121,10 +121,9 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
           <Controller
             name='scheduleDate'
             control={control}
-            defaultValue={new Date()}
-            render={({field: {onChange, value, ...props}}) => {
+            render={({field: {onChange, value}}) => {
               const handleDate = (e: Date | null) => {
-                if (Array.isArray(e)) onChange(e);
+                console.log(e);
               };
               return (
                 <div style={{minHeight: 375}}>
@@ -132,10 +131,11 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
                   <DateTimePicker
                     value={value}
                     onChange={handleDate}
-                    locale='en-US'
+                    locale='ko'
+                    calendarType='US'
                     format='y. MM. dd H:mm'
                     disableClock
-                    {...props}
+                    formatDay={(locale, date) => date.getDate().toString()}
                   />
                 </div>
               );
