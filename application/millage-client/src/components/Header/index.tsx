@@ -14,7 +14,7 @@ import {updateUnreadAsync,
   validateUserAsync,
   updateUserAsync} from '@modules/User/actions';
 import {io, Socket} from 'socket.io-client';
-import {SOCKET_SERVER} from '@constants';
+import {RESERVATION_PATH, SOCKET_SERVER} from '@constants';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -265,8 +265,8 @@ function Header() {
             to='/schedule' onClick={()=>setPageState('schedule')}>
               캘린더
           </RouterLink>
-          <RouterLink className={pageState == 'reserve' ? 'enabled' : ''}
-            to='/reserve' onClick={()=>setPageState('reserve')}>
+          <RouterLink className={pageState == 'reservation' ? 'enabled' : ''}
+            to={RESERVATION_PATH} onClick={()=>setPageState('reservation')}>
               시설예약
           </RouterLink>
           {adminHeaderLink()}
