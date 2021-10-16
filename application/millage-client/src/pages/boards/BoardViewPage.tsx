@@ -7,7 +7,7 @@ import {
 } from '@components/boards';
 import {
   PostListBox,
-  BoardBoxTop,
+  SearchBox,
 } from '@components/boards/BoardView';
 
 
@@ -48,36 +48,27 @@ function BoardViewPage() {
 
   console.log(data);
 
-  if (!data || loading) {
-    return (
-      <div>
-        loading...
-      </div>
-    );
-  }
-
   return (
     <div
       className=''
     >
       {/* Title */}
-      <BoardTitle title={data.title} />
+      <BoardTitle title={data?.title || ''} />
 
-      {/* Main Component */}
-      <div className='
-        max-w-screen-lg flex-1 w-full
-        p-8 ring-1 ring-gray-500 min-h-full flex flex-col
-      '>
-        <BoardBoxTop auth={data.auth} />
+      {/* SearchBox */}
+      <SearchBox />
 
-        {/* Post List Component */}
-        { data.paginationObject &&
-          <PostListBox
-            paginationObject={data.paginationObject}
-            getBoardWithPage={getBoardWithPage}
-          />}
+      {/* PostList Box */}
+      { loading || !data || !data.paginationObject ?
 
-      </div>
+        <div> loading... </div> :
+
+        <PostListBox
+          paginationObject={data.paginationObject}
+          getBoardWithPage={getBoardWithPage}
+        />
+      }
+
     </div>
   );
 }
