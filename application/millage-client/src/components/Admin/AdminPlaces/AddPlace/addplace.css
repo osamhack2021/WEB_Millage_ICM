@@ -1,0 +1,48 @@
+
+#AddPlaceDialog .container{
+    width: 100%;
+}
+#AddPlaceDialog .buttonStyle{
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 10px;
+    font-family: 'Inter';
+    font-size: 11px;
+    font-weight: normal;
+    width: 100%;
+    height: 45px;
+    text-indent: 10px;
+}
+
+#AddPlaceDialog label{
+    color: rgba(0,0,0,0.8);
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: normal;
+    margin-left:10px;
+}
+
+#AddPlaceDialog .title{
+    font-family: 'Inter';
+    font-size: '12px';
+    font-weight: 600;
+    width:100%;
+    display: block;
+    margin-left: -5px;
+    margin-bottom: 10px;
+}
+
+#AddPlaceDialog .submitButton{
+    background-color: #10902C;
+    font-family: 'Inter';
+    font-weight: bold;
+    font-size: 10px;
+}
+
+#AddPlaceDialog .gridContainer{
+    margin:10px;
+}
+
+#AddPlaceDialog .mainTitle{
+    display: none;
+}

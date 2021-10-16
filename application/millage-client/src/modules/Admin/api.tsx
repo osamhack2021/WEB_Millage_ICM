@@ -1,7 +1,13 @@
 import {Role} from '@constants';
 import axios from 'axios';
 import {SERVER} from '@constants';
-import {AdminState, BoardInsertData, BoardUpdateData} from './types';
+import {
+  AdminState,
+  BoardInsertData,
+  BoardUpdateData,
+  PlaceInsertData,
+  PlaceUpdateData,
+} from './types';
 
 export async function getUserList(role: string): Promise<AdminState> {
   try {
@@ -132,6 +138,57 @@ export async function deleteBoardApi(id: number):
   Promise<AdminState> {
   try {
     const result = await axios.delete(`${SERVER}/board/${id}`,
+        {withCredentials: true});
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+
+export async function getPlaceList(): Promise<AdminState> {
+  try {
+    const places = await axios.get(`${SERVER}/place/`,
+        {withCredentials: true});
+    return places.data;
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+export async function updatePlaceApi(data: PlaceUpdateData):
+  Promise<AdminState> {
+  try {
+    const result = await axios.patch(`${SERVER}/place/${data.id}`,
+        data, {withCredentials: true});
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+export async function insertPlaceApi(data: PlaceInsertData):
+  Promise<AdminState> {
+  try {
+    const result = await axios.post(`${SERVER}/place`,
+        data, {withCredentials: true});
+    return {
+      result: 'success',
+    };
+  } catch (err: any) {
+    return {result: 'error', message: err};
+  }
+}
+
+
+export async function deletePlaceApi(id: number):
+  Promise<AdminState> {
+  try {
+    const result = await axios.delete(`${SERVER}/place/${id}`,
         {withCredentials: true});
     return {
       result: 'success',

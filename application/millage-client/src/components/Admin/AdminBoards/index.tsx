@@ -49,7 +49,7 @@ export default function AdminBoards() {
     } else if (authResult === 'deleteBoardSuccess') {
       alert('게시판을 삭제하였습니다.');
     } else if (authResult === 'deleteBoardFail') {
-      alert('게시판을 삭제에 실패하였습니다.');
+      alert('게시판 삭제에 실패하였습니다.');
     }
   }, [authResult]);
 

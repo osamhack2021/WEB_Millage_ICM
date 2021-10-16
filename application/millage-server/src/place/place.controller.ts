@@ -24,7 +24,7 @@ export class PlaceController {
       const unitId = req.session.user.unit.id;
       return {
         result: Result.SUCCESS,
-        placeList: await this.placeService.getPlaceListByUnitId(unitId),
+        places: await this.placeService.getPlaceListByUnitId(unitId),
       };
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
