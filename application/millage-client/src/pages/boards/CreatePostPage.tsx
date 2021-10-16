@@ -10,6 +10,7 @@ import {
   CreatePollBox,
   SelectBoardBox,
   SelectPostTypeBox,
+  PostTitleBox,
 } from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
 
@@ -94,7 +95,7 @@ function CreatePostPage() {
 
   return (
     <div
-      className='flex flex-col items-center ring-1 ring-gray-300 py-8 px-4'
+      className='flex flex-col items-center ring-1 ring-gray-300 py-8 px-6'
     >
       <h1 className='text-2xl' > 게시글 만들기 </h1>
 
@@ -115,17 +116,11 @@ function CreatePostPage() {
       }
 
       <form
-        className='mt-8 w-3/4 flex flex-col'
+        className='flex flex-col w-full'
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h3 className='text-xl mt-4 mb-2' >게시글 제목</h3>
-        <input
-          {...register('title', {
-            required: '제목을 입력해주세요',
-          })}
-          type='text'
-          className='focus:outline-none border-b border-gray-500 py-2 w-full'
-        />
+        {/* 게시글 제목 */}
+        <PostTitleBox register={register} />
 
         <h3 className='text-xl mt-4 mb-2' >내용</h3>
         <TextareaAutosize
