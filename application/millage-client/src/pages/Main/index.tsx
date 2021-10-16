@@ -23,7 +23,7 @@ import BoardRoutes from '@pages/boards/BoardRoutes';
 import AdminHeader from '@components/Admin/AdminHeader';
 import Reservation from '@pages/Reservation';
 import Manage from '@pages/Manage';
-
+import NotFound from '@pages/NotFound';
 const Main = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -66,6 +66,7 @@ const Main = () => {
           <Route path={DM_PATH} component={DM} />
           <Route path={RESERVATION_PATH} component={Reservation} />
           <Route path={MANAGE_PATH} component={Manage} />
+          <Route component={NotFound} />
         </Switch>
       </>
     );
