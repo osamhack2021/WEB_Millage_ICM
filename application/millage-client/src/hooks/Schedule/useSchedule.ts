@@ -32,15 +32,12 @@ const useSchedule: () => [
   }, [schedule]);
   const createSchedule = React.useCallback((req: CreateScheduleReq) => {
     dispatch(createScheduleAsync.request(req));
-    dispatch(getScheduleListAsync.request());
   }, []);
   const updateSchedule = React.useCallback((req: UpdateScheduleReq) => {
     dispatch(updateScheduleAsync.request(req));
-    dispatch(getScheduleListAsync.request());
   }, []);
   const deleteSchedule = React.useCallback((req: DeleteScheduleReq) => {
     dispatch(deleteScheduleAsync.request(req));
-    dispatch(getScheduleListAsync.request());
   }, []);
 
   return [

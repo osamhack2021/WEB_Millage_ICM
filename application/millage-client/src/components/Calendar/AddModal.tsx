@@ -119,7 +119,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
               calendarType='US'
               format='y. MM. dd H:mm'
               disableClock
-              formatDay={(locale, date) => date.getUTCDate().toString()}
+              formatDay={(locale, date) => date.getDate().toString()}
             />
           </div>
         ) : (
@@ -132,7 +132,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
               calendarType='US'
               format='y. MM. dd H:mm'
               disableClock
-              formatDay={(locale, date) => date.getUTCDate().toString()}
+              formatDay={(locale, date) => date.getDate().toString()}
             />
           </div>
         )}

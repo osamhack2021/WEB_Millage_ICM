@@ -228,7 +228,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                   format='y. MM. dd H:mm'
                   disableClock
                   formatDay={(locale, date) =>
-                    date.getUTCDate().toString()}
+                    date.getDate().toString()}
                 />
               </div>
             ) : (
@@ -242,7 +242,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                   format='y. MM. dd H:mm'
                   disableClock
                   formatDay={(locale, date) =>
-                    date.getUTCDate().toString()}
+                    date.getDate().toString()}
                 />
               </div>
             )}

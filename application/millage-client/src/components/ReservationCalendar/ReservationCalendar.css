@@ -1,0 +1,15 @@
+
+@media only screen and (max-width: 640px) {
+    .fc-toolbar-title{
+        font-size:15px !important;
+    }
+
+    .fc-toggleEvents-button {
+        margin-top:22px !important;
+    }
+
+    #reservation-container .fc-addEvents-button, 
+    #reservation-container .fc-deleteEvents-button{
+        margin-top:22px !important;
+    }
+}
