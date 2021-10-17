@@ -6,8 +6,16 @@ type Props = Pick<Post, 'title' | 'content' >
 const PostContentBox: React.FC<Props> = ({title, content}) => {
   return (
     <div>
-      <h1 className='text-2xl' > {title} </h1>
-      <p> {content} </p>
+      <h1
+        className='text-2xl mb-2 break-all'
+      >
+        {title}
+      </h1>
+      <p
+        className='mb-4 break-all'
+      >
+        {content?.split('\n').map((line) => <p>{line}</p>)}
+      </p>
     </div>
   );
 };
