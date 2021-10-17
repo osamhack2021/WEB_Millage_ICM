@@ -15,7 +15,7 @@ export type Post = {
     postType: PostType;
     title: string;
     content?: string;
-    createdAt: Date;
+    createdAt: string;
     writer: UserData;
     hearts: UserData[];
     heartCount: number;

@@ -12,6 +12,7 @@ import {
   RecruitInputBox,
 } from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
+import {FilledButton} from '@components/common';
 
 
 function CreatePostPage() {
@@ -140,20 +141,12 @@ function CreatePostPage() {
           <RecruitInputBox register={register} />
         }
 
-        <button
-          className='
-            bg-green hover:bg-green-dark transition duration-500
-            text-lg text-white font-bold self-center
-            w-72 py-2 mt-8 focus:outline-none
-            flex items-center justify-center
-          '
-        >
+        <FilledButton className='w-72 mt-8 text-lg' >
           {createPostState.loading ?
-          'loading...' :
-          '게시글 생성하기'}
-        </button>
+            'loading...' :
+            '게시글 생성하기'}
+        </FilledButton>
       </form>
-
 
     </div>
   );

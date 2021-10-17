@@ -8,7 +8,7 @@ import {
   Comment,
   Like,
 } from '@images';
-import PostTypeIcon from './PostTypeIcon';
+import PostTypeIcon from '../../PostTypeIcon';
 
 type Props = Pick<Post,
   'id' | 'title' | 'createdAt' |

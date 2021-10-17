@@ -102,7 +102,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             <List>
               {scheduleList.filter(({groupId, start, end}) =>
                 groupId !== 'unit' && end !== undefined ?
-                compareDateRange(start, end) : compareDate(start)
+                compareDateRange(start, end) : compareDate(start),
               ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
