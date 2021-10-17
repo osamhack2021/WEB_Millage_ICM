@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {useSchedule} from '@hooks/Schedule';
 import FullCalendar, {
-  CustomButtonInput,
+  CustomButtonInput, EventHoveringArg,
 } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import Dialog from './Dialog';
 import './Calendar.css';
-
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
 const Calendar: React.FC = () => {
   const [isShow, setIsShow] = React.useState(true);
   const [visible, setVisible] = React.useState(false);
@@ -47,6 +48,12 @@ const Calendar: React.FC = () => {
     click: () => {
       setIsShow((e) => !e);
     },
+  };
+  const handleMouseEnter = (e: EventHoveringArg) =>{
+    console.log(e);
+    tippy(e.el, {
+      content: e.el.innerText,
+    });
   };
 
   return (
@@ -88,7 +95,9 @@ const Calendar: React.FC = () => {
               color: schedule.groupId === 'person' ? '#FFA000' : '#388E3C',
             }))
         }
+
         fixedWeekCount={false}
+        eventMouseEnter={handleMouseEnter}
         customButtons={{
           addEvents,
           editEvents,
