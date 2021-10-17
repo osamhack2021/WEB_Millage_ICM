@@ -1,10 +1,5 @@
 import React from 'react';
 import {Post} from '@modules/board/types';
-import moment from 'moment';
-import {
-  ChatBubbleOutlineOutlined,
-  ThumbUpOutlined,
-} from '@mui/icons-material';
 import PostItemTop from './PostItemTop';
 import PostContent from './PostContent';
 import PostItemBottom from './PostItemBottom';
