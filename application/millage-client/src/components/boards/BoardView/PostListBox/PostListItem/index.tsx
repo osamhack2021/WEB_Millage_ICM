@@ -7,6 +7,7 @@ import {
 } from '@mui/icons-material';
 import PostItemTop from './PostItemTop';
 import PostContent from './PostContent';
+import PostItemBottom from './PostItemBottom';
 
 type Props = {
   post: Post;
@@ -26,44 +27,8 @@ const PostListItem: React.FC<Props> = ({post}) => {
       {/* Content */}
       <PostContent {...post} />
 
-
-      <div className='flex justify-between items-center'>
-
-        <div>
-          <span className='text-sm text-gray-400'>
-            {moment(post.createdAt).format('MM/DD HH:mm:ss')}
-          </span>
-          &nbsp;&nbsp;&nbsp;
-          <span className='text-sm'>
-            {post.writer.nickname}
-          </span>
-        </div>
-
-        <div className='flex items-center' style={{
-          fontSize: '0.875rem',
-          lineHeight: '0.875rem',
-        }}>
-          <div className='text-red-500 flex items-center'>
-            <ThumbUpOutlined className='mr-1' style={{
-              fontSize: '0.875rem',
-            }} />
-            <span>
-              {post.heartCount}
-            </span>
-          </div>
-          &nbsp;&nbsp;&nbsp;
-          <div className='text-blue-500 flex items-center'>
-            <ChatBubbleOutlineOutlined className='mr-1' style={{
-              fontSize: '0.875rem',
-            }} />
-            <span>
-              {post.comments.length}
-            </span>
-          </div>
-        </div>
-
-      </div>
-
+      {/* Writer, HeartCount, Comments, PostType, Poll, Recruit */}
+      <PostItemBottom {...post} />
     </div>
   );
 };
