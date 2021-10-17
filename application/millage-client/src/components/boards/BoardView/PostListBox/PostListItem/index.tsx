@@ -6,6 +6,7 @@ import {
   ThumbUpOutlined,
 } from '@mui/icons-material';
 import PostItemTop from './PostItemTop';
+import PostContent from './PostContent';
 
 type Props = {
   post: Post;
@@ -22,7 +23,8 @@ const PostListItem: React.FC<Props> = ({post}) => {
       {/* Title / createdAt */}
       <PostItemTop {...post} />
 
-      <p className='text-base text-gray-400' >{post.content}</p>
+      {/* Content */}
+      <PostContent {...post} />
 
 
       <div className='flex justify-between items-center'>
