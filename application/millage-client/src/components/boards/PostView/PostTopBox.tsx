@@ -3,10 +3,15 @@ import {Post} from '@modules/board/types';
 import NewMessage from '@components/DM/NewMessage';
 import {useSelector} from 'react-redux';
 import {RootState} from '@modules';
-import { Comment, Like, UserIcon } from '@images';
-import { formatDateTime } from '@utils/formatDateTime';
-import { PostTypeIcon } from '../boardCommons';
-import { RECRUIT } from '@constants';
+import {UserIcon} from '@images';
+import {RECRUIT} from '@constants';
+import {
+  CommentCounts,
+  CreatedAt,
+  HeartCounts,
+  RecruitStatus,
+  PostTypeIcon,
+} from '../boardCommons/PostInfos';
 
 
 type Props = Pick<Post,
@@ -36,51 +41,36 @@ const PostTopBox: React.FC<Props> = (
       <div className='w-full mb-4 flex items-start justify-between'>
         {/* 좌측 영역 */}
         <div className='flex items-center'>
-          
+
           {/* 프로필 이미지 */}
           <img className="smallericon mr-3" src={UserIcon} />
-          
+
           {/* 상세 정보 (작성자, 작성시각, 하트, 댓글, 게시글 타입) */}
           <div className='flex flex-col'>
             {/* 작성자 */}
             <span className='text-base font-bold' >
               {writer.nickname}
             </span>
-            
+
             {/* 작성자 하단 정보 (작성자, 작성시각, 하트, 댓글, 게시글 타입) */}
             <div className='flex items-center text-sm text-gray-600' >
               {/* 작성 시각 */}
-              <span className='mr-2'>
-                {formatDateTime(createdAt)}
-              </span>
+              <CreatedAt
+                className='mr-2'
+                createdAt={createdAt}
+              />
 
               {/* 하트 */}
-              <div className='flex justify-start items-center mr-2'>
-                <div
-                  className='h-4 w-4 bg-cover mr-1'
-                  style={{
-                    marginBottom: '-2px',
-                    backgroundImage: `url(${Like})`,
-                  }}
-                />
-                <span>
-                  {heartCount}
-                </span>
-              </div>
+              <HeartCounts
+                heartCount={heartCount}
+                className='mr-2'
+              />
 
               {/* 댓글 수 */}
-              <div className='flex justify-start items-center mr-2'>
-                <div
-                  className='h-4 w-4 bg-cover mr-1'
-                  style={{
-                    marginBottom: '-2px',
-                    backgroundImage: `url(${Comment})`,
-                  }}
-                />
-                <span>
-                  {comments.length}
-                </span>
-              </div>
+              <CommentCounts
+                comments={comments}
+                className='mr-2'
+              />
 
               {/* 게시글 타입 */}
               <PostTypeIcon
@@ -90,18 +80,15 @@ const PostTopBox: React.FC<Props> = (
 
               {/* Recruit Status */}
               { postType === RECRUIT && recruitStatus &&
-                <span>
-                  {recruitStatus.currentMember.length}명
-                  /&nbsp;
-                  {recruitStatus.totalMember}명
-                </span>
+                <RecruitStatus
+                  recruitStatus={recruitStatus}
+                />
               }
-
             </div>
           </div>
         </div>
 
-        
+
         {/* 우측 영역 */}
         <div>
           <button
