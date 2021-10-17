@@ -109,7 +109,7 @@ function PostViewPage() {
 
       {!loading && data ?
 
-      <div className='ring-1 ring-gray-300 p-3 flex flex-col'>
+      <div className='ring-1 ring-gray-300 p-6 flex flex-col'>
 
         <PostTopBox {...data} />
 
