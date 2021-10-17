@@ -50,7 +50,6 @@ const Calendar: React.FC = () => {
     },
   };
   const handleMouseEnter = (e: EventHoveringArg) =>{
-    console.log(e);
     tippy(e.el, {
       content: e.el.innerText,
     });
@@ -65,7 +64,7 @@ const Calendar: React.FC = () => {
         allDaySlot={false}
         nowIndicator
         aspectRatio={0.8}
-        dayCellContent={({date}) => date.getDate()}
+        dayCellContent={({date}) => date.getUTCDate()}
         views={{
           timeGrid: {
             dayHeaderFormat: {

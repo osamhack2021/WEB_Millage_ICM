@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Req, Body, Patch, Param, ParseIntPipe} from '@nestjs/common';
+import {Controller, Get, Post, Req, Body, Patch, Param, ParseIntPipe, Delete} from '@nestjs/common';
 import {ApiTags, ApiBearerAuth} from '@nestjs/swagger';
 import {Request} from 'express';
 
@@ -64,12 +64,13 @@ export class ScheduleController {
     }
   }
 
-  @Post('/create')
+  @Post('/')
   async createNewSchedule(
     @Req() req: Request,
     @Body() dto: CreateScheduleDto,
   ): Promise<ScheduleRO> {
     try {
+      console.log(dto);
       const userData: UserData = req.session.user;
       return {
         result: Result.SUCCESS,
@@ -83,7 +84,7 @@ export class ScheduleController {
     }
   }
 
-  @Patch('/update/:id')
+  @Patch('/:id')
   async updateSchedule(
     @Req() req: Request,
     @Param('id', ParseIntPipe) id: number,
@@ -91,6 +92,7 @@ export class ScheduleController {
   ): Promise<ScheduleRO> {
     try {
       const userId = req.session.user.id;
+      console.log(dto);
       return {
         result: Result.SUCCESS,
         schedule: await this.scheduleService.update(id, userId, dto),
@@ -103,7 +105,7 @@ export class ScheduleController {
     }
   }
 
-  @Get('/delete/:id')
+  @Delete('/:id')
   async deleteSchedule(@Param('id', ParseIntPipe) id: number): Promise<ResultObject> {
     try {
       await this.scheduleService.delete(id);

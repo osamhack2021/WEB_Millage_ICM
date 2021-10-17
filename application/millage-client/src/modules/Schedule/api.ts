@@ -30,7 +30,7 @@ export async function createScheduleApi(
     data: CreateScheduleReq,
 ): Promise<CreateScheduleRes> {
   const res = await axios.post<CreateScheduleRes>(
-      `${SERVER}/schedule/create`,
+      `${SERVER}/schedule`,
       data,
       {withCredentials: true},
   );
@@ -41,7 +41,7 @@ export async function updateScheduleApi(
     {id, ...data}: UpdateScheduleReq,
 ) : Promise<UpdateScheduleRes> {
   const res = await axios.patch<UpdateScheduleRes>(
-      `${SERVER}/schedule/update/${id}`,
+      `${SERVER}/schedule/${id}`,
       data,
       {withCredentials: true},
   );
@@ -52,7 +52,7 @@ export async function deleteScheduleApi(
     {id}: DeleteScheduleReq,
 ) : Promise<DeleteScheduleRes> {
   const res = await axios.delete<DeleteScheduleRes>(
-      `${SERVER}/schedule/delete/${id}`,
+      `${SERVER}/schedule/${id}`,
       {withCredentials: true},
   );
   return res.data;

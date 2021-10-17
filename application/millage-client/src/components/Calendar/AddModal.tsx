@@ -43,6 +43,21 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
     }
   };
 
+  const convertDate = (date : Date) => {
+    try {
+      return new Date(
+          date.getUTCFullYear(),
+          date.getUTCMonth(),
+          date.getUTCDate(),
+          date.getUTCHours(),
+          date.getUTCMinutes(),
+          date.getUTCSeconds(),
+      );
+    } catch (err) {
+      return date;
+    }
+  };
+
   const handleSubmit = () => {
     if (checked) {
       createSchedule({
@@ -99,7 +114,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
             <DateTimeRangePicker
               value={dateTimeRange}
               onChange={handleDateTimeRange}
-              locale='ko'
+              locale='UTC'
               calendarType='US'
               format='y. MM. dd H:mm'
               disableClock
@@ -112,7 +127,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
             <DateTimePicker
               value={date}
               onChange={handleDate}
-              locale='ko'
+              locale='UTC'
               calendarType='US'
               format='y. MM. dd H:mm'
               disableClock
