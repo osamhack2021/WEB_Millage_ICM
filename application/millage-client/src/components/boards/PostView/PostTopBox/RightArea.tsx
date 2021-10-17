@@ -32,11 +32,6 @@ const RightArea: React.FC<Props> = ({
 
       {/* 하트 버튼 */}
       <button
-        className={
-          writer.id !== session?.id ?
-          '':
-          'hidden'
-        }
         onClick={() => {
           togglePostHeart({postId});
         }}
