@@ -2,6 +2,7 @@ import {RootState} from '@modules';
 import {
   createBoardAsync,
   createPostAsync,
+  deletePostAsync,
   getBoardByIdAsync,
   getBoardListAsync,
   getPostAsync,
@@ -16,6 +17,7 @@ import {insertReplyApi} from '@modules/board/apis';
 import {
   CreateBoardReq,
   CreatePostReq,
+  DeletePostReq,
   GetBoardByIdReq,
   GetBoardListInput,
   GetPostReq,
@@ -77,6 +79,9 @@ function useBoard() {
   const createPost = useCallback((createPostReq: CreatePostReq) => {
     dispatch(createPostAsync.request(createPostReq));
   }, [dispatch]);
+  const deletePost = useCallback((deletePostReq: DeletePostReq) => {
+    dispatch(deletePostAsync.request(deletePostReq));
+  }, [dispatch]);
   const initCreatePostState = useCallback(() => {
     dispatch(initCreatePostStateAction());
   }, [dispatch]);
@@ -117,6 +122,7 @@ function useBoard() {
     initCreateBoardState,
     getPost,
     createPost,
+    deletePost,
     initCreatePostState,
     togglePostHeart,
     toggleVote,

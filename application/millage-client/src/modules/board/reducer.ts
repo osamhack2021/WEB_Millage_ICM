@@ -183,7 +183,8 @@ const BoardReducer = createReducer<BoardState, BoardAction>(initialState, {
   [GET_POST_SUCCESS]: (state, action) => {
     if (action.payload.result === 'success' && action.payload.post) {
       const me = action.payload.session;
-      const hasHearted: boolean = action.payload.post.hearts ?
+      const hasHearted: boolean =
+        JSON.stringify(action.payload.post.hearts) !== '[]' ?
         action.payload.post.hearts.every((user) => user.id === me.id) :
         false;
 

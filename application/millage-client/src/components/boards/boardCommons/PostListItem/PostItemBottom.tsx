@@ -1,7 +1,11 @@
 import React from 'react';
 import {Post} from '@modules/board/types';
-import {Comment, Like} from '@images';
-import {PostTypeIcon} from '@components/boards/boardCommons/PostInfos';
+import {
+  CommentCounts,
+  HeartCounts,
+  PostTypeIcon,
+  RecruitStatus,
+} from '@components/boards/boardCommons/PostInfos';
 import {RECRUIT} from '@constants';
 
 type Props = Pick<Post,
@@ -32,32 +36,16 @@ const PostItemBottom: React.FC<Props> = ({
       </span>
 
       {/* 하트 */}
-      <div className='flex justify-start items-center mr-2'>
-        <div
-          className='h-4 w-4 bg-cover mr-1'
-          style={{
-            marginBottom: '-2px',
-            backgroundImage: `url(${Like})`,
-          }}
-        />
-        <span>
-          {heartCount}
-        </span>
-      </div>
+      <HeartCounts
+        heartCount={heartCount}
+        className='m-2'
+      />
 
       {/* 댓글 수 */}
-      <div className='flex justify-start items-center mr-4'>
-        <div
-          className='h-4 w-4 bg-cover mr-1'
-          style={{
-            marginBottom: '-2px',
-            backgroundImage: `url(${Comment})`,
-          }}
-        />
-        <span>
-          {comments.length}
-        </span>
-      </div>
+      <CommentCounts
+        comments={comments}
+        className='mr-4'
+      />
 
       {/* 게시글 타입 */}
       <PostTypeIcon
@@ -67,11 +55,9 @@ const PostItemBottom: React.FC<Props> = ({
 
       {/* Recruit Status */}
       { postType === RECRUIT && recruitStatus &&
-        <span>
-          {recruitStatus.currentMember.length}명
-          /&nbsp;
-          {recruitStatus.totalMember}명
-        </span>
+        <RecruitStatus
+          recruitStatus={recruitStatus}
+        />
       }
 
     </div>

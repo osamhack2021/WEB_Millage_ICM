@@ -54,6 +54,12 @@ export type CreatePostRes = CommonResponse & {
     post?: Post;
 }
 
+export type DeletePostReq = {
+    postId: number;
+}
+
+export type DeletePostRes = CommonResponse
+
 export type TogglePostHeartReq = {
     postId: number;
 }

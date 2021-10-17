@@ -4,7 +4,12 @@ import {useParams} from 'react-router';
 import {BoardTitle} from '@components/boards/boardCommons';
 import {default as CommentBox} from '@components/boards/PostView/Comment';
 import {Comment} from '@modules/board/types/';
-import {PollListBox, RecruitBox, PostTopBox} from '@components/boards/PostView';
+import {
+  PollListBox,
+  RecruitBox,
+  PostTopBox,
+  PostContentBox,
+} from '@components/boards/PostView';
 import {
   ReplyButton,
 } from '@images';
@@ -109,13 +114,15 @@ function PostViewPage() {
 
       {!loading && data ?
 
-      <div className='ring-1 ring-gray-300 p-6 flex flex-col'>
+      <div className='ring-1 ring-gray-300 p-3 sm:p-6 flex flex-col'>
 
+        {/* 상단부 (작성자, 작성시각, 하트, 댓글수, 타입 / 쪽지, 하트, 삭제) */}
         <PostTopBox {...data} />
 
-        <h1 className='text-2xl' > {data.title} </h1>
-        <p> {data.content} </p>
+        {/* 제목, 내용 */}
+        <PostContentBox {...data} />
 
+        {/* 설문 리스트 */}
         { data.postType === 'POLL' && data.pollItems &&
           <PollListBox
             pollItems={data.pollItems}
@@ -124,19 +131,12 @@ function PostViewPage() {
           />
         }
 
+        {/* 모집 상태 */}
         { data.postType === 'RECRUIT' && data.recruitStatus &&
           <RecruitBox {...data.recruitStatus } postId={data.id} />
         }
 
-        <div>
-          <button onClick={() => togglePostHeart({postId: +postId})}>
-            { data.hasHearted ?
-              '하트 취소' :
-              '하트'
-            }
-          </button>
-          PostBottom (좋아요, 댓글수, 좋아요 / 취소 기능)
-        </div>
+        {/* 댓글 컴포넌트 */}
         <div>
           <div className="CommentInputContainer w-full flex">
             <input type="text"
