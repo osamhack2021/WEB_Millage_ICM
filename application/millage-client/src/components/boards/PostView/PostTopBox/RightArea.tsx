@@ -3,17 +3,27 @@ import {CommentDeleteIcon, DMIcon, LikeBlackFilled, LikeComment} from '@images';
 import {Post} from '@modules/board/types';
 import {useUser} from '@hooks/user';
 import {useBoard} from '@hooks/board';
+import {useHistory} from 'react-router';
+import {BOARD_PATH} from '@constants';
 
 
-type Props = Pick<Post, 'writer' | 'id' | 'hasHearted'> & {
+type Props = Pick<Post, 'writer' | 'id' | 'hasHearted' | 'board'> & {
   setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 const RightArea: React.FC<Props> = ({
-  id: postId, writer, hasHearted, setOpenDialog,
+  id: postId, writer, hasHearted, board, setOpenDialog,
 }) => {
   const {session} = useUser();
-  const {togglePostHeart} = useBoard();
+  const {togglePostHeart, deletePost} = useBoard();
+  const history = useHistory();
+
+  const onDelete = () => {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      deletePost({postId});
+      history.push(`${BOARD_PATH}/${board.id}`);
+    }
+  };
 
   return (
     <div>
@@ -47,11 +57,7 @@ const RightArea: React.FC<Props> = ({
           session?.role.name =='SUPER_ADMIN' ? '' : 'hidden'}
           focus:outline-none
         `}
-        onClick={() => {
-          if (confirm('정말로 삭제하시겠습니까?')) {
-            // dispatch(deleteReplyAsync.request(id));
-          }
-        }}
+        onClick={onDelete}
       >
         <img src={CommentDeleteIcon}/>
       </button>

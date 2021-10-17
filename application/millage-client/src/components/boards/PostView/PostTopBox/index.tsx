@@ -8,7 +8,7 @@ import RightArea from './RightArea';
 
 
 type Props = Pick<Post,
-  'id' | 'postType' | 'writer' | 'createdAt' |
+  'id' | 'board' | 'postType' | 'writer' | 'createdAt' |
   'heartCount' | 'comments' | 'recruitStatus' | 'hasHearted'
 >;
 
