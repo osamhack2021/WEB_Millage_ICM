@@ -155,13 +155,32 @@ export class UserController {
   }
 
   @Delete(':userId')
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
   async delete(
     @Param('userId', ParseIntPipe) userId: number,
+    @Req() req: Request,
   ): Promise<ResultObject> {
     try {
-      if (await this.userService.delete(userId)) {
-        return {result: Result.SUCCESS};
-      }
+      const userData: UserData = req.session.user;
+      await this.userService.delete(userId, userData);
+      return {result: Result.SUCCESS};
+    } catch (err) {
+      return {result: Result.ERROR, message: err.message};
+    }
+  }
+
+  @Delete('self')
+  @Roles(Role.NORMAL_USER, Role.SUPER_ADMIN, Role.ADMIN)
+  async deleteSelf(@Req() req: Request): Promise<ResultObject> {
+    try {
+      const userData: UserData = req.session.user;
+      await this.userService.deleteSelf(userData);
+      await new Promise((res, rej) =>
+        req.session.destroy((err) =>
+            err ? rej(err) : res(err)
+        )
+      );
+      return {result: Result.SUCCESS};
     } catch (err) {
       return {result: Result.ERROR, message: err.message};
     }
