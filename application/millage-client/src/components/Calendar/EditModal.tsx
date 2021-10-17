@@ -21,6 +21,8 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
+import {useSelector} from 'react-redux';
+import {RootState} from '@modules';
 
 interface Props {
   handleClose: () => void
@@ -30,6 +32,7 @@ const steps = ['변경하고 싶은 날짜 선택', '변경하고 싶은 일정 
 
 const EditModal: React.FC<Props> = ({handleClose}) => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const session = useSelector((state : RootState) => state.user.session);
   const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
   const [checked, setChecked] = React.useState(false);
   const [date, setDate] = React.useState(new Date());
@@ -114,18 +117,26 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     }
   };
 
-  const compareDate = (a: Date) => (
-    a.getUTCFullYear() === selectedDate.getUTCFullYear() &&
-    a.getUTCMonth() === selectedDate.getUTCMonth() &&
-    a.getUTCDate() === selectedDate.getUTCDate()
-  );
-  const compareDateRange = (start: Date, end: Date) => {
+  const compareDate = (a: Date) => {
     const startDate = new Date(
-        start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate(),
+        a.getFullYear(), a.getMonth(), a.getDate(),
+    );
+    return (
+      startDate.getFullYear() === selectedDate.getFullYear() &&
+      startDate.getMonth() === selectedDate.getMonth() &&
+      startDate.getDate() === selectedDate.getDate()
+    );
+  };
+  const compareDateRange = (start: Date, end: Date) => {
+    console.log(start);
+    console.log(end);
+    const startDate = new Date(
+        start.getFullYear(), start.getMonth(), start.getDate(),
     );
     const endDate = new Date(
-        end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1,
+        end.getFullYear(), end.getMonth(), end.getDate() + 1,
     );
+
     return startDate <= selectedDate && selectedDate < endDate;
   };
 
@@ -159,9 +170,14 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
           <Box>
             <List>
               {scheduleList.filter(({groupId, start, end}) =>
-                groupId !== 'unit' && end ?
+                (
+                end ?
                 compareDateRange(start, end) :
-                compareDate(start),
+                compareDate(start)
+                ) && (session?.role.name == 'NORMAL_USER' ?
+                  groupId == 'person':
+                  true
+                ),
               ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
