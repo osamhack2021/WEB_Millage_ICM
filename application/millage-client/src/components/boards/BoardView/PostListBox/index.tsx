@@ -24,9 +24,16 @@ const PostListBox: React.FC<Props> = ({
 
   return (
     <div className='w-full mt-4'>
-      {results.map(( post ) => (
-        <PostListItem key={post.id} post={post} type='boardView' />
-      ))}
+      <div
+        className='
+        ring-gray-300 ring-1
+          grid grid-cols-1 divide-y divide-gray-300
+        '
+      >
+        {results.map(( post ) => (
+          <PostListItem key={post.id} post={post} type='boardView' />
+        ))}
+      </div>
 
       {/* Pagination Button */}
       {
