@@ -31,6 +31,12 @@ const ReservationCalendar: React.FC = () => {
 
   return (
     <div className='reservation-calendar-wrapper'>
+      <div className='flex flex-row justify-center'>
+        <div className='description'>
+          {place.description}
+        </div>
+      </div>
+
       <FullCalendar
         plugins={[timeGridPlugin]}
         locale='UTC'

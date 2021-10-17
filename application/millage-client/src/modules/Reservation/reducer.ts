@@ -37,6 +37,7 @@ const initialState: ReducerState = {
     name: '',
     seats: 0,
     unitId: 0,
+    description: '',
     reservations: [],
   },
   places: [],
