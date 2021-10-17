@@ -1,6 +1,6 @@
 import React from 'react';
 import {Board} from '@modules/board/types';
-import PostListItem from './PostListItem';
+import PostListItem from '@components/boards/PostListItem';
 import {FilledButton} from '@components/common';
 
 type Props = Pick<Board, 'paginationObject'> & {
@@ -25,7 +25,7 @@ const PostListBox: React.FC<Props> = ({
   return (
     <div className='w-full mt-4'>
       {results.map(( post ) => (
-        <PostListItem post={post} key={post.id} />
+        <PostListItem key={post.id} post={post} type='boardView' />
       ))}
 
       {/* Pagination Button */}

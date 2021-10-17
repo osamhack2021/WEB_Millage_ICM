@@ -6,9 +6,10 @@ import PostItemBottom from './PostItemBottom';
 
 type Props = {
   post: Post;
+  type: 'main' | 'boardView';
 };
 
-const PostListItem: React.FC<Props> = ({post}) => {
+const PostListItem: React.FC<Props> = ({post, type}) => {
   return (
     <div
       className='border border-gray-300 p-4'
@@ -20,7 +21,9 @@ const PostListItem: React.FC<Props> = ({post}) => {
       <PostItemTop {...post} />
 
       {/* Content */}
-      <PostContent {...post} />
+      { type === 'boardView' &&
+        <PostContent {...post} />
+      }
 
       {/* Writer, HeartCount, Comments, PostType, Poll, Recruit */}
       <PostItemBottom {...post} />
