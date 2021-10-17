@@ -6,10 +6,13 @@ import {UnitService} from './unit.service';
 import {BoardModule} from '../board/board.module';
 import {BoardEntity} from '../board/board.entity';
 import {PlaceEntity} from '../place/place.entity';
+import {UserEntity} from '../user/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UnitEntity, BoardEntity, PlaceEntity]),
+    TypeOrmModule.forFeature([
+      UnitEntity, BoardEntity, PlaceEntity, UserEntity,
+    ]),
     BoardModule,
   ],
   providers: [UnitService],
