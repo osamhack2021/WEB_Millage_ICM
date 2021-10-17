@@ -51,6 +51,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
   ] = useSchedule();
 
   const handleSubmit = () => {
+    console.log(date);
     if (checked) {
       updateSchedule({
         id: selectedSchedule.id,
@@ -80,8 +81,11 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
   const handleItemClick = (e: Schedule) => {
     setChecked(e.end === undefined);
     setSelectedSchedule(e);
-    if (e.end) setDateTimeRange([e.start, e.end]);
-    else setDate(e.start);
+    if (e.end) {
+      setDateTimeRange(
+          [e.start,
+            e.end]);
+    } else setDate(e.start);
     setActiveStep(2);
   };
 
@@ -124,6 +128,21 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     return startDate <= selectedDate && selectedDate < endDate;
   };
 
+  const convertDate = (date : Date) => {
+    try {
+      return new Date(
+          date.getUTCFullYear(),
+          date.getUTCMonth(),
+          date.getUTCDate(),
+          date.getUTCHours(),
+          date.getUTCMinutes(),
+          date.getUTCSeconds(),
+      );
+    } catch (err) {
+      return date;
+    }
+  };
+
   return (
     <div>
       <DialogTitle>일정 편집하기</DialogTitle>
@@ -155,8 +174,10 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
             <List>
               {scheduleList.filter(({groupId, start, end}) =>
                 groupId !== 'unit' && end ?
-                compareDateRange(new Date(start), new Date(end)) :
-                compareDate(new Date(start)),
+                compareDateRange(
+                    convertDate(new Date(start)),
+                    convertDate(new Date(end))) :
+                compareDate(convertDate(new Date(start))),
               ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
@@ -206,7 +227,8 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                   calendarType='US'
                   format='y. MM. dd H:mm'
                   disableClock
-                  formatDay={(locale, date) => date.getDate().toString()}
+                  formatDay={(locale, date) =>
+                    convertDate(date).getDate().toString()}
                 />
               </div>
             ) : (
@@ -219,7 +241,8 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                   calendarType='US'
                   format='y. MM. dd H:mm'
                   disableClock
-                  formatDay={(locale, date) => date.getDate().toString()}
+                  formatDay={(locale, date) =>
+                    convertDate(date).getUTCDate().toString()}
                 />
               </div>
             )}

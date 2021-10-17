@@ -33,8 +33,8 @@ const ReservationCalendar: React.FC = () => {
     <div className='reservation-calendar-wrapper'>
       <FullCalendar
         plugins={[timeGridPlugin]}
-        locale='ko'
-        timeZone='ko'
+        locale='UTC'
+        timeZone='UTC'
         nowIndicator
         dayCellContent={({date}) => date.getDate()}
         allDaySlot={false}
