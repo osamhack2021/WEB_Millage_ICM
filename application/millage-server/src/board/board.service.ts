@@ -116,7 +116,7 @@ export class BoardService {
         {boardId: boardId, title: Like(`%${searchKeyword}%`)},
         {boardId: boardId, content: Like(`%${searchKeyword}%`)},
       ],
-      order: {createdAt: 'ASC'},
+      order: {createdAt: 'DESC'},
     };
     const totalCounts = await this.postRepository.count(searchOptions);
     const totalPages = Math.ceil(totalCounts / 10);
