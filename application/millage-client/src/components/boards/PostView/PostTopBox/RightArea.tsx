@@ -42,6 +42,7 @@ const RightArea: React.FC<Props> = ({
 
       {/* 하트 버튼 */}
       <button
+        className='focus:outline-none'
         onClick={() => {
           togglePostHeart({postId});
         }}
