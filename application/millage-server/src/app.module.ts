@@ -1,9 +1,7 @@
-import {join} from 'path';
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule} from '@nestjs/config';
 import {MailerModule} from '@nestjs-modules/mailer';
-import {ServeStaticModule} from '@nestjs/serve-static';
 
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
@@ -46,9 +44,6 @@ import {ImageModule} from './image/image.module';
       defaults: {
         from: '"Millage" <military_village@naver.com>',
       },
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'upload'),
     }),
   ],
   controllers: [AppController],

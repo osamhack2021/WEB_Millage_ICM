@@ -8,6 +8,7 @@ import {PollEntity} from './poll/poll.entity';
 import {UserEntity} from '../user/user.entity';
 import {RecruitEntity} from './recruit/recruit.entity';
 import {BoardEntity} from '../board/board.entity';
+import {CommentEntity} from './comment/comment.entity';
 import {UserData} from '../user/user.interface';
 import {Role} from '../user_role/user_role.interface';
 
@@ -77,6 +78,20 @@ export class PostService {
     }
   }
 
+  private setPropertyLikedOnComments(
+      comments: CommentEntity[],
+      userId: number
+  ): void {
+    comments.forEach((comment) => {
+      if (comment.hearts.some((heart) => heart.id === userId)) {
+        comment.liked = true;
+      } else {
+        comment.liked = false;
+      }
+    });
+    return;
+  }
+
   async get(id: number, userData: UserData): Promise<PostEntity> {
     const post = await this.postRepository.createQueryBuilder('post')
         .where('post.id= :id', {id: id})
@@ -118,6 +133,7 @@ export class PostService {
             (user: UserEntity) => user.id === userData.id)) {
       post.recruitStatus.isMember = true;
     }
+    this.setPropertyLikedOnComments(post.comments, userData.id);
     return post;
   }
 

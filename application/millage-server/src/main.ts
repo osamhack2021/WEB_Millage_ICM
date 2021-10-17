@@ -39,6 +39,7 @@ async function bootstrap() {
       appOptions);
     app.useStaticAssets(join(__dirname, '..', 'public'));
     app.useStaticAssets(join(__dirname, '..', 'dist'));
+    app.useStaticAssets(join(__dirname, '..', 'upload'));
     app.setGlobalPrefix('api');
     app.set('trust proxy', true);
     app.use(session( {
