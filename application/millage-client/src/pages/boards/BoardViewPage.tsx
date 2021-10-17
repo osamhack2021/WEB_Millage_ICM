@@ -61,7 +61,7 @@ function BoardViewPage() {
       {/* PostList Box */}
       { loading || !data || !data.paginationObject ?
 
-        <div> loading... </div> :
+        <div className='mt-4'> loading... </div> :
 
         <PostListBox
           paginationObject={data.paginationObject}

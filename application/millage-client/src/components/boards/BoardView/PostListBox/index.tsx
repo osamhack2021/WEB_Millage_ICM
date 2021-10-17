@@ -1,7 +1,7 @@
 import React from 'react';
 import {Board} from '@modules/board/types';
 import PostListItem from './PostListItem';
-import { FilledButton } from '@components/common';
+import {FilledButton} from '@components/common';
 
 type Props = Pick<Board, 'paginationObject'> & {
   getBoardWithPage: (page: number) => void,
@@ -16,8 +16,6 @@ const PostListBox: React.FC<Props> = ({
     totalPages,
   } = paginationObject;
 
-  console.log(results);
-
   const isFirstPage = curPage === 1;
   const isLastPage = curPage === totalPages;
 
@@ -27,7 +25,7 @@ const PostListBox: React.FC<Props> = ({
   return (
     <div className='w-full mt-4'>
       {results.map(( post ) => (
-        <PostListItem post={post} />
+        <PostListItem post={post} key={post.id} />
       ))}
 
       {/* Pagination Button */}
@@ -38,7 +36,7 @@ const PostListBox: React.FC<Props> = ({
             !isFirstPage &&
             <FilledButton
               onClick={onPrevButton}
-              className='py-2 w-16'
+              className='py-2 w-16 text-md'
             >
               이전
             </FilledButton>
