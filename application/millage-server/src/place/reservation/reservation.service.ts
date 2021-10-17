@@ -17,6 +17,11 @@ export class ReservationService {
       bookerId: number,
       unitId: number,
   ): Promise<ReservationEntity> {
+    const nineHours = 9 * 60 * 60 * 1000;
+    dto.start = new Date(new Date(dto.start).getTime() + nineHours);
+    dto.end = dto.end ?
+      new Date(new Date(dto.end).getTime() + nineHours) : null;
+
     const newReservation = this.reservationRepository.create(dto);
     Object.assign(newReservation, {unitId, bookerId});
     return await this.reservationRepository.save(newReservation);
