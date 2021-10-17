@@ -462,7 +462,7 @@ function DM() {
           <DialogTitle className="dialogTitle">
             메시지 작성하기
           </DialogTitle>
-          <DialogContent>
+          <DialogContent className="dialogContent">
             <div id = "SearchContainer">
               <input type="text"
                 placeholder="사용자 검색"
