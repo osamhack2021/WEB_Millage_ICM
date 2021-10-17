@@ -1,4 +1,4 @@
-import { StyleOverWriteProps } from '@utils/commonTypes';
+import {StyleOverWriteProps} from '@utils/commonTypes';
 import React from 'react';
 
 type Props = StyleOverWriteProps & {
@@ -8,7 +8,7 @@ type Props = StyleOverWriteProps & {
 const Button: React.FC<Props> = ({
   children, className, onClick,
 }) => {
-  return(
+  return (
     <button
       onClick={onClick}
       className={`

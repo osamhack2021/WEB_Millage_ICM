@@ -12,7 +12,7 @@ import {
   RecruitInputBox,
 } from '@components/boards/CreatePost';
 import {useHistory} from 'react-router';
-import { FilledButton } from '@components/common';
+import {FilledButton} from '@components/common';
 
 
 function CreatePostPage() {

@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 /**
  * dateString을 받아서, 일정한 포멧에 맞게 반환하는 함수\
@@ -7,7 +7,7 @@ import moment from "moment";
  * @returns
  */
 export function formatDateTime(dateTimeStr: string) {
-  const korTime = moment(dateTimeStr).subtract(9, 'hours')
+  const korTime = moment(dateTimeStr).subtract(9, 'hours');
   const timeDiff = moment().diff(moment(korTime));
   const basisDuration = moment.duration(3, 'days').as('milliseconds');
 
