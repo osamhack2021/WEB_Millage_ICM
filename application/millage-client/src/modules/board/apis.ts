@@ -3,6 +3,8 @@ import {
   CreateBoardRes,
   CreatePostReq,
   CreatePostRes,
+  DeletePostReq,
+  DeletePostRes,
   deleteReplyRes,
   GetBoardByIdReq,
   GetBoardByIdRes,
@@ -29,6 +31,7 @@ import {
   GET_BOARD_LIST_API,
   GET_BOARD_LIST_WITH_POSTS_API,
   GET_POST_API,
+  POST_API,
   SERVER,
   TOGGLE_POST_HEART_API,
   TOGGLE_RECRUIT_API,
@@ -124,6 +127,23 @@ export async function apiCreatePost(
     const {data} = await axios.post<CreatePostRes>(
         CREATE_POST_API,
         createPostReq,
+        {withCredentials: true},
+    );
+    return data;
+  } catch (error: any) {
+    return {result: 'error', message: error};
+  }
+}
+
+/**
+ * Delete Post API
+ */
+export async function apiDeletePost(
+    {postId}: DeletePostReq,
+): Promise<DeletePostRes> {
+  try {
+    const {data} = await axios.delete<DeletePostRes>(
+        `${POST_API}/${postId}`,
         {withCredentials: true},
     );
     return data;

@@ -2,6 +2,7 @@ import {call, put, takeLatest, select} from 'redux-saga/effects';
 import {
   apiCreateBoard,
   apiCreatePost,
+  apiDeletePost,
   apiGetBoardById,
   apiGetBoardList,
   apiGetPost,
@@ -18,6 +19,7 @@ import {
 import {
   CreateBoardRes,
   CreatePostRes,
+  DeletePostRes,
   deleteReplyRes,
   GetBoardByIdRes,
   GetBoardListRes,
@@ -32,6 +34,7 @@ import {
 import {
   createBoardAsync,
   createPostAsync,
+  deletePostAsync,
   deleteReplyAsync,
   getBoardByIdAsync,
   getBoardListAsync,
@@ -121,6 +124,20 @@ function* createPostSaga(
     yield put(createPostAsync.success(response));
   } catch (error: any) {
     yield put(createPostAsync.failure(error));
+  }
+}
+
+function* deletePostSaga(
+    action: ReturnType<typeof deletePostAsync.request>,
+) {
+  try {
+    const response: DeletePostRes = yield call(
+        apiDeletePost,
+        action.payload,
+    );
+    yield put(deletePostAsync.success(response));
+  } catch (error: any) {
+    yield put(deletePostAsync.failure(error));
   }
 }
 
@@ -261,6 +278,7 @@ export function* boardSagaListener() {
   yield takeLatest(createBoardAsync.request, createBoardSaga);
   yield takeLatest(getPostAsync.request, getPostSaga);
   yield takeLatest(createPostAsync.request, createPostSaga);
+  yield takeLatest(deletePostAsync.request, deletePostSaga);
   yield takeLatest(togglePostHeartAsync.request, togglePostHeartSaga);
   yield takeLatest(toggleVoteAsync.request, toggleVoteSaga);
   yield takeLatest(toggleRecruitAsync.request, toggleRecruitSaga);

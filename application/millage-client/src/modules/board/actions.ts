@@ -5,6 +5,8 @@ import {
   CreateBoardRes,
   CreatePostReq,
   CreatePostRes,
+  DeletePostReq,
+  DeletePostRes,
   deleteReplyRes,
   GetBoardByIdReq,
   GetBoardByIdRes,
@@ -100,6 +102,15 @@ export const createPostAsync = createAsyncAction(
 export const initCreatePostStateAction = createAction(
     INIT_CREATE_POST_STATE,
 )();
+
+export const DELETE_POST = 'board/DELETE_POST';
+export const DELETE_POST_SUCCESS = 'board/DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'board/DELETE_POST_FAILURE';
+export const deletePostAsync = createAsyncAction(
+    DELETE_POST,
+    DELETE_POST_SUCCESS,
+    DELETE_POST_FAILURE,
+)<DeletePostReq, DeletePostRes, AxiosError>();
 
 /**
  * POST Toggle Post Heart API Actions
