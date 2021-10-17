@@ -37,6 +37,10 @@ export class ScheduleService {
   ): Promise<ScheduleEntity> {
     const groupType = userData.role.name === Role.NORMAL_USER ?
       GroupType.PERSON : GroupType.UNIT;
+    const nineHours = 9 * 60 * 60 * 1000;
+    dto.start = new Date(new Date(dto.start).getTime() + nineHours);
+    dto.end = dto.end ?
+      new Date(new Date(dto.end).getTime() + nineHours) : null;
     Object.assign(dto,
         {userId: userData.id, unitId: userData.unit.id, groupType});
     const newSchedule = this.scheduleRepository.create(dto);
