@@ -50,6 +50,7 @@ function* createScheduleSaga(
         createScheduleApi,
         action.payload,
     );
+    yield put(getScheduleListAsync.request());
     yield put(createScheduleAsync.success(response));
   } catch (error: any) {
     yield put(createScheduleAsync.failure(error));
@@ -64,6 +65,7 @@ function* updateScheduleSaga(
         updateScheduleApi,
         action.payload,
     );
+    yield put(getScheduleListAsync.request());
     yield put(updateScheduleAsync.success(response));
   } catch (error: any) {
     yield put(updateScheduleAsync.failure(error));
@@ -79,6 +81,7 @@ function* deleteScheduleSaga(
         deleteScheduleApi,
         action.payload,
     );
+    yield put(getScheduleListAsync.request());
     yield put(deleteScheduleAsync.success(response));
   } catch (error: any) {
     yield put(deleteScheduleAsync.failure(error));
