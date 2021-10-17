@@ -6,6 +6,7 @@ import {BoardEntity} from '../board/board.entity';
 import {UnitDTO, UnitInfo} from './unit.interface';
 import {createBasicBoards, getSamplePlace} from './unit.template';
 import {PlaceEntity} from '../place/place.entity';
+import {UserEntity} from '../user/user.entity';
 
 @Injectable()
 export class UnitService {
@@ -18,6 +19,9 @@ export class UnitService {
 
     @InjectRepository(PlaceEntity)
     private readonly placeRepository: Repository<PlaceEntity>,
+
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
 
@@ -34,15 +38,16 @@ export class UnitService {
     if (previousUnit === undefined) {
       throw new Error(`Cannot find unit by id ${id}`);
     }
-    try {
-      const changes = this.unitRepository.create(dto);
-      if (!(await this.unitRepository.update(id, changes)).affected) {
-        return false;
-      }
-      return true;
-    } catch (err) {
-      throw new Error(err.message);
+    const changes = this.unitRepository.create(dto);
+    if (!(await this.unitRepository.update(id, changes)).affected) {
+      return false;
     }
+    if (dto.isConfirmed) {
+      const adminUser = await this.userRepository.findOne({where: {unitId: id}});
+      adminUser.isConfirmed = true;
+      await this.userRepository.save(adminUser);
+    }
+    return true;
   }
 
   async delete(id: number): Promise<boolean> {
