@@ -72,7 +72,7 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   }),
   [GET_UNITLIST_REQUEST]: (state, action) => ({
     ...state,
-    result: ''
+    result: '',
   }),
   [GET_UNITLIST_SUCCESS]: (state, action) => ({
     ...state,
@@ -148,7 +148,7 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   }),
   [GET_BOARDLIST_REQUEST]: (state, action) => ({
     ...state,
-    result: ''
+    result: '',
   }),
   [GET_BOARDLIST_SUCCESS]: (state, action) => ({
     ...state,
@@ -195,7 +195,7 @@ const UserReducer = createReducer<AdminState, AdminAction>(initialState, {
   }),
   [GET_PLACELIST_REQUEST]: (state, action) => ({
     ...state,
-    result: ''
+    result: '',
   }),
   [GET_PLACELIST_SUCCESS]: (state, action) => ({
     ...state,
