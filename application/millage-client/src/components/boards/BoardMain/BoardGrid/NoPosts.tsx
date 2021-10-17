@@ -1,5 +1,4 @@
 import React from 'react';
-import PostItem from './PostItem';
 
 function NoPosts() {
   return (
