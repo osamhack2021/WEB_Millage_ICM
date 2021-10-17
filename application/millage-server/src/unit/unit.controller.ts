@@ -46,6 +46,7 @@ export class UnitController {
 
 
   @Patch(':id')
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN)
   async update(
     @Param('id') id: number,
     @Body() dto: UnitDTO
