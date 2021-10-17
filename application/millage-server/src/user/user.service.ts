@@ -79,7 +79,7 @@ export class UserService {
     };
   }
 
-  async sendUserConfirmedMail(email: string, unitName: string): Promise<boolean> {
+  async sendUserConfirmedMail(email: string, unitName: string): Promise<void> {
     const htmlStream = fs.readFileSync(
         path.join(__dirname, '/mailTemplate/userConfirmed.html')
     );
@@ -88,7 +88,31 @@ export class UserService {
       subject: `[Millage 승인 완료] ${unitName} 커뮤니티를 이용하실 수 있습니다.`,
       html: htmlStream, // template 필요
     });
-    return true;
+    return;
+  }
+
+  async sendUserDeletedMail(email: string, unitName: string): Promise<void> {
+    const htmlStream = fs.readFileSync(
+        path.join(__dirname, '/mailTemplate/userDeleted.html')
+    );
+    await this.mailerService.sendMail({
+      to: email,
+      subject: `[Millage] ${unitName} 부대 관리자가 승인을 거부했습니다.`,
+      html: htmlStream,
+    });
+    return;
+  }
+
+  async sendSelfDeletedMail(email: string, unitName: string): Promise<void> {
+    const htmlStream = fs.readFileSync(
+        path.join(__dirname, '/mailTemplate/selfDeleted.html')
+    );
+    await this.mailerService.sendMail({
+      to: email,
+      subject: `[Millage] ${unitName} 정상적으로 회원 탈퇴 되었습니다.`,
+      html: htmlStream,
+    });
+    return;
   }
 
   async findByUnit(unitId: number, id: number) : Promise<UserDataForChat[]> {
@@ -220,18 +244,23 @@ export class UserService {
     return updatedUser;
   }
 
-  async delete(id: number): Promise<boolean> {
-    try {
-      await this.userRepository.delete({
-        id: id,
-      });
-
-      // add send email
-
-      return true;
-    } catch (err) {
-      throw new Error(err.message);
+  async delete(id: number, userData: UserData): Promise<void> {
+    const userToDelete = await this.userRepository.findOne(id);
+    if (userData.role.name === Role.ADMIN && userData.unit.id !== userToDelete.unitId) {
+      throw new Error('No authority for the admin with different unitId');
     }
+    const email = userToDelete.email;
+    await this.userRepository.delete(id);
+    await this.sendUserDeletedMail(email, userData.unit.name);
+    return;
+  }
+
+  async deleteSelf(userData: UserData): Promise<void> {
+    const userToDelete = await this.userRepository.findOne(userData.id);
+    const email = userToDelete.email;
+    await this.userRepository.delete(userData.id);
+    await this.sendSelfDeletedMail(email, userData.unit.name);
+    return;
   }
 
 
