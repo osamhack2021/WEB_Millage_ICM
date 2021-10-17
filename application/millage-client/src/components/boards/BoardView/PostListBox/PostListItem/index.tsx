@@ -5,27 +5,25 @@ import {
   ChatBubbleOutlineOutlined,
   ThumbUpOutlined,
 } from '@mui/icons-material';
-import {Link} from 'react-router-dom';
-import {POST_PATH} from '@constants';
+import PostItemTop from './PostItemTop';
 
 type Props = {
   post: Post;
 };
 
 const PostListItem: React.FC<Props> = ({post}) => {
-  console.log(post);
   return (
     <div
-      key={post.id}
-      className='border border-gray-500 p-4'
+      className='border border-gray-300 p-4'
       style={{
         marginTop: '-1px',
       }}
     >
-      <Link to={`${POST_PATH}/${post.id}`}>
-        <h3 className='text-xl' >{post.title}</h3>
-      </Link>
+      {/* Title / createdAt */}
+      <PostItemTop {...post} />
+
       <p className='text-base text-gray-400' >{post.content}</p>
+
 
       <div className='flex justify-between items-center'>
 
