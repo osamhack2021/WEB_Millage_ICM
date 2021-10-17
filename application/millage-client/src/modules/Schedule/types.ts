@@ -18,8 +18,8 @@ export interface ScheduleRes {
   id: number;
   title: string;
   content: string;
-  start: Date;
-  end?: Date;
+  start: string;
+  end: string | null;
   groupType: groupType;
   userId?: number;
   unitId?: number;
@@ -33,8 +33,8 @@ export interface GetScheduleListRes {
 export interface CreateScheduleReq {
   title: string;
   content: string;
-  start: Date;
-  end?: Date;
+  start: string;
+  end: string | null;
 }
 export interface CreateScheduleRes {
   schedule: ScheduleRes;

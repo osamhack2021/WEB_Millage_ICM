@@ -63,14 +63,15 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
       createSchedule({
         title,
         content,
-        start: date,
+        start: date.toUTCString(),
+        end: null,
       });
     } else {
       createSchedule({
         title,
         content,
-        start: dateTimeRange[0],
-        end: dateTimeRange[1],
+        start: dateTimeRange[0].toUTCString(),
+        end: dateTimeRange[1].toUTCString(),
       });
     }
     handleClose();
@@ -118,7 +119,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
               calendarType='US'
               format='y. MM. dd H:mm'
               disableClock
-              formatDay={(locale, date) => date.getDate().toString()}
+              formatDay={(locale, date) => date.getUTCDate().toString()}
             />
           </div>
         ) : (
@@ -131,7 +132,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
               calendarType='US'
               format='y. MM. dd H:mm'
               disableClock
-              formatDay={(locale, date) => date.getDate().toString()}
+              formatDay={(locale, date) => date.getUTCDate().toString()}
             />
           </div>
         )}
