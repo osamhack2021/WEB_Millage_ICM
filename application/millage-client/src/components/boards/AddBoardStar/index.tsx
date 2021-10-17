@@ -5,8 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
-import {StarIcon as OutlinedStarIcon} from '@images';
-import StarIcon from '@mui/icons-material/Star';
+import {StarIcon, FilledStarIcon} from '@images';
 import {Board} from '@modules/board/types';
 import './addboardstar.css';
 import {toggleBoardStarAsync} from '@modules/board/actions';
@@ -48,10 +47,7 @@ const AddBoardStar :React.FC<Props> = ({closeHandler, open}) => {
             onClick={() => {
               dispatch(toggleBoardStarAsync.request(b.id));
             }}>
-            { b.isStarred?
-              <StarIcon/>:
-              <img src={OutlinedStarIcon} />
-            }
+            <img src={b.isStarred?FilledStarIcon:StarIcon} />
           </button>
           <span className="flex flex-col justify-center">{b.title}</span>
         </div>

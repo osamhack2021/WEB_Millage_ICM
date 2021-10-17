@@ -39,6 +39,11 @@ import {
   CalendarIcon,
   ManageIcon,
   ReservationIcon,
+  GreenBoardIcon,
+  GreenCalendarIcon,
+  GreenManageIcon,
+  GreenReservationIcon,
+
 } from '@images';
 
 function Header() {
@@ -220,7 +225,8 @@ function Header() {
       return (
         <BottomNavigationAction
           label="부대관리" icon={
-            <img src={ManageIcon}></img>
+            <img src={pageState == 'manage' ?
+            GreenManageIcon : ManageIcon}></img>
           }
           className={pageState == 'manage' ? 'enabled' : ''}
           onClick={()=> {
@@ -309,7 +315,9 @@ function Header() {
           >
             <BottomNavigationAction
               label="게시판" icon={
-                <img src={BoardIcon} />}
+                <img src={pageState == '' ||
+                pageState.substr(0, 5) == 'board' ?
+                GreenBoardIcon : BoardIcon} />}
               className={pageState == '' ||
               pageState.substr(0, 5) == 'board' ? 'enabled' : ''}
               onClick={()=> {
@@ -327,7 +335,8 @@ function Header() {
             /> */}
             <BottomNavigationAction
               label="켈린더" icon={
-                <img src={CalendarIcon} />}
+                <img src={pageState == 'schedule' ?
+                GreenCalendarIcon :CalendarIcon} />}
               className={pageState == 'schedule' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('schedule');
@@ -336,7 +345,9 @@ function Header() {
             />
             <BottomNavigationAction
               label="시설예약" icon={
-                <img src={ReservationIcon} />
+                <img src={pageState == 'reservation' ||
+                pageState.substr(0, 5) == 'reser' ?
+                GreenReservationIcon :ReservationIcon} />
               }
               className={pageState == 'reservation' ||
               pageState.substr(0, 5) == 'reser' ? 'enabled' : ''}
