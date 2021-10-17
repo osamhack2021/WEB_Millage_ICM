@@ -104,6 +104,12 @@ const Calendar: React.FC = () => {
           deleteEvents,
           toggleEvents,
         }}
+        eventTimeFormat={{
+          hour: 'numeric',
+          minute: '2-digit',
+          meridiem: false,
+          hour12: false,
+        }}
       />
       <Dialog
         visible={visible}
