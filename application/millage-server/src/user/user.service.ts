@@ -239,7 +239,11 @@ export class UserService {
     Object.assign(userToUpdate, dto);
     const updatedUser = await this.userRepository.save(userToUpdate);
     if (dto.isConfirmed === true) {
-      await this.sendUserConfirmedMail(updatedUser.email, updatedUser.unit.name);
+      try {
+        await this.sendUserConfirmedMail(updatedUser.email, updatedUser.unit.name);
+      } catch (err) {
+        console.log(err);
+      }
     }
     return updatedUser;
   }
@@ -251,7 +255,11 @@ export class UserService {
     }
     const email = userToDelete.email;
     await this.userRepository.delete(id);
-    await this.sendUserDeletedMail(email, userData.unit.name);
+    try {
+      await this.sendUserDeletedMail(email, userData.unit.name);
+    } catch (err) {
+      console.log(err);
+    }
     return;
   }
 
@@ -259,7 +267,11 @@ export class UserService {
     const userToDelete = await this.userRepository.findOne(userData.id);
     const email = userToDelete.email;
     await this.userRepository.delete(userData.id);
-    await this.sendSelfDeletedMail(email, userData.unit.name);
+    try {
+      await this.sendSelfDeletedMail(email, userData.unit.name);
+    } catch (err) {
+      console.log(err);
+    }
     return;
   }
 
