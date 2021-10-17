@@ -153,14 +153,10 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
         ) : activeStep === 1 ? (
           <Box>
             <List>
-              {scheduleList.filter(({groupId, start, end}) => {
-                if (groupId === 'unit') return false;
-                if (end) {
-                  return compareDateRange(start, end);
-                } else {
-                  return compareDate(start);
-                }
-              }).map((schedule) => (
+              {scheduleList.filter(({groupId, start, end}) => 
+                groupId !== 'unit' &&
+                end !== undefined ? compareDateRange(start, end) : compareDate(start)
+              ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
                     {schedule.title}

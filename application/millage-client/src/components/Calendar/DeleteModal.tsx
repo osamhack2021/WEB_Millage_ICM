@@ -24,20 +24,6 @@ interface Props {
 }
 
 const steps = ['삭제하고 싶은 날짜 선택', '삭제하고 싶은 일정 선택'];
-const compareDate = (a: Date, b: Date) => (
-  a.getFullYear() === b.getFullYear() &&
-  a.getMonth() === b.getMonth() &&
-  a.getDate() === b.getDate()
-);
-const compareDateRange = (start: Date, end: Date, date: Date) => {
-  const startDate = new Date(
-      start.getFullYear(), start.getMonth(), start.getDate(),
-  );
-  const endDate = new Date(
-      end.getFullYear(), end.getMonth(), end.getDate() + 1,
-  );
-  return startDate <= date && date < endDate;
-};
 
 const DeleteModal: React.FC<Props> = ({handleClose}) => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -71,6 +57,20 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
     setSelectedSchedule(e);
     setActiveStep(2);
   };
+  const compareDate = (a: Date) => (
+    a.getFullYear() === selectedDate.getFullYear() &&
+    a.getMonth() === selectedDate.getMonth() &&
+    a.getDate() === selectedDate.getDate()
+  );
+  const compareDateRange = (start: Date, end: Date) => {
+    const startDate = new Date(
+        start.getFullYear(), start.getMonth(), start.getDate(),
+    );
+    const endDate = new Date(
+        end.getFullYear(), end.getMonth(), end.getDate() + 1,
+    );
+    return startDate <= selectedDate && selectedDate < endDate;
+  };
 
   return (
     <React.Fragment>
@@ -100,14 +100,10 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
         ) : activeStep === 1 ? (
           <Box>
             <List>
-              {scheduleList.filter(({groupId, start, end}) => {
-                if (groupId === 'unit') return false;
-                if (!end) {
-                  return compareDate(start, selectedDate);
-                } else {
-                  return compareDateRange(start, end, selectedDate);
-                }
-              }).map((schedule) => (
+              {scheduleList.filter(({groupId, start, end}) => 
+                groupId !== 'unit' &&
+                end !== undefined ? compareDateRange(start, end) : compareDate(start)
+              ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
                     {schedule.title}
