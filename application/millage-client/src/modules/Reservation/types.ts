@@ -17,6 +17,7 @@ export interface Place {
   name: string;
   seats: number;
   unitId: number;
+  description: string;
   reservations: Array<Reservation>;
 }
 

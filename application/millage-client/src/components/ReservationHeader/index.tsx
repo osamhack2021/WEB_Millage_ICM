@@ -13,7 +13,13 @@ const ReservationHeader: React.FC = () => {
   return (
     <div className='reservation-router'>
       {
-        placeList.map((place) => <PlaceItem place={place} />)
+        placeList.map((place) => {
+          return (
+            <PlaceItem
+              place={place}
+            />
+          );
+        })
       }
     </div>
   );

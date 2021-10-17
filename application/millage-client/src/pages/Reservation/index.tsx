@@ -11,8 +11,8 @@ import './reservation.css';
 const Reservation: React.FC = () => {
   return (
     <div id="reservation-container">
+      <Header />
       <Switch>
-        <Route exact path={RESERVATION_PATH} component={Header} />
         <Route exact path={RESERVATION_VIEW_PATH} component={Calendar} />
       </Switch>
     </div>

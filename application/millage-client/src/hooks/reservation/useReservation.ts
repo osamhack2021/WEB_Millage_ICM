@@ -25,6 +25,7 @@ const useReservation: () => [
   const [place, setPlace] = React.useState<PlaceState>({
     id: 0,
     name: '',
+    description: '',
     seats: 0,
     unitId: 0,
     reservations: [],
