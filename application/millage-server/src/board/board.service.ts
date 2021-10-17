@@ -56,7 +56,7 @@ export class BoardService {
       board.posts = await this.postRepository.find({
         relations: ['writer', 'comments', 'recruitStatus', 'recruitStatus.currentMember'],
         where: {board},
-        order: {createdAt: 'ASC'},
+        order: {createdAt: 'DESC'},
         take: POSTS_PER_BOARD_PREVIEW,
       });
 
@@ -116,6 +116,7 @@ export class BoardService {
         {boardId: boardId, title: Like(`%${searchKeyword}%`)},
         {boardId: boardId, content: Like(`%${searchKeyword}%`)},
       ],
+      order: {createdAt: 'ASC'},
     };
     const totalCounts = await this.postRepository.count(searchOptions);
     const totalPages = Math.ceil(totalCounts / 10);
