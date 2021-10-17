@@ -5,10 +5,10 @@ export class CreateReservationDto {
   title: string;
 
   @IsNotEmpty()
-  start: string;
+  start: Date;
 
   @IsNotEmpty()
-  end: string;
+  end: Date;
 
   @IsNotEmpty()
   placeId: number;
