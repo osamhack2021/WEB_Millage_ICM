@@ -4,11 +4,12 @@ import NewMessage from '@components/DM/NewMessage';
 import {useSelector} from 'react-redux';
 import {RootState} from '@modules';
 import LeftArea from './LeftArea';
+import RightArea from './RightArea';
 
 
 type Props = Pick<Post,
-  'postType' | 'writer' | 'createdAt' |
-  'heartCount' | 'comments' | 'recruitStatus'
+  'id' | 'postType' | 'writer' | 'createdAt' |
+  'heartCount' | 'comments' | 'recruitStatus' | 'hasHearted'
 >;
 
 const PostTopBox: React.FC<Props> = (post) => {
@@ -34,14 +35,7 @@ const PostTopBox: React.FC<Props> = (post) => {
 
 
         {/* 우측 영역 */}
-        <div>
-          <button
-            className='p-4 bg-white border border-gray-900'
-            onClick={postMessage}
-          >
-            쪽지
-          </button>
-        </div>
+        <RightArea {...post} setOpenDialog={setOpenDialog} />
       </div>
       <NewMessage
         open={openDialog}
