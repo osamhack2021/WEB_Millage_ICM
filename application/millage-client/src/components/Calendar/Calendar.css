@@ -28,6 +28,20 @@
   height: 3em;
 }
 
+.fc-event-title {
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 641px) {
+  .fc-event-time {
+    display: none;
+  }
+}
+
+.fc-daygrid-event {
+  overflow-x: hidden;
+}
+
 .fc .fc-view-harness {
   max-height: 1080px;
 }
