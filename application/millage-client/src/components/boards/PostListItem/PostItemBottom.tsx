@@ -7,17 +7,20 @@ import {RECRUIT} from '@constants';
 type Props = Pick<Post,
   'writer' | 'heartCount' | 'comments' |
   'postType' | 'recruitStatus'
->
+> & {
+  type: 'main' | 'boardView';
+}
 
 const PostItemBottom: React.FC<Props> = ({
-  writer, heartCount, comments, postType, recruitStatus,
+  writer, heartCount, comments, postType, recruitStatus, type,
 }) => {
   return (
     <div
-      className='
-        mt-4 flex justify-start items-center
+      className={`
+        ${type === 'main' ? 'mt-2' : 'mt-4'}
+        flex justify-start items-center
         text-sm text-gray-600 cursor-default
-      '
+      `}
       style={{
         lineHeight: '0.875rem',
       }}
