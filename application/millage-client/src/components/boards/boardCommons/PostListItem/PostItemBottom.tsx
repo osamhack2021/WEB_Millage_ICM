@@ -1,7 +1,7 @@
 import React from 'react';
 import {Post} from '@modules/board/types';
 import {Comment, Like} from '@images';
-import PostTypeIcon from '@components/boards/PostTypeIcon';
+import {PostTypeIcon} from '@components/boards/boardCommons';
 import {RECRUIT} from '@constants';
 
 type Props = Pick<Post,

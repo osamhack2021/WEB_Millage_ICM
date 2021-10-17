@@ -1,6 +1,6 @@
 import React from 'react';
 import {Board} from '@modules/board/types';
-import PostListItem from '@components/boards/PostListItem';
+import {PostListItem} from '@components/boards/boardCommons';
 import {FilledButton} from '@components/common';
 
 type Props = Pick<Board, 'paginationObject'> & {

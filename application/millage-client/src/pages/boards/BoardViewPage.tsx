@@ -4,7 +4,7 @@ import {useBoard, useBoardViewPath} from '@hooks/board';
 import {ROOT_PATH} from '@constants';
 import {
   BoardTitle,
-} from '@components/boards';
+} from '@components/boards/boardCommons';
 import {
   PostListBox,
   SearchBox,

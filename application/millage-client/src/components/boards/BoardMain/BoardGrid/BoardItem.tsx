@@ -3,7 +3,7 @@ import {Board} from '@modules/board/types';
 import {Link} from 'react-router-dom';
 import {BOARD_PATH} from '@constants';
 import NoPosts from './NoPosts';
-import PostListItem from '@components/boards/PostListItem';
+import {PostListItem} from '@components/boards/boardCommons';
 
 type Props = Pick<Board, 'id' | 'title' | 'posts'>
 
@@ -13,10 +13,14 @@ const BoardItem: React.FC<Props> = ({id, title, posts}) => {
       ring-1 ring-gray-300 divide-y divide-gray-300 flex flex-col
     ' >
       <div className='
-        px-3 py-4 ring-1 ring-gray-300
-        text-green text-lg font-bold
+        px-3 py-4 ring-1 ring-gray-300 flex items-center justify-between
       '>
-        <Link to={`${BOARD_PATH}/${id}`}> {title} </Link>
+        <Link
+          to={`${BOARD_PATH}/${id}`}
+          className='text-green text-lg font-bold hover:underline'
+        >
+          {title}
+        </Link>
       </div>
 
       { posts && JSON.stringify(posts) !== JSON.stringify([]) ?
