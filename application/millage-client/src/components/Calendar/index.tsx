@@ -9,7 +9,6 @@ import Dialog from './Dialog';
 import './Calendar.css';
 
 const Calendar: React.FC = () => {
-  const calendarRef = React.useRef<FullCalendar>(null);
   const [isShow, setIsShow] = React.useState(true);
   const [visible, setVisible] = React.useState(false);
   const [state, setState] = React.useState<'add' | 'edit' | 'delete'>('add');
@@ -17,6 +16,10 @@ const Calendar: React.FC = () => {
 
   const handleOpen = () => setVisible(true);
   const handleClose = () => setVisible(false);
+
+  React.useEffect(() => {
+    console.log(scheduleList);
+  }, [scheduleList]);
 
   const addEvents: CustomButtonInput = {
     text: '추가',
@@ -49,7 +52,6 @@ const Calendar: React.FC = () => {
   return (
     <div className='calendar-wrapper'>
       <FullCalendar
-        ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin]}
         locale='ko'
         timeZone='ko'
@@ -80,11 +82,11 @@ const Calendar: React.FC = () => {
           week: '주간',
         }}
         events={scheduleList
+            .filter(({groupId}) => isShow ? true : groupId === 'person')
             .map((schedule) => ({
               ...schedule,
               color: schedule.groupId === 'person' ? '#FFA000' : '#388E3C',
             }))
-            .filter(({groupId}) => isShow ? true : groupId === 'person')
         }
         fixedWeekCount={false}
         customButtons={{

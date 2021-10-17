@@ -109,19 +109,19 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
     }
   };
 
-  const compareDate = (a: Date, b: Date) => (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
+  const compareDate = (a: Date) => (
+    a.getFullYear() === selectedDate.getFullYear() &&
+    a.getMonth() === selectedDate.getMonth() &&
+    a.getDate() === selectedDate.getDate()
   );
-  const compareDateRange = (start: Date, end: Date, date: Date) => {
+  const compareDateRange = (start: Date, end: Date) => {
     const startDate = new Date(
         start.getFullYear(), start.getMonth(), start.getDate(),
     );
     const endDate = new Date(
         end.getFullYear(), end.getMonth(), end.getDate() + 1,
     );
-    return startDate <= date && date < endDate;
+    return startDate <= selectedDate && selectedDate < endDate;
   };
 
   return (
@@ -156,9 +156,9 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
               {scheduleList.filter(({groupId, start, end}) => {
                 if (groupId === 'unit') return false;
                 if (end) {
-                  return compareDateRange(start, end, selectedDate);
+                  return compareDateRange(start, end);
                 } else {
-                  return compareDate(start, selectedDate);
+                  return compareDate(start);
                 }
               }).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>

@@ -8,7 +8,6 @@ export interface Schedule {
   content: string;
   start: Date;
   end?: Date;
-  color?: string;
 }
 
 export type ScheduleList = Array<Schedule>
