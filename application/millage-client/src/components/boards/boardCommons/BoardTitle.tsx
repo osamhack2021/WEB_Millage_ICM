@@ -18,7 +18,7 @@ const BoardTitle: React.FC<Props> = ({title}) => {
       </h1>
 
       {/* 글 생성 버튼 */}
-      <CreatePostButton />
+      <CreatePostButton type='boardView' />
     </div>
   );
 };

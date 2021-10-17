@@ -4,12 +4,18 @@ import {CREATE_POST_PATH} from '@constants';
 import {CreatePostIcon} from '@images';
 import {useHistory} from 'react-router';
 
-const CreatePostButton: React.FC = () => {
+type Props = {
+  type: 'main' | 'boardView'
+}
+
+const CreatePostButton: React.FC<Props> = ({type}) => {
   const history = useHistory();
   const onClick = () => {
     history.push(CREATE_POST_PATH);
   };
   return (
+    type === 'boardView' ?
+
     <OutlinedButton
       onClick={onClick}
       className='px-4 py-2'
@@ -21,7 +27,16 @@ const CreatePostButton: React.FC = () => {
         }}
       />
         글 쓰기
-    </OutlinedButton>
+    </OutlinedButton> :
+
+    <button onClick={onClick}>
+      <div
+        className='h-6 w-6 bg-cover mr-2'
+        style={{
+          backgroundImage: `url(${CreatePostIcon})`,
+        }}
+      />
+    </button>
   );
 };
 
