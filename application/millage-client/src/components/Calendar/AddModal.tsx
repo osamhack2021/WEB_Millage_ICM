@@ -94,7 +94,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
           />
         </FormGroup>
         {!checked ? (
-          <div style={{minHeight: 375}}>
+          <div className='calendar-form-wrapper'>
             <label>기간: </label>
             <DateTimeRangePicker
               value={dateTimeRange}
@@ -107,7 +107,7 @@ const AddModal: React.FC<Props> = ({handleClose}) => {
             />
           </div>
         ) : (
-          <div style={{minHeight: 375}}>
+          <div className='calendar-form-wrapper'>
             <label>일자: </label>
             <DateTimePicker
               value={date}
