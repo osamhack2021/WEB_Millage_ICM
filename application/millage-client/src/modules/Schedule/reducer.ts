@@ -30,9 +30,23 @@ const convertResToData: (schedule: ScheduleRes) => Schedule = (schedule) => {
     groupId: schedule.groupType,
     title: schedule.title,
     content: schedule.content,
-    start: schedule.start,
-    end: schedule.end,
+    start: convertDate(new Date(schedule.start)),
+    end: schedule.end ? convertDate(new Date(schedule.end)) : undefined,
   };
+};
+
+const convertDate = (date : Date) => {
+  try {
+    return new Date(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate(),
+        date.getUTCHours(),
+        date.getUTCMinutes(),
+    );
+  } catch (err) {
+    return date;
+  }
 };
 
 const ScheduleReducer = createReducer<ScheduleState, ScheduleAction>(

@@ -9,6 +9,9 @@ import Dialog from './Dialog';
 import './Calendar.css';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/animations/scale.css';
+
 const Calendar: React.FC = () => {
   const [isShow, setIsShow] = React.useState(true);
   const [visible, setVisible] = React.useState(false);
@@ -49,9 +52,30 @@ const Calendar: React.FC = () => {
       setIsShow((e) => !e);
     },
   };
-  const handleMouseEnter = (e: EventHoveringArg) =>{
+  const handleMouseEnter = (e: EventHoveringArg) => {
+    const ToolbarWrapper = document.createElement('div');
+    const ToolbarHeader = document.createElement('p');
+    const HeaderText = document.createTextNode(e.event.title);
+    ToolbarHeader.classList.add('toolbar-header');
+    ToolbarHeader.appendChild(HeaderText);
+    ToolbarWrapper.appendChild(ToolbarHeader);
+    if (e.event.extendedProps.content) {
+      const ToolbarDivider = document.createElement('div');
+      ToolbarDivider.classList.add('toolbar-divider');
+      const ToolbarContent = document.createElement('p');
+      ToolbarContent.classList.add('toolbar-content');
+      const ContentText = document.createTextNode(
+          e.event.extendedProps.content,
+      );
+      ToolbarContent.appendChild(ContentText);
+      ToolbarWrapper.appendChild(ToolbarDivider);
+      ToolbarWrapper.appendChild(ToolbarContent);
+    }
     tippy(e.el, {
-      content: e.el.innerText,
+      content: ToolbarWrapper.innerHTML,
+      allowHTML: true,
+      animation: 'scale',
+      theme: 'light',
     });
   };
 
@@ -60,11 +84,10 @@ const Calendar: React.FC = () => {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin]}
         locale='ko'
-        timeZone='ko'
         allDaySlot={false}
         nowIndicator
         aspectRatio={0.8}
-        dayCellContent={({date}) => date.getUTCDate()}
+        dayCellContent={({date}) => date.getDate()}
         views={{
           timeGrid: {
             dayHeaderFormat: {

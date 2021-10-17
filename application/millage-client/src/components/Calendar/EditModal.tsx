@@ -57,15 +57,16 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
         id: selectedSchedule.id,
         title: selectedSchedule.title,
         content: selectedSchedule.content,
-        start: date,
+        start: date.toUTCString(),
+        end: null,
       });
     } else {
       updateSchedule({
         id: selectedSchedule.id,
         title: selectedSchedule.title,
         content: selectedSchedule.content,
-        start: dateTimeRange[0],
-        end: dateTimeRange[1],
+        start: dateTimeRange[0].toUTCString(),
+        end: dateTimeRange[1].toUTCString(),
       });
     }
     handleClose();
@@ -114,33 +115,18 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
   };
 
   const compareDate = (a: Date) => (
-    a.getFullYear() === selectedDate.getFullYear() &&
-    a.getMonth() === selectedDate.getMonth() &&
-    a.getDate() === selectedDate.getDate()
+    a.getUTCFullYear() === selectedDate.getUTCFullYear() &&
+    a.getUTCMonth() === selectedDate.getUTCMonth() &&
+    a.getUTCDate() === selectedDate.getUTCDate()
   );
   const compareDateRange = (start: Date, end: Date) => {
     const startDate = new Date(
-        start.getFullYear(), start.getMonth(), start.getDate(),
+        start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate(),
     );
     const endDate = new Date(
-        end.getFullYear(), end.getMonth(), end.getDate() + 1,
+        end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1,
     );
     return startDate <= selectedDate && selectedDate < endDate;
-  };
-
-  const convertDate = (date : Date) => {
-    try {
-      return new Date(
-          date.getUTCFullYear(),
-          date.getUTCMonth(),
-          date.getUTCDate(),
-          date.getUTCHours(),
-          date.getUTCMinutes(),
-          date.getUTCSeconds(),
-      );
-    } catch (err) {
-      return date;
-    }
   };
 
   return (
@@ -174,10 +160,8 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
             <List>
               {scheduleList.filter(({groupId, start, end}) =>
                 groupId !== 'unit' && end ?
-                compareDateRange(
-                    convertDate(new Date(start)),
-                    convertDate(new Date(end))) :
-                compareDate(convertDate(new Date(start))),
+                compareDateRange(start, end) :
+                compareDate(start),
               ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
@@ -228,7 +212,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                   format='y. MM. dd H:mm'
                   disableClock
                   formatDay={(locale, date) =>
-                    convertDate(date).getDate().toString()}
+                    date.getUTCDate().toString()}
                 />
               </div>
             ) : (
@@ -242,7 +226,7 @@ const EditModal: React.FC<Props> = ({handleClose}) => {
                   format='y. MM. dd H:mm'
                   disableClock
                   formatDay={(locale, date) =>
-                    convertDate(date).getUTCDate().toString()}
+                    date.getUTCDate().toString()}
                 />
               </div>
             )}

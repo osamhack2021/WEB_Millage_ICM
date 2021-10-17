@@ -58,16 +58,16 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
     setActiveStep(2);
   };
   const compareDate = (a: Date) => (
-    a.getFullYear() === selectedDate.getFullYear() &&
-    a.getMonth() === selectedDate.getMonth() &&
-    a.getDate() === selectedDate.getDate()
+    a.getUTCFullYear() === selectedDate.getUTCFullYear() &&
+    a.getUTCMonth() === selectedDate.getUTCMonth() &&
+    a.getUTCDate() === selectedDate.getUTCDate()
   );
   const compareDateRange = (start: Date, end: Date) => {
     const startDate = new Date(
-        start.getFullYear(), start.getMonth(), start.getDate(),
+        start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate(),
     );
     const endDate = new Date(
-        end.getFullYear(), end.getMonth(), end.getDate() + 1,
+        end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1,
     );
     return startDate <= selectedDate && selectedDate < endDate;
   };
@@ -94,7 +94,8 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             <Calendar
               value={selectedDate}
               onChange={handleDate}
-              locale='en-US'
+              locale='ko'
+              calendarType='US'
             />
           </div>
         ) : activeStep === 1 ? (
@@ -102,8 +103,8 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             <List>
               {scheduleList.filter(({groupId, start, end}) =>
                 groupId !== 'unit' && end ?
-                compareDateRange(new Date(start), new Date(end)) :
-                compareDate(new Date(start)),
+                compareDateRange(start, end) :
+                compareDate(start),
               ).map((schedule) => (
                 <ListItem key={schedule.id} disablePadding>
                   <ListItemButton onClick={() => handleItemClick(schedule)}>
@@ -133,7 +134,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             <TextField
               value={
                 moment(selectedSchedule.start).format('YYYY-MM-DD HH:mm') +
-                selectedSchedule.end !== undefined ? '' :
+                selectedSchedule.end === undefined ? '' :
                 ' - ' + moment(selectedSchedule.end).format('YYYY-MM-DD HH:mm')
               }
               label='날짜'
