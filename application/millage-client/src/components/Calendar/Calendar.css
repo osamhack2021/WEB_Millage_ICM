@@ -32,9 +32,19 @@
   text-overflow: ellipsis;
 }
 
+.calendar-form-wrapper {
+  min-height: 375px;
+}
+
 @media (max-width: 641px) {
   .fc-event-time {
     display: none;
+  }
+  .react-calendar {
+    font-size: 0.8em;
+  }
+  .calendar-form-wrapper {
+    min-height: 300px;
   }
 }
 
@@ -71,6 +81,15 @@
   border-top-width: 1px !important;
   border-left-width: 1px !important;
   border-radius: 0.2em;
+}
+
+@media (max-width: 641.5px) {
+  .fc-event-time {
+    display: none;
+  }
+  .react-calendar {
+    font-size: 0.8em;
+  }
 }
 
 @media (min-width:642px)  { 
