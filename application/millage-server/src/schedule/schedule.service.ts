@@ -53,6 +53,12 @@ export class ScheduleService {
       dto: UpdateScheduleDto,
   ): Promise<ScheduleEntity> {
     Object.assign(dto, {userId});
+
+    const nineHours = 9 * 60 * 60 * 1000;
+    dto.start = new Date(new Date(dto.start).getTime() + nineHours);
+    dto.end = dto.end ?
+      new Date(new Date(dto.end).getTime() + nineHours) : null;
+
     const editedSchedule = this.scheduleRepository.create(dto);
     const updateResult = await this.scheduleRepository.update(id, editedSchedule);
     return updateResult.generatedMaps[0] as ScheduleEntity;

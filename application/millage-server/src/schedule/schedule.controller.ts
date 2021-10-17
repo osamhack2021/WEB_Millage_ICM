@@ -70,7 +70,6 @@ export class ScheduleController {
     @Body() dto: CreateScheduleDto,
   ): Promise<ScheduleRO> {
     try {
-      console.log(dto);
       const userData: UserData = req.session.user;
       return {
         result: Result.SUCCESS,
@@ -92,7 +91,6 @@ export class ScheduleController {
   ): Promise<ScheduleRO> {
     try {
       const userId = req.session.user.id;
-      console.log(dto);
       return {
         result: Result.SUCCESS,
         schedule: await this.scheduleService.update(id, userId, dto),
