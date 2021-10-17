@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment/locale/ko';
 
 /**
  * dateString을 받아서, 일정한 포멧에 맞게 반환하는 함수\

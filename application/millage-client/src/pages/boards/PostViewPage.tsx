@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useBoard} from '@hooks/board';
 import {useParams} from 'react-router';
-import {BoardTitle} from '@components/boards';
+import {BoardTitle} from '@components/boards/boardCommons';
 import {default as CommentBox} from '@components/boards/PostView/Comment';
 import {Comment} from '@modules/board/types/';
 import {PollListBox, RecruitBox, PostTopBox} from '@components/boards/PostView';
