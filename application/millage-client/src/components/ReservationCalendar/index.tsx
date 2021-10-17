@@ -4,11 +4,22 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import './ReservationCalendar.css';
 import {useReservation} from '@hooks/reservation';
 import Dialog from './Dialog';
+import {useDispatch} from 'react-redux';
+import {
+  getPlaceByIdAsync,
+  getPlaceListAsync,
+} from '@modules/Reservation/actions';
 
-const ReservationCalendar: React.FC = () => {
+
+const ReservationCalendar: React.FC<any> = ({match}) => {
+  const dispatch = useDispatch();
   const [place] = useReservation();
   const [state, setState] = React.useState<'add' | 'edit' | 'delete'>('add');
   const [visible, setVisible] = React.useState(false);
+  React.useEffect(() => {
+    dispatch(getPlaceListAsync.request());
+    dispatch(getPlaceByIdAsync.request({id: match.params.placeId}));
+  }, [match.params.placeId]);
 
   const handleOpen = () => setVisible(true);
   const handleClose = () => setVisible(false);
@@ -40,7 +51,7 @@ const ReservationCalendar: React.FC = () => {
       <FullCalendar
         plugins={[timeGridPlugin]}
         locale='UTC'
-        timeZone='UTC'
+        timeZone='ko'
         nowIndicator
         dayCellContent={({date}) => date.getDate()}
         allDaySlot={false}

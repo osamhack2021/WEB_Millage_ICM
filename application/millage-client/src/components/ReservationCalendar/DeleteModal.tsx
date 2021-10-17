@@ -24,11 +24,21 @@ interface Props {
 }
 
 const steps = ['삭제하고 싶은 날짜 선택', '삭제하고 싶은 예약 선택'];
-const compareDate = (a: Date, b: Date) => (
-  a.getFullYear() === b.getFullYear() &&
-  a.getMonth() === b.getMonth() &&
-  a.getDate() === b.getDate()
-);
+const compareDate = (a: Date, b: Date) => {
+  try {
+    return (
+      new Date(a).getFullYear() === new Date(b).getFullYear() &&
+      new Date(a).getMonth() === new Date(b).getMonth() &&
+      new Date(a).getDate() === new Date(b).getDate()
+    );
+  } catch (err) {
+    return (
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate()
+    );
+  }
+};
 const compareDateRange = (start: Date, end: Date, date: Date) => {
   const startDate = new Date(
       start.getFullYear(), start.getMonth(), start.getDate(),
@@ -106,7 +116,8 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
                 if (!end) {
                   return compareDate(start, selectedDate);
                 } else {
-                  return compareDateRange(start, end, selectedDate);
+                  return compareDateRange(new Date(start),
+                      new Date(end), selectedDate);
                 }
               }).map((reservation) => (
                 <ListItem key={reservation.id} disablePadding>
