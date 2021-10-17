@@ -2,6 +2,7 @@ export {default as CreateBoardIcon} from './sidebox/boardicon.svg';
 export {default as PostIcon} from './sidebox/posticon.svg';
 export {default as RecruitIcon} from './sidebox/recruiticon.svg';
 export {default as StarIcon} from './sidebox/staricon.svg';
+export {default as FilledStarIcon} from './sidebox/filledstar.svg';
 export {default as ScheduleIcon} from './sidebox/scheduleicon.svg';
 export {default as ReportIcon} from './sidebox/report.svg';
 export {default as CommentIcon} from './sidebox/comment.svg';
