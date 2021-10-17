@@ -114,7 +114,7 @@ function PostViewPage() {
 
       {!loading && data ?
 
-      <div className='ring-1 ring-gray-300 p-6 flex flex-col'>
+      <div className='ring-1 ring-gray-300 p-3 sm:p-6 flex flex-col'>
 
         {/* 상단부 (작성자, 작성시각, 하트, 댓글수, 타입 / 쪽지, 하트, 삭제) */}
         <PostTopBox {...data} />

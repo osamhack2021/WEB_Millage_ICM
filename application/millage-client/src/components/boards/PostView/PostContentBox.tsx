@@ -7,12 +7,12 @@ const PostContentBox: React.FC<Props> = ({title, content}) => {
   return (
     <div>
       <h1
-        className='text-2xl mb-2 break-all'
+        className='text-lg sm:text-2xl mb-2 break-all'
       >
         {title}
       </h1>
       <p
-        className='mb-4 break-all'
+        className='text-sm sm:text-base mb-4 break-all'
       >
         {content?.split('\n').map((line) => <p>{line}</p>)}
       </p>

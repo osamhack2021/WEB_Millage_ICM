@@ -22,17 +22,22 @@ const LeftArea: React.FC<Props> = ({
     <div className='flex items-center'>
 
       {/* 프로필 이미지 */}
-      <img className="smallericon mr-3" src={UserIcon} />
+      <img
+        className="
+          w-8 h-8 sm:w-10 sm:h-10 mr-3
+        "
+        src={UserIcon}
+      />
 
       {/* 상세 정보 (작성자, 작성시각, 하트, 댓글, 게시글 타입) */}
       <div className='flex flex-col'>
         {/* 작성자 */}
-        <span className='text-base font-bold' >
+        <span className='text-sm sm:text-base font-bold' >
           {writer.nickname}
         </span>
 
         {/* 작성자 하단 정보 (작성자, 작성시각, 하트, 댓글, 게시글 타입) */}
-        <div className='flex items-center text-sm text-gray-600' >
+        <div className='flex items-center text-xs sm:text-sm text-gray-600' >
           {/* 작성 시각 */}
           <CreatedAt
             className='mr-2'

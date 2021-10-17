@@ -9,11 +9,11 @@ const BoardTitle: React.FC<Props> = ({title}) => {
   return (
     <div
       className='
-        mb-4 px-6 py-4 ring-1 ring-gray-300
+        mb-4 p-3 sm:px-6 sm:py-4 ring-1 ring-gray-300
         flex justify-between items-center
       '
     >
-      <h1 className='text-3xl'>
+      <h1 className='text-xl sm:text-3xl break-all'>
         {title}
       </h1>
 
