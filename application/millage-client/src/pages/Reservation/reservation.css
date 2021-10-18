@@ -10,6 +10,8 @@
     display:flex;
     flex-direction:row;
     justify-content: center;
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 #reservation-container .reservation-router a{
