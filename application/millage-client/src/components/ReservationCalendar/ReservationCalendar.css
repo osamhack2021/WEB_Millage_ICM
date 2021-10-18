@@ -14,17 +14,17 @@
   }
 }
 
-@media (min-width:640px)  { 
-  .reservation-calendar-wrapper{
-    padding: 1em;
-    width: 1200px;
-  }
-}
-
 .reservation-calendar-wrapper {
   height: 100%;
   width: 100%;
   margin: auto;
+}
+
+@media (min-width:641px)  { 
+  .reservation-calendar-wrapper{
+    padding: 1em;
+    width: 1200px;
+  }
 }
 
 .toolbar-header {

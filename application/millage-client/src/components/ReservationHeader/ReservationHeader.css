@@ -1,0 +1,15 @@
+.reservation-router {
+  max-width: 1200px;
+  padding: 1em;
+  margin: auto;
+}
+
+.reservation-router-anchor {
+  margin: auto;
+}
+
+@media (min-width:641px)  { 
+  .reservation-router-anchor {
+    width: fit-content;
+  }
+}
