@@ -99,7 +99,7 @@ export class UserEntity {
   @Column({nullable: true})
   ownedUnitId: number;
 
-  @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember)
+  @ManyToMany(() => RecruitEntity, (recruit) => recruit.currentMember, {onDelete: 'CASCADE'})
   @JoinTable({name: 'recruitingUser'})
   appliedRecruits: RecruitEntity[];
 
@@ -123,7 +123,7 @@ export class UserEntity {
   })
   reservations: ReservationEntity[];
 
-  @ManyToMany(() => BoardEntity, (board: BoardEntity) => board.staringUsers)
+  @ManyToMany(() => BoardEntity, (board: BoardEntity) => board.staringUsers, {onDelete: 'CASCADE'})
   @JoinTable({name: 'starredBoards'})
   starredBoards: BoardEntity[];
 }
