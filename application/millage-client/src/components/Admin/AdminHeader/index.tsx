@@ -3,9 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
-import {
-  CalendarIcon,
-} from '@images';
+import TodayIcon from '@mui/icons-material/Today';
 import Menu from '@mui/material/Menu';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
@@ -128,7 +126,7 @@ function Header() {
               }}
             />
             <BottomNavigationAction
-              label="캘린더" icon={<CalendarIcon />}
+              label="캘린더" icon={<TodayIcon />}
               className={pageState == 'schedule' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('schedule');
