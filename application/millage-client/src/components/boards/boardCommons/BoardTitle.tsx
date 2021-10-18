@@ -1,11 +1,13 @@
 import React from 'react';
-import {CreatePostButton} from '.';
+import {CreatePostButton, BackToMenuButton} from '.';
 
 type Props = {
   title: string;
+  id?: number;
+  page?: string;
 }
 
-const BoardTitle: React.FC<Props> = ({title}) => {
+const BoardTitle: React.FC<Props> = ({title, id, page}) => {
   return (
     <div
       className='
@@ -18,7 +20,13 @@ const BoardTitle: React.FC<Props> = ({title}) => {
       </h1>
 
       {/* 글 생성 버튼 */}
-      <CreatePostButton type='boardView' />
+      <div className='flex'>
+        <CreatePostButton type='boardView' />
+        { page == 'postView' ?
+        <BackToMenuButton type='boardView' id={id}/>:
+        ''
+        }
+      </div>
     </div>
   );
 };
