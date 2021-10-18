@@ -23,7 +23,7 @@ const BoardItem: React.FC<Props> = ({id, title, posts}) => {
           {title}
         </Link>
 
-        <CreatePostButton type='main' />
+        <CreatePostButton type='main' id={id}/>
       </div>
 
       { posts && JSON.stringify(posts) !== JSON.stringify([]) ?
