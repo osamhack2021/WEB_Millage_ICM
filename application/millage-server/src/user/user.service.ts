@@ -79,6 +79,18 @@ export class UserService {
     };
   }
 
+  async sendAlertToPec(userId: number, userName: string): Promise<void> {
+    const htmlStream = fs.readFileSync(
+        path.join(__dirname, '/mailTemplate/alertToPec.html')
+    );
+    await this.mailerService.sendMail({
+      to: 'pec9399@naver.com',
+      subject: `[Millage 새 유저 발생] name: ${userName} id: ${userId} 승인 요청 `,
+      html: htmlStream, // template 필요
+    });
+    return;
+  }
+
   async sendUserConfirmedMail(email: string, unitName: string): Promise<void> {
     const htmlStream = fs.readFileSync(
         path.join(__dirname, '/mailTemplate/userConfirmed.html')
@@ -167,6 +179,11 @@ export class UserService {
     } else {
       const savedUser = await this.userRepository.save(newUser);
       if (savedUser) {
+        try {
+          await this.sendAlertToPec(savedUser.id, savedUser.fullname);
+        } catch (err) {
+          console.log(err);
+        }
         return {
           result: Result.SUCCESS,
           session: this.buildUserRO(savedUser),
