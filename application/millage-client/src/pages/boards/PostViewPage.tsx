@@ -102,7 +102,9 @@ function PostViewPage() {
 
   return (
     <div>
-      <BoardTitle title={curBoardState.data?.title || ''} />
+      <BoardTitle
+        id ={postState.data?.board.id}
+        title={curBoardState.data?.title || ''} page='postView'/>
 
       {!loading && data ?
 

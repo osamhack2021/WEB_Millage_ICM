@@ -53,7 +53,7 @@ function BoardViewPage() {
       className=''
     >
       {/* Title */}
-      <BoardTitle title={data?.title || ''} />
+      <BoardTitle id={+boardId} title={data?.title || ''} />
 
       {/* SearchBox */}
       <SearchBox />
