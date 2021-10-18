@@ -56,6 +56,7 @@ const ReservationCalendar: React.FC<any> = ({match}) => {
         dayCellContent={({date}) => date.getDate()}
         allDaySlot={false}
         weekNumbers
+        nextDayThreshold='24:00:00'
         weekNumberContent={(week) => `${week.num}주`}
         views={{
           timeGrid: {

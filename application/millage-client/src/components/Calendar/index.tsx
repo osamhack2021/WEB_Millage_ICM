@@ -117,7 +117,7 @@ const Calendar: React.FC = () => {
               color: schedule.groupId === 'person' ? '#FFA000' : '#388E3C',
             }))
         }
-
+        nextDayThreshold='24:00:00'
         fixedWeekCount={false}
         eventMouseEnter={handleMouseEnter}
         customButtons={{
@@ -127,7 +127,7 @@ const Calendar: React.FC = () => {
           toggleEvents,
         }}
         eventTimeFormat={{
-          hour: 'numeric',
+          hour: '2-digit',
           minute: '2-digit',
           meridiem: false,
           hour12: false,
