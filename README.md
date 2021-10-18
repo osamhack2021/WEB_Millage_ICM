@@ -42,17 +42,26 @@
      - Redux, Redux-saga,
  -  Material UI
 
-## 설치 안내 (Installation Process)
+## 프로젝트 사용법 (Getting Started) / 개발 시작하기
 
 개발을 시작하기 전에 [CONTRIBUTING.md](CONTRIBUTING.md) 를 꼭 참고해주세요.
 
 1. Millage Project 클론 - ```git clone https://github.com/osamhack2021/WEB_Millage_ICM.git```  
 2. application 디렉토리로 이동후 ```yarn install```
-3. ```yarn client-start```로 React Application 실행, ```yarn server-start```로 Nodejs 서버 실행
+3. ```yarn client-start```로 React Application 실행
+4. millage-server 디렉토리에 ormconfig.json 추가, db 정보 입력.
+5. ```yarn server-start```로 Nodejs 서버 실행
+6. Codespace 에서 작업 시 ```npx localtunnel --port 4000 --subdomain millage```로 proxy 서버 설정,<br>
+  [Constants](https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/application/millage-client/src/constants/APIs.ts)의 서버를 해당 도메인으로 변경  
 
-## 프로젝트 사용법 (Getting Started)
- - To be added
- - 
+## 서비스 이용 방법
+<b>1. 데스크탑 / WEB</b><br>
+https://millage.ml/ 웹사이트 접속 후 서비스 이용
+
+<b>2. 스마트폰 / APP</b><br>
+안드로이드/IOS 기반 스마트폰에서 웹사이트 접속 후 [홈 화면에 사이트 추가 설정] 후 어플리케이션으로 이용<br>
+또는 브라우저 어플리케이션에서 https://millage.ml/ 웹사이트 접속
+ 
 ## 서비스 플로우 
 <img src="docs/Flow Diagram.drawio.svg">
 
