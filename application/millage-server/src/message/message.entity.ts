@@ -5,7 +5,7 @@ import {
   Column,
   ManyToOne,
   JoinTable,
-  JoinColumn} from 'typeorm';
+} from 'typeorm';
 import {UserEntity} from '../user/user.entity';
 
 @Entity('message')
@@ -32,22 +32,20 @@ export class MessageEntity {
     @CreateDateColumn()
     createdAt: string;
 
-    @ManyToOne((type) => UserEntity)
-    @JoinColumn({name: 'senderId', referencedColumnName: 'id'})
+    @Column()
     senderId: number;
 
-    @ManyToOne((type) => UserEntity)
+    @ManyToOne((type) => UserEntity, {onDelete: 'CASCADE'})
     @JoinTable({
       name: 'user',
       joinColumn: {name: 'senderId', referencedColumnName: 'id'},
     })
     sender: UserEntity;
 
-    @ManyToOne((type) => UserEntity)
-    @JoinColumn({name: 'receiverId', referencedColumnName: 'id'})
+    @Column()
     receiverId: number;
 
-    @ManyToOne((type) => UserEntity)
+    @ManyToOne((type) => UserEntity, {onDelete: 'CASCADE'})
     @JoinTable({
       name: 'user',
       joinColumn: {name: 'receiverId', referencedColumnName: 'id'},
