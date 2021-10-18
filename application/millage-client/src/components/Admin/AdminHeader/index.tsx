@@ -3,6 +3,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import IconButton from '@mui/material/IconButton';
+import {
+  CalendarIcon,
+} from '@images';
 import Menu from '@mui/material/Menu';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
@@ -69,6 +72,10 @@ function Header() {
             to='/' onClick={()=>setPageState('units')}>
               부대관리
           </RouterLink>
+          <RouterLink className={pageState == 'schedule' ? 'enabled' : ''}
+            to='/' onClick={()=>setPageState('schedule')}>
+              캘린더
+          </RouterLink>
         </div>
         <div className="buttons">
           <IconButton onClick={handleClick}>
@@ -118,6 +125,13 @@ function Header() {
               className={pageState == 'units' ? 'enabled' : ''}
               onClick={()=> {
                 setPageState('units');
+              }}
+            />
+            <BottomNavigationAction
+              label="캘린더" icon={<CalendarIcon />}
+              className={pageState == 'schedule' ? 'enabled' : ''}
+              onClick={()=> {
+                setPageState('schedule');
               }}
             />
           </BottomNavigation>

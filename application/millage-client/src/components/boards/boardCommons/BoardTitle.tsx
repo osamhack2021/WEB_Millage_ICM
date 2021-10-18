@@ -15,7 +15,7 @@ const BoardTitle: React.FC<Props> = ({title, id, page}) => {
         flex justify-between items-center
       '
     >
-      <h1 className='text-xl sm:text-3xl break-all'>
+      <h1 className='text-xl sm:text-3xl break-all smallerFont2'>
         {title}
       </h1>
 
