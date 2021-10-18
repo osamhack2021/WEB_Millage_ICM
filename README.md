@@ -49,11 +49,36 @@
 
 
 ## 팀 정보 (Team Information)
-- EunChan Park (pec9399@naver.com), Github Id: pec9399
-- Soogeun Park (bwmelon97@naver.com), Github Id: bwmelon97
-- Seongheum Choi, Github Id: nailerHeum
-- Ingyu Hwang, Github Id: hig4342
-- Donghyun Kim, Github Id: thn02046
+<br>
+<table align="center" width="788">
+<thead>
+<tr>
+<th width="100" align="center">사진</th>
+<th width="100" align="center">성명</th>
+<th width="150" align="left">담당</th>
+<th width="100" align="center">깃허브</th>
+<th width="175" align="center">이메일</th>
+</tr> 
+</thead>
+<tbody>
+<tr>
+<td width="100" align="center"></td>
+<td width="100" align="center">박은찬</td>
+<td width="150">역할<br>풀스택 개발<br>서버 환경 구축<br></td>
+<td width="100" align="center">
+	<a href="https://github.com/pec9399">
+		<img src="http://img.shields.io/badge/pec9399-655ced?style=social&logo=github"/>
+	</a>
+</td>
+<td width="175" align="center">
+	<a href="mailto:pec9399@naver.com">pec9399@naver.com</a>
+</td>
+</tr>
+
+</tr>
+</tbody>
+</table>
+<br>
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License)
  * This project is licensed under the terms of the [MIT license](https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/LICENSE).
