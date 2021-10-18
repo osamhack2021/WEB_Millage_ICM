@@ -9,7 +9,10 @@ import {Link as RouterLink} from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import AddBoardStar from './AddBoardStar';
 import AddBoard from '@components/Admin/AdminBoards/AddBoard';
-
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/animations/scale.css';
 import './sidebox.css';
 import {
   CreateBoardIcon,
@@ -52,6 +55,17 @@ function SideBox() {
 
   const openCreateBoard = () => {
     setOpenDialog2(true);
+  };
+
+  const handleMouseEnter = (e:
+      React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.currentTarget.innerText.length > 9) {
+      tippy(e.target as Element, {
+        content: e.currentTarget.innerText,
+        animation: 'scale',
+        theme: 'light',
+      });
+    }
   };
   const renderRecruitAndPollList = () => {
     if (sideboxState.data && sideboxState.data.posts) {
@@ -111,6 +125,7 @@ function SideBox() {
             }}
             className="truncate"
             data-title
+            onMouseEnter={handleMouseEnter}
             >
               {schedule.title}
             </div>
