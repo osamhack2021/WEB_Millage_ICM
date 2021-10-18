@@ -9,6 +9,11 @@ const ReservationHeader: React.FC = () => {
     _c,
     placeList,
   ] = useReservation();
+  const [route, setRoute] = React.useState(0);
+
+  const handleRoute = (id: number) => {
+    setRoute(id);
+  };
 
   return (
     <div className='reservation-router'>
@@ -17,6 +22,8 @@ const ReservationHeader: React.FC = () => {
           return (
             <PlaceItem
               place={place}
+              onClick={() => handleRoute(place.id)}
+              isSelected={route === place.id}
             />
           );
         })

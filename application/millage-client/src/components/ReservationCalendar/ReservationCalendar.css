@@ -1,15 +1,44 @@
 
 @media only screen and (max-width: 640px) {
-    .fc-toolbar-title{
-        font-size:15px !important;
-    }
+.fc-toolbar-title{
+    font-size:15px !important;
+  }
 
-    .fc-toggleEvents-button {
-        margin-top:22px !important;
-    }
+  .fc-toggleEvents-button {
+    margin-top:22px !important;
+  }
 
-    #reservation-container .fc-addEvents-button, 
-    #reservation-container .fc-deleteEvents-button{
-        margin-top:22px !important;
-    }
+  #reservation-container .fc-addEvents-button, 
+  #reservation-container .fc-deleteEvents-button{
+    margin-top:22px !important;
+  }
+}
+
+@media (min-width:640px)  { 
+  .reservation-calendar-wrapper{
+    padding: 1em;
+    width: 1200px;
+  }
+}
+
+.reservation-calendar-wrapper {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+}
+
+.toolbar-header {
+  font-weight: bold;
+}
+
+.toolbar-divider {
+  width: 100%;
+  height: 1px;
+  margin: 0.5em 0.1em;
+  background-color: #dcdfe6;
+  position: relative;
+}
+
+.toolbar-content {
+  text-align: center;
 }

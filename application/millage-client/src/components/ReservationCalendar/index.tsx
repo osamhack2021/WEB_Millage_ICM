@@ -1,5 +1,7 @@
 import * as React from 'react';
-import FullCalendar, {CustomButtonInput} from '@fullcalendar/react';
+import FullCalendar, {
+  CustomButtonInput, EventHoveringArg,
+} from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import './ReservationCalendar.css';
 import {useReservation} from '@hooks/reservation';
@@ -9,6 +11,10 @@ import {
   getPlaceByIdAsync,
   getPlaceListAsync,
 } from '@modules/Reservation/actions';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
+import 'tippy.js/animations/scale.css';
 
 
 const ReservationCalendar: React.FC<any> = ({match}) => {
@@ -38,6 +44,33 @@ const ReservationCalendar: React.FC<any> = ({match}) => {
       setState('delete');
       handleOpen();
     },
+  };
+
+  const handleMouseEnter = (e: EventHoveringArg) => {
+    const ToolbarWrapper = document.createElement('div');
+    const ToolbarHeader = document.createElement('p');
+    const HeaderText = document.createTextNode(e.event.title);
+    ToolbarHeader.classList.add('toolbar-header');
+    ToolbarHeader.appendChild(HeaderText);
+    ToolbarWrapper.appendChild(ToolbarHeader);
+    if (e.event.extendedProps.content) {
+      const ToolbarDivider = document.createElement('div');
+      ToolbarDivider.classList.add('toolbar-divider');
+      const ToolbarContent = document.createElement('p');
+      ToolbarContent.classList.add('toolbar-content');
+      const ContentText = document.createTextNode(
+          e.event.extendedProps.content,
+      );
+      ToolbarContent.appendChild(ContentText);
+      ToolbarWrapper.appendChild(ToolbarDivider);
+      ToolbarWrapper.appendChild(ToolbarContent);
+    }
+    tippy(e.el, {
+      content: ToolbarWrapper.innerHTML,
+      allowHTML: true,
+      animation: 'scale',
+      theme: 'light',
+    });
   };
 
   return (
@@ -77,6 +110,7 @@ const ReservationCalendar: React.FC<any> = ({match}) => {
           addEvents,
           deleteEvents,
         }}
+        eventMouseEnter={handleMouseEnter}
         events={place.reservations}
       />
       <Dialog
