@@ -43,7 +43,11 @@
 
 ## 프로젝트 사용법 (Getting Started)
  - To be added
- 
+ - 
+## 서비스 플로우 
+<img src="docs/Flow Diagram.drawio.svg">
+
+
 ## 팀 정보 (Team Information)
 - EunChan Park (pec9399@naver.com), Github Id: pec9399
 - Soogeun Park (bwmelon97@naver.com), Github Id: bwmelon97
