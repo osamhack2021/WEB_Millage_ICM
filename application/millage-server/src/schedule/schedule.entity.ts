@@ -24,9 +24,9 @@ export class ScheduleEntity {
   @Column({default: GroupType.PERSON})
   groupType: GroupType;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, {onDelete: 'CASCADE'})
   userId: number;
 
-  @ManyToOne(() => UnitEntity)
+  @ManyToOne(() => UnitEntity, {onDelete: 'CASCADE'})
   unitId: number;
 }
