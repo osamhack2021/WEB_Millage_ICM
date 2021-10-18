@@ -11,6 +11,7 @@ import {BoardEntity} from '../board/board.entity';
 import {CommentEntity} from './comment/comment.entity';
 import {UserData} from '../user/user.interface';
 import {Role} from '../user_role/user_role.interface';
+import {AuthType} from '../board/board.interface';
 
 @Injectable()
 export class PostService {
@@ -51,7 +52,9 @@ export class PostService {
   async create(dto: CreatePostDto, user: UserData): Promise<PostEntity> {
     const newPost: PostEntity = this.postRepository.create(dto);
     const targetBoard: BoardEntity = await this.boardRepository.findOne(dto.boardId);
-
+    if (targetBoard.auth === AuthType.ADMIN && user.role.name === Role.NORMAL_USER) {
+      throw new Error('Not authorized user');
+    }
     if (user.role.name !== Role.SUPER_ADMIN && user.unit.id !== targetBoard.unitId) {
       throw new Error('Different unit id');
     }
