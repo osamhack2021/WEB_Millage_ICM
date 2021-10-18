@@ -7,6 +7,8 @@ import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 
 import {ScheduleEntity} from './schedule.entity';
 import {GroupType} from './schedule.interface';
+import {UserEntity} from '../user/user.entity';
+import {UserRoleEntity} from '../user_role/user_role.entity';
 
 const RECENT_SCHEDULE_COUNT = 5;
 
@@ -15,11 +17,23 @@ export class ScheduleService {
   constructor(
     @InjectRepository(ScheduleEntity)
     private readonly scheduleRepository: Repository<ScheduleEntity>,
+
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+
+    @InjectRepository(UserRoleEntity)
+    private readonly userRoleRepository: Repository<UserRoleEntity>,
   ) {}
 
-  async getUserSchedule(userId: number, unitId: number): Promise<ScheduleEntity[]> {
+  async getUserSchedule(userData: UserData): Promise<ScheduleEntity[]> {
+    const superAdmin = await this.userRoleRepository.findOne({where: {name: Role.SUPER_ADMIN}});
+    const superAdminUser = await this.userRepository.findOne({where: {roleId: superAdmin.id}});
     return this.scheduleRepository.find({
-      where: [{userId: userId}, {unitId: unitId, groupType: GroupType.UNIT}],
+      where: [
+        {userId: userData.id},
+        {unitId: userData.unit.id, groupType: GroupType.UNIT},
+        {userId: superAdminUser.id, groupType: GroupType.UNIT}, // 최고관리자가 관리 가능
+      ],
     });
   }
 

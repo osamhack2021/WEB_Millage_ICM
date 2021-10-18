@@ -6,7 +6,7 @@ import {Result, ResultObject} from '../common/common.interface';
 import {SchedulesRO, ScheduleRO} from './schedule.interface';
 import {ScheduleService} from './schedule.service';
 import {CreateScheduleDto, UpdateScheduleDto} from './dto';
-import {UserData} from 'src/user/user.interface';
+import {UserData} from '../user/user.interface';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
@@ -32,12 +32,10 @@ export class ScheduleController {
   @Get('/personal') // validation 필요
   async getUserSchedule(@Req() req: Request): Promise<SchedulesRO> {
     try {
+      const userData: UserData = req.session.user;
       return {
         result: Result.SUCCESS,
-        schedules: await this.scheduleService.getUserSchedule(
-            req.session.user.id,
-            req.session.user.unit.id,
-        ),
+        schedules: await this.scheduleService.getUserSchedule(userData),
       };
     } catch (err) {
       return {
