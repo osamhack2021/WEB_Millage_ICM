@@ -23,7 +23,7 @@ const CreatePostButton: React.FC<Props> = ({type, id}) => {
 
     <OutlinedButton
       onClick={onClick}
-      className='px-4 py-2'
+      className='px-4 py-2 smallerFont'
     >
       <div
         className='h-4 w-4 bg-cover mr-2'

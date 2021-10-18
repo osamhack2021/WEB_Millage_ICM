@@ -1,6 +1,6 @@
 #AdminContainer{
-    width: 100vw;
-    height: 610px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

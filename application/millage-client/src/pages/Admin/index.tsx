@@ -3,6 +3,7 @@ import AdminUsers from '@components/Admin/AdminUsers';
 import AdminUnits from '@components/Admin/AdminUnits';
 import './admin.css';
 import {useDispatch, useSelector} from 'react-redux';
+import Schedule from '@pages/Schedule';
 
 export default function Admin() {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ export default function Admin() {
     <div id="AdminContainer">
       {adminState.page == 'users' ? <AdminUsers /> : ''}
       {adminState.page == 'units' ? <AdminUnits /> : ''}
+      {adminState.page == 'schedule' ? <Schedule /> : ''}
     </div>
   );
 }
