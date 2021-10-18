@@ -22,6 +22,7 @@ function CreatePostPage() {
     createPostState,
     getBoardList,
     createPost,
+    toggleRecruit,
     initCreatePostState,
   } = useBoard();
 
@@ -83,8 +84,19 @@ function CreatePostPage() {
     createPost(createPostReq);
   };
 
+
+  /**
+   * 게시글 생성이 완료되었을 때,
+   * 1) 모집 게시글인 경우, 자동으로 참가
+   * 2) 해당 게시글 페이지로 이동
+   * 3) CreatePostState를 초기화
+   */
   const history = useHistory();
   if (createPostState.data) {
+    const {id, postType} = createPostState.data;
+    if (postType === RECRUIT) {
+      toggleRecruit({postId: id});
+    }
     history.push(`${POST_PATH}/${createPostState.data.id}`);
   }
   useEffect(() => {
@@ -92,6 +104,7 @@ function CreatePostPage() {
       initCreatePostState();
     };
   }, []);
+
 
   return (
     <div
