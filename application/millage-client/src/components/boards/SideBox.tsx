@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import AddBoardStar from './AddBoardStar';
+import AddBoard from '@components/Admin/AdminBoards/AddBoard';
+
 import './sidebox.css';
 import {
   CreateBoardIcon,
@@ -42,6 +44,15 @@ function SideBox() {
     setOpenDialog(true);
   };
 
+
+  const [openDialog2, setOpenDialog2] = useState<boolean>(false);
+  const closeDialog2 = () => {
+    setOpenDialog2(false);
+  };
+
+  const openCreateBoard = () => {
+    setOpenDialog2(true);
+  };
   const renderRecruitAndPollList = () => {
     if (sideboxState.data && sideboxState.data.posts) {
       return sideboxState.data.posts.map((post: PostPartial) => {
@@ -113,10 +124,11 @@ function SideBox() {
     return (
       <div className="box link">
         <div className="head">
-          <RouterLink to={CREATE_BOARD_PATH} className="head">
+          <button className="flex"
+            onClick={()=>openCreateBoard()}>
             <img src={CreateBoardIcon}/>
             <span className = "title">게시판 생성하기</span>
-          </RouterLink>
+          </button>
         </div>
       </div>
     );
@@ -199,6 +211,10 @@ function SideBox() {
       <AddBoardStar
         open={openDialog}
         closeHandler={closeDialog}
+      />
+      <AddBoard
+        open={openDialog2}
+        closeHandler={closeDialog2}
       />
     </div>
   );
