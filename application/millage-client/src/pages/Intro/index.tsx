@@ -16,16 +16,11 @@ function Intro() {
           style={{backgroundImage:
             `url(${LadingPageImage})`}}
         >
-          <img src='img/introtext.png'
+          <img src='img/introtext.svg'
           />
         </div>
         <div className="wrap2">
-          <img src='img/introduce.png'/>
-          <div className="flex justify-center icons">
-            <img src={IntroIcon1}/>
-            <img src={IntroIcon2}/>
-            <img src={IntroIcon3}/>
-          </div>
+          <img src='img/introduce.svg'/>
         </div>
       </section>
       <section className="rightbar">
