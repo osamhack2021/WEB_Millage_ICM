@@ -48,7 +48,7 @@ function CreatePostPage() {
   }]);
 
   const {register, handleSubmit} = useForm<CreatePostReq>({
-    defaultValues: {totalMember: 0},
+    defaultValues: {totalMember: 1},
   });
   const onSubmit: SubmitHandler<CreatePostReq> = (data) => {
     if (createPostState.loading) {
@@ -78,6 +78,10 @@ function CreatePostPage() {
           .filter((p) => p.content !== '')
           .map((p) => p.content);
     } else if (postType === RECRUIT) {
+      if (!data.totalMember || data.totalMember < 1) {
+        window.alert('모집 인원은 1명 이상이어야 합니다.');
+        return;
+      }
       createPostReq.totalMember = data.totalMember;
     }
 

@@ -18,7 +18,7 @@ const RecruitInputBox: React.FC<Props> = ({register}) => {
           focus:ring-green-light transition duration-500
         '
         type='number'
-        min={0}
+        min={1}
       />
     </InputContainer>
   );
