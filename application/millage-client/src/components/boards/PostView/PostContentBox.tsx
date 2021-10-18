@@ -11,11 +11,11 @@ const PostContentBox: React.FC<Props> = ({title, content}) => {
       >
         {title}
       </h1>
-      <p
+      <div
         className='text-sm sm:text-base mb-4 break-all'
       >
-        {content?.split('\n').map((line) => <p>{line}</p>)}
-      </p>
+        {content?.split('\n').map((line, i) => <p key={i}>{line}</p>)}
+      </div>
     </div>
   );
 };
