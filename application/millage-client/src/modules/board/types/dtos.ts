@@ -1,6 +1,13 @@
 import {UserState} from '@modules/User/types';
 import {CommonResponse} from '@utils/commonTypes';
-import {Board, Post, PostPartial, Schedule, Comment} from './entities';
+import {
+  Board,
+  Post,
+  PostPartial,
+  Schedule,
+  Comment,
+  Poll,
+} from './entities';
 
 export type GetBoardListInput = {
     withPosts?: boolean;
@@ -70,12 +77,9 @@ export type ToggleVoteReq = {
     postId: number;
     pollId: number;
 }
-// export type ToggleVoteReq = Pick<UserState, 'session'> & {
-//     postId: number;
-//     pollId: number;
-// }
 
-export type ToggleVoteRes = CommonResponse & Pick<Post, 'pollItems'>;
+export type ToggleVoteRes = CommonResponse
+    & Pick<Post, 'pollItems' | 'isVoter'>
 
 export type ToggleRecruitReq = {
     postId: number,
