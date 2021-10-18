@@ -106,13 +106,13 @@ export class UserEntity {
   @OneToMany(() => PostEntity, (post) => post.writer)
   posts: PostEntity[];
 
-  @ManyToMany(() => PostEntity)
+  @ManyToMany(() => PostEntity, {onDelete: 'CASCADE'})
   likedPosts: PostEntity[];
 
-  @ManyToMany(() => CommentEntity)
+  @ManyToMany(() => CommentEntity, {onDelete: 'CASCADE'})
   likedComments: CommentEntity[];
 
-  @ManyToMany(() => PollEntity, (pollItem) => pollItem.voters)
+  @ManyToMany(() => PollEntity, (pollItem) => pollItem.voters, {onDelete: 'CASCADE'})
   votes: PollEntity[];
 
   @OneToMany(() => ScheduleEntity, (schedule) => schedule.userId)
