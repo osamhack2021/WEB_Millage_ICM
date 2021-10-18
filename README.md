@@ -2,6 +2,15 @@
 
 모두를 위한 독립형 국방 커뮤니티
 
+
+<p align="center">
+	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/search?l=TSX&type=code"><img alt="GitHub language count" src="https://img.shields.io/github/languages/count/osamhack2021/WEB_Millage_ICM"></a>
+	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/osamhack2021/WEB_Millage_ICM?color=success"></a>
+	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/osamhack2021/WEB_Millage_ICM"></a>
+	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/osamhack2021/WEB_Millage_ICM"></a>
+	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/osamhack2021/WEB_Millage_ICM"></a>
+</p>
+
 ## 프로젝트 소개
 큰 규모의 부대같은 경우 인트라넷을 통한 커뮤니티가 어느정도 활성화 되어있지만, 그렇지 못한 소규모 부대들의 경우 [육군훈련소 대신 전해드립니다](https://www.facebook.com/katckr/) 같은 개인적으로 운영되는 커뮤니티를 사용하는 것이 현실입니다.
 
