@@ -30,7 +30,6 @@ function PostViewPage() {
     postState,
     getPost,
     curBoardState,
-    togglePostHeart,
     insertReply,
     replyState,
   } = useBoard();
@@ -40,8 +39,7 @@ function PostViewPage() {
 
   useEffect(() => {
     getPost({postId: +postId});
-  }, []);
-
+  }, [postId]);
 
   useEffect(() => {
     console.log(replyState.result);
@@ -53,12 +51,6 @@ function PostViewPage() {
       alert('댓글 삭제에 실패하였습니다.');
     }
   }, [replyState.result]);
-
-  console.log(curBoardState);
-  console.log(data);
-  /**
-   * title, content, createdAt, id, images, pollItems, postType,
-   */
 
   const renderComments = () => {
     const commentMap : commentData = {};

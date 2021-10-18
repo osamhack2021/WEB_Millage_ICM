@@ -22,6 +22,7 @@ function CreatePostPage() {
     createPostState,
     getBoardList,
     createPost,
+    toggleRecruit,
     initCreatePostState,
   } = useBoard();
 
@@ -47,7 +48,7 @@ function CreatePostPage() {
   }]);
 
   const {register, handleSubmit} = useForm<CreatePostReq>({
-    defaultValues: {totalMember: 0},
+    defaultValues: {totalMember: 1},
   });
   const onSubmit: SubmitHandler<CreatePostReq> = (data) => {
     if (createPostState.loading) {
@@ -77,14 +78,29 @@ function CreatePostPage() {
           .filter((p) => p.content !== '')
           .map((p) => p.content);
     } else if (postType === RECRUIT) {
+      if (!data.totalMember || data.totalMember < 1) {
+        window.alert('모집 인원은 1명 이상이어야 합니다.');
+        return;
+      }
       createPostReq.totalMember = data.totalMember;
     }
 
     createPost(createPostReq);
   };
 
+
+  /**
+   * 게시글 생성이 완료되었을 때,
+   * 1) 모집 게시글인 경우, 자동으로 참가
+   * 2) 해당 게시글 페이지로 이동
+   * 3) CreatePostState를 초기화
+   */
   const history = useHistory();
   if (createPostState.data) {
+    const {id, postType} = createPostState.data;
+    if (postType === RECRUIT) {
+      toggleRecruit({postId: id});
+    }
     history.push(`${POST_PATH}/${createPostState.data.id}`);
   }
   useEffect(() => {
@@ -92,6 +108,7 @@ function CreatePostPage() {
       initCreatePostState();
     };
   }, []);
+
 
   return (
     <div
