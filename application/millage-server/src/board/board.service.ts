@@ -47,32 +47,36 @@ export class BoardService {
   }
 
   async getBoardListWithPosts(unitId: number, userId: number): Promise<BoardEntity[]> {
-    const boards = await this.boardRepository.find({
-      where: {
-        unitId: unitId,
-      },
-    });
-    return await Promise.all(boards.map(async (board) => {
-      board.posts = await this.postRepository.find({
-        relations: ['writer', 'comments', 'recruitStatus', 'recruitStatus.currentMember'],
-        where: {board},
-        order: {createdAt: 'DESC'},
-        take: POSTS_PER_BOARD_PREVIEW,
-      });
-
-
-      const user = await this.userRepository.findOne(
-          userId, {relations: ['starredBoards']});
-
-      const ids = [];
-      for (const board of user.starredBoards.values()) {
-        ids.push(board.id);
+    const boards = await this.boardRepository.createQueryBuilder('board')
+        .select([
+          'board',
+          'post.id', 'post.title', 'post.postType', 'post.content',
+          'post.createdAt',
+          'writer.id', 'writer.fullname', 'writer.nickname',
+          'comments.id', 'comments.content', 'comments.createdAt',
+          'comments.isDeleted', 'comments.parentCommentId',
+          'recruitStatus',
+          'currentMember.id', 'currentMember.fullname', 'currentMember.nickname',
+          'hearts.id',
+        ])
+        .leftJoin('board.posts', 'post')
+        .where('board.unitId = :unitId', {unitId})
+        .leftJoin('post.writer', 'writer')
+        .leftJoin('post.comments', 'comments')
+        .leftJoin('post.recruitStatus', 'recruitStatus')
+        .leftJoin('recruitStatus.currentMember', 'currentMember')
+        .leftJoin('post.hearts', 'hearts')
+        .orderBy('post.createdAt', 'DESC')
+        .take(POSTS_PER_BOARD_PREVIEW)
+        .getMany();
+    const user = await this.userRepository.findOne(
+        userId, {relations: ['starredBoards']});
+    for (const board of boards) {
+      if (user.starredBoards.some((starredBoard) => starredBoard.id === board.id)) {
+        board.isStarred = true;
       }
-
-      board.isStarred = ids.includes(board.id);
-
-      return board;
-    }));
+    }
+    return boards;
   }
 
   async create(dto: CreateBoardDto): Promise<BoardEntity> {
