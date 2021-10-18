@@ -39,7 +39,7 @@ function PostViewPage() {
 
   useEffect(() => {
     getPost({postId: +postId});
-  }, []);
+  }, [postId]);
 
   useEffect(() => {
     console.log(replyState.result);
