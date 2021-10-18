@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {PostEntity} from '../post/post.entity';
-import {FindManyOptions, Like, Repository} from 'typeorm';
+import {Brackets, Repository} from 'typeorm';
 import {BoardEntity} from './board.entity';
 import {CreateBoardDto, UpdateBoardDto} from './dto';
 import {PaginationObject} from './board.interface';
@@ -111,19 +111,40 @@ export class BoardService {
       curPage: number,
   ): Promise<PaginationObject<PostEntity>> {
     searchKeyword = searchKeyword ? decodeURI(searchKeyword) : '';
-    const searchOptions: FindManyOptions<PostEntity> = {
-      where: [
-        {boardId: boardId, title: Like(`%${searchKeyword}%`)},
-        {boardId: boardId, content: Like(`%${searchKeyword}%`)},
-      ],
-      order: {createdAt: 'DESC'},
-    };
-    const totalCounts = await this.postRepository.count(searchOptions);
+    const totalCounts = await this.postRepository.createQueryBuilder('post')
+        .where('post.boardId = :boardId', {boardId})
+        .andWhere(new Brackets((qb) => {
+          qb.where('post.title like :searchKeyword', {searchKeyword: `%${searchKeyword}%`})
+              .orWhere('post.content like :searchKeyword', {searchKeyword: `%${searchKeyword}%`});
+        }))
+        .getCount();
     const totalPages = Math.ceil(totalCounts / 10);
-    searchOptions.skip = (curPage - 1) * POSTS_PER_PAGE;
-    searchOptions.take = POSTS_PER_PAGE;
-    searchOptions.relations = ['images', 'writer', 'comments', 'recruitStatus', 'recruitStatus.currentMember'];
-    const results = await this.postRepository.find(searchOptions);
+    const skip = (curPage - 1) * POSTS_PER_PAGE;
+    const results = await this.postRepository.createQueryBuilder('post')
+        .where('post.boardId = :boardId', {boardId})
+        .andWhere(new Brackets((qb) => {
+          qb.where('post.title like :searchKeyword', {searchKeyword: `%${searchKeyword}%`})
+              .orWhere('post.content like :searchKeyword', {searchKeyword: `%${searchKeyword}%`});
+        }))
+        .select([
+          'post.id', 'post.title', 'post.postType', 'post.content',
+          'post.createdAt',
+          'writer.id', 'writer.fullname', 'writer.nickname',
+          'comments.id', 'comments.content', 'comments.createdAt',
+          'comments.isDeleted', 'comments.parentCommentId',
+          'recruitStatus',
+          'currentMember.id', 'currentMember.fullname', 'currentMember.nickname',
+          'hearts.id',
+        ])
+        .leftJoin('post.writer', 'writer')
+        .leftJoin('post.comments', 'comments')
+        .leftJoin('post.recruitStatus', 'recruitStatus')
+        .leftJoin('recruitStatus.currentMember', 'currentMember')
+        .leftJoin('post.hearts', 'hearts')
+        .orderBy('post.createdAt', 'DESC')
+        .skip(skip)
+        .take(POSTS_PER_PAGE)
+        .getMany();
     return {results, curPage, totalCounts, totalPages};
   }
 
