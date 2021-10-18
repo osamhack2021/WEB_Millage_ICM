@@ -114,7 +114,7 @@ function CreatePostPage() {
     <div
       className='flex flex-col items-center ring-1 ring-gray-300 py-8 px-6'
     >
-      <h1 className='text-2xl' > 게시글 만들기 </h1>
+      <h1 className='text-2xl' > 게시글 작성하기 </h1>
 
       {/* 게시판 선택 */}
       <SelectBoardBox

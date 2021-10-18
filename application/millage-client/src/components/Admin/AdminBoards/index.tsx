@@ -190,8 +190,8 @@ export default function AdminBoards() {
                 params.row.auth = event.target.value;
               }}
             >
-              <MenuItem value={0}>관리자만</MenuItem>
-              <MenuItem value={1}>아무나</MenuItem>
+              <MenuItem value={1}>관리자만</MenuItem>
+              <MenuItem value={0}>아무나</MenuItem>
             </Select>
           </>
         );

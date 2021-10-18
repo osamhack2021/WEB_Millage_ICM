@@ -133,7 +133,7 @@ const AddBoard :React.FC<Props> = ({closeHandler, open}) => {
                   <Switch
                     {...register('auth')}
                     onChange={
-                      (e, checked)=>setAuth(checked ? '아무나' : '관리자만')}
+                      (e, checked)=>setAuth(checked ? '관리자만' : '아무나')}
                   />
                   <span>{auth}</span>
                 </Grid>
