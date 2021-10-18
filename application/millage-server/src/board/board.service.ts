@@ -66,6 +66,7 @@ export class BoardService {
           .leftJoin('recruitStatus.currentMember', 'currentMember')
           .leftJoin('post.hearts', 'hearts')
           .where('post.boardId = :boardId', {boardId: board.id})
+          .orderBy('post.createdAt', 'DESC')
           .take(POSTS_PER_BOARD_PREVIEW)
           .getMany();
     }
