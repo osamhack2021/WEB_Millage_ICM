@@ -20,7 +20,7 @@ export class PlaceEntity {
   })
   description: string;
 
-  @ManyToOne(() => UnitEntity)
+  @ManyToOne(() => UnitEntity, {onDelete: 'CASCADE'})
   @JoinColumn({name: 'unitId', referencedColumnName: 'id'})
   unit: UnitEntity;
 
