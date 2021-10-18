@@ -6,12 +6,17 @@ import {useHistory} from 'react-router';
 
 type Props = {
   type: 'main' | 'boardView'
+  id?: number;
 }
 
-const CreatePostButton: React.FC<Props> = ({type}) => {
+const CreatePostButton: React.FC<Props> = ({type, id}) => {
   const history = useHistory();
   const onClick = () => {
-    history.push(CREATE_POST_PATH);
+    history.push(CREATE_POST_PATH, {
+      state: {
+        boardId: id,
+      },
+    });
   };
   return (
     type === 'boardView' ?

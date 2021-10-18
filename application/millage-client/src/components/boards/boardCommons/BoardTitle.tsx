@@ -21,7 +21,7 @@ const BoardTitle: React.FC<Props> = ({title, id, page}) => {
 
       {/* 글 생성 버튼 */}
       <div className='flex'>
-        <CreatePostButton type='boardView' />
+        <CreatePostButton type='boardView' id={id}/>
         { page == 'postView' ?
         <BackToMenuButton type='boardView' id={id}/>:
         ''
