@@ -4,10 +4,10 @@
 </p>
 <br><br>
 <p align="center">
-	<img alt="모두를 위한 독립형 국방 커뮤니티" src="https://user-images.githubusercontent.com/31975515/137828705-0df4b1e4-598b-463e-a4c5-fe6d2a35dafb.png">
+	<img alt="모두를 위한 독립형 국방 커뮤니티" src="https://user-images.githubusercontent.com/31975515/137829642-2819f474-2606-4061-9ec0-ccfaba322539.jpg">
 </p>
 <p align="center">
-	<img alt="메시지" src="https://user-images.githubusercontent.com/31975515/137825783-96c4fd52-04d3-4208-bf7f-7f42b355835f.png">
+	<img alt="메시지" src="https://user-images.githubusercontent.com/31975515/137829780-364f5262-2e49-4694-a159-5cceef66276c.png">
 </p>
 <br><br>
 
