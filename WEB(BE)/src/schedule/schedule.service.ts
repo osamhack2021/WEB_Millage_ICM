@@ -66,8 +66,11 @@ export class ScheduleService {
       userId: number,
       dto: UpdateScheduleDto,
   ): Promise<ScheduleEntity> {
+    const scheduleToUpdate = await this.scheduleRepository.findOne(id, {relations: ['userId']});
+    if (userId !== scheduleToUpdate.userId.id) {
+      throw new Error('Not authorized user');
+    }
     Object.assign(dto, {userId});
-
     const nineHours = 9 * 60 * 60 * 1000;
     dto.start = new Date(new Date(dto.start).getTime() + nineHours);
     dto.end = dto.end ?
@@ -78,7 +81,11 @@ export class ScheduleService {
     return updateResult.generatedMaps[0] as ScheduleEntity;
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: number, userData: UserData): Promise<boolean> {
+    const scheduleToDelete = await this.scheduleRepository.findOne(id, {relations: ['userId']});
+    if (userData.id !== scheduleToDelete.userId.id) {
+      throw new Error('Not Authorized user');
+    }
     await this.scheduleRepository.delete(id);
     return true;
   }

@@ -7,6 +7,8 @@ import {SchedulesRO, ScheduleRO} from './schedule.interface';
 import {ScheduleService} from './schedule.service';
 import {CreateScheduleDto, UpdateScheduleDto} from './dto';
 import {UserData} from '../user/user.interface';
+import {Role} from '../user_role/user_role.interface';
+import {Roles} from '../user_role/user_role.decorator';
 
 @ApiBearerAuth()
 @ApiTags('schedule')
@@ -82,6 +84,7 @@ export class ScheduleController {
   }
 
   @Patch('/:id')
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN, Role.NORMAL_USER)
   async updateSchedule(
     @Req() req: Request,
     @Param('id', ParseIntPipe) id: number,
@@ -102,9 +105,14 @@ export class ScheduleController {
   }
 
   @Delete('/:id')
-  async deleteSchedule(@Param('id', ParseIntPipe) id: number): Promise<ResultObject> {
+  @Roles(Role.ADMIN, Role.SUPER_ADMIN, Role.NORMAL_USER)
+  async deleteSchedule(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: Request,
+  ): Promise<ResultObject> {
     try {
-      await this.scheduleService.delete(id);
+      const userData: UserData = req.session.user;
+      await this.scheduleService.delete(id, userData);
       return {result: Result.SUCCESS};
     } catch (err) {
       return {
