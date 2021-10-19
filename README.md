@@ -140,7 +140,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 </td>
 </tr>
 <tr>
-<td width="100" align="center"></td>
+<td width="100" align="center">
+	<img src="https://user-images.githubusercontent.com/26620458/137883828-11c37b1c-e94f-4839-9484-328381327506.jpg"/>
+</td>
 <td width="100" align="center">최성흠</td>
 <td width="150">백엔드 개발<br>REST API 구현<br>DB 구조 설계<br></td>
 <td width="100" align="center">
