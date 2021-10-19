@@ -2,10 +2,10 @@
 
 밀리지 문서들을 정리한 directory 입니다.
 
-- Design - 밀리지의 디자인 파일입니다
-- DB - 데이터 베이스 설계 관련 파일입니다.
-- Discussions - 지금까지 진행한 회의 및 멘토링의 회의록입니다
-- README - README 파일에 쓰이는 이미지들입니다.
+- [Design](https://github.com/osamhack2021/WEB_Millage_ICM/tree/main/docs/design) - 밀리지의 디자인 파일입니다
+- [DB](https://github.com/osamhack2021/WEB_Millage_ICM/tree/main/docs/db) - 데이터 베이스 설계 관련 파일입니다.
+- [Discussions](https://github.com/osamhack2021/WEB_Millage_ICM/tree/main/docs/discussions) - 지금까지 진행한 회의 및 멘토링의 회의록입니다
+- [README](https://github.com/osamhack2021/WEB_Millage_ICM/tree/main/docs/README) - README 파일에 쓰이는 이미지들입니다.
 
 ## REST API 
 
