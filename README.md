@@ -4,7 +4,7 @@
 </p>
 <br><br>
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/31975515/137825577-02640a1e-8172-4ed9-806e-b030a1017bd9.png">
+	<img alt="모두를 위한 독립형 국방 커뮤니티" src="https://user-images.githubusercontent.com/31975515/137828705-0df4b1e4-598b-463e-a4c5-fe6d2a35dafb.png">
 </p>
 <p align="center">
 	<img alt="메시지" src="https://user-images.githubusercontent.com/31975515/137825783-96c4fd52-04d3-4208-bf7f-7f42b355835f.png">
