@@ -43,16 +43,20 @@
 * 권장: Google Chrome 버젼 77 이상
 
 ## 기술 스택 (Technique Used) 
-### Server(back-end)
- - NodeJS v14 + Typescript
- - Express, NestJS, TypeORM 
- - MySQL
- - Ubuntu, Ngnix, SSL, pm2
+### 서버 (back-end)
+  - [Ubuntu](https://ubuntu.com/), [Ngnix](https://www.nginx.com/), SSL
+  - [NodeJS v14](https://nodejs.org/) + [Typescript](https://www.typescriptlang.org/), [pm2](https://pm2.keymetrics.io/), [nodemon](https://nodemon.io/)
+  - [Express](https://expressjs.com/), [NestJS](https://nestjs.com/)
+    - [Socket.io](https://socket.io/), [Nodemailler](https://nodemailer.com/), [argon2](https://github.com/ranisalt/node-argon2)
+  - [MySQL](https://www.mysql.com/), [TypeORM](https://typeorm.io/)
  
-### Front-end
- -  React JS + TypeScript
-     - Redux, Redux-saga,
- -  Material UI
+### 웹 (Front-end)
+  -  [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/)
+	  - [Redux](https://redux.js.org/), [Redux-saga](https://redux-saga.js.org/),
+  -  [Material UI](https://mui.com/), [tailwindcss](https://tailwindcss.com/)
+
+### 사용한 오픈 소스 (Used Open Source)
+  - [fullcalendar](https://fullcalendar.io), [moment](https://momentjs.com/), [react-calendar](https://projects.wojtekmaj.pl/react-calendar/), [react-hook-form](https://react-hook-form.com/), [tippy.js](https://atomiks.github.io/tippyjs/)
 
 ## 프로젝트 사용법 (Getting Started) / 개발 시작하기
 
