@@ -147,7 +147,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 	</a>
 </td>
 <td width="175" align="center">
-	
+	<a href="mailto:kingman330@gmail.com">
+		<img src="http://img.shields.io/badge/kingman330-655ced?style=social&logo=gmail"/>
+	</a>
 </td>
 </tr>
 <tr>
