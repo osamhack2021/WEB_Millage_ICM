@@ -36,27 +36,684 @@
 <b>모두를 위한 국방 커뮤니티, Millage</b>는 병사와 간부들, 또 병 상호간 소통할 수 있는 커뮤니티를 제공합니다. 부대별로 독립적인 다양한 게시판 및 일정 캘린더를 제공하여 정보 공유를 원활하게 하고, 설문/모집 기능을 이용해 활동에 필요한 인원들을 모을 수도 있습니다. 또, 사용자들간 1대1 채팅을 통해 서로 소통을 가능하게 하며, 시설 예약 시스템을 통하여 시설 관리를 편리하게 할 수 있도록 도와줍니다.
 
 ## 기능 설명
- - To be Added
+ ※ 이미지를 클릭하면 확대된 원본 이미지를 확인할 수 있습니다.  
+<table>
+    <tbody>
+      <tr>
+        <td colspan="2">
+            <h2>부대 단위 게시판</h2>
+            <li>부대 단위 게시판 제공</li>
+            <li>부대관리자가 부대 생성시 기본 게시판 제공</li>
+            <li>부대관리자가 자유롭게 게시판 추가 / 수정 / 삭제</li>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/board%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/board%20web.png">
+            </a>
+          </div>
+        </td>
+        <td>
+          <div>
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/board%20mobile.JPG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/board%20mobile.JPG">
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>게시글 페이지</h2>
+            <li>게시글 좋아요 버튼, 작성자에게 쪽지, 댓글 기능 탑재</li>
+            <li>댓글 작성시 답글 (대댓글) 작성 가능</li>
+            <li>댓글 좋아요, 댓글 작성자에게 메시지, 댓글 삭제 기능 탑재</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/post%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/post%20web.png">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/post%20mobile.JPG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/post%20mobile.JPG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>설문 게시글</h2>
+            <li>관리자가 설문 허용 시 설문 게시글 작성 가능</li>
+            <li>설문 내용 추가, 최종 결과 확인 가능</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/poll%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/poll%20web.png">
+            </a>
+        </td>
+        <td>
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/poll%20mobile.JPG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/poll%20mobile.JPG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>모집 게시글</h2>
+            <li>관리자가 모집 허용 시 모집 게시글 작성 가능</li>
+            <li>모집 인원 설정 후 참여 인원 확인 가능</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/recruit%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/recruit%20web.png">
+            </a>
+        </td>
+        <td>
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/recruit%20mobile.JPG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/recruit%20mobile.JPG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+       <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>게시판 즐겨찾기</h2>
+            <li>자주 사용하는 게시판 즐겨찾기 설정 가능</li>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/star%20board%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/board/star%20board%20web.png">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <tbody>
+     <tr>
+        <td colspan="2">
+            <h2>실시간 메시지</h2>
+            <li>같은 부대 사용자 / 관리자와 1대1 <b>실시간</b> 메시지 기능</li>
+            <li>새로운 메시지 도착 시 Socket으로 실시간 반영</li>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20web.png">
+            </a>
+          </div>
+        </td>
+        <td>
+          <div float="left">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20mobile%201.PNG">
+              <img width="48%" height="50%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20mobile%201.PNG">
+            </a>
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20mobile%202.PNG">
+              <img width="48%" height="50%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20mobile%202.PNG">
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+       <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>사용자 검색</h2>
+            <li>같은 부대 소속 유저 검색 후 메시지 기능</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20search%20web.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20search%20web.PNG">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20search%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/DM/dm%20search%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <tbody>
+      <tr>
+        <td colspan="2">
+            <h2>로그인 기능</h2>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/login%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/login%20web.png">
+            </a>
+          </div>
+        </td>
+        <td>
+          <div float="left">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/login%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/login%20mobile.PNG">
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h3>회원가입</h3>
+            <li>아이디, 닉네임, 이메일 중복여부 자동 확인</li>
+            <li>비밀번호 매치 여부 자동 확인</li>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/register%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/register%20web.png">
+            </a>
+          </div>
+        </td>
+        <td>
+          <div float="left">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/register%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/register%20mobile.PNG">
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+       <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h3>회원 유형 선택</h3>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/user%20role%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/user%20role%20web.png">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/user%20role%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/user%20role%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h3>부대 선택</h3>
+            <li>사용자: 생성된 부대 중 선택</li>
+            <li>관리자: 생성된 부대 중 선택 혹은 새로운 부대명 입력 후 생성</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/select%20unit%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/select%20unit%20web.png">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/select%20unit%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/select%20unit%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h3>사용자 승인</h3>
+            <li>사용 신청한 사용자를 관리자가 승인 또는 반려</li>
+            <li>유저의 권한 변경 역시 가능</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20user%20web.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20user%20web.PNG">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20user%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20user%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+       <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h3>부대 승인</h3>
+            <li>부대 생성을 신청한 부대 관리자를 최고 관리자가 승인 또는 반려</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20unit%20web.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20unit%20web.PNG">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20unit%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/user/accept%20unit%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <table>
+    <tbody>
+      <tr>
+        <td colspan="2">
+            <h3>게시판 관리 (부대 관리자)</h3>
+            <li>부대에 존재하는 게시판을 생성, 수정, 또는 삭제</li>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20board%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20board%20web.png">
+            </a>
+          </div>
+        </td>
+        <td>
+          <div float="left">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20board%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20board%20mobile.PNG">
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+       <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>게시판 생성 (부대 관리자)</h2>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20board%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20board%20web.png">
+            </a>
+          </div>
+        </td>
+        <td>
+          <div float="left">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20board%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20board%20mobile.PNG">
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+      <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h3>시설 관리 (부대 관리자)</h3>
+            <li>부대에 존재하는 시설을 생성, 수정, 또는 삭제</li>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20place%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20place%20web.png">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20place%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/manage%20place%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">웹 화면</td>
+        <td align="center" width="20%">모바일 화면</td>
+      </tr>
+       <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+            <h2>시설 생성 (부대 관리자)</h2>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+            <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20place%20web.png">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20place%20web.png">
+            </a>
+        </td>
+        <td>
+          <a
+              href="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20place%20mobile.PNG">
+              <img width="100%" height="100%"
+                src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/admin/add%20place%20mobile.PNG">
+            </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<table align="center" width="700">
+<thead>
+<tr>
+<th colspan="2" align="center">시설물 예약 페이지</td>
+</tr>
+</thead>
+<tbody>
+ <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+        <h2>시설물 예약 현황 페이지</h2>
+            <li>시설물 선택, 해당 시설물 특이사항 확인</li>
+            <li>시설물 예약 현황 확인</li>
+        </td>
+      </tr>
+<tr>
+<td width="500" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/1d.png" width=500></th>
+<td width="200" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/1m.png" width=500></th>
+</tr>
+<tr>
+<td width="500" align="center">웹 화면</th>
+<td width="200" align="center">모바일 화면</th>
+</tr>
+ <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+        <h2>신청 페이지</h2>
+            <li>신청 버튼 클릭, 예약 신청 팝업 확인</li>
+            <li>날짜 선택, 시간 작성, 내용 기업 후 추가 버튼 클릭</li>
+        </td>
+      </tr>
+<tr>
+<td width="500" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/2d.png" width=500></th>
+<td width="200" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/2m.png" width=500></th>
+</tr>
+<tr>
+<td width="500" align="center">웹 화면</th>
+<td width="200" align="center">모바일 화면</th>
+</tr>
+ <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+        <h2>삭제 페이지 1</h2>
+            <li>삭제 버튼 클릭</li>
+            <li>예약 취소를 원하는 날짜 선택</il>
+        </td>
+      </tr>
+<tr>
+<td width="500" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/3d.png" width=500></th>
+<td width="200" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/3m.png" width=500></th>
+</tr>
+<tr>
+<td width="500" align="center">웹 화면</th>
+<td width="200" align="center">모바일 화면</th>
+</tr>
+ <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+        <h2>삭제 페이지 2</h2>
+            <li>해당 일자 예약 확인</li>
+            <li>삭제를 원하는 예약 선택</li>
+        </td>
+      </tr>
+<tr>
+<td width="500" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/4d.png" width=500></th>
+<td width="200" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/4m.png" width=500></th>
+</tr>
+<tr>
+<td width="500" align="center">웹 화면</th>
+<td width="200" align="center">모바일 화면</th>
+</tr>
+ <tr>
+        <td colspan="2"><br/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+        <h2>삭제 페이지 3</h2>
+            <li>예약 내역 확인 후 삭제</li>
+        </td>
+      </tr>
+<tr>
+<td width="500" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/5d.png" width=500></th>
+<td width="200" align="center"><img src="https://raw.githubusercontent.com/osamhack2021/WEB_Millage_ICM/main/docs/README/reservation/5m.png" width=500></th>
+</tr>
+<tr>
+<td width="500" align="center">웹 화면</th>
+<td width="200" align="center">모바일 화면</th>
+</tr>
+</tbody>
+</table>
 
 ## 컴퓨터 구성 / 필수 조건 안내 (Prerequisites)
 * ECMAScript 6 지원 브라우저 사용
 * 권장: Google Chrome 버젼 77 이상
 
 ## 기술 스택 (Technique Used) 
-### 서버 (back-end)
-  - [Ubuntu](https://ubuntu.com/), [Ngnix](https://www.nginx.com/), SSL
-  - [NodeJS v14](https://nodejs.org/) + [Typescript](https://www.typescriptlang.org/), [pm2](https://pm2.keymetrics.io/), [nodemon](https://nodemon.io/)
-  - [Express](https://expressjs.com/), [NestJS](https://nestjs.com/)
-    - [Socket.io](https://socket.io/), [Nodemailler](https://nodemailer.com/), [argon2](https://github.com/ranisalt/node-argon2)
-  - [MySQL](https://www.mysql.com/), [TypeORM](https://typeorm.io/)
- 
-### 웹 (Front-end)
-  -  [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/)
-	  - [Redux](https://redux.js.org/), [Redux-saga](https://redux-saga.js.org/),
-  -  [Material UI](https://mui.com/), [tailwindcss](https://tailwindcss.com/)
+### 인프라 (Infra)
+| <img src="https://git.io/J6nhl" height=100> | <img src="https://git.io/J6nuS" height=100> | <img src="https://git.io/J6nhj" height=100> |
+|:-------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|
+|        [Ubuntu](https://ubuntu.com/)        |       [Ngnix](https://www.nginx.com/)       |                     SSL                     |
 
-### 사용한 오픈 소스 (Used Open Source)
-  - [fullcalendar](https://fullcalendar.io), [moment](https://momentjs.com/), [react-calendar](https://projects.wojtekmaj.pl/react-calendar/), [react-hook-form](https://react-hook-form.com/), [tippy.js](https://atomiks.github.io/tippyjs/)
+### 협업 도구 (Cooperation Tool)
+| <img src="https://git.io/J6GuG" height=100> | <img src="https://git.io/J6GuQ" height=100> |
+|:-------------------------------------------:|:-------------------------------------------:|
+|         [Git](https://git-scm.com/)         |         [Github](https://github.com)        |
+
+### 사용 언어 (Programing Language)
+| <img src="https://git.io/J6GzR" height=100> |  <img src="https://git.io/J6Gzj" height=100>  |
+|:-------------------------------------------:|:---------------------------------------------:|
+|  [Javascript](https://www.javascript.com/)  | [Typescript](https://www.typescriptlang.org/) |
+
+### 서버 관리 도구(Server Management Tool)
+| <img src="https://git.io/J6GgP" height=100> | <img src="https://git.io/J6G2g" height=100> |
+|:-------------------------------------------:|:-------------------------------------------:|
+|      [pm2](https://pm2.keymetrics.io/)      |        [nodemon](https://nodemon.io/)       |
+
+### 서버 (Back-end)
+| <img src="https://git.io/J6cGB" height=100> | <img src="https://git.io/J6nzg" height=100> | <img src="https://git.io/J6ce3" height=100> | <img src="https://git.io/J6ceV" height=100> | <img src="https://git.io/J6cfG" height=100> |
+|:-------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|
+|     [Nodejs V14](https://nodejs.org/ko/)    |      [Express](https://expressjs.com/)      |        [NestJS](https://nestjs.com/)        |       [Socket.io](https://socket.io/)       |        [TypeORM](https://typeorm.io/)       |
+
+### 데이터베이스 (Database)
+| <img src="https://git.io/J6ngD" height=100> |
+|:-------------------------------------------:|
+|       [MySQL](https://www.mysql.com/)       |
+ 
+### 웹 어플리케이션 (Front-end)
+| <img src="https://git.io/J6n2C" height=100> | <img src="https://git.io/J6n2D" height=100> | <img src="https://git.io/J6GOA" height=100> |
+|:-------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:|
+|        [React](https://reactjs.org/)        |        [Redux](https://redux.js.org/)       |   [Redux-saga](https://redux-saga.js.org/)  |
+
+### 웹 디자인 (CSS)
+| <img src="https://git.io/J6Gt0" height=100> | <img src="https://git.io/J6GZ1" height=100> |
+|:-------------------------------------------:|:-------------------------------------------:|
+|       [Material UI](https://mui.com/)       |   [tailwindcss](https://tailwindcss.com/)   |
+
+### 기타 오픈 소스 (Other Open Source)
+  - [argon2](https://github.com/ranisalt/node-argon2)
+  - [fullcalendar](https://fullcalendar.io)
+  - [moment](https://momentjs.com/)
+  - [Nodemailler](https://nodemailer.com/)
+  - [react-calendar](https://projects.wojtekmaj.pl/react-calendar/)
+  - [react-hook-form](https://react-hook-form.com/)
+  - [react-router-dom](https://reactrouter.com/)
+  - [tippy.js](https://atomiks.github.io/tippyjs/)
 
 ## 프로젝트 사용법 (Getting Started) / 개발 시작하기
 
@@ -70,7 +727,7 @@
 6. Codespace 에서 작업 시 ```npx localtunnel --port 4000 --subdomain millage```로 proxy 서버 설정,<br>
   [Constants](https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/WEB(FE)/src/constants/APIs.ts)의 서버를 해당 도메인으로 변경  
 
-## 서비스 이용 방법 (평일 17:00 ~ 23:00, 주말 09:00 ~ 23:00 운영) 
+## 서비스 이용 방법
 <b>1. 데스크탑 / WEB</b><br>
 https://millage.ml/ 웹사이트 접속 후 서비스 이용
 
@@ -81,7 +738,46 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 ## 서비스 플로우 
 <img src="https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/docs/Flow%20Diagram.svg">
 
-## 밀리터리 빌리지 기대 효과
+## 밀리지 기대 효과
+### 📅 부대생활에 필요한 정보를 쉽게 얻을 수 있습니다
+부대 생활에 필요한 정보들을 얻기 위해 여러 군데를 돌아다니며 힘들게 찾아야 했던 병사 여러분,\
+밀리지를 이렇게 활용해보세요.
+- 캘린더 기능을 이용하여 본인의 근무 일정 및 부대 일정 확인을 할 수 있습니다.
+- 공지게시판을 이용하여 생활 규정이나 공모전 등 각종 행사 정보를 접할 수 있습니다.
+- 자유게시판 등 쉽게 커스터마이징할 수 있는 게시판을 통해 다양한 이야기와 팁을 공유할 수 있습니다.
+
+
+### 🤼‍♂️ 부대 내 결속을 높힐 수 있습니다.
+소속원들끼리 자주 만나고 소통할수록 집단의 유대감은 향상되기 마련이죠.\
+밀리지는 이렇게 활용할 수 있습니다.
+- 모집 기능의 게시물을 이용해 축구, 스터디 등 소규모 그룹 활동을 활발하게 할 수 있습니다.
+- 칭찬 게시판을 활용하여 부대 소속원들간의 친밀감을 형성하는 데 기여할 수 있습니다.
+
+
+### ⚙ 더 나은 부대운영이 가능합니다.
+온라인 환경은 오프라인에 비해 더 편리한 접근성을 제공합니다.\
+밀리지를 이렇게 활용해보세요.
+- 설문기능의 게시물을 이용해 급식 설문 조사를 포함해 병사들의 병영 생활 만족도를 조사할 수 있고, 부대 행사 기획 시 병사들의 여론을 확인할 수 있습니다.
+- 시설 관리 및 예약 기능을 통해 클릭 몇 번만으로 언제 어디서나 시설을 예약할 수 있습니다.
+
+
+### 📭 사소한 불편함, 깊은 고민 모두 쉽게 소통하고 개선할 수 있습니다.
+불편함을 쉽게 말할 수 있는 집단이 건강한 집단입니다.\
+밀리지는 이렇게 도움을 줄 수 있습니다.
+- 민원 게시판을 이용해 시설 하자와 같은 작은 불편함들도 쉽게 전달하고 빠르게 해결할 수 있습니다.
+- DM 기능은 부대 소속원들 모두 개인적으로 연결하여, 쉽게 전하기 힘든 고민까지도 전할 수 있는 소통 통로가 될 수 있습니다.
+
+### 🤝 부대에서 해결할 수 있는 문제는 부대에서 해결해야죠
+개인이 운영하는 커뮤니티에 의존하게 되고, 이로 인해 군대의 이미지가 훼손된 것은 부대 내 소통이 부족했기 때문입니다.\
+밀리지가 해결하겠습니다.
+- 독립적으로 운영할 수 있는 부대단위의 커뮤니티를 쉽게 개설하여, 부대 내에서 소통할 수 있는 창구를 마련할 수 있습니다.
+- 커뮤니티에 속한 인원은 모두 관리자의 승인을 받아서 가입한 것이기 때문에, 외부인의 접근을 방지할 수 있습니다.
+- 관리자의 권한으로 부적절한 게시글을 올리는 사용자를 제제하고 관리할 수 있습니다.
+
+
+
+---
+
   - 규모에 상관없는 독립적 부대 커뮤니티 생성 / 운영 →  '육군훈련소 대신 전해드립니다' 같은 개인 운영 커뮤니티 의존성 필요 x
   - 부대 내 공지사항, 일정, 인수인계 등 정보 공유의 원활화
   - 설문 / 모집을 통한 부대 내 스터디, 운동 등 소규모 활동 장려
@@ -131,7 +827,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 </td>
 </tr>
 <tr>
-<td width="100" align="center"></td>
+<td width="100" align="center">
+	<img src="https://avatars.githubusercontent.com/u/46237722?s=400&u=6ca917fc6abd663390662853955925efdeaf27b1&v=4">
+</td>
 <td width="100" align="center">황인규</td>
 <td width="150">프론트엔드 개발<br>캘린더/시설예약<br></td>
 <td width="100" align="center">
@@ -140,7 +838,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 	</a>
 </td>
 <td width="175" align="center">
-	
+	<a href="mailto:hig8060@gmail.com">
+		<img src="http://img.shields.io/badge/hig8060-655ced?style=social&logo=gmail"/>
+	</a>
 </td>
 </tr>
 <tr>
