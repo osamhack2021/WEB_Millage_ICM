@@ -75,7 +75,7 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 또는 브라우저 어플리케이션에서 https://millage.ml/ 웹사이트 접속
  
 ## 서비스 플로우 
-<img src="docs/Flow Diagram.drawio.svg">
+<img src="https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/docs/Flow%20Diagram.svg">
 
 ## 밀리터리 빌리지 기대 효과
   - 규모에 상관없는 독립적 부대 커뮤니티 생성 / 운영 →  '육군훈련소 대신 전해드립니다' 같은 개인 운영 커뮤니티 의존성 필요 x
