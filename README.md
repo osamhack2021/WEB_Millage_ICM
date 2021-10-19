@@ -2,7 +2,7 @@
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/31975515/137825431-3792a01c-ece9-4125-9a63-d27355a04c24.png">
 </p>
-<br><br>
+<br>
 <p align="center">
 	<img alt="모두를 위한 독립형 국방 커뮤니티" src="https://user-images.githubusercontent.com/31975515/137829642-2819f474-2606-4061-9ec0-ccfaba322539.jpg">
 </p>
