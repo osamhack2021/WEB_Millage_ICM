@@ -33,7 +33,7 @@ const initialDialogState : BoardInsertData = {
 const AddBoard :React.FC<Props> = ({closeHandler, open}) => {
   const dispatch = useDispatch();
   const session = useSelector((state: RootState) => state.user.session);
-  const [auth, setAuth] = useState<string>('관리자만');
+  const [auth, setAuth] = useState<string>('아무나');
   const [imageAllowed, setImageAllowed] = useState<string>('불가능');
   const [pollAllowed, setPollAllowed] = useState<string>('불가능');
   const [recruitAllowed, setRecruitAllowed] = useState<string>('불가능');

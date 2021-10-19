@@ -180,6 +180,9 @@ export default function AdminPlaces() {
           <Button
             variant="contained"
             className="addButton actionButton" component="span"
+            style={{
+              marginLeft: '10px',
+            }}
             onClick={() => setOpenDialog(true)}>
             <span>추가</span>
           </Button>

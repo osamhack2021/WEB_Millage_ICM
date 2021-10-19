@@ -41,10 +41,10 @@ const compareDate = (a: Date, b: Date) => {
 };
 const compareDateRange = (start: Date, end: Date, date: Date) => {
   const startDate = new Date(
-      start.getFullYear(), start.getMonth(), start.getDate(),
+      start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate(),
   );
   const endDate = new Date(
-      end.getFullYear(), end.getMonth(), end.getDate() + 1,
+      end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1,
   );
   return startDate <= date && date < endDate;
 };
@@ -106,7 +106,7 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             <Calendar
               value={selectedDate}
               onChange={handleDate}
-              locale='en-US'
+              locale='ko'
             />
           </div>
         ) : activeStep === 1 ? (
@@ -140,9 +140,9 @@ const DeleteModal: React.FC<Props> = ({handleClose}) => {
             />
             <TextField
               value={
-                moment(selectedReservation.start).format('YYYY-MM-DD HH:mm') +
+                moment(selectedReservation.start).subtract(9, 'hours').format('YYYY-MM-DD HH:mm') +
                 ' - ' +
-                moment(selectedReservation.end).format('YYYY-MM-DD HH:mm')
+                moment(selectedReservation.end).subtract(9, 'hours').format('YYYY-MM-DD HH:mm')
               }
               label='날짜'
               variant='filled'

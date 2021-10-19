@@ -76,14 +76,15 @@ const ReservationCalendar: React.FC<any> = ({match}) => {
   return (
     <div className='reservation-calendar-wrapper'>
       <div className='flex flex-row justify-center'>
+        <br/>
         <div className='description'>
           {place.description}
         </div>
       </div>
-
+      <br/>
       <FullCalendar
         plugins={[timeGridPlugin]}
-        locale='UTC'
+        locale='ko'
         timeZone='ko'
         nowIndicator
         dayCellContent={({date}) => date.getDate()}
