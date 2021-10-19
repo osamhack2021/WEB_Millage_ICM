@@ -1,0 +1,22 @@
+{
+    "name": "millage",
+    "version": "0.0.1",
+    "private": "true",
+    "license": "MIT",
+    "description": "Military Village - Millage",
+    "workspaces": [
+        "WEB(BE)",
+        "WEB(FE)"
+    ],
+    "scripts": {
+      "start": "yarn workspace 'WEB(BE)' start && yarn workspace 'WEB(FE)' start",
+      "server-start": "yarn workspace 'WEB(BE)' start",
+      "server-start:watch": "yarn workspace WEB(BE) start:watch",
+      "client-start": "yarn workspace 'WEB(FE)' start",
+      "build": "yarn workspace 'WEB(FE)' build",
+      "build:dist": "yarn workspace 'WEB(FE)' build:dist",
+      "lint": "yarn workspace 'WEB(FE)' lint && yarn workspace 'WEB(BE)' lint",
+      "lint:fix": "yarn workspace 'WEB(FE)' lint:fix && yarn workspace 'WEB(BE)' lint:fix"
+    }
+  }
+  

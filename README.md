@@ -59,12 +59,12 @@
 개발을 시작하기 전에 [CONTRIBUTING.md](CONTRIBUTING.md) 를 꼭 참고해주세요.
 
 1. Millage Project 클론 - ```git clone https://github.com/osamhack2021/WEB_Millage_ICM.git```  
-2. application 디렉토리로 이동후 ```yarn install```
+2. 프로젝트 디렉토리로 이동후 ```yarn install```
 3. ```yarn client-start```로 React Application 실행
-4. millage-server 디렉토리에 ormconfig.json 추가, db 정보 입력.
+4. WEB(BE) 디렉토리에 ormconfig.json 추가, db 정보 입력.
 5. ```yarn server-start```로 Nodejs 서버 실행
 6. Codespace 에서 작업 시 ```npx localtunnel --port 4000 --subdomain millage```로 proxy 서버 설정,<br>
-  [Constants](https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/application/millage-client/src/constants/APIs.ts)의 서버를 해당 도메인으로 변경  
+  [Constants](https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/WEB(FE)/src/constants/APIs.ts)의 서버를 해당 도메인으로 변경  
 
 ## 서비스 이용 방법 (평일 17:00 ~ 23:00, 주말 09:00 ~ 23:00 운영) 
 <b>1. 데스크탑 / WEB</b><br>

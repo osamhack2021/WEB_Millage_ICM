@@ -1,5 +1,5 @@
 {
-  "name": "millage-client",
+  "name": "WEB(FE)",
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
@@ -51,7 +51,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "build:dist": "craco build && rm -rf ../millage-server/dist && mv -f build ../millage-server/dist",
+    "build:dist": "craco build && rm -rf ../WEB(BE)/dist && mv -f build ../WEB(BE)/dist",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
