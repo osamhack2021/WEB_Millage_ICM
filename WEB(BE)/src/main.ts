@@ -65,7 +65,7 @@ async function bootstrap() {
       .addBearerAuth()
       .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('/docs', app, document);
+  SwaggerModule.setup('/api/docs', app, document);
 
   const errorHandler = (err, req, res, next) => {
     res.status(500).send(err);
