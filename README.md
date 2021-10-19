@@ -99,7 +99,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 </thead>
 <tbody>
 <tr>
-<td width="100" align="center"></td>
+<td width="100" align="center">
+	<img src="https://user-images.githubusercontent.com/31975515/137883696-1e2b7ae4-31fc-46fa-8fd5-b8fe6bf3680d.jpg">
+</td>
 <td width="100" align="center">박은찬</td>
 <td width="150">풀스택 개발<br>DM/사용자 기능<br>서버 환경 구축<br></td>
 <td width="100" align="center">
