@@ -1,11 +1,6 @@
-<br>
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/31975515/138065430-e2d86646-d64a-4f60-86f4-c1ff4e58c3eb.jpg">
+	<img src="https://user-images.githubusercontent.com/31975515/138066912-894ac379-af99-44c4-999b-7472d9225649.jpg">
 </p>
-<br>
-
-<br><br>
-
 <p align="center">
 	<a href="https://millage.ml/">
 		<img width="250" alt="demo" src="https://user-images.githubusercontent.com/31975515/137824930-65a09411-bc6b-49f0-8a3a-996dc5a726df.png">
