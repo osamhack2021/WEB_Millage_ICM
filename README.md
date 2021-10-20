@@ -29,6 +29,8 @@
 <a href="https://github.com/osamhack2021/WEB_Millage_ICM/wiki/2.-%EA%B8%B0%EB%8A%A5-%EC%84%A4%EB%AA%85">기능 설명 페이지로 이동하기</a>
 
 ## 서비스 이용 방법
+*<b>사용자 승인/부대 생성 승인</b>은 시연 기간 중 수시로 하고 있으나 가입 후 승인까지 시간이 걸릴 수 있으니 양해 부탁드립니다.*<br/>
+
 <b>1. 데스크탑 / WEB</b><br>
 https://millage.ml/ 웹사이트 접속 후 서비스 이용
 
