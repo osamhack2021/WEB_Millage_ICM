@@ -161,7 +161,7 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 <td width="100" align="center">
 	<img src="https://user-images.githubusercontent.com/31975515/137883696-1e2b7ae4-31fc-46fa-8fd5-b8fe6bf3680d.jpg">
 </td>
-<td width="100" align="center">박은찬</td>
+<td width="100" align="center">박은찬<br/>(팀장)</td>
 <td width="150">풀스택 개발<br>DM/사용자 기능<br>서버 환경 구축<br></td>
 <td width="100" align="center">
 	<a href="https://github.com/pec9399">
@@ -226,7 +226,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 </td>
 </tr>
 <tr>
-<td width="100" align="center"></td>
+<td width="100" align="center">
+	<img src="https://user-images.githubusercontent.com/31975515/138101260-e291ccb0-88d4-4652-8e59-2949ac035e15.jpg"/>
+</td>
 <td width="100" align="center">김동현</td>
 <td width="150">디자인<br>시연,발표자료<br></td>
 <td width="100" align="center">
@@ -235,7 +237,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 	</a>
 </td>
 <td width="175" align="center">
-	
+	<a href="mailto:thn02046@naver.com">
+                <img src="https://img.shields.io/badge/thn02046-655ced?style=social&logo=naver"/>
+	</a>
 </td>
 </tr>
 </tbody>
