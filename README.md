@@ -1,14 +1,9 @@
 <br>
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/31975515/137825431-3792a01c-ece9-4125-9a63-d27355a04c24.png">
+	<img src="https://user-images.githubusercontent.com/31975515/138065430-e2d86646-d64a-4f60-86f4-c1ff4e58c3eb.jpg">
 </p>
 <br>
-<p align="center">
-	<img alt="모두를 위한 독립형 국방 커뮤니티" src="https://user-images.githubusercontent.com/31975515/137829642-2819f474-2606-4061-9ec0-ccfaba322539.jpg">
-</p>
-<p align="center">
-	<img alt="메시지" src="https://user-images.githubusercontent.com/31975515/137829780-364f5262-2e49-4694-a159-5cceef66276c.png">
-</p>
+
 <br><br>
 
 <p align="center">
