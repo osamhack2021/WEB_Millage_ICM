@@ -15,7 +15,7 @@
 	<a href="https://millage.ml/">
 		<img width="250" alt="demo" src="https://user-images.githubusercontent.com/31975515/137824930-65a09411-bc6b-49f0-8a3a-996dc5a726df.png">
 	</a>
-	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/tree/main/docs">
+	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/wiki">
 		<img width="250" alt="docs" src="https://user-images.githubusercontent.com/31975515/137825076-c7b06c2e-6ce8-4c12-97b5-f27e1b633fb2.png">
 	</a>
 	<a href="https://github.com/osamhack2021/WEB_Millage_ICM/issues">
@@ -36,7 +36,7 @@
 <b>모두를 위한 국방 커뮤니티, Millage</b>는 병사와 간부들, 또 병 상호간 소통할 수 있는 커뮤니티를 제공합니다. 부대별로 독립적인 다양한 게시판 및 일정 캘린더를 제공하여 정보 공유를 원활하게 하고, 설문/모집 기능을 이용해 활동에 필요한 인원들을 모을 수도 있습니다. 또, 사용자들간 1대1 채팅을 통해 서로 소통을 가능하게 하며, 시설 예약 시스템을 통하여 시설 관리를 편리하게 할 수 있도록 도와줍니다.
 
 ## 기능 설명
-<a href="https://github.com/osamhack2021/WEB_Millage_ICM/blob/main/docs/README.md">기능 설명 페이지로 이동하기</a>
+<a href="https://github.com/osamhack2021/WEB_Millage_ICM/wiki/%EA%B8%B0%EB%8A%A5%EC%84%A4%EB%AA%85">기능 설명 페이지로 이동하기</a>
 
 ## 서비스 이용 방법
 <b>1. 데스크탑 / WEB</b><br>
