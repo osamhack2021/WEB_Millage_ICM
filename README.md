@@ -177,11 +177,15 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 	</a>
 </td>
 <td width="175" align="center">
-	<a href="mailto:pec9399@naver.com">pec9399@naver.com</a>
+	<a href="mailto:pec9399@naver.com">
+                <img src="https://img.shields.io/badge/pec9399-655ced?style=social&logo=naver"/>
+        </a>
 </td>
 </tr>
 <tr>
-<td width="100" align="center"></td>
+<td width="100" align="center">
+    <img src="https://user-images.githubusercontent.com/39655003/138027060-e3a8ce55-0e80-4d86-a6d6-5c35d8f5ff0f.jpg">
+</td>
 <td width="100" align="center">박수근</td>
 <td width="150">프론트엔드 개발<br>게시판 기능<br></td>
 <td width="100" align="center">
@@ -190,7 +194,9 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 	</a>
 </td>
 <td width="175" align="center">
-	<a href="mailto:bwmelon97@naver.com">bwmelon97@naver.com</a>
+	<a href="mailto:bwmelon97@naver.com">
+                <img src="https://img.shields.io/badge/bwmelon97-655ced?style=social&logo=naver"/>
+	</a>
 </td>
 </tr>
 <tr>
@@ -230,7 +236,7 @@ https://millage.ml/ 웹사이트 접속 후 서비스 이용
 <tr>
 <td width="100" align="center"></td>
 <td width="100" align="center">김동현</td>
-<td width="150">디자이너<br>시연,발표자료<br></td>
+<td width="150">디자인<br>시연,발표자료<br></td>
 <td width="100" align="center">
 	<a href="https://github.com/thn02046">
 		<img src="http://img.shields.io/badge/thn02046-655ced?style=social&logo=github"/>
