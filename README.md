@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/31975515/138066912-894ac379-af99-44c4-999b-7472d9225649.jpg">
+	<img src="https://user-images.githubusercontent.com/31975515/138533637-4abb6480-88bb-40bc-84dc-c6d9c9aae64f.jpg">
 </p>
 <p align="center">
 	<a href="https://millage.ml/">
